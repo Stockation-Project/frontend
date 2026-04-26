@@ -1,19 +1,35 @@
 // src/App.tsx
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
-// Import halaman yang sudah kita buat
+// Pages
 import RegisterPage from "./pages/auth/RegisterPage";
+import LoginPage from "./pages/auth/LoginPages";
+
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<Navigate to="/register" replace />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Rute untuk halaman Register */}
-        <Route path="/register" element={<RegisterPage />} />
-
-        {/* Opsional: Jika user mengakses path kosong ('/'), lempar ke /register untuk sementara */}
-        <Route path="/" element={<Navigate to="/register" replace />} />
-      </Routes>
+      <AnimatedRoutes />
     </BrowserRouter>
   );
 }

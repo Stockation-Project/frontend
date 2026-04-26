@@ -40,7 +40,7 @@ const AuthVisualPanel: React.FC<AuthVisualPanelProps> = ({
 
         {/* Bottom branding text */}
         <div className="text-center space-y-4 max-w-sm">
-          <h1 className="text-3xl xl:text-4xl font-extrabold leading-tight tracking-tight drop-shadow-md">
+          <h1 className="text-3xl xl:text-4xl font-medium leading-tight tracking-tight drop-shadow-md">
             {title}
           </h1>
           <p className="text-sm xl:text-base text-green-100/90 font-light leading-relaxed drop-shadow-sm">
