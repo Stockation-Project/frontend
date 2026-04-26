@@ -1,11 +1,7 @@
-import { Button } from "@/components/ui/button";
+import Register from "@/pages/auth/Register";
 
 function App() {
-  return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
-  );
+  return <Register />;
 }
 
 export default App;
