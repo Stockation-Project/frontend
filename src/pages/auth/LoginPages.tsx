@@ -1,33 +1,59 @@
 import { useState } from "react";
-
-import logoGreen from "@/assets/logo/logo-green.svg";
 import PasswordInputField from "@/components/shared/PasswordInputField";
 import FormInputGroup from "@/components/shared/FormInputGroup";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthVisualPanel from "@/components/shared/AuthVisualPanel";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
+import AuthHeader from "@/components/shared/AuthHeader";
+import authService from "@/services/auth.service";
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Registering with:", formData);
+    setErrorMessage("");
+    setIsLoading(true);
+
+    try {
+      // hit api login
+      const response = await authService.login(formData);
+
+      // cek user udah punya risk profile belum
+      if (response.success) {
+        const user = response.data.user;
+
+        if (!user.risk_profile) {
+          navigate("/questionnaire");
+        } else {
+          navigate("/dashboard");
+        }
+      }
+    } catch (error: any) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <motion.div
-      className="h-screen w-full flex"
+      className="min-h-screen w-full flex"
       style={{ backgroundColor: "#ffffff" }}
       initial={{ opacity: 0, x: -80 }}
       animate={{ opacity: 1, x: 0 }}
@@ -36,7 +62,7 @@ const LoginPage: React.FC = () => {
     >
       {/* Kolom Kiri Form Login */}
       <motion.div
-        className="flex-1 flex flex-col items-center justify-center px-6 py-4 sm:px-10 lg:px-14 xl:px-20"
+        className="flex-1 flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20"
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -40 }}
@@ -44,25 +70,13 @@ const LoginPage: React.FC = () => {
       >
         <div className="w-full max-w-md space-y-5">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <img src={logoGreen} alt="Stockation" className="h-7 " />
-            <span className="text-xl font-bold text-slate-900 tracking-tight">
-              Stockation
-            </span>
-          </div>
-          {/* Header */}
-          <div className="space-y-1">
-            <h2 className="text-2xl font-extrabold text-slate-950 tracking-tight">
-              Masuk Stockation
-            </h2>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              Selamat datang kembali! Silakan masuk untuk pantau portofolio dan
-              lanjut asah strategi simulasi Anda.
-            </p>
-          </div>
+          <AuthHeader
+            title="Masuk Stockation"
+            description="Selamat datang kembali! Silakan masuk untuk pantau portofolio dan lanjut asah strategi simulasi Anda."
+          />
 
           {/* Form Login */}
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <FormInputGroup
               id="email"
               label="Email"
@@ -104,7 +118,7 @@ const LoginPage: React.FC = () => {
 
       {/* Kolom Kanan Gambar */}
       <motion.div
-        className="hidden lg:block lg:w-[45%] xl:w-[50%] flex-shrink-0"
+        className="hidden lg:block lg:w-[40%] xl:w-[45%] flex-shrink-0"
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 40 }}

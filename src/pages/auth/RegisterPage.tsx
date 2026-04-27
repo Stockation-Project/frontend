@@ -1,22 +1,17 @@
-// src/pages/auth/Register.tsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-
-// Import logo
-import logoGreen from "@/assets/logo/logo-green.svg";
-
-// Import Komponen Reusable
 import FormInputGroup from "@/components/shared/FormInputGroup";
 import PasswordInputField from "@/components/shared/PasswordInputField";
 import AuthVisualPanel from "@/components/shared/AuthVisualPanel";
-
-// Import background image
 import registerBg from "@/assets/images/auth/register-bg.jpg";
-
 import { motion } from "framer-motion";
+import authService from "@/services/auth.service";
+import AuthHeader from "@/components/shared/AuthHeader";
 
 const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -25,19 +20,54 @@ const RegisterPage: React.FC = () => {
     confirmPassword: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Registering with:", formData);
+    setErrorMessage("");
+
+    // validasi konfirm pw
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage("Konfirmasi Kata Sandi Tidak Cocok");
+      return;
+    }
+
+    // state loading
+    setIsLoading(true);
+
+    try {
+      // mapping data
+      const payload = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+      };
+
+      // hit api nya
+      const response = await authService.register(payload);
+
+      // validasi
+      if (response.success) {
+        alert("Registrasi berhasil, silakan Login.");
+        navigate("/login");
+      }
+    } catch (error: any) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <motion.div
-      className="h-screen w-full flex"
+      className="min-h-screen w-full flex"
       style={{ backgroundColor: "#ffffff" }}
       initial={{ opacity: 0, x: 80 }}
       animate={{ opacity: 1, x: 0 }}
@@ -46,7 +76,7 @@ const RegisterPage: React.FC = () => {
     >
       {/* --- KOLOM KIRI (Panel Visual & Branding) --- */}
       <motion.div
-        className="hidden lg:block lg:w-[45%] xl:w-[50%] flex-shrink-0"
+        className="hidden lg:block lg:w-[40%] xl:w-[40%] flex-shrink-0"
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 40 }}
@@ -61,34 +91,22 @@ const RegisterPage: React.FC = () => {
 
       {/* --- KOLOM KANAN (Panel Form Register) --- */}
       <motion.div
-        className="flex-1 flex items-center justify-center px-6 py-4 sm:px-10 lg:px-14 xl:px-20"
+        className="flex-1 flex items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20"
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -40 }}
         transition={{ duration: 0.3, delay: 0.1 }}
       >
         <div className="w-full max-w-md space-y-5">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <img src={logoGreen} alt="Stockation" className="h-7" />
-            <span className="text-xl font-bold text-slate-900 tracking-tight">
-              Stockation
-            </span>
-          </div>
 
-          {/* Header */}
-          <div className="space-y-1">
-            <h2 className="text-2xl font-extrabold text-slate-950 tracking-tight">
-              Buat Akun Stockation
-            </h2>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              Selamat datang! Silakan isi data diri Anda untuk memulai simulasi
-              investasi.
-            </p>
-          </div>
+          {/* Logo */}
+          <AuthHeader
+            title="Gabung Stockation"
+            description="Daftar sekarang, buat dompet virtual, dan mulai susun strategi investasi saham tanpa risiko di Stocketion."
+          />
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <FormInputGroup
                 id="firstName"
