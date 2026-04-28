@@ -1,6 +1,7 @@
 // src/components/shared/AuthVisualPanel.tsx
 import React from "react";
 import logoWhite from "@/assets/logo/logo-white.svg";
+import Logo from "./Logo";
 
 interface AuthVisualPanelProps {
   title: string;
@@ -29,14 +30,7 @@ const AuthVisualPanel: React.FC<AuthVisualPanelProps> = ({
       <div className="relative z-10 flex flex-col justify-center items-center text-center px-8 xl:px-12 text-white">
         {/* Logo */}
         <div className="flex flex-col items-center gap-3 mb-8">
-          <img
-            src={logoWhite}
-            alt="Stockation"
-            className="w-12 drop-shadow-lg"
-          />
-          <span className="text-2xl font-semibold tracking-wide drop-shadow-lg">
-            Stockation
-          </span>
+          <Logo variant="white" showText={true} className="mb-16 flex flex-col" />
         </div>
 
         {/* Text */}

@@ -11,6 +11,7 @@ import { AnimatePresence } from "framer-motion";
 // Pages
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPages";
+import QuestionnairePage from "./pages/questionnaire/QuestionnairePage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/questionnaire" element={<QuestionnairePage />} />
         <Route path="/" element={<Navigate to="/register" replace />} />
       </Routes>
     </AnimatePresence>

@@ -1,5 +1,5 @@
 import React from "react";
-import logoGreen from "@/assets/logo/logo-green.svg";
+import Logo from "./Logo";
 
 interface AuthHeaderProps {
   title: string;
@@ -11,15 +11,12 @@ const AuthHeader: React.FC<AuthHeaderProps> = ({ title, description }) => {
     <div className="space-y-4">
       {/* Logo */}
       <div className="flex items-center gap-2">
-        <img src={logoGreen} alt="Stockation" className="h-7" />
-        <span className="text-xl font-bold text-slate-900 tracking-tight">
-          Stockation
-        </span>
+        <Logo variant="color" showText={true} className="-ml-1" />
       </div>
 
       {/* Text */}
       <div className="space-y-1">
-        <h2 className="text-2xl font-extrabold text-slate-950 tracking-tight">
+        <h2 className="text-2xl font-medium text-slate-950 tracking-tight">
           {title}
         </h2>
         <p className="text-slate-500 text-sm leading-relaxed">{description}</p>
