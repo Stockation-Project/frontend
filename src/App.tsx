@@ -8,6 +8,9 @@ import {
 } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
+// context
+import { AuthProvider } from "./contexts/AuthContext";
+
 // Pages
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPages";
@@ -30,9 +33,11 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AnimatedRoutes />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <AnimatedRoutes />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

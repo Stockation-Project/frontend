@@ -8,9 +8,12 @@ import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
 import AuthHeader from "@/components/shared/AuthHeader";
 import authService from "@/services/auth.service";
+import { useAuth } from "@/contexts/AuthContext";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -34,10 +37,14 @@ const LoginPage: React.FC = () => {
       // hit api login
       const response = await authService.login(formData);
 
-      // cek user udah punya risk profile belum
       if (response.success) {
+        // Ekstrak data dari response backend
         const user = response.data.user;
+        const token = response.data.token;
 
+        login(user, token);
+
+        // cek user udah punya risk profile belum
         if (!user.risk_profile) {
           navigate("/questionnaire");
         } else {

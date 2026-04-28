@@ -99,7 +99,7 @@ const RegisterPage: React.FC = () => {
       >
         <div className="w-full max-w-md space-y-5">
 
-          {/* Logo */}
+          {/* Header */}
           <AuthHeader
             title="Gabung Stockation"
             description="Daftar sekarang, buat dompet virtual, dan mulai susun strategi investasi saham tanpa risiko di Stocketion."
