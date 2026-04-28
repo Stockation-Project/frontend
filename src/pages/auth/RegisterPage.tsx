@@ -8,6 +8,9 @@ import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
 import authService from "@/services/auth.service";
 import AuthHeader from "@/components/shared/AuthHeader";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +25,7 @@ const RegisterPage: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -31,6 +35,7 @@ const RegisterPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
+    setSuccessMessage("");
 
     // validasi konfirm pw
     if (formData.password !== formData.confirmPassword) {
@@ -55,13 +60,19 @@ const RegisterPage: React.FC = () => {
 
       // validasi
       if (response.success) {
-        alert("Registrasi berhasil, silakan Login.");
-        navigate("/login");
+        setSuccessMessage(
+          "Registrasi berhasil! Mengalihkan ke halaman login...",
+        );
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
       }
     } catch (error: any) {
       setErrorMessage(error.message);
     } finally {
-      setIsLoading(false);
+      if (!successMessage) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -98,7 +109,6 @@ const RegisterPage: React.FC = () => {
         transition={{ duration: 0.3, delay: 0.1 }}
       >
         <div className="w-full max-w-md space-y-5">
-
           {/* Header */}
           <AuthHeader
             title="Gabung Stockation"
@@ -151,12 +161,37 @@ const RegisterPage: React.FC = () => {
               required
             />
 
-            <Button
-              type="submit"
-              className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-full text-base font-semibold shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
-            >
-              Daftar
-            </Button>
+            {/* 2. AREA ALERT UNTUK ERROR & SUCCESS */}
+            {errorMessage && (
+              <Alert
+                variant="destructive"
+                className="bg-red-50 border-red-200 text-red-800"
+              >
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Gagal Mendaftar</AlertTitle>
+                <AlertDescription>{errorMessage}</AlertDescription>
+              </Alert>
+            )}
+
+            {successMessage && (
+              <Alert className="bg-green-50 border-green-200 text-green-800">
+                <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <AlertTitle>Berhasil!</AlertTitle>
+                <AlertDescription>{successMessage}</AlertDescription>
+              </Alert>
+            )}
+
+            {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}
+            {isLoading ? (
+              <Skeleton className="w-full h-11 rounded-full bg-slate-200" />
+            ) : (
+              <Button
+                type="submit"
+                className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-full text-base font-semibold shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
+              >
+                Daftar
+              </Button>
+            )}
           </form>
 
           {/* Footer link */}

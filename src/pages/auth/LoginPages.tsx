@@ -9,6 +9,9 @@ import { motion } from "framer-motion";
 import AuthHeader from "@/components/shared/AuthHeader";
 import authService from "@/services/auth.service";
 import { useAuth } from "@/contexts/AuthContext";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
+import { AlertCircle } from "lucide-react";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -53,7 +56,6 @@ const LoginPage: React.FC = () => {
       }
     } catch (error: any) {
       setErrorMessage(error.message);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -102,12 +104,29 @@ const LoginPage: React.FC = () => {
               required
             />
 
-            <Button
-              type="submit"
-              className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-full text-base font-semibold shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
-            >
-              Masuk
-            </Button>
+            {/* 2. AREA ALERT UNTUK ERROR */}
+            {errorMessage && (
+              <Alert
+                variant="destructive"
+                className="bg-red-50 border-red-200 text-red-800"
+              >
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Gagal Masuk</AlertTitle>
+                <AlertDescription>{errorMessage}</AlertDescription>
+              </Alert>
+            )}
+
+            {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}
+            {isLoading ? (
+              <Skeleton className="w-full h-11 rounded-full bg-slate-200 mt-2" />
+            ) : (
+              <Button
+                type="submit"
+                className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-full text-base font-semibold shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer mt-2"
+              >
+                Masuk
+              </Button>
+            )}
           </form>
 
           {/* Footer link */}
