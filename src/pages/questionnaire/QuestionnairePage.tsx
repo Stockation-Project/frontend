@@ -7,53 +7,27 @@ import ProgressBar from "@/components/questionnaire/ProgressBar";
 import OptionCard from "@/components/questionnaire/OptionCard";
 import { riskQuestions } from "@/data/questionnaire";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQuestionnaire } from "@/hooks/useQuestionnaire";
 
 const QuestionnairePage: React.FC = () => {
-  const navigate = useNavigate();
+  const {
+    currentStep,
+    currentQuestion,
+    answers,
+    direction,
+    isLastStep,
+    hasAnsweredCurrent,
+    totalSteps,
+    handleSelectOption,
+    handleNext,
+    handleBack,
+    isSubmitting
+  } = useQuestionnaire();
 
-  // State untuk melacak urutan pertanyaan (dimulai dari 0)
-  const [currentStep, setCurrentStep] = useState(0);
-
-  // State untuk menyimpan jawaban { questionId: optionId }
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-
-  const [direction, setDirection] = useState(1);
-
-  const currentQuestion = riskQuestions[currentStep];
-  const isLastStep = currentStep === riskQuestions.length - 1;
-
-  // Handler memilih opsi
-  const handleSelectOption = (optionId: string) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [currentQuestion.id]: optionId,
-    }));
-  };
-
-  // Handler tombol Lanjut
-  const handleNext = () => {
-    if (isLastStep) {
-      // TODO: Logika hitung total poin dan tembak API PUT Profile Risiko
-      console.log("Kuesioner Selesai! Jawaban:", answers);
-      alert("Selesai! Mengarahkan ke Dashboard...");
-      navigate("/dashboard");
-    } else {
-      setDirection(1)
-      setCurrentStep((prev) => prev + 1);
-    }
-  };
-
-  // Handler tombol Kembali
-  const handleBack = () => {
-    if (currentStep > 0) {
-      setDirection(-1)
-      setCurrentStep((prev) => prev - 1);
-    }
-  };
-
+  // Rumus pergerakan animasi dua arah
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 50 : -50, // Jika maju, mulai dari kanan (+). Jika mundur, mulai dari kiri (-).
+      x: direction > 0 ? 50 : -50,
       opacity: 0,
     }),
     center: {
@@ -61,13 +35,10 @@ const QuestionnairePage: React.FC = () => {
       opacity: 1,
     },
     exit: (direction: number) => ({
-      x: direction < 0 ? 50 : -50, // Jika mundur, buang ke kanan (+). Jika maju, buang ke kiri (-).
+      x: direction < 0 ? 50 : -50,
       opacity: 0,
     }),
   };
-
-  // Validasi: Tombol 'Lanjut' hanya bisa diklik jika sudah memilih jawaban
-  const hasAnsweredCurrent = !!answers[currentQuestion.id];
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -140,10 +111,14 @@ const QuestionnairePage: React.FC = () => {
 
           <Button
             onClick={handleNext}
-            disabled={!hasAnsweredCurrent} // Matikan jika belum memilih
+            disabled={!hasAnsweredCurrent || isSubmitting} // Matikan jika belum memilih
             className="h-12 px-8 rounded-xl bg-green-700 hover:bg-green-800 text-white font-medium shadow-md transition-all"
           >
-            {isLastStep ? "Selesai" : "Lanjut"}
+            {isLastStep
+              ? isSubmitting
+                ? "Memproses..."
+                : "Selesai" // Ubah teks saat loading
+              : "Lanjut"}
             {!isLastStep && <ArrowRight className="w-4 h-4 ml-2" />}
           </Button>
         </div>
