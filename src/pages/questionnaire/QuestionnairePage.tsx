@@ -8,6 +8,7 @@ import OptionCard from "@/components/questionnaire/OptionCard";
 import { riskQuestions } from "@/data/questionnaire";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
+import ResultModal from "@/components/questionnaire/ResultModal"; // Import Modal
 
 const QuestionnairePage: React.FC = () => {
   const {
@@ -21,7 +22,10 @@ const QuestionnairePage: React.FC = () => {
     handleSelectOption,
     handleNext,
     handleBack,
-    isSubmitting
+    isSubmitting,
+    showResultModal,
+    resultData,
+    handleFinishModal,
   } = useQuestionnaire();
 
   // Rumus pergerakan animasi dua arah
@@ -123,6 +127,14 @@ const QuestionnairePage: React.FC = () => {
           </Button>
         </div>
       </footer>
+      {resultData && (
+        <ResultModal
+          isOpen={showResultModal}
+          score={resultData.score}
+          profileKey={resultData.profile}
+          onContinue={handleFinishModal}
+        />
+      )}
     </div>
   );
 };

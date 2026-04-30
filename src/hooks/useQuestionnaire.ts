@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { riskQuestions } from "@/data/questionnaire";
 import { questionnaireService } from "@/services/questionnaire.service"; // Import service baru
+import type { RiskProfileKey } from "@/data/riskProfile";
 
 export const useQuestionnaire = () => {
   const navigate = useNavigate();
@@ -13,6 +14,12 @@ export const useQuestionnaire = () => {
 
   // State baru untuk efek loading saat submit API
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [showResultModal, setShowResultModal] = useState(false);
+  const [resultData, setResultData] = useState<{
+    score: number;
+    profile: RiskProfileKey;
+  } | null>(null);
 
   const currentQuestion = riskQuestions[currentStep];
   const isLastStep = currentStep === riskQuestions.length - 1;
@@ -40,16 +47,23 @@ export const useQuestionnaire = () => {
         });
 
         // 2. Tembak ke Backend
-        const payload = { answers: pointsArray };
-        const response = await questionnaireService.submit(payload);
+        const response = await questionnaireService.submit({
+          answers: pointsArray,
+        });
 
         // 3. Jika berhasil (Backend memberi profil dan modal 100jt), arahkan ke Dashboard
-        if (response) {
-          navigate("/dashboard");
+        if (response && response.success) {
+          const scoreData = response.data.score;
+          const profileData = response.data.user.risk_profile;
+          setResultData({
+            score: scoreData,
+            profile: profileData as RiskProfileKey,
+          });
+          setShowResultModal(true);
         }
       } catch (error: any) {
-        // Tampilkan error jika gagal (opsional: bisa pakai toast/alert)
-        alert(error.message);
+        console.error("Gagal submit kuesioner:", error);
+        alert(error.message || "Terjadi kesalahan saat mengirim data.");
       } finally {
         setIsSubmitting(false);
       }
@@ -66,6 +80,11 @@ export const useQuestionnaire = () => {
     }
   };
 
+  const handleFinishModal = () => {
+    setShowResultModal(false);
+    navigate("/dashboard");
+  };
+
   return {
     currentStep,
     currentQuestion,
@@ -78,5 +97,8 @@ export const useQuestionnaire = () => {
     handleSelectOption,
     handleNext,
     handleBack,
+    resultData,
+    handleFinishModal,
+    showResultModal,
   };
 };
