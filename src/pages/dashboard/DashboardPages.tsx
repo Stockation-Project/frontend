@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import GlobalWalletCard from "@/components/dashboard/GlobalWalletCard";
 
 const DashboardPages: React.FC = () => {
   return (
@@ -22,9 +23,7 @@ const DashboardPages: React.FC = () => {
         {/* KOLOM KIRI (70% - xl:col-span-7) */}
         <div className="xl:col-span-7 space-y-8">
           {/* Tempat Global Wallet Card */}
-          <div className="w-full h-40 bg-slate-200 rounded-3xl border border-slate-300 border-dashed flex items-center justify-center text-slate-500 font-medium">
-            (Slot Dompet Utama)
-          </div>
+            <GlobalWalletCard balance={100000000} />
 
           {/* Tempat Portfolio Section */}
           <div className="w-full h-60 bg-slate-200 rounded-3xl border border-slate-300 border-dashed flex items-center justify-center text-slate-500 font-medium">
