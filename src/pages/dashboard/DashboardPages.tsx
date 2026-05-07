@@ -3,11 +3,13 @@ import { motion } from "framer-motion";
 import GlobalWalletCard from "@/components/dashboard/GlobalWalletCard";
 import RecommendedStocks from "@/components/dashboard/RecommendedStocks";
 import PortfolioSection from "@/components/dashboard/PortfolioSection";
+import WalletSummary from "@/components/dashboard/WalletSummary";
+import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
 
 const DashboardPages: React.FC = () => {
   // Dummy data untuk testing empty state
   // DUMMY DATA PORTFOLIO (Silakan hapus elemen array ini untuk melihat Empty State)
-  const myPortfolios: PortfolioCardProps[] = [
+  const myPortfolios = [
     {
       id: "DMPT7439",
       name: "Saham Blue Chip",
@@ -32,21 +34,24 @@ const DashboardPages: React.FC = () => {
       cashBalance: 2500000,
       profitPercentage: -3.2,
       profitAmount: -256000, // Contoh jika portfolio merugi
-    },
-    {
-      id: "DMPT8821",
-      name: "Saham Agresif",
-      allocations: [
-        { ticker: "BREN", percentage: 70, color: "bg-[#329B0D]" },
-        { ticker: "GOTO", percentage: 30, color: "bg-[#84CC16]" },
-      ],
-      investedBalance: 8000000,
-      cashBalance: 2500000,
-      profitPercentage: -3.2,
-      profitAmount: -256000, // Contoh jika portfolio merugi
-    },
+    }
   ];
   const currentRiskProfile = "Serigala";
+
+  const walletAllocations = [
+    {
+      id: "1",
+      name: "Dompet Blue Chip",
+      amount: 32000000,
+      color: "bg-green-700",
+    },
+    {
+      id: "2",
+      name: "Dompet Agresif",
+      amount: 38000000,
+      color: "bg-green-400",
+    },
+  ];
 
   return (
     <motion.div
@@ -83,18 +88,21 @@ const DashboardPages: React.FC = () => {
         {/* KOLOM KANAN (30% - xl:col-span-3) */}
         <div className="xl:col-span-3 space-y-8">
           {/* Tempat Wallet Summary */}
-          <div className="w-full h-72 bg-slate-200 rounded-3xl border border-slate-300 border-dashed flex items-center justify-center text-slate-500 font-medium">
-            (Slot Ringkasan Dompet / Donut Chart)
-          </div>
+          <WalletSummary
+            totalWallet={100000000}
+            allocations={walletAllocations}
+          />
 
           {/* Tempat Risk Profile Widget */}
-          <div className="w-full h-96 bg-slate-200 rounded-3xl border border-slate-300 border-dashed flex items-center justify-center text-slate-500 font-medium">
-            (Slot Profil Risiko)
-          </div>
+          <RiskProfileWidget
+            score={38.5}
+            profileKey="wolf"
+            updatedAt="20 Okt 2023"
+          />
         </div>
       </div>
     </motion.div>
   );
-};;;
+};;
 
 export default DashboardPages;
