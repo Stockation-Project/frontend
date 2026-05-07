@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import GlobalWalletCard from "@/components/dashboard/GlobalWalletCard";
+import RecommendedStocks from "@/components/dashboard/RecommendedStocks";
 
 const DashboardPages: React.FC = () => {
   return (
@@ -31,9 +32,7 @@ const DashboardPages: React.FC = () => {
           </div>
 
           {/* Tempat Recommended Stocks */}
-          <div className="w-full h-80 bg-slate-200 rounded-3xl border border-slate-300 border-dashed flex items-center justify-center text-slate-500 font-medium">
-            (Slot Tabel Saham)
-          </div>
+          <RecommendedStocks />
         </div>
 
         {/* KOLOM KANAN (30% - xl:col-span-3) */}
