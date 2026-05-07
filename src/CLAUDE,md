@@ -1,0 +1,14 @@
+Oke terimakasih untuk saran nya, nanti saya akan pikirkan lebih lanjut, untuk sekarang mari kita lanjutkan untuk pembuatan halaman quesioner
+
+terakhir kita sampai pada tombol submit untuk mengirimkan semua data quesioner, saya sudah mencoba testing untuk mengisi ke-13 pertanyaan dan mengirim jawabanya, hasilnya halaman berpindah ke /dashboard, namun karena dashboard masih kosong, hal yang saya lihat adalah halaman blank putih biasa, namun ini bukan sebuah masalah, justru ketika user selesai mengisi kuesioner user akan melihat halaman mengambang seperti di gambar yang saya kirimkan:
+
+- terdapat sebuah gambar yang menunjukan risk profile user (turtle, hippo, capybara, wofl, lion)
+- gambar tersebut dibungkus oleh pie chart (menggunakan komponen dari shadcn)
+- lalu dibawahnya terdapat skor, jika dilihar digambar terltulis 8.2 dari 10, ini adalah pembulatan dari total skor user, total skor keseluruhan itu ada 47, jadi kita bisa pakai rumus (score_user/47) * 100
+- di sebelah kanan dari skor user, terdapat label yang menunjukan risk_profile user, contohnya 'Serigala'
+- lalu dibawahnya terdapat penjelasan, baiknya penjelasan ini ditaruh di database atau di hardcode di frontend?
+- terakhir, di paling bawah terdapat tombol lanjut yang ketika di klik akan mengarah ke halaman dashboard 
+
+jadi kesimpulanya user tidak langsung diarahkan ke halaman dashboard akan tetapi user disuguhkan langsung hasil dari risk_profile mereka beserta penjelasanya
+
+tolong buat ini dengan sebisa mungkin menggunakan komponen dari shadcn
