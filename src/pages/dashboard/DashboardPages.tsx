@@ -2,8 +2,52 @@ import React from "react";
 import { motion } from "framer-motion";
 import GlobalWalletCard from "@/components/dashboard/GlobalWalletCard";
 import RecommendedStocks from "@/components/dashboard/RecommendedStocks";
+import PortfolioSection from "@/components/dashboard/PortfolioSection";
 
 const DashboardPages: React.FC = () => {
+  // Dummy data untuk testing empty state
+  // DUMMY DATA PORTFOLIO (Silakan hapus elemen array ini untuk melihat Empty State)
+  const myPortfolios: PortfolioCardProps[] = [
+    {
+      id: "DMPT7439",
+      name: "Saham Blue Chip",
+      allocations: [
+        { ticker: "BBRI", percentage: 50, color: "bg-[#329B0D]" }, // Hijau tua
+        { ticker: "BBCA", percentage: 30, color: "bg-[#84CC16]" }, // Hijau muda (lime)
+        { ticker: "TLKM", percentage: 20, color: "bg-[#D9F99D]" }, // Hijau paling muda
+      ],
+      investedBalance: 10500000,
+      cashBalance: 5000000,
+      profitPercentage: 12.5,
+      profitAmount: 132872,
+    },
+    {
+      id: "DMPT8821",
+      name: "Saham Agresif",
+      allocations: [
+        { ticker: "BREN", percentage: 70, color: "bg-[#329B0D]" },
+        { ticker: "GOTO", percentage: 30, color: "bg-[#84CC16]" },
+      ],
+      investedBalance: 8000000,
+      cashBalance: 2500000,
+      profitPercentage: -3.2,
+      profitAmount: -256000, // Contoh jika portfolio merugi
+    },
+    {
+      id: "DMPT8821",
+      name: "Saham Agresif",
+      allocations: [
+        { ticker: "BREN", percentage: 70, color: "bg-[#329B0D]" },
+        { ticker: "GOTO", percentage: 30, color: "bg-[#84CC16]" },
+      ],
+      investedBalance: 8000000,
+      cashBalance: 2500000,
+      profitPercentage: -3.2,
+      profitAmount: -256000, // Contoh jika portfolio merugi
+    },
+  ];
+  const currentRiskProfile = "Serigala";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,12 +68,13 @@ const DashboardPages: React.FC = () => {
         {/* KOLOM KIRI (70% - xl:col-span-7) */}
         <div className="xl:col-span-7 space-y-8">
           {/* Tempat Global Wallet Card */}
-            <GlobalWalletCard balance={100000000} />
+          <GlobalWalletCard balance={100000000} />
 
           {/* Tempat Portfolio Section */}
-          <div className="w-full h-60 bg-slate-200 rounded-3xl border border-slate-300 border-dashed flex items-center justify-center text-slate-500 font-medium">
-            (Slot Dompet Investasi / Slider)
-          </div>
+          <PortfolioSection
+            portfolios={myPortfolios}
+            userRiskProfile={currentRiskProfile}
+          />
 
           {/* Tempat Recommended Stocks */}
           <RecommendedStocks />
@@ -50,6 +95,6 @@ const DashboardPages: React.FC = () => {
       </div>
     </motion.div>
   );
-};
+};;;
 
 export default DashboardPages;
