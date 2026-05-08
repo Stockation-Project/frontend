@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import FormInputGroup from "@/components/shared/FormInputGroup";
-import PasswordInputField from "@/components/shared/PasswordInputField";
-import AuthVisualPanel from "@/components/shared/AuthVisualPanel";
+import FormInputGroup from "@/components/shared/auth/FormInputGroup";
+import PasswordInputField from "@/components/shared/auth/PasswordInputField";
+import AuthVisualPanel from "@/components/shared/auth/AuthVisualPanel";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
 import authService from "@/services/auth.service";
-import AuthHeader from "@/components/shared/AuthHeader";
+import AuthHeader from "@/components/shared/auth/AuthHeader";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
