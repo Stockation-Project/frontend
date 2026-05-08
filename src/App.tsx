@@ -15,6 +15,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPages";
 import QuestionnairePage from "./pages/questionnaire/QuestionnairePage";
+import DashboardLayout from "./components/layout/DashboardLayout";
+import DashboardPages from "./pages/dashboard/DashboardPages";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -25,6 +27,14 @@ function AnimatedRoutes() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/questionnaire" element={<QuestionnairePage />} />
+
+        {/* Rute Utama (Dengan Sidebar) */}
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<DashboardPages />} />
+          {/* Nanti Anda bisa tambahkan rute lain di sini: */}
+          {/* <Route path="/wallet" element={<WalletPage />} /> */}
+        </Route>
+        
         <Route path="/" element={<Navigate to="/register" replace />} />
       </Routes>
     </AnimatePresence>

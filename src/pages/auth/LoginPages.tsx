@@ -1,12 +1,12 @@
 import { useState } from "react";
-import PasswordInputField from "@/components/shared/PasswordInputField";
-import FormInputGroup from "@/components/shared/FormInputGroup";
+import PasswordInputField from "@/components/shared/auth/PasswordInputField";
+import FormInputGroup from "@/components/shared/auth/FormInputGroup";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import AuthVisualPanel from "@/components/shared/AuthVisualPanel";
+import AuthVisualPanel from "@/components/shared/auth/AuthVisualPanel";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
-import AuthHeader from "@/components/shared/AuthHeader";
+import AuthHeader from "@/components/shared/auth/AuthHeader";
 import authService from "@/services/auth.service";
 import { useAuth } from "@/contexts/AuthContext";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
