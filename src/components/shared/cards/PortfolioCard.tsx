@@ -1,6 +1,7 @@
-// src/components/dashboard/PortfolioCard.tsx
+// src/components/shared/cards/PortfolioCard.tsx
 import React from "react";
 import { Wallet } from "lucide-react";
+import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 
 export interface Allocation {
   ticker: string;
@@ -28,16 +29,6 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
   profitPercentage,
 }) => {
   const isProfit = profitAmount >= 0;
-
-  // Fungsi format Rupiah
-  const formatRupiah = (angka: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(Math.abs(angka)); // Math.abs agar minusnya bisa kita atur manual
-  };
 
   return (
     <div className="min-w-[320px] w-[320px] bg-white border border-slate-200 rounded-[1.5rem] p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow cursor-pointer">
@@ -97,7 +88,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
             Saldo Terpakai
           </p>
           <p className="text-sm font-bold text-slate-900 mb-0.5">
-            {formatRupiah(investedBalance)}
+            {formatCurrencyIDR(investedBalance, { absolute: true })}
           </p>
           {/* Teks Profit/Loss */}
           {investedBalance > 0 && (
@@ -106,7 +97,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
             >
               ({isProfit ? "+" : "-"}
               {Math.abs(profitPercentage)}%) {isProfit ? "+" : "-"}
-              {formatRupiah(profitAmount)}
+              {formatCurrencyIDR(profitAmount, { absolute: true })}
             </p>
           )}
         </div>
@@ -117,7 +108,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
             Saldo Tersedia
           </p>
           <p className="text-sm font-bold text-slate-900">
-            {formatRupiah(cashBalance)}
+            {formatCurrencyIDR(cashBalance, { absolute: true })}
           </p>
         </div>
       </div>

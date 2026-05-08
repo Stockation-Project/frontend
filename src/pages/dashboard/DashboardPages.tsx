@@ -1,10 +1,56 @@
 import React from "react";
 import { motion } from "framer-motion";
-import GlobalWalletCard from "@/components/dashboard/GlobalWalletCard";
-import RecommendedStocks from "@/components/dashboard/RecommendedStocks";
+import PageHeader from "@/components/shared/layout/PageHeader";
+import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
+import StockTable, { type StockItem } from "@/components/shared/cards/StockTable";
 import PortfolioSection from "@/components/dashboard/PortfolioSection";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
+
+// --- DUMMY DATA ---
+// Nanti data ini akan datang dari backend / AI
+const RECOMMENDED_STOCKS: StockItem[] = [
+  {
+    id: 1,
+    ticker: "BREN",
+    name: "Barito Renewables Energy",
+    price: 6850,
+    change: 4.5,
+    isPositive: true,
+  },
+  {
+    id: 2,
+    ticker: "BREN",
+    name: "Barito Renewables Energy",
+    price: 6850,
+    change: 4.5,
+    isPositive: true,
+  },
+  {
+    id: 3,
+    ticker: "BREN",
+    name: "Barito Renewables Energy",
+    price: 6850,
+    change: 4.5,
+    isPositive: true,
+  },
+  {
+    id: 4,
+    ticker: "ADRO",
+    name: "Adaro Energy Indonesia",
+    price: 6850,
+    change: 4.5,
+    isPositive: false,
+  }, // Contoh turun
+  {
+    id: 5,
+    ticker: "BREN",
+    name: "Barito Renewables Energy",
+    price: 6850,
+    change: 4.5,
+    isPositive: true,
+  },
+];
 
 const DashboardPages: React.FC = () => {
   // Dummy data untuk testing empty state
@@ -62,11 +108,7 @@ const DashboardPages: React.FC = () => {
       className="w-full"
     >
       {/* Header Halaman */}
-      <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-          Dashboard
-        </h1>
-      </header>
+      <PageHeader title="Dashboard" />
 
       {/* Grid Utama (70% Kiri, 30% Kanan) */}
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8">
@@ -82,7 +124,10 @@ const DashboardPages: React.FC = () => {
           />
 
           {/* Tempat Recommended Stocks */}
-          <RecommendedStocks />
+          <StockTable
+            title="Sesuai dengan Profil Resikomu"
+            stocks={RECOMMENDED_STOCKS}
+          />
         </div>
 
         {/* KOLOM KANAN (30% - xl:col-span-3) */}
@@ -103,6 +148,6 @@ const DashboardPages: React.FC = () => {
       </div>
     </motion.div>
   );
-};;
+};
 
 export default DashboardPages;

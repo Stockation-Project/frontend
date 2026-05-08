@@ -1,73 +1,29 @@
-// src/components/dashboard/RecommendedStocks.tsx
+// src/components/shared/cards/StockTable.tsx
 import React from "react";
 import { motion } from "framer-motion";
-// Lucide icons tidak punya icon segitiga solid kecil, jadi kita akan pakai panah atau buat SVG kustom nanti.
-// Untuk sekarang, kita pakai icon panah standar.
+import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 
-// --- DUMMY DATA ---
-// Nanti data ini akan datang dari backend / AI
-const RECOMMENDED_STOCKS = [
-  {
-    id: 1,
-    ticker: "BREN",
-    name: "Barito Renewables Energy",
-    price: 6850,
-    change: 4.5,
-    isPositive: true,
-  },
-  {
-    id: 2,
-    ticker: "BREN",
-    name: "Barito Renewables Energy",
-    price: 6850,
-    change: 4.5,
-    isPositive: true,
-  },
-  {
-    id: 3,
-    ticker: "BREN",
-    name: "Barito Renewables Energy",
-    price: 6850,
-    change: 4.5,
-    isPositive: true,
-  },
-  {
-    id: 4,
-    ticker: "ADRO",
-    name: "Adaro Energy Indonesia",
-    price: 6850,
-    change: 4.5,
-    isPositive: false,
-  }, // Contoh turun
-  {
-    id: 5,
-    ticker: "BREN",
-    name: "Barito Renewables Energy",
-    price: 6850,
-    change: 4.5,
-    isPositive: true,
-  },
-];
+export interface StockItem {
+  id: number;
+  ticker: string;
+  name: string;
+  price: number;
+  change: number;
+  isPositive: boolean;
+}
 
-const RecommendedStocks: React.FC = () => {
-  // Fungsi format Rupiah
-  const formatRupiah = (angka: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(angka);
-  };
+interface StockTableProps {
+  title: string;
+  stocks: StockItem[];
+}
 
+const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
   return (
     <div className="w-full">
-      <h3 className="text-lg font-bold text-slate-800 mb-4">
-        Sesuai dengan Profil Resikomu
-      </h3>
+      <h3 className="text-lg font-bold text-slate-800 mb-4">{title}</h3>
 
       <div className="flex flex-col border-t border-slate-100">
-        {RECOMMENDED_STOCKS.map((stock, index) => (
+        {stocks.map((stock, index) => (
           <motion.div
             key={stock.id}
             initial={{ opacity: 0, y: 10 }}
@@ -103,12 +59,12 @@ const RecommendedStocks: React.FC = () => {
                     />
                     <path
                       d="M0 20 L10 15 L20 22 L30 10 L40 18 L50 5 L60 2 V24 H0 V20 Z"
-                      fill="url(#paint0_linear_green)"
+                      fill={`url(#paint0_linear_green_${stock.id})`}
                       opacity="0.2"
                     />
                     <defs>
                       <linearGradient
-                        id="paint0_linear_green"
+                        id={`paint0_linear_green_${stock.id}`}
                         x1="30"
                         y1="2"
                         x2="30"
@@ -131,12 +87,12 @@ const RecommendedStocks: React.FC = () => {
                     />
                     <path
                       d="M0 5 L10 10 L20 2 L30 15 L40 8 L50 20 L60 22 V24 H0 V5 Z"
-                      fill="url(#paint0_linear_red)"
+                      fill={`url(#paint0_linear_red_${stock.id})`}
                       opacity="0.2"
                     />
                     <defs>
                       <linearGradient
-                        id="paint0_linear_red"
+                        id={`paint0_linear_red_${stock.id}`}
                         x1="30"
                         y1="2"
                         x2="30"
@@ -155,7 +111,7 @@ const RecommendedStocks: React.FC = () => {
             {/* Kolom 3: Harga saat ini */}
             <div className="flex-1 text-right md:text-center min-w-[100px]">
               <span className="font-semibold text-slate-900 text-sm md:text-base">
-                {formatRupiah(stock.price)}
+                {formatCurrencyIDR(stock.price)}
               </span>
             </div>
 
@@ -186,4 +142,4 @@ const RecommendedStocks: React.FC = () => {
   );
 };
 
-export default RecommendedStocks;
+export default StockTable;

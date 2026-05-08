@@ -1,19 +1,15 @@
+// src/components/shared/wallet/GlobalWalletCard.tsx
 import type React from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Plus } from "lucide-react";
+import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 
 interface GlobalWalletCardProps {
   balance: number;
 }
 
 const GlobalWalletCard: React.FC<GlobalWalletCardProps> = ({ balance }) => {
-  // Fungsi untuk format angka ke Rupiah secara otomatis, nanti jadiin utils
-  const formattedBalance = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(balance);
+  const formattedBalance = formatCurrencyIDR(balance);
 
   return (
     // Menggunakan warna hijau khas Stockation (#329B0D atau bisa pakai tailwind green-700)

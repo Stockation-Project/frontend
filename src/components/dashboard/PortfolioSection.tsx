@@ -1,7 +1,7 @@
 // src/components/dashboard/PortfolioSection.tsx
 import React from "react";
 import EmptyPortfolioState from "./EmptyPortfolioState";
-import PortfolioCard, { type PortfolioCardProps } from "./PortfolioCard";
+import PortfolioCard, { type PortfolioCardProps } from "@/components/shared/cards/PortfolioCard";
 
 interface PortfolioSectionProps {
   portfolios: PortfolioCardProps[];
