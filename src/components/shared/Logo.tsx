@@ -16,15 +16,15 @@ const Logo: React.FC<LogoProps> = ({
   const imgSrc = variant === "white" ? logoWhite : logoColor;
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <div className={`flex items-center gap-1 ${className}`}>
       <img
         src={imgSrc}
         alt="Stockation Logo"
-        className="h-9 w-auto" 
+        className="h-6 w-fit" 
       />
       {showText && (
         <span
-          className={`text-xl font-medium ${variant === "white" ? "text-white" : "text-slate-950"}`}
+          className={`text-sm font-medium ${variant === "white" ? "text-white" : "text-slate-950"}`}
         >
           Stockation
         </span>

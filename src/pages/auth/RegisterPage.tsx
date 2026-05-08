@@ -78,7 +78,7 @@ const RegisterPage: React.FC = () => {
 
   return (
     <motion.div
-      className="min-h-screen w-full flex"
+      className="h-screen overflow-hidden w-full flex px-2 py-2"
       style={{ backgroundColor: "#ffffff" }}
       initial={{ opacity: 0, x: 80 }}
       animate={{ opacity: 1, x: 0 }}
@@ -87,7 +87,7 @@ const RegisterPage: React.FC = () => {
     >
       {/* --- KOLOM KIRI (Panel Visual & Branding) --- */}
       <motion.div
-        className="hidden lg:block lg:w-[40%] xl:w-[40%] flex-shrink-0"
+        className="hidden lg:block lg:w-1/2 flex-shrink-0"
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 40 }}
@@ -102,7 +102,8 @@ const RegisterPage: React.FC = () => {
 
       {/* --- KOLOM KANAN (Panel Form Register) --- */}
       <motion.div
-        className="flex-1 flex items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20"
+        className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20 overflow-y-auto h-full"
+        style={{ scrollbarWidth: "none" }}
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -40 }}
@@ -117,7 +118,7 @@ const RegisterPage: React.FC = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <FormInputGroup
                 id="firstName"
                 label="Nama depan"
@@ -183,11 +184,11 @@ const RegisterPage: React.FC = () => {
 
             {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}
             {isLoading ? (
-              <Skeleton className="w-full h-11 rounded-full bg-slate-200" />
+              <Skeleton className="w-full h-11 rounded-xl bg-slate-200" />
             ) : (
               <Button
                 type="submit"
-                className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-full text-base font-semibold shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
+                className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
               >
                 Daftar
               </Button>
@@ -195,7 +196,7 @@ const RegisterPage: React.FC = () => {
           </form>
 
           {/* Footer link */}
-          <div className="text-center text-sm text-slate-500">
+          <div className="text-center text-xs text-slate-500">
             Sudah Punya Akun?{" "}
             <Link
               to="/login"
