@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, Search, Wallet, Briefcase, User } from "lucide-react";
-import Logo from "../shared/Logo";
+import Logo from "../shared/brand/Logo";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();

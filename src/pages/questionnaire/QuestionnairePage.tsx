@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Logo from "@/components/shared/Logo";
+import Logo from "@/components/shared/brand/Logo";
 import ProgressBar from "@/components/questionnaire/ProgressBar";
 import OptionCard from "@/components/questionnaire/OptionCard";
 import { riskQuestions } from "@/data/questionnaire";

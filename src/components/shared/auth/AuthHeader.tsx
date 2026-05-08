@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "./Logo";
+import Logo from "../brand/Logo";
 
 interface AuthHeaderProps {
   title: string;

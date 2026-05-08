@@ -1,6 +1,6 @@
 // src/components/shared/AuthVisualPanel.tsx
 import React from "react";
-import Logo from "./Logo";
+import Logo from "../brand/Logo";
 
 interface AuthVisualPanelProps {
   title: string;
