@@ -6,38 +6,31 @@ interface AuthVisualPanelProps {
   title: string;
   description: string;
   backgroundImage: string;
+  flipped?: boolean;
 }
 
 const AuthVisualPanel: React.FC<AuthVisualPanelProps> = ({
   title,
   description,
   backgroundImage,
+  flipped = false,
 }) => {
   return (
-    <div className="hidden lg:flex relative w-full h-full overflow-hidden">
-      {/* Background */}
-      <img
-        src={backgroundImage}
-        alt="Visual background"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/40" />
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col justify-center items-center text-center px-8 xl:px-12 text-white">
+    <div className={`h-full w-full flex flex-col justify-end items-start p-12 bg-cover bg-center bg-no-repeat rounded-xl ${flipped ? "scale-x-[-1]" : ""}`}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
+      <div className={`relative flex flex-col justify-center items-center text-center px-8 xl:px-12 text-white gap-6 ${flipped ? "scale-x-[-1]" : ""}`}>
         {/* Logo */}
-        <div className="flex flex-col items-center gap-3 mb-8">
-          <Logo variant="white" showText={true} className="mb-16 flex flex-col" />
+        <div className="flex flex-col items-center">
+          <Logo variant="white" showText={true} className=" flex flex-col" />
         </div>
 
         {/* Text */}
         <div className="space-y-4 max-w-md">
-          <h1 className="text-3xl xl:text-4xl font-semibold leading-tight tracking-tight drop-shadow-md">
+          <h1 className="text-base xl:text-lg font-medium leading-tight tracking-tight drop-shadow-md">
             {title}
           </h1>
-          <p className="text-sm xl:text-base text-green-100/90 font-light leading-relaxed drop-shadow-sm">
+          <p className="text-xs text-green-100/90 font-light leading-relaxed drop-shadow-sm">
             {description}
           </p>
         </div>

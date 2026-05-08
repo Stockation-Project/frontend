@@ -62,7 +62,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <motion.div
-      className="min-h-screen w-full flex"
+      className="min-h-screen w-full flex px-2 py-2"
       style={{ backgroundColor: "#ffffff" }}
       initial={{ opacity: 0, x: -80 }}
       animate={{ opacity: 1, x: 0 }}
@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
     >
       {/* Kolom Kiri Form Login */}
       <motion.div
-        className="flex-1 flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20"
+        className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20"
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -40 }}
@@ -118,11 +118,11 @@ const LoginPage: React.FC = () => {
 
             {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}
             {isLoading ? (
-              <Skeleton className="w-full h-11 rounded-full bg-slate-200 mt-2" />
+              <Skeleton className="w-full h-11 rounded-xl bg-slate-200 mt-2" />
             ) : (
               <Button
                 type="submit"
-                className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-full text-base font-semibold shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer mt-2"
+                className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer mt-2"
               >
                 Masuk
               </Button>
@@ -130,7 +130,7 @@ const LoginPage: React.FC = () => {
           </form>
 
           {/* Footer link */}
-          <div className="text-center text-sm text-slate-500">
+          <div className="text-center text-xs text-slate-500">
             Belum Punya Akun?{" "}
             <Link
               to="/register"
@@ -144,7 +144,7 @@ const LoginPage: React.FC = () => {
 
       {/* Kolom Kanan Gambar */}
       <motion.div
-        className="hidden lg:block lg:w-[40%] xl:w-[45%] flex-shrink-0"
+        className="hidden lg:block lg:w-1/2 flex-shrink-0 "
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 40 }}
@@ -154,6 +154,7 @@ const LoginPage: React.FC = () => {
           title="Wujudkan Strategi Investasi Terbaik Anda"
           description="Gunakan data pasar akurat untuk mencoba berbagai strategi trading dan jadilah investor yang lebih siap sebelum terjun ke pasar asli"
           backgroundImage={registerBg}
+          flipped
         />
       </motion.div>
     </motion.div>
