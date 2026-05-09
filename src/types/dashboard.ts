@@ -7,6 +7,7 @@ import type { RiskProfileKey } from "@/data/riskProfile";
 export interface DashboardUserInfo {
   greeting: string;
   risk_profile: RiskProfileKey;
+  risk_score: number;
   profile_description: string;
 }
 
