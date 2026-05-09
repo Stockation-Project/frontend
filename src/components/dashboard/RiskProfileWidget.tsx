@@ -14,9 +14,12 @@ const RiskProfileWidget: React.FC<RiskProfileWidgetProps> = ({
   profileKey,
   updatedAt,
 }) => {
+  // Defensive fallback: pastikan score tidak pernah NaN di UI
+  const safeScore = score || 0;
+
   return (
     <RiskProfileCard
-      score={score}
+      score={safeScore}
       profileKey={profileKey}
       showHeader={true}
       showRetestButton={true}
