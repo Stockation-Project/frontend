@@ -1,4 +1,6 @@
 import React from "react";
+import { useState } from "react";
+import apiClient from "@/services/api";
 import { motion } from "framer-motion";
 import { AlertCircle } from "lucide-react";
 import { useDashboard } from "@/hooks/useDashboard";
@@ -11,14 +13,9 @@ import PortfolioSection from "@/components/dashboard/PortfolioSection";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
+import TopUpModal from "@/components/shared/modal/TopUpModal";
+import { fetchDashboardData } from "@/services/dashboard.service";
 
-// --- Helper Functions ---
-
-/**
- * Map recommended stocks dari format backend ke format StockItem (UI).
- * - `change_percent` dibulatkan maks 2 angka di belakang koma.
- * - `isPositive` ditentukan dari nilai `change_percent`.
- */
 function mapRecommendedStocks(
   stocks: DashboardRecommendedStock[]
 ): StockItem[] {
@@ -36,13 +33,25 @@ function mapRecommendedStocks(
 
 const DashboardPages: React.FC = () => {
   const { data, isLoading, error } = useDashboard();
+  
+  // ini buat kebutuhan top tup
+  const [isTopUpOpen, setIsTopUpOpen] = useState(false);
 
-  // --- Loading State ---
+  const handleTopUpSuccess = async (amount: number) => {
+    // Tembak API Backend
+    await apiClient.post("/wallets/topup", { amount });
+
+    // Karena saldo sudah bertambah di database, kita harus me-refresh data dashboard
+    // Panggil kembali fungsi fetchDashboardData() milikmu di sini
+    await fetchDashboardData();
+  };
+
+  // ini buat loading ya lek yaa
   if (isLoading) {
     return <DashboardSkeleton />;
   }
 
-  // --- Error State ---
+  // klo ini buat error ya lek yaa
   if (error || !data) {
     return (
       <motion.div
@@ -91,17 +100,24 @@ const DashboardPages: React.FC = () => {
       className="w-full"
     >
       {/* Header Halaman — Greeting dari backend */}
-      <PageHeader
-        title="Dashboard"
-        description={user_info.greeting}
-      />
+      <PageHeader title="Dashboard" description={user_info.greeting} />
 
       {/* Grid Utama (70% Kiri, 30% Kanan) */}
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8">
         {/* KOLOM KIRI (70% - xl:col-span-7) */}
         <div className="xl:col-span-7 space-y-8">
           {/* Global Wallet Card — Saldo dompet utama */}
-          <GlobalWalletCard balance={wallet_summary.main_wallet_balance} />
+          <GlobalWalletCard
+            balance={wallet_summary.main_wallet_balance}
+            onTopUpClick={() => setIsTopUpOpen(true)}
+          />
+
+          <TopUpModal
+            isOpen={isTopUpOpen}
+            onClose={() => setIsTopUpOpen(false)}
+            currentBalance={data?.wallet_summary?.main_wallet_balance || 0}
+            onSuccess={handleTopUpSuccess}
+          />
 
           {/* Portfolio Section — Dompet investasi */}
           <PortfolioSection

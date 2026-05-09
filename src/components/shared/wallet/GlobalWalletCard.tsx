@@ -6,9 +6,10 @@ import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 
 interface GlobalWalletCardProps {
   balance: number;
+  onTopUpClick: () => void;
 }
 
-const GlobalWalletCard: React.FC<GlobalWalletCardProps> = ({ balance }) => {
+const GlobalWalletCard: React.FC<GlobalWalletCardProps> = ({ balance, onTopUpClick }) => {
   const formattedBalance = formatCurrencyIDR(balance);
 
   return (
@@ -27,7 +28,10 @@ const GlobalWalletCard: React.FC<GlobalWalletCardProps> = ({ balance }) => {
         </p>
 
         <div className="flex items-center gap-3">
-          <Button className="bg-white text-[#329B0D] hover:bg-slate-50 hover:text-green-800 rounded-xl px-6 h-11 text-sm font-bold transition-all shadow-sm">
+          <Button
+            onClick={onTopUpClick}
+            className="bg-white text-[#329B0D] hover:bg-slate-50 hover:text-green-800 rounded-xl px-6 h-11 text-sm font-bold transition-all shadow-sm"
+          >
             <Plus className="w-4 h-4 mr-2 stroke-[2.5]" />
             Isi Saldo
           </Button>
