@@ -1,103 +1,86 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { AlertCircle } from "lucide-react";
+import { useDashboard } from "@/hooks/useDashboard";
+import type { DashboardRecommendedStock } from "@/types/dashboard";
+import type { StockItem } from "@/components/shared/cards/StockTable";
 import PageHeader from "@/components/shared/layout/PageHeader";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
-import StockTable, { type StockItem } from "@/components/shared/cards/StockTable";
+import StockTable from "@/components/shared/cards/StockTable";
 import PortfolioSection from "@/components/dashboard/PortfolioSection";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
+import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
 
-// --- DUMMY DATA ---
-// Nanti data ini akan datang dari backend / AI
-const RECOMMENDED_STOCKS: StockItem[] = [
-  {
-    id: 1,
-    ticker: "BREN",
-    name: "Barito Renewables Energy",
-    price: 6850,
-    change: 4.5,
-    isPositive: true,
-  },
-  {
-    id: 2,
-    ticker: "BREN",
-    name: "Barito Renewables Energy",
-    price: 6850,
-    change: 4.5,
-    isPositive: true,
-  },
-  {
-    id: 3,
-    ticker: "BREN",
-    name: "Barito Renewables Energy",
-    price: 6850,
-    change: 4.5,
-    isPositive: true,
-  },
-  {
-    id: 4,
-    ticker: "ADRO",
-    name: "Adaro Energy Indonesia",
-    price: 6850,
-    change: 4.5,
-    isPositive: false,
-  }, // Contoh turun
-  {
-    id: 5,
-    ticker: "BREN",
-    name: "Barito Renewables Energy",
-    price: 6850,
-    change: 4.5,
-    isPositive: true,
-  },
-];
+// --- Helper Functions ---
+
+/**
+ * Map recommended stocks dari format backend ke format StockItem (UI).
+ * - `change_percent` dibulatkan maks 2 angka di belakang koma.
+ * - `isPositive` ditentukan dari nilai `change_percent`.
+ */
+function mapRecommendedStocks(
+  stocks: DashboardRecommendedStock[]
+): StockItem[] {
+  return stocks.map((stock, index) => ({
+    id: index + 1,
+    ticker: stock.ticker,
+    name: stock.name,
+    price: stock.current_price,
+    change: Math.abs(
+      parseFloat(stock.change_percent.toFixed(2))
+    ),
+    isPositive: stock.change_percent >= 0,
+  }));
+}
 
 const DashboardPages: React.FC = () => {
-  // Dummy data untuk testing empty state
-  // DUMMY DATA PORTFOLIO (Silakan hapus elemen array ini untuk melihat Empty State)
-  const myPortfolios = [
-    {
-      id: "DMPT7439",
-      name: "Saham Blue Chip",
-      allocations: [
-        { ticker: "BBRI", percentage: 50, color: "bg-[#329B0D]" }, // Hijau tua
-        { ticker: "BBCA", percentage: 30, color: "bg-[#84CC16]" }, // Hijau muda (lime)
-        { ticker: "TLKM", percentage: 20, color: "bg-[#D9F99D]" }, // Hijau paling muda
-      ],
-      investedBalance: 10500000,
-      cashBalance: 5000000,
-      profitPercentage: 12.5,
-      profitAmount: 132872,
-    },
-    {
-      id: "DMPT8821",
-      name: "Saham Agresif",
-      allocations: [
-        { ticker: "BREN", percentage: 70, color: "bg-[#329B0D]" },
-        { ticker: "GOTO", percentage: 30, color: "bg-[#84CC16]" },
-      ],
-      investedBalance: 8000000,
-      cashBalance: 2500000,
-      profitPercentage: -3.2,
-      profitAmount: -256000, // Contoh jika portfolio merugi
-    }
-  ];
-  const currentRiskProfile = "Serigala";
+  const { data, isLoading, error } = useDashboard();
 
-  const walletAllocations = [
-    {
-      id: "1",
-      name: "Dompet Blue Chip",
-      amount: 32000000,
-      color: "bg-green-700",
-    },
-    {
-      id: "2",
-      name: "Dompet Agresif",
-      amount: 38000000,
-      color: "bg-green-400",
-    },
-  ];
+  // --- Loading State ---
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }
+
+  // --- Error State ---
+  if (error || !data) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="w-full"
+      >
+        <PageHeader title="Dashboard" />
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4">
+            <AlertCircle className="w-8 h-8 text-red-500" />
+          </div>
+          <h3 className="text-lg font-bold text-slate-800 mb-2">
+            Gagal Memuat Dashboard
+          </h3>
+          <p className="text-sm text-slate-500 max-w-md">
+            {error || "Data dashboard tidak tersedia. Silakan coba lagi nanti."}
+          </p>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // --- Destructure data from API ---
+  const { user_info, wallet_summary, portfolios, recommended_stocks } = data;
+
+  // Map recommended stocks ke format StockTable
+  const mappedStocks = mapRecommendedStocks(recommended_stocks);
+
+  // Map wallet summary ke format WalletSummary (saat ini portfolios kosong = allocations kosong)
+  // Allocations diambil dari portfolios jika ada, jika kosong tampilkan empty state
+  const walletAllocations = portfolios.map((portfolio, index) => ({
+    id: portfolio.id || String(index + 1),
+    name: portfolio.name,
+    amount: portfolio.investedBalance + portfolio.cashBalance,
+    color: index === 0 ? "bg-green-700" : "bg-green-400",
+  }));
 
   return (
     <motion.div
@@ -107,42 +90,45 @@ const DashboardPages: React.FC = () => {
       transition={{ duration: 0.4 }}
       className="w-full"
     >
-      {/* Header Halaman */}
-      <PageHeader title="Dashboard" />
+      {/* Header Halaman — Greeting dari backend */}
+      <PageHeader
+        title="Dashboard"
+        description={user_info.greeting}
+      />
 
       {/* Grid Utama (70% Kiri, 30% Kanan) */}
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8">
         {/* KOLOM KIRI (70% - xl:col-span-7) */}
         <div className="xl:col-span-7 space-y-8">
-          {/* Tempat Global Wallet Card */}
-          <GlobalWalletCard balance={100000000} />
+          {/* Global Wallet Card — Saldo dompet utama */}
+          <GlobalWalletCard balance={wallet_summary.main_wallet_balance} />
 
-          {/* Tempat Portfolio Section */}
+          {/* Portfolio Section — Dompet investasi */}
           <PortfolioSection
-            portfolios={myPortfolios}
-            userRiskProfile={currentRiskProfile}
+            portfolios={portfolios}
+            userRiskProfile={user_info.risk_profile}
           />
 
-          {/* Tempat Recommended Stocks */}
+          {/* Recommended Stocks — Saham sesuai profil risiko */}
           <StockTable
             title="Sesuai dengan Profil Resikomu"
-            stocks={RECOMMENDED_STOCKS}
+            stocks={mappedStocks}
           />
         </div>
 
         {/* KOLOM KANAN (30% - xl:col-span-3) */}
         <div className="xl:col-span-3 space-y-8">
-          {/* Tempat Wallet Summary */}
+          {/* Wallet Summary — Ringkasan alokasi dompet */}
           <WalletSummary
-            totalWallet={100000000}
+            totalWallet={wallet_summary.total_assets}
             allocations={walletAllocations}
           />
 
-          {/* Tempat Risk Profile Widget */}
+          {/* Risk Profile Widget — Profil risiko user */}
           <RiskProfileWidget
-            score={38.5}
-            profileKey="wolf"
-            updatedAt="20 Okt 2023"
+            score={0}
+            profileKey={user_info.risk_profile}
+            updatedAt=""
           />
         </div>
       </div>
