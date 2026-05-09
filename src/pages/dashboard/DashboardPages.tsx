@@ -126,7 +126,7 @@ const DashboardPages: React.FC = () => {
 
           {/* Risk Profile Widget — Profil risiko user */}
           <RiskProfileWidget
-            score={user_info.risk_score}
+            score={user_info.risk_score || 0}
             profileKey={user_info.risk_profile}
             updatedAt=""
           />
