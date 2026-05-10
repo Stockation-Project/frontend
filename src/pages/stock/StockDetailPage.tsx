@@ -1,25 +1,79 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronLeft, Bookmark } from "lucide-react";
 
-// --- Custom Hooks & Utils ---
 import { useStockDetail } from "@/hooks/useStockDetail";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
+import type { ChartData } from "@/types/stock";
 
-// --- Components ---
 import StatCard from "@/components/shared/cards/StatCard";
-import { Button } from "@/components/ui/button"; 
-import { Badge } from "@/components/ui/badge"; 
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import StockAreaChart from "@/components/shared/charts/StockAreaChart";
-import AnomalyTable from "@/components/shared/cards/AnomalyTable";
+import AnomalyTable from "@/components/shared/cards/AnomalyTable"; // Asumsi path table-mu
 
 const StockDetailPage: React.FC = () => {
   const { ticker } = useParams<{ ticker: string }>();
   const navigate = useNavigate();
-
-  // Memanggil logika dari Custom Hook
   const { data, isLoading, error } = useStockDetail(ticker);
+
+  // State untuk filter waktu
+  const [activeFilter, setActiveFilter] = useState("1bulan");
+
+  // 1. Logika Pemotong Data Chart berdasarkan Filter
+  const filteredChartData = useMemo(() => {
+    // Note: Pastikan di tipe atau backend-mu namanya `chart_data` (atau ganti jadi chart_1M jika belum diubah)
+    const rawData: ChartData[] = data?.chart_1M || [];
+    if (!rawData.length) return [];
+
+    const now = new Date();
+    let startDate = new Date();
+
+    switch (activeFilter) {
+      case "1minggu":
+        startDate.setDate(now.getDate() - 7);
+        break;
+      case "1bulan":
+        startDate.setMonth(now.getMonth() - 1);
+        break;
+      case "3bulan":
+        startDate.setMonth(now.getMonth() - 3);
+        break;
+      case "6bulan":
+        startDate.setMonth(now.getMonth() - 6);
+        break;
+      case "1tahun":
+        startDate.setFullYear(now.getFullYear() - 1);
+        break;
+      case "Semua":
+        return rawData;
+      default:
+        startDate.setMonth(now.getMonth() - 1);
+    }
+
+    return rawData.filter((item) => new Date(item.date) >= startDate);
+  }, [data, activeFilter]);
+
+  // 2. Logika Penghitungan Persentase Dinamis
+  const priceChange = useMemo(() => {
+    if (!filteredChartData.length || !data?.current_price)
+      return { percent: "0.00", isPositive: true };
+
+    // Cari harga valid paling awal di rentang waktu yang dipilih
+    const firstValidPoint = filteredChartData.find((d) => d.price !== null);
+    const oldPrice = firstValidPoint?.price;
+
+    if (!oldPrice) return { percent: "0.00", isPositive: true };
+
+    const diff = data.current_price - oldPrice;
+    const percent = (diff / oldPrice) * 100;
+
+    return {
+      percent: Math.abs(percent).toFixed(2),
+      isPositive: percent >= 0,
+    };
+  }, [filteredChartData, data?.current_price]);
 
   if (isLoading)
     return (
@@ -39,7 +93,6 @@ const StockDetailPage: React.FC = () => {
       exit={{ opacity: 0, y: 20 }}
       className="w-full p-10"
     >
-      {/* Tombol Kembali (Shadcn Button) */}
       <Button
         variant="outline"
         size="icon"
@@ -49,9 +102,7 @@ const StockDetailPage: React.FC = () => {
         <ChevronLeft className="w-5 h-5" />
       </Button>
 
-      {/* GRID UTAMA HALAMAN */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-        {/* KOLOM KIRI (60%) - Header & Chart */}
         <div className="xl:col-span-7 flex flex-col gap-6">
           <div className="flex justify-between items-start">
             <div>
@@ -59,7 +110,6 @@ const StockDetailPage: React.FC = () => {
                 {data.ticker}
               </h1>
               <p className="text-xl text-slate-600 mb-3">{data.name}</p>
-              {/* Shadcn Badge */}
               <Badge
                 variant="outline"
                 className="bg-green-50 text-[#329B0D] border-[#329B0D] hover:bg-green-100 font-semibold px-3 py-1 rounded-full text-xs"
@@ -67,7 +117,6 @@ const StockDetailPage: React.FC = () => {
                 Sektor: {data.sector}
               </Badge>
             </div>
-
             <Button
               variant="outline"
               size="icon"
@@ -81,18 +130,25 @@ const StockDetailPage: React.FC = () => {
             <h2 className="text-5xl font-extrabold text-slate-900 tracking-tight">
               {formatCurrencyIDR(data.current_price)}
             </h2>
-            <span className="text-lg font-bold text-[#329B0D] mb-1">
-              ▲ 3.47% {/* Nanti kita hitung secara dinamis */}
+            {/* AREA PERSENTASE DINAMIS */}
+            <span
+              className={`text-lg font-bold mb-1 ${priceChange.isPositive ? "text-[#329B0D]" : "text-red-500"}`}
+            >
+              {priceChange.isPositive ? "▲" : "▼"} {priceChange.percent}%
             </span>
           </div>
 
-          {/* Placeholder Chart */}
-          <StockAreaChart data={data.chart_1M} />
+          {/* AREA CHART DENGAN FILTER PROP */}
+          <StockAreaChart
+            data={filteredChartData}
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+            isPositive={priceChange.isPositive} 
+          />
         </div>
 
-        {/* KOLOM KANAN (40%) - Statistik & AI */}
+        {/* ... sisa kolom kanan biarkan persis sama seperti sebelumnya ... */}
         <div className="xl:col-span-5 flex flex-col gap-8">
-          {/* STATISTIK SAHAM (Menggunakan Reusable StatCard) */}
           <div className="bg-white p-6 md:p-8 border border-slate-200 rounded-[2rem] shadow-sm">
             <h3 className="text-lg font-bold text-slate-800 mb-6">
               Statistik Saham
@@ -123,7 +179,6 @@ const StockDetailPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Placeholder Tabel Anomali */}
           <div className="bg-white p-6 md:p-8 border border-slate-200 rounded-[2rem] shadow-sm">
             <h3 className="text-lg font-bold text-slate-800 mb-4">
               Pergerakan Anomali
@@ -131,7 +186,6 @@ const StockDetailPage: React.FC = () => {
             <AnomalyTable data={data.anomaly_history} />
           </div>
 
-          {/* Rangkuman AI */}
           <div className="px-2">
             <h3 className="text-lg font-bold text-slate-800 mb-3">Rangkuman</h3>
             <p className="text-sm text-slate-500 leading-relaxed text-justify">
@@ -139,7 +193,6 @@ const StockDetailPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Tombol Beli (Shadcn Button Custom Styling) */}
           <Button className="w-full h-14 bg-[#329B0D] hover:bg-green-800 text-white font-bold text-lg rounded-2xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98]">
             Beli Saham Ini
           </Button>
