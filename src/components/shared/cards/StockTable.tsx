@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
+import { useNavigate } from "react-router-dom";
 
 export interface StockItem {
   id: number;
@@ -18,6 +19,8 @@ interface StockTableProps {
 }
 
 const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full">
       <h3 className="text-lg font-bold text-slate-800 mb-4">{title}</h3>
@@ -29,6 +32,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
+            onClick={() => navigate(`/dashboard/stock/${stock.ticker}`)}
             className="group flex items-center justify-between py-4 border-b border-slate-100 hover:bg-slate-50 px-2 -mx-2 rounded-xl transition-colors cursor-pointer"
           >
             {/* Kolom 1: Ticker & Nama */}
