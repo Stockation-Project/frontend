@@ -1,80 +1,29 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronLeft, Bookmark } from "lucide-react";
-
 import { useStockDetail } from "@/hooks/useStockDetail";
+import { useChartFilter } from "@/hooks/useChartFilter";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
-import type { ChartData } from "@/types/stock";
-
 import StatCard from "@/components/shared/cards/StatCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import StockAreaChart from "@/components/shared/charts/StockAreaChart";
-import AnomalyTable from "@/components/shared/cards/AnomalyTable"; // Asumsi path table-mu
+import AnomalyTable from "@/components/shared/cards/AnomalyTable";
 
 const StockDetailPage: React.FC = () => {
   const { ticker } = useParams<{ ticker: string }>();
   const navigate = useNavigate();
+
+  // 1. Ambil data dari Backend
   const { data, isLoading, error } = useStockDetail(ticker);
 
-  // State untuk filter waktu
-  const [activeFilter, setActiveFilter] = useState("1bulan");
+  // 2. Serahkan data mentah ke Custom Hook untuk diproses
+  const chartRawData = data?.chart_data || data?.chart_1M || [];
+  const { activeFilter, setActiveFilter, filteredChartData, priceChange } =
+    useChartFilter(chartRawData, data?.current_price);
 
-  // 1. Logika Pemotong Data Chart berdasarkan Filter
-  const filteredChartData = useMemo(() => {
-    // Note: Pastikan di tipe atau backend-mu namanya `chart_data` (atau ganti jadi chart_1M jika belum diubah)
-    const rawData: ChartData[] = data?.chart_1M || [];
-    if (!rawData.length) return [];
-
-    const now = new Date();
-    let startDate = new Date();
-
-    switch (activeFilter) {
-      case "1minggu":
-        startDate.setDate(now.getDate() - 7);
-        break;
-      case "1bulan":
-        startDate.setMonth(now.getMonth() - 1);
-        break;
-      case "3bulan":
-        startDate.setMonth(now.getMonth() - 3);
-        break;
-      case "6bulan":
-        startDate.setMonth(now.getMonth() - 6);
-        break;
-      case "1tahun":
-        startDate.setFullYear(now.getFullYear() - 1);
-        break;
-      case "Semua":
-        return rawData;
-      default:
-        startDate.setMonth(now.getMonth() - 1);
-    }
-
-    return rawData.filter((item) => new Date(item.date) >= startDate);
-  }, [data, activeFilter]);
-
-  // 2. Logika Penghitungan Persentase Dinamis
-  const priceChange = useMemo(() => {
-    if (!filteredChartData.length || !data?.current_price)
-      return { percent: "0.00", isPositive: true };
-
-    // Cari harga valid paling awal di rentang waktu yang dipilih
-    const firstValidPoint = filteredChartData.find((d) => d.price !== null);
-    const oldPrice = firstValidPoint?.price;
-
-    if (!oldPrice) return { percent: "0.00", isPositive: true };
-
-    const diff = data.current_price - oldPrice;
-    const percent = (diff / oldPrice) * 100;
-
-    return {
-      percent: Math.abs(percent).toFixed(2),
-      isPositive: percent >= 0,
-    };
-  }, [filteredChartData, data?.current_price]);
-
+  // --- Render Loading & Error ---
   if (isLoading)
     return (
       <div className="p-8 text-center text-slate-500 font-medium animate-pulse">
@@ -86,6 +35,7 @@ const StockDetailPage: React.FC = () => {
       <div className="p-8 text-center text-red-500 font-bold">{error}</div>
     );
 
+  // --- Render UI Utama ---
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -130,7 +80,6 @@ const StockDetailPage: React.FC = () => {
             <h2 className="text-5xl font-extrabold text-slate-900 tracking-tight">
               {formatCurrencyIDR(data.current_price)}
             </h2>
-            {/* AREA PERSENTASE DINAMIS */}
             <span
               className={`text-lg font-bold mb-1 ${priceChange.isPositive ? "text-[#329B0D]" : "text-red-500"}`}
             >
@@ -138,16 +87,14 @@ const StockDetailPage: React.FC = () => {
             </span>
           </div>
 
-          {/* AREA CHART DENGAN FILTER PROP */}
           <StockAreaChart
             data={filteredChartData}
             activeFilter={activeFilter}
             onFilterChange={setActiveFilter}
-            isPositive={priceChange.isPositive} 
+            isPositive={priceChange.isPositive}
           />
         </div>
 
-        {/* ... sisa kolom kanan biarkan persis sama seperti sebelumnya ... */}
         <div className="xl:col-span-5 flex flex-col gap-8">
           <div className="bg-white p-6 md:p-8 border border-slate-200 rounded-[2rem] shadow-sm">
             <h3 className="text-lg font-bold text-slate-800 mb-6">
