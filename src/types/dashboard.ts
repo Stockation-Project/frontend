@@ -1,5 +1,3 @@
-// src/types/dashboard.ts
-
 import type { RiskProfileKey } from "@/data/riskProfile";
 
 // --- Sub-interfaces ---
@@ -39,15 +37,16 @@ export interface DashboardData {
 export interface DashboardPortfolio {
   id: string;
   name: string;
-  allocations: {
+  cash_balance: number;
+  invested_balance: number;
+  total_value: number;
+  allocations?: {
     ticker: string;
     percentage: number;
     color: string;
   }[];
-  investedBalance: number;
-  cashBalance: number;
-  profitPercentage: number;
-  profitAmount: number;
+  profitPercentage?: number;
+  profitAmount?: number;
 }
 
 export interface DashboardApiResponse {

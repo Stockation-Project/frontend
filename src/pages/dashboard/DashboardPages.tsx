@@ -15,18 +15,18 @@ import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
 import { toast } from "sonner";
+import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
+import { createPortfolioService } from "@/services/portfolio.service";
 
 function mapRecommendedStocks(
-  stocks: DashboardRecommendedStock[]
+  stocks: DashboardRecommendedStock[],
 ): StockItem[] {
   return stocks.map((stock, index) => ({
     id: index + 1,
     ticker: stock.ticker,
     name: stock.name,
     price: stock.current_price,
-    change: Math.abs(
-      parseFloat(stock.change_percent.toFixed(2))
-    ),
+    change: Math.abs(parseFloat(stock.change_percent.toFixed(2))),
     isPositive: stock.change_percent >= 0,
   }));
 }
@@ -35,23 +35,45 @@ const DashboardPages: React.FC = () => {
   const { data, isLoading, error, refreshData } = useDashboard();
   // ini buat kebutuhan top tup
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
+  const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
 
   const handleTopUpSuccess = async (amount: number) => {
     try {
       await topUpWalletService(amount);
-    
+
       await refreshData();
 
       toast("Top Up Berhaasil !", {
         description: `Saldo sebesar Rp ${amount.toLocaleString("id-ID")} telah masuk ke dompet utama.`,
         // Kamu bisa tambahkan className khusus di sini jika ingin warna hijau
       });
-
     } catch (error: any) {
       toast("Top Up Gagal!", {
         description:
           error.message || "Terjadi kesalahan saat menambahkan saldo.",
       });
+    }
+  };
+
+  const handleCreatePortfolioSuccess = async (name: string, amount: number) => {
+    try {
+      // Ingat, backend kamu minta variabel bernama 'allocated_fund'
+      await createPortfolioService({ name, allocated_fund: amount });
+
+      // Refresh UI
+      await refreshData();
+
+      // Toast Berhasil
+      toast.success("Dompet Berhasil Dibuat! 🎉", {
+        description: `${name} sudah siap digunakan.`,
+      });
+    } catch (error: any) {
+      // Toast Gagal
+      toast.error("Gagal Membuat Dompet", {
+        description: error.message || "Terjadi kesalahan sistem.",
+      });
+      // Melempar error agar state loading di modal berhenti dan modal tidak tertutup otomatis
+      throw error;
     }
   };
 
@@ -96,7 +118,7 @@ const DashboardPages: React.FC = () => {
   const walletAllocations = portfolios.map((portfolio, index) => ({
     id: portfolio.id || String(index + 1),
     name: portfolio.name,
-    amount: portfolio.investedBalance + portfolio.cashBalance,
+    amount: portfolio.total_value,
     color: index === 0 ? "bg-green-700" : "bg-green-400",
   }));
 
@@ -132,6 +154,14 @@ const DashboardPages: React.FC = () => {
           <PortfolioSection
             portfolios={portfolios}
             userRiskProfile={user_info.risk_profile}
+            onAddClick={() => setIsCreatePortoOpen(true)}
+          />
+
+          <CreatePortfolioModal
+            isOpen={isCreatePortoOpen}
+            onClose={() => setIsCreatePortoOpen(false)}
+            currentBalance={data?.wallet_summary?.main_wallet_balance || 0}
+            onSuccess={handleCreatePortfolioSuccess}
           />
 
           {/* Recommended Stocks — Saham sesuai profil risiko */}
