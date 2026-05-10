@@ -102,7 +102,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
       </div>
 
       {/* Bagian Bawah: Daftar Detail Alokasi per Dompet */}
-      <div className="space-y-4">
+      <div className="space-y-4 max-h-[140px] overflow-y-auto no-scrollbar pr-1 pb-1">
         {allocations.map((item) => {
           const itemPercentage = (item.amount / totalWallet) * 100;
           return (
