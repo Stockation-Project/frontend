@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import apiClient from "@/services/api";
 import { motion } from "framer-motion";
 import { AlertCircle } from "lucide-react";
 import { useDashboard } from "@/hooks/useDashboard";
@@ -15,6 +14,7 @@ import WalletSummary from "@/components/dashboard/WalletSummary";
 import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
+import { toast } from "sonner";
 
 function mapRecommendedStocks(
   stocks: DashboardRecommendedStock[]
@@ -41,8 +41,17 @@ const DashboardPages: React.FC = () => {
       await topUpWalletService(amount);
     
       await refreshData();
+
+      toast("Top Up Berhaasil !", {
+        description: `Saldo sebesar Rp ${amount.toLocaleString("id-ID")} telah masuk ke dompet utama.`,
+        // Kamu bisa tambahkan className khusus di sini jika ingin warna hijau
+      });
+
     } catch (error: any) {
-      alert(error.message);
+      toast("Top Up Gagal!", {
+        description:
+          error.message || "Terjadi kesalahan saat menambahkan saldo.",
+      });
     }
   };
 

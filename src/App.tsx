@@ -18,6 +18,9 @@ import QuestionnairePage from "./pages/questionnaire/QuestionnairePage";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import DashboardPages from "./pages/dashboard/DashboardPages";
 
+// import component shadcn
+import { Toaster } from "./components/ui/sonner";
+
 function AnimatedRoutes() {
   const location = useLocation();
 
@@ -47,6 +50,7 @@ function App() {
       <BrowserRouter>
         <AnimatedRoutes />
       </BrowserRouter>
+      <Toaster position="top-center" richColors />
     </AuthProvider>
   );
 }
