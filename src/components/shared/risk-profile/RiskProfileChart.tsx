@@ -19,7 +19,7 @@ const RiskProfileChart: React.FC<RiskProfileChartProps> = ({
   variant = "default",
 }) => {
   const percentage = (score / 47) * 100;
-  const radius = 60;
+  const radius = 65
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 

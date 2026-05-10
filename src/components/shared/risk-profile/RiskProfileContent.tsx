@@ -44,8 +44,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
           <span
             className={
               isModal
-                ? "text-xs text-slate-500 font-medium mt-1 block"
-                : "text-xs text-slate-400 font-medium"
+                ? "text-xs text-slate-500 font-regular mt-1 block"
+                : "text-xs text-slate-400 font-regular"
             }
           >
             dari 10
@@ -60,18 +60,18 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
           <span
             className={
               isModal
-                ? "text-[10px] text-slate-500 font-medium uppercase tracking-wider mb-1 block"
-                : "text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1"
+                ? "text-[10px] text-slate-500 font-regular uppercase tracking-wider mb-1 block"
+                : "text-[10px] text-slate-400 font-regular uppercase tracking-wider block mb-1"
             }
           >
             {isModal ? "Level Risiko" : "Level Resiko"}
           </span>
           {isModal ? (
-            <div className="px-6 py-1.5 bg-green-50 border border-green-600 text-green-700 rounded-lg text-sm font-semibold">
+            <div className="px-6 py-1.5 bg-green-50 border border-green-600 text-green-700 rounded-md text-base font-medium">
               {label}
             </div>
           ) : (
-            <span className="text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-3 py-1 rounded-lg">
+            <span className="text-sm font-medium text-green-700 bg-green-50 border border-green-200 px-3 py-1 rounded-md">
               {label}
             </span>
           )}
@@ -95,17 +95,18 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
         <h4
           className={
             isModal
-              ? "text-xs md:text-sm font-bold text-slate-900"
-              : "text-xs md:text-sm font-bold text-slate-800"
+              ? "text-sm  font-semibold text-slate-900"
+              : "text-sm  font-semibold text-slate-800"
           }
         >
           {label}
         </h4>
+
         <p
           className={
             isModal
-              ? "text-xs md:text-sm text-slate-500 leading-relaxed"
-              : "text-xs md:text-sm text-slate-500 leading-relaxed line-clamp-3"
+              ? "text-[10px] md:text-xs text-slate-500 leading-relaxed"
+              : "text-[10px] md:text-xs text-slate-500 leading-relaxed line-clamp-3"
           }
         >
           {description}
