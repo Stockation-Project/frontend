@@ -20,7 +20,7 @@ const OptionCard: React.FC<OptionCardProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`w-full flex items-center p-2 rounded-xl border-2 text-left transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2
+      className={`w-full flex items-center p-2 rounded-lg border-1 text-left transition-all duration-200 cursor-pointer outline-none 
         ${
           isSelected
             ? "border-green-600 bg-green-50" // State Terpilih
@@ -30,7 +30,7 @@ const OptionCard: React.FC<OptionCardProps> = ({
     >
       {/* Kotak Huruf (A, B, C) */}
       <div
-        className={`flex items-center justify-center w-10 h-10 rounded-lg border-2 text-xl font-bold mr-5 flex-shrink-0 transition-colors
+        className={`flex items-center justify-center w-10 h-10 rounded-md border text-2xl font-bold mr-5 flex-shrink-0 transition-colors
           ${
             isSelected
               ? "border-green-600 text-green-700 bg-white"
