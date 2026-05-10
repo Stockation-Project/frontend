@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import BaseSideModal from "../layout/BaseSideModal";
 import { Info } from "lucide-react";
+import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 
 interface TopUpModalProps {
   isOpen: boolean;
@@ -15,15 +16,6 @@ const TOP_UP_OPTIONS = [
   { id: "50jt", label: "50jt", value: 50000000 },
   { id: "100jt", label: "100jt", value: 100000000 },
 ];
-
-// Helper untuk format rupiah
-const formatRupiah = (num: number) => {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  }).format(num);
-};
 
 const TopUpModal: React.FC<TopUpModalProps> = ({
   isOpen,
@@ -67,7 +59,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
               Saldo saat ini
             </p>
             <p className="text-2xl font-bold text-slate-900">
-              {formatRupiah(currentBalance)}
+              {formatCurrencyIDR(currentBalance)}
             </p>
           </div>
           <div className="text-left">
@@ -76,7 +68,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
             </p>
             <p className="text-2xl font-bold text-[#329B0D]">
               {selectedAmount
-                ? formatRupiah(currentBalance + selectedAmount)
+                ? formatCurrencyIDR(currentBalance + selectedAmount)
                 : "--"}
             </p>
           </div>
@@ -102,7 +94,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
                   {option.label}
                 </span>
                 <span className="text-sm text-slate-500">
-                  {formatRupiah(option.value)}
+                  {formatCurrencyIDR(option.value)}
                 </span>
               </button>
             ))}
