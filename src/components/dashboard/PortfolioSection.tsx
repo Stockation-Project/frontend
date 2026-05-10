@@ -20,7 +20,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
 }) => {
   return (
     <div className="w-full flex flex-col">
-      <h3 className="text-lg font-bold text-slate-800 mb-4">
+      <h3 className="text-base font-medium text-slate-600 mb-2">
         Dompet Investasi
       </h3>
 
@@ -52,12 +52,12 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           <div className="snap-start">
             <button
               onClick={onAddClick}
-              className="min-w-[320px] w-[320px] h-full min-h-[220px] bg-transparent border-2 border-dashed border-slate-300 rounded-[1.5rem] flex flex-col items-center justify-center text-slate-500 hover:text-[#329B0D] hover:border-[#329B0D] hover:bg-green-50/50 transition-all cursor-pointer group"
+              className="min-w-[320px] w-[320px] h-full bg-transparent border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-500 hover:text-[#329B0D] hover:border-[#329B0D] hover:bg-green-50/50 transition-all cursor-pointer group"
             >
               <div className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-100 transition-colors">
                 <Plus className="w-7 h-7 text-slate-400 group-hover:text-[#329B0D] transition-colors" />
               </div>
-              <span className="font-bold text-sm">Buat Dompet Baru</span>
+              <span className="font-medium text-sm">Buat Dompet Baru</span>
             </button>
           </div>
         </div>

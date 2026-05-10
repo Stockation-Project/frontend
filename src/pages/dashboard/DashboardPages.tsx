@@ -1,12 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { AlertCircle } from "lucide-react";
 import { useDashboard } from "@/hooks/useDashboard";
 import { topUpWalletService } from "@/services/wallet.services";
 import type { DashboardRecommendedStock } from "@/types/dashboard";
 import type { StockItem } from "@/components/shared/cards/StockTable";
-import PageHeader from "@/components/shared/layout/PageHeader";
+// import { HeaderContext } from "@/components/layout/DashboardLayout";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
 import PortfolioSection from "@/components/dashboard/PortfolioSection";
@@ -17,6 +17,7 @@ import TopUpModal from "@/components/shared/modal/TopUpModal";
 import { toast } from "sonner";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import { createPortfolioService } from "@/services/portfolio.service";
+import PageHeader from "@/components/shared/layout/PageHeader";
 
 function mapRecommendedStocks(
   stocks: DashboardRecommendedStock[],
@@ -33,9 +34,20 @@ function mapRecommendedStocks(
 
 const DashboardPages: React.FC = () => {
   const { data, isLoading, error, refreshData } = useDashboard();
+  // const headerContext = useContext(HeaderContext);
   // ini buat kebutuhan top tup
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
+
+  // Update header saat data berhasil dimuat
+  // useEffect(() => {
+  //   if (data?.user_info && headerContext) {
+  //     headerContext.setHeader({
+  //       title: "Dashboard",
+  //       description: data.user_info.greeting,
+  //     });
+  //   }
+  // }, [data?.user_info, headerContext]);
 
   const handleTopUpSuccess = async (amount: number) => {
     try {
@@ -91,7 +103,9 @@ const DashboardPages: React.FC = () => {
         transition={{ duration: 0.4 }}
         className="w-full"
       >
-        <PageHeader title="Dashboard" />
+        <PageHeader
+          title="Dashboard"
+        />
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4">
             <AlertCircle className="w-8 h-8 text-red-500" />
@@ -130,9 +144,7 @@ const DashboardPages: React.FC = () => {
       transition={{ duration: 0.4 }}
       className="w-full"
     >
-      {/* Header Halaman — Greeting dari backend */}
-      <PageHeader title="Dashboard" description={user_info.greeting} />
-
+      <PageHeader title="Dasboard" description={user_info.greeting} />
       {/* Grid Utama (70% Kiri, 30% Kanan) */}
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8">
         {/* KOLOM KIRI  */}

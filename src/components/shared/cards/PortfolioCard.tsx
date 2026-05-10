@@ -31,7 +31,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
   const isProfit = profitAmount >= 0;
 
   return (
-    <div className="min-w-[320px] w-[320px] bg-white border border-slate-200 rounded-[1.5rem] p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+    <div className="min-w-[320px] w-[320px] bg-white border border-slate-200 rounded-xl p-3 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow cursor-pointer">
       {/* 1. Bagian Atas (Header) */}
       <div className="flex items-center gap-3 mb-5">
         <div className="w-12 h-12 bg-[#329B0D] rounded-xl flex items-center justify-center flex-shrink-0">
