@@ -22,7 +22,7 @@ export interface PortfolioCardProps {
 const PortfolioCard: React.FC<PortfolioCardProps> = ({
   id,
   name,
-  allocations,
+  allocations = [],
   cashBalance,
   investedBalance,
   profitAmount,
