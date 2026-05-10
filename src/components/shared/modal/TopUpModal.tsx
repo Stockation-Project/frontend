@@ -61,7 +61,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
     >
       <div className="space-y-6">
         {/* Card Saldo Saat Ini & Setelah Top Up */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex justify-between items-center">
+        <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between items-center">
           <div>
             <p className="text-sm text-slate-500 font-medium mb-1">
               Saldo saat ini
@@ -70,7 +70,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
               {formatRupiah(currentBalance)}
             </p>
           </div>
-          <div className="text-right">
+          <div className="text-left">
             <p className="text-sm text-slate-500 font-medium mb-1">
               Setelah top up
             </p>

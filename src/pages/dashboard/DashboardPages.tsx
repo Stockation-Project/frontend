@@ -4,6 +4,7 @@ import apiClient from "@/services/api";
 import { motion } from "framer-motion";
 import { AlertCircle } from "lucide-react";
 import { useDashboard } from "@/hooks/useDashboard";
+import { topUpWalletService } from "@/services/wallet.services";
 import type { DashboardRecommendedStock } from "@/types/dashboard";
 import type { StockItem } from "@/components/shared/cards/StockTable";
 import PageHeader from "@/components/shared/layout/PageHeader";
@@ -14,7 +15,6 @@ import WalletSummary from "@/components/dashboard/WalletSummary";
 import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
-import { fetchDashboardData } from "@/services/dashboard.service";
 
 function mapRecommendedStocks(
   stocks: DashboardRecommendedStock[]
@@ -32,18 +32,18 @@ function mapRecommendedStocks(
 }
 
 const DashboardPages: React.FC = () => {
-  const { data, isLoading, error } = useDashboard();
-  
+  const { data, isLoading, error, refreshData } = useDashboard();
   // ini buat kebutuhan top tup
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
 
   const handleTopUpSuccess = async (amount: number) => {
-    // Tembak API Backend
-    await apiClient.post("/wallets/topup", { amount });
-
-    // Karena saldo sudah bertambah di database, kita harus me-refresh data dashboard
-    // Panggil kembali fungsi fetchDashboardData() milikmu di sini
-    await fetchDashboardData();
+    try {
+      await topUpWalletService(amount);
+    
+      await refreshData();
+    } catch (error: any) {
+      alert(error.message);
+    }
   };
 
   // ini buat loading ya lek yaa
@@ -104,7 +104,7 @@ const DashboardPages: React.FC = () => {
 
       {/* Grid Utama (70% Kiri, 30% Kanan) */}
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8">
-        {/* KOLOM KIRI (70% - xl:col-span-7) */}
+        {/* KOLOM KIRI  */}
         <div className="xl:col-span-7 space-y-8">
           {/* Global Wallet Card — Saldo dompet utama */}
           <GlobalWalletCard
@@ -132,7 +132,7 @@ const DashboardPages: React.FC = () => {
           />
         </div>
 
-        {/* KOLOM KANAN (30% - xl:col-span-3) */}
+        {/* KOLOM KANAN */}
         <div className="xl:col-span-3 space-y-8">
           {/* Wallet Summary — Ringkasan alokasi dompet */}
           <WalletSummary
