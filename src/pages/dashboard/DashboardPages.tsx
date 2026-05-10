@@ -55,14 +55,26 @@ const DashboardPages: React.FC = () => {
 
       await refreshData();
 
-      toast("Top Up Berhaasil !", {
+      toast.success("Top Up Berhaasil !", {
         description: `Saldo sebesar Rp ${amount.toLocaleString("id-ID")} telah masuk ke dompet utama.`,
-        // Kamu bisa tambahkan className khusus di sini jika ingin warna hijau
+         classNames: {
+            title: "!text-green-700 !font-semibold",
+            description: "!text-slate-500",
+            toast: "!bg-white !border !border-green-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
+          },
+          duration: 10000,
+        // Kamu bisa tambahkan className khusus di sini jika ingin warna hijau)
       });
     } catch (error: any) {
-      toast("Top Up Gagal!", {
+      toast.error("Top Up Gagal!", {
         description:
           error.message || "Terjadi kesalahan saat menambahkan saldo.",
+          classNames: {
+            title: "!text-red-700 !font-semibold",
+            description: "!text-slate-500",
+            toast: "!bg-white !border !border-red-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
+          },
+          duration: 10000,
       });
     }
   };
@@ -76,13 +88,25 @@ const DashboardPages: React.FC = () => {
       await refreshData();
 
       // Toast Berhasil
-      toast.success("Dompet Berhasil Dibuat! 🎉", {
-        description: `${name} sudah siap digunakan.`,
+      toast.success("Dompet Berhasil Dibuat!", {
+        description: `Dompet ${name} sudah siap digunakan untuk investasi.`,
+        classNames: {
+            title: "!text-green-700 !font-semibold",
+            description: "!text-slate-500",
+            toast: "!bg-white !border !border-green-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
+          },
+          duration: 10000,
       });
     } catch (error: any) {
       // Toast Gagal
       toast.error("Gagal Membuat Dompet", {
         description: error.message || "Terjadi kesalahan sistem.",
+        classNames: {
+            title: "!text-red-700 !font-semibold",
+            description: "!text-slate-500",
+            toast: "!bg-white !border !border-red-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
+          },
+          duration: 10000,
       });
       // Melempar error agar state loading di modal berhenti dan modal tidak tertutup otomatis
       throw error;
