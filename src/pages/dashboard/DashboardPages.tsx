@@ -9,7 +9,6 @@ import type { StockItem } from "@/components/shared/cards/StockTable";
 import PageHeader from "@/components/shared/layout/PageHeader";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
-import PortfolioSection from "@/components/dashboard/PortfolioSection";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
@@ -17,6 +16,7 @@ import TopUpModal from "@/components/shared/modal/TopUpModal";
 import { toast } from "sonner";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import { createPortfolioService } from "@/services/portfolio.service";
+import PortfolioSection from "@/components/dashboard/PortfolioSection";
 
 function mapRecommendedStocks(
   stocks: DashboardRecommendedStock[],
