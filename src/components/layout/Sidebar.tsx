@@ -15,45 +15,40 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-20 md:w-24 h-screen bg-white border-r border-slate-100 flex flex-col items-center py-8 sticky top-0 flex-shrink-0 z-50">
-      {/* Logo Stockation (Hanya ikonnya saja agar muat) */}
-      <div className="mb-10">
-        <Logo variant="color" className="flex flex-col text-sm" />
-      </div>
+  <aside className=" h-screen bg-white border-r border-slate-100 flex flex-col items-center py-2 px-3 gap-16 sticky top-0 flex-shrink-0 z-50">
+    {/* Logo */}
+    <div className="flex flex-col items-center gap-0.5 [&_span]:!text-[8px]">
+      <Logo variant="color"  className="flex flex-col" />
+    </div>
 
-      {/* Navigasi Menu */}
-      <nav className="flex flex-col gap-6 w-full px-4">
-        {menuItems.map((item) => {
-          const isActive = location.pathname.includes(item.path);
-          const Icon = item.icon;
+    {/* Navigasi Menu — dibungkus 1 container */}
+    <nav className="flex flex-col gap-2  rounded-xl">
+      {menuItems.map((item) => {
+        const isActive = location.pathname.includes(item.path);
+        const Icon = item.icon;
 
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className="group relative flex items-center justify-center w-full aspect-square rounded-2xl transition-all duration-200"
-              title={item.label}
-            >
-              <div
-                className={`absolute inset-0 rounded-2xl transition-all duration-200 ${
-                  isActive
-                    ? "bg-green-700 shadow-md shadow-green-700/20"
-                    : "group-hover:bg-slate-50"
-                }`}
-              />
-              <Icon
-                className={`relative w-6 h-6 z-10 transition-colors duration-200 ${
-                  isActive
-                    ? "text-white"
-                    : "text-slate-400 group-hover:text-green-700"
-                }`}
-              />
-            </Link>
-          );
-        })}
-      </nav>
-    </aside>
-  );
+        return (
+          <Link
+            key={item.path}
+            to={item.path}
+            title={item.label}
+            className={`flex items-center justify-center p-3 rounded-lg transition-all duration-200
+              ${isActive
+                ? "bg-green-700 shadow-md shadow-green-700/20"
+                : "bg-slate-100 hover:bg-slate-200"
+              }`}
+          >
+            <Icon
+              className={`w-4 h-4 transition-colors duration-200 ${
+                isActive ? "text-white" : "text-slate-500 hover:text-green-700"
+              }`}
+            />
+          </Link>
+        );
+      })}
+    </nav>
+  </aside>
+);
 };
 
 export default Sidebar;

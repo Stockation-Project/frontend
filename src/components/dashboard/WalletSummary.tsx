@@ -37,7 +37,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
 
   return (
     <div className="w-full bg-white border border-slate-100 rounded-[2rem] p-6 lg:p-8 shadow-sm">
-      <h3 className="text-base font-bold text-slate-800 mb-6">
+      <h3 className="text-base font-medium text-slate-600 mb-2">
         Ringkasan Dompet
       </h3>
 

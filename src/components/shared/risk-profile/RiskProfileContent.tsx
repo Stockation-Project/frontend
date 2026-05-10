@@ -35,8 +35,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
           <span
             className={
               isModal
-                ? "text-3xl font-bold text-slate-900 leading-none block"
-                : "text-2xl font-extrabold text-slate-900 block leading-none"
+                ? "text-lg md:text-2xl font-semibold text-slate-900 leading-none block"
+                : "text-lg md:text-2xl font-semibold text-slate-900 block leading-none"
             }
           >
             {scale10Score}
@@ -45,7 +45,7 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
             className={
               isModal
                 ? "text-xs text-slate-500 font-medium mt-1 block"
-                : "text-[10px] text-slate-400 font-medium"
+                : "text-xs text-slate-400 font-medium"
             }
           >
             dari 10
@@ -88,15 +88,15 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
       <div
         className={
           isModal
-            ? "text-center space-y-2"
-            : "text-center space-y-2 mb-6"
+            ? "text-center space-y-2 mb-6 px-4"
+            : "text-center space-y-2 mb-6 px-4"
         }
       >
         <h4
           className={
             isModal
-              ? "text-sm font-bold text-slate-900"
-              : "text-sm font-bold text-slate-800"
+              ? "text-xs md:text-sm font-bold text-slate-900"
+              : "text-xs md:text-sm font-bold text-slate-800"
           }
         >
           {label}
@@ -104,8 +104,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
         <p
           className={
             isModal
-              ? "text-sm text-slate-500 leading-relaxed"
-              : "text-[13px] text-slate-500 leading-relaxed line-clamp-3"
+              ? "text-xs md:text-sm text-slate-500 leading-relaxed"
+              : "text-xs md:text-sm text-slate-500 leading-relaxed line-clamp-3"
           }
         >
           {description}

@@ -22,7 +22,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
 
   return (
     <div className="w-full">
-      <h3 className="text-lg font-bold text-slate-800 mb-4">{title}</h3>
+      <h3 className="text-base font-medium text-slate-600 mb-2">{title}</h3>
 
       <div className="flex flex-col border-t border-slate-100 max-h-[380px] overflow-y-auto pr-2">
         {stocks.map((stock, index) => (
