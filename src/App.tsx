@@ -17,6 +17,7 @@ import LoginPage from "./pages/auth/LoginPages";
 import QuestionnairePage from "./pages/questionnaire/QuestionnairePage";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import DashboardPages from "./pages/dashboard/DashboardPages";
+import StockDetailPage from "./pages/stock/StockDetailPage";
 
 // import component shadcn
 import { Toaster } from "./components/ui/sonner";
@@ -30,6 +31,7 @@ function AnimatedRoutes() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/questionnaire" element={<QuestionnairePage />} />
+        <Route path="/dashboard/stock/:ticker" element={<StockDetailPage />} />
 
         {/* Rute Utama (Dengan Sidebar) */}
         <Route element={<DashboardLayout />}>
@@ -37,7 +39,7 @@ function AnimatedRoutes() {
           {/* Nanti Anda bisa tambahkan rute lain di sini: */}
           {/* <Route path="/wallet" element={<WalletPage />} /> */}
         </Route>
-        
+
         <Route path="/" element={<Navigate to="/register" replace />} />
       </Routes>
     </AnimatePresence>
