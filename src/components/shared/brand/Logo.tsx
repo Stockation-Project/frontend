@@ -24,7 +24,7 @@ const Logo: React.FC<LogoProps> = ({
       />
       {showText && (
         <span
-          className={`text-sm font-medium ${variant === "white" ? "text-white" : "text-slate-950"}`}
+          className={`text-xs font-medium ${variant === "white" ? "text-white" : "text-slate-950"}`}
         >
           Stockation
         </span>

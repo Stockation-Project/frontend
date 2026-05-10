@@ -30,7 +30,7 @@ const RiskProfileCard: React.FC<RiskProfileCardProps> = ({
   if (!profile) return null;
 
   return (
-    <div className="w-full bg-white border border-slate-100 rounded-[2rem] p-6 lg:p-8 shadow-sm">
+    <div className="w-full bg-white border border-slate-100 rounded-2xl p-6 lg:p-8 shadow-sm">
       {/* Header Widget (Conditional) */}
       {showHeader && (
         <div className="flex flex-col justify-between items-start mb-6">
