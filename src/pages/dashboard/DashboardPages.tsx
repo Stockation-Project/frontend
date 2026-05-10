@@ -9,7 +9,6 @@ import type { StockItem } from "@/components/shared/cards/StockTable";
 // import { HeaderContext } from "@/components/layout/DashboardLayout";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
-import PortfolioSection from "@/components/dashboard/PortfolioSection";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";

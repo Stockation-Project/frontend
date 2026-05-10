@@ -1,9 +1,7 @@
 // src/components/dashboard/PortfolioSection.tsx
 import React from "react";
 import EmptyPortfolioState from "./EmptyPortfolioState";
-import PortfolioCard, {
-  type PortfolioCardProps,
-} from "@/components/shared/cards/PortfolioCard";
+import PortfolioCard from "@/components/shared/cards/PortfolioCard";
 import type { DashboardPortfolio } from "@/types/dashboard";
 import { Plus } from "lucide-react";
 
@@ -30,17 +28,15 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           onAddClick={onAddClick}
         />
       ) : (
-        // Slider Container
+        // Container Daftar Portfolio
         <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar scroll-smooth snap-x">
           {portfolios.map((porto, index) => (
             <div key={porto.id || index} className="snap-start">
-              {/* Di sinilah kita melakukan "Penerjemahan" datanya! */}
               <PortfolioCard
                 id={porto.id}
                 name={porto.name}
                 cashBalance={porto.cash_balance || 0}
                 investedBalance={porto.invested_balance || 0}
-                // Set default aman untuk data yang belum ada dari backend
                 allocations={[]}
                 profitAmount={0}
                 profitPercentage={0}
@@ -48,7 +44,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
             </div>
           ))}
 
-          {/* 2. Kartu Khusus untuk Menambah Portofolio Baru */}
+          {/* Kartu Khusus untuk Menambah Portofolio Baru */}
           <div className="snap-start">
             <button
               onClick={onAddClick}

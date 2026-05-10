@@ -1,4 +1,3 @@
-// src/components/dashboard/EmptyPortfolioState.tsx
 import React from "react";
 import { Wallet, Plus } from "lucide-react";
 import EmptyState from "@/components/shared/states/EmptyState";

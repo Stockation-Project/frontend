@@ -1,12 +1,10 @@
-// src/components/dashboard/WalletSummary.tsx
 import React from "react";
 
-// Struktur data dummy untuk komponen ini
 interface AllocationDetail {
   id: string;
   name: string;
-  amount: number; // Dalam Rupiah asli
-  color: string; // Warna progress bar
+  amount: number; 
+  color: string; 
 }
 
 interface WalletSummaryProps {
