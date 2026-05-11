@@ -4,6 +4,7 @@ import EmptyPortfolioState from "./EmptyPortfolioState";
 import PortfolioCard from "@/components/shared/cards/PortfolioCard";
 import type { DashboardPortfolio } from "@/types/dashboard";
 import { Plus } from "lucide-react";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 interface PortfolioSectionProps {
   portfolios: DashboardPortfolio[];
@@ -18,9 +19,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
 }) => {
   return (
     <div className="w-full flex flex-col">
-      <h3 className="text-base font-medium text-slate-600 mb-2">
-        Dompet Investasi
-      </h3>
+      <SectionHeader title="Dompet Investasi" />
 
       {portfolios.length === 0 ? (
         <EmptyPortfolioState

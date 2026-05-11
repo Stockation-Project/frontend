@@ -1,4 +1,7 @@
 import React from "react";
+import { formatJT } from "@/lib/utils/formatCurrency";
+import SectionHeader from "@/components/shared/SectionHeader";
+import MiniProgressBar from "@/components/shared/MiniProgressBar";
 
 interface AllocationDetail {
   id: string;
@@ -25,10 +28,6 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
   // Hitung persentase untuk Donut Chart
   const percentage = totalWallet > 0 ? (totalAllocated / totalWallet) * 100 : 0;
 
-  // Format angka ke format "JT" (Juta) agar ringkas seperti di desain
-  const formatJT = (angka: number) => {
-    return `${(angka / 1000000).toLocaleString("id-ID")}JT`;
-  };
 
   // Pengaturan SVG Donut Chart
   const radius = 50;
@@ -37,9 +36,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
 
   return (
     <div className="w-full bg-white border border-slate-200 rounded-xl p-2 lg:p-4">
-      <h3 className="text-base font-medium text-slate-600 mb-4">
-        Ringkasan Dompet
-      </h3>
+      <SectionHeader title="Ringkasan Dompet" className="mb-4" />
 
       {/* Bagian Atas: Donut Chart & Info Total */}
       <div className="flex gap-8 md:gap-30 lg:gap-8 mb-6 justify-center">
@@ -113,13 +110,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
                   {formatJT(item.amount)}
                 </span>
               </div>
-              {/* Progress Bar Mini */}
-              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                <div
-                  className={`h-full ${item.color} rounded-full`}
-                  style={{ width: `${itemPercentage}%` }}
-                />
-              </div>
+              <MiniProgressBar percentage={itemPercentage} colorClass={item.color} />
             </div>
           );
         })}
