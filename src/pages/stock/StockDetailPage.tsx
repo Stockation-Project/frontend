@@ -91,12 +91,12 @@ const StockDetailPage: React.FC = () => {
           />
         </div>
 
-        <div className="xl:col-span-5 flex flex-col gap-8">
-          <div className="bg-white p-6 md:p-8 border border-slate-200 rounded-[2rem] shadow-sm">
-            <h3 className="text-lg font-bold text-slate-800 mb-6">
+        <div className="xl:col-span-5 flex flex-col gap-4 relative">
+          <div className="bg-white px-2">
+            <h3 className="text-base font-medium text-slate-600 mb-2">
               Statistik Saham
             </h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2">
               <StatCard
                 title="Rata-rata tumbuh per tahun"
                 value={data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"}
@@ -122,23 +122,27 @@ const StockDetailPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 md:p-8 border border-slate-200 rounded-[2rem] shadow-sm">
-            <h3 className="text-lg font-bold text-slate-800 mb-4">
+          <div className="bg-white px-2">
+            <h3 className="text-base font-medium text-slate-600 mb-2">
               Pergerakan Anomali
             </h3>
             <AnomalyTable data={data.anomaly_history} />
           </div>
 
           <div className="px-2">
-            <h3 className="text-lg font-bold text-slate-800 mb-3">Rangkuman</h3>
-            <p className="text-sm text-slate-500 leading-relaxed text-justify">
-              {data.about_company}
-            </p>
+            <h3 className="text-base font-medium text-slate-600 mb-2">Rangkuman</h3>
+            <div className="max-h-37 overflow-y-auto"> {/* TAMBAH: max-h-40 overflow-y-auto */}
+              <p className="text-sm text-slate-500 leading-relaxed text-justify">
+                {data.about_company}
+              </p>
+            </div>
           </div>
-
-          <Button className="w-full h-14 bg-[#329B0D] hover:bg-green-800 text-white font-bold text-lg rounded-2xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98]">
+          <div className="sticky bottom-0 bg-white py-4 px-2">
+            <Button className=" w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer">
             Beli Saham Ini
-          </Button>
+            </Button>
+          </div>
+          
         </div>
       </div>
     </motion.div>

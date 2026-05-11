@@ -15,7 +15,7 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ title, value, tooltipText }) => {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col justify-between h-full hover:border-slate-300 transition-colors">
+    <div className="bg-white rounded-lg border border-slate-200 p-4 flex flex-col justify-between h-full hover:border-slate-200 transition-colors">
       <div className="flex justify-between items-center mb-2">
         <span className="text-xs font-medium text-slate-500">{title}</span>
 
@@ -27,13 +27,13 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, tooltipText }) => {
                 <Info className="w-3.5 h-3.5" />
               </button>
             </TooltipTrigger>
-            <TooltipContent className="max-w-[200px] text-xs text-center bg-slate-800 text-white border-none">
+            <TooltipContent className="max-w-[200px] text-xs text-center bg-white text-slate-900 border-1 border-slate-200 rounded-md p-2 shadow-lg [&>span]:hidden">
               <p>{tooltipText}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </div>
-      <span className="text-lg font-extrabold text-slate-900">{value}</span>
+      <span className="text-base font-semibold text-slate-900">{value}</span>
     </div>
   );
 };
