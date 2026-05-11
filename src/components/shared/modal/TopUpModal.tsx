@@ -50,7 +50,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
       onAction={handleTopUp}
       isActionDisabled={selectedAmount === null}
       isLoading={isLoading}
-      classname="!max-w-[800px]"
+      // classname="!max-w-[800px]"
     >
       <div className="space-y-6 ">
         {/* Card Saldo Saat Ini & Setelah Top Up */}
