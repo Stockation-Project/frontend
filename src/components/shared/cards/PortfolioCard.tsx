@@ -81,7 +81,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
       </div>
 
       {/* 3. Bagian Bawah (Footer: Terpakai & Tersedia) */}
-      <div className="flex justify-between items-end pt-4 border-t border-slate-100">
+      <div className="flex items-start justify-between items-end pt-4 border-t border-slate-100">
         {/* Kiri: Terpakai (Invested) */}
         <div>
           <p className="text-[10px] text-slate-500 font-medium mb-0.5">

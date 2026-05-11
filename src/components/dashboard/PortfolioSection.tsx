@@ -36,9 +36,9 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                 name={porto.name}
                 cashBalance={porto.cash_balance || 0}
                 investedBalance={porto.invested_balance || 0}
-                allocations={[]}
-                profitAmount={0}
-                profitPercentage={0}
+                allocations={porto.allocations || []}
+                profitAmount={porto.profitAmount || 0}
+                profitPercentage={porto.profitPercentage || 0}
               />
             </div>
           ))}
