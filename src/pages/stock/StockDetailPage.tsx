@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Bookmark } from "lucide-react";
 import { useStockDetail } from "@/hooks/useStockDetail";
@@ -14,6 +14,7 @@ import PageHeader from "@/components/shared/layout/PageHeader";
 
 const StockDetailPage: React.FC = () => {
   const { ticker } = useParams<{ ticker: string }>();
+  const navigate = useNavigate();
 
   // 1. Ambil data dari Backend
   const { data, isLoading, error } = useStockDetail(ticker);
@@ -136,7 +137,10 @@ const StockDetailPage: React.FC = () => {
             </p>
           </div>
 
-          <Button className="w-full h-14 bg-[#329B0D] hover:bg-green-800 text-white font-bold text-lg rounded-2xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98]">
+          <Button 
+            className="w-full h-14 bg-[#329B0D] hover:bg-green-800 text-white font-bold text-lg rounded-2xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98]"
+            onClick={() => navigate('/dashboard/simulation')}
+          >
             Beli Saham Ini
           </Button>
         </div>
