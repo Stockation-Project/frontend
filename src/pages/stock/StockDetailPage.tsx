@@ -1,7 +1,7 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronLeft, Bookmark } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import { useStockDetail } from "@/hooks/useStockDetail";
 import { useChartFilter } from "@/hooks/useChartFilter";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
@@ -10,10 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import StockAreaChart from "@/components/shared/charts/StockAreaChart";
 import AnomalyTable from "@/components/shared/cards/AnomalyTable";
+import PageHeader from "@/components/shared/layout/PageHeader";
 
 const StockDetailPage: React.FC = () => {
   const { ticker } = useParams<{ ticker: string }>();
-  const navigate = useNavigate();
 
   // 1. Ambil data dari Backend
   const { data, isLoading, error } = useStockDetail(ticker);
@@ -43,14 +43,10 @@ const StockDetailPage: React.FC = () => {
       exit={{ opacity: 0, y: 20 }}
       className="w-full p-10"
     >
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => navigate(-1)}
-        className="mb-6 rounded-xl text-slate-600 hover:text-slate-900 border-slate-200 h-10 w-10"
-      >
-        <ChevronLeft className="w-5 h-5" />
-      </Button>
+      <PageHeader
+        title=""
+        showBackButton={true}
+      />
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
         <div className="xl:col-span-7 flex flex-col gap-6">
