@@ -23,17 +23,17 @@ const AnomalyTable: React.FC<AnomalyTableProps> = ({ data }) => {
 
   return (
     // Wrapper dengan batasan tinggi (sekitar 3-4 baris) dan scroll otomatis
-    <div className="w-full max-h-[240px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+    <div className="w-full overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent border border-slate-200 rounded-lg">
       <table className="w-full text-sm text-left border-collapse">
         {/* Sticky Header agar tidak hilang saat discroll */}
-        <thead className="text-xs text-slate-500 border-b border-slate-200 sticky top-0 bg-white z-10">
+        <thead className="text-xs text-slate-500 border-b border-slate-200 sticky top-0 bg-slate-50 z-10">
           <tr>
             <th className="py-3 px-2 font-medium text-center">Periode</th>
             <th className="py-3 px-2 font-medium text-center">Pergerakan Harga</th>
             <th className="py-3 px-2 font-medium text-center">Status</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="h-37 overflow-y-auto">
           {data.length > 0 ? (
             data.map((item, index) => (
               <tr

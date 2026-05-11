@@ -80,7 +80,7 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
 
       <hr
         className={
-          isModal ? "w-full border-slate-100" : "w-full border-slate-50 mb-4"
+          isModal ? "w-full border-slate-200" : "w-full border-slate-200 mb-4"
         }
       />
 
@@ -88,8 +88,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
       <div
         className={
           isModal
-            ? "text-center space-y-2 mb-6 px-4"
-            : "text-center space-y-2 mb-6 px-4"
+            ? " space-y-2 mb-6 text-center"
+            : " space-y-2 mb-6 text-center"
         }
       >
         <h4
@@ -106,7 +106,7 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
           className={
             isModal
               ? "text-[10px] md:text-xs text-slate-500 leading-relaxed"
-              : "text-[10px] md:text-xs text-slate-500 leading-relaxed line-clamp-3"
+              : "text-[10px] md:text-xs text-slate-500 leading-relaxed"
           }
         >
           {description}
