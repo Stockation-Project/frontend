@@ -6,7 +6,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 
 interface BaseSideModalProps {
   isOpen: boolean;
