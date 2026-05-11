@@ -18,6 +18,7 @@ import QuestionnairePage from "./pages/questionnaire/QuestionnairePage";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import DashboardPages from "./pages/dashboard/DashboardPages";
 import StockDetailPage from "./pages/stock/StockDetailPage";
+import SimulationBuyPage from "./pages/simulation/SimulationBuyPage";
 
 // import component shadcn
 import { Toaster } from "./components/ui/sonner";
@@ -36,6 +37,7 @@ function AnimatedRoutes() {
         {/* Rute Utama (Dengan Sidebar) */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPages />} />
+          <Route path="/dashboard/simulation" element={<SimulationBuyPage />} />
           {/* Nanti Anda bisa tambahkan rute lain di sini: */}
           {/* <Route path="/wallet" element={<WalletPage />} /> */}
         </Route>
