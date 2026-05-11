@@ -1,64 +1,18 @@
-import { useState } from "react";
+import { useLogin } from "@/hooks/useLogin";
 import PasswordInputField from "@/components/shared/auth/PasswordInputField";
 import FormInputGroup from "@/components/shared/auth/FormInputGroup";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthVisualPanel from "@/components/shared/auth/AuthVisualPanel";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
 import AuthHeader from "@/components/shared/auth/AuthHeader";
-import authService from "@/services/auth.service";
-import { useAuth } from "@/contexts/AuthContext";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import AuthAlert from "@/components/shared/auth/AuthAlert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle } from "lucide-react";
 
 const LoginPage: React.FC = () => {
-  const navigate = useNavigate();
-
-  const { login } = useAuth();
-
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMessage("");
-    setIsLoading(true);
-
-    try {
-      // hit api login
-      const response = await authService.login(formData);
-
-      if (response.success) {
-        // Ekstrak data dari response backend
-        const user = response.data.user;
-        const token = response.data.token;
-
-        login(user, token);
-
-        // cek user udah punya risk profile belum
-        if (!user.risk_profile) {
-          navigate("/questionnaire");
-        } else {
-          navigate("/dashboard");
-        }
-      }
-    } catch (error: any) {
-      setErrorMessage(error.message);
-      setIsLoading(false);
-    }
-  };
+  const { formData, isLoading, errorMessage, handleInputChange, handleSubmit } =
+    useLogin();
 
   return (
     <motion.div
@@ -104,16 +58,9 @@ const LoginPage: React.FC = () => {
               required
             />
 
-            {/* 2. AREA ALERT UNTUK ERROR */}
+            {/* Area Alert untuk Error */}
             {errorMessage && (
-              <Alert
-                variant="destructive"
-                className="bg-red-50 border-red-200 text-red-800"
-              >
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Gagal Masuk</AlertTitle>
-                <AlertDescription>{errorMessage}</AlertDescription>
-              </Alert>
+              <AuthAlert type="error" title="Gagal Masuk" message={errorMessage} />
             )}
 
             {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}

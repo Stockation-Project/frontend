@@ -1,80 +1,25 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useRegister } from "@/hooks/useRegister";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import FormInputGroup from "@/components/shared/auth/FormInputGroup";
 import PasswordInputField from "@/components/shared/auth/PasswordInputField";
 import AuthVisualPanel from "@/components/shared/auth/AuthVisualPanel";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
-import authService from "@/services/auth.service";
 import AuthHeader from "@/components/shared/auth/AuthHeader";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import AuthAlert from "@/components/shared/auth/AuthAlert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 const RegisterPage: React.FC = () => {
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
-
-    // validasi konfirm pw
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Konfirmasi Kata Sandi Tidak Cocok");
-      return;
-    }
-
-    // state loading
-    setIsLoading(true);
-
-    try {
-      // mapping data
-      const payload = {
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-      };
-
-      // hit api nya
-      const response = await authService.register(payload);
-
-      // validasi
-      if (response.success) {
-        setSuccessMessage(
-          "Registrasi berhasil! Mengalihkan ke halaman login...",
-        );
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
-      }
-    } catch (error: any) {
-      setErrorMessage(error.message);
-    } finally {
-      if (!successMessage) {
-        setIsLoading(false);
-      }
-    }
-  };
+  const {
+    formData,
+    isLoading,
+    errorMessage,
+    successMessage,
+    handleInputChange,
+    handleSubmit,
+  } = useRegister();
 
   return (
     <motion.div
@@ -162,24 +107,13 @@ const RegisterPage: React.FC = () => {
               required
             />
 
-            {/* 2. AREA ALERT UNTUK ERROR & SUCCESS */}
+            {/* Area Alert untuk Error & Success */}
             {errorMessage && (
-              <Alert
-                variant="destructive"
-                className="bg-red-50 border-red-200 text-red-800"
-              >
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Gagal Mendaftar</AlertTitle>
-                <AlertDescription>{errorMessage}</AlertDescription>
-              </Alert>
+              <AuthAlert type="error" title="Gagal Mendaftar" message={errorMessage} />
             )}
 
             {successMessage && (
-              <Alert className="bg-green-50 border-green-200 text-green-800">
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
-                <AlertTitle>Berhasil!</AlertTitle>
-                <AlertDescription>{successMessage}</AlertDescription>
-              </Alert>
+              <AuthAlert type="success" title="Berhasil!" message={successMessage} />
             )}
 
             {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}

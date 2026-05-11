@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import BaseSideModal from "../layout/BaseSideModal";
+import QuickSelectButton from "@/components/shared/QuickSelectButton";
 
 interface CreatePortfolioModalProps {
   isOpen: boolean;
@@ -16,13 +18,7 @@ const NOMINAL_OPTIONS = [
   { label: "50jt", value: 50000000 },
 ];
 
-const formatRupiah = (num: number) => {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  }).format(num);
-};
+
 
 const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
   isOpen,
@@ -50,13 +46,13 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
     const numericValue = parseInt(rawValue, 10) || 0;
 
     setAmount(numericValue);
-    setAmountText(numericValue > 0 ? formatRupiah(numericValue) : "");
+    setAmountText(numericValue > 0 ? formatCurrencyIDR(numericValue) : "");
   };
 
   // Handler untuk klik tombol nominal cepat
   const handleQuickSelect = (value: number) => {
     setAmount(value);
-    setAmountText(formatRupiah(value));
+    setAmountText(formatCurrencyIDR(value));
   };
 
   const handleSubmit = async () => {
@@ -110,17 +106,12 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
           {/* Tombol Pilihan Cepat */}
           <div className="flex flex-wrap gap-2 mb-4">
             {NOMINAL_OPTIONS.map((opt) => (
-              <button
+              <QuickSelectButton
                 key={opt.value}
+                label={opt.label}
+                isSelected={amount === opt.value}
                 onClick={() => handleQuickSelect(opt.value)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
-                  amount === opt.value
-                    ? "border-[#329B0D] bg-green-100 text-green-800"
-                    : "border-slate-200 bg-white text-slate-600 hover:border-green-300"
-                }`}
-              >
-                {opt.label}
-              </button>
+              />
             ))}
           </div>
 
@@ -139,7 +130,7 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
             <span
               className={`font-semibold ${amount > currentBalance ? "text-red-500" : "text-slate-700"}`}
             >
-              {formatRupiah(currentBalance)}
+              {formatCurrencyIDR(currentBalance)}
             </span>
           </div>
 

@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import { useNavigate } from "react-router-dom";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 export interface StockItem {
   id: number;
@@ -22,7 +23,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
 
   return (
     <div className="w-full">
-      <h3 className="text-base font-medium text-slate-600 mb-2">{title}</h3>
+      <SectionHeader title={title} />
 
       <div className="flex flex-col border border-slate-200 max-h-[380px] overflow-y-auto px-4 rounded-xl">
         {stocks.map((stock, index) => (

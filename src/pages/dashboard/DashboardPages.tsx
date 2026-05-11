@@ -1,117 +1,26 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { AlertCircle } from "lucide-react";
 import { useDashboard } from "@/hooks/useDashboard";
-import { topUpWalletService } from "@/services/wallet.services";
-import type { DashboardRecommendedStock } from "@/types/dashboard";
-import type { StockItem } from "@/components/shared/cards/StockTable";
-// import { HeaderContext } from "@/components/layout/DashboardLayout";
+import { useWalletActions } from "@/hooks/useWalletActions";
+import { mapRecommendedStocks, mapPortfoliosToAllocations } from "@/utils/dashboard.utils";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
-import { toast } from "sonner";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
-import { createPortfolioService } from "@/services/portfolio.service";
 import PageHeader from "@/components/shared/layout/PageHeader";
 import PortfolioSection from "@/components/dashboard/PortfolioSection";
 
-function mapRecommendedStocks(
-  stocks: DashboardRecommendedStock[],
-): StockItem[] {
-  return stocks.map((stock, index) => ({
-    id: index + 1,
-    ticker: stock.ticker,
-    name: stock.name,
-    price: stock.current_price,
-    change: Math.abs(parseFloat(stock.change_percent.toFixed(2))),
-    isPositive: stock.change_percent >= 0,
-  }));
-}
-
 const DashboardPages: React.FC = () => {
   const { data, isLoading, error, refreshData } = useDashboard();
-  // const headerContext = useContext(HeaderContext);
-  // ini buat kebutuhan top tup
+  const { handleTopUp, handleCreatePortfolio } = useWalletActions({ onRefresh: refreshData });
+
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
-
-  // Update header saat data berhasil dimuat
-  // useEffect(() => {
-  //   if (data?.user_info && headerContext) {
-  //     headerContext.setHeader({
-  //       title: "Dashboard",
-  //       description: data.user_info.greeting,
-  //     });
-  //   }
-  // }, [data?.user_info, headerContext]);
-
-  const handleTopUpSuccess = async (amount: number) => {
-    try {
-      await topUpWalletService(amount);
-
-      await refreshData();
-
-      toast.success("Top Up Berhaasil !", {
-        description: `Saldo sebesar Rp ${amount.toLocaleString("id-ID")} telah masuk ke dompet utama.`,
-         classNames: {
-            title: "!text-green-700 !font-semibold",
-            description: "!text-slate-500",
-            toast: "!bg-white !border !border-green-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
-          },
-          duration: 10000,
-        // Kamu bisa tambahkan className khusus di sini jika ingin warna hijau)
-      });
-    } catch (error: any) {
-      toast.error("Top Up Gagal!", {
-        description:
-          error.message || "Terjadi kesalahan saat menambahkan saldo.",
-          classNames: {
-            title: "!text-red-700 !font-semibold",
-            description: "!text-slate-500",
-            toast: "!bg-white !border !border-red-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
-          },
-          duration: 10000,
-      });
-    }
-  };
-
-  const handleCreatePortfolioSuccess = async (name: string, amount: number) => {
-    try {
-      // Ingat, backend kamu minta variabel bernama 'allocated_fund'
-      await createPortfolioService({ name, allocated_fund: amount });
-
-      // Refresh UI
-      await refreshData();
-
-      // Toast Berhasil
-      toast.success("Dompet Berhasil Dibuat!", {
-        description: `Dompet ${name} sudah siap digunakan untuk investasi.`,
-        classNames: {
-            title: "!text-green-700 !font-semibold",
-            description: "!text-slate-500",
-            toast: "!bg-white !border !border-green-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
-          },
-          duration: 10000,
-      });
-    } catch (error: any) {
-      // Toast Gagal
-      toast.error("Gagal Membuat Dompet", {
-        description: error.message || "Terjadi kesalahan sistem.",
-        classNames: {
-            title: "!text-red-700 !font-semibold",
-            description: "!text-slate-500",
-            toast: "!bg-white !border !border-red-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
-          },
-          duration: 10000,
-      });
-      // Melempar error agar state loading di modal berhenti dan modal tidak tertutup otomatis
-      throw error;
-    }
-  };
 
   // ini buat loading ya lek yaa
   if (isLoading) {
@@ -151,14 +60,8 @@ const DashboardPages: React.FC = () => {
   // Map recommended stocks ke format StockTable
   const mappedStocks = mapRecommendedStocks(recommended_stocks);
 
-  // Map wallet summary ke format WalletSummary (saat ini portfolios kosong = allocations kosong)
-  // Allocations diambil dari portfolios jika ada, jika kosong tampilkan empty state
-  const walletAllocations = portfolios.map((portfolio, index) => ({
-    id: portfolio.id || String(index + 1),
-    name: portfolio.name,
-    amount: portfolio.total_value,
-    color: index === 0 ? "bg-green-700" : "bg-green-400",
-  }));
+  // Map portfolios ke format WalletSummary melalui utilitas terpusat
+  const walletAllocations = mapPortfoliosToAllocations(portfolios);
 
   return (
     <motion.div
@@ -183,7 +86,7 @@ const DashboardPages: React.FC = () => {
             isOpen={isTopUpOpen}
             onClose={() => setIsTopUpOpen(false)}
             currentBalance={data?.wallet_summary?.main_wallet_balance || 0}
-            onSuccess={handleTopUpSuccess}
+            onSuccess={handleTopUp}
           />
 
           {/* Portfolio Section — Dompet investasi */}
@@ -197,7 +100,7 @@ const DashboardPages: React.FC = () => {
             isOpen={isCreatePortoOpen}
             onClose={() => setIsCreatePortoOpen(false)}
             currentBalance={data?.wallet_summary?.main_wallet_balance || 0}
-            onSuccess={handleCreatePortfolioSuccess}
+            onSuccess={handleCreatePortfolio}
           />
 
           {/* Recommended Stocks — Saham sesuai profil risiko */}

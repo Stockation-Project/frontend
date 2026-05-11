@@ -136,7 +136,7 @@ const StockDetailPage: React.FC = () => {
           <div className="px-2">
             <h3 className="text-lg font-bold text-slate-800 mb-3">Rangkuman</h3>
             <p className="text-sm text-slate-500 leading-relaxed text-justify">
-              {data.ai_summary}
+              {data.about_company}
             </p>
           </div>
 
