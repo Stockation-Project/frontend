@@ -38,9 +38,9 @@ const CustomTooltip = ({ active, payload, label, isPositive }: any) => {
     const colorClass = isPositive ? "text-[#329B0D]" : "text-red-500";
 
     return (
-      <div className="bg-white p-3 border border-slate-200 rounded-xl shadow-lg">
+      <div className="bg-white p-2 border border-slate-200 rounded-lg shadow-lg">
         <p className="text-xs text-slate-500 font-medium mb-1">{date}</p>
-        <p className={`text-base font-extrabold ${colorClass}`}>
+        <p className={`text-sm font-semibold ${colorClass}`}>
           {formatCurrencyIDR(payload[0].value)}
         </p>
       </div>
@@ -63,14 +63,14 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
   const themeColor = isPositive ? "#329B0D" : "#EF4444";
 
   return (
-    <div className="w-full bg-white border border-slate-200 rounded-[2rem] p-6 mt-4 shadow-sm">
-      <div className="flex justify-end mb-6">
-        <div className="bg-slate-50 p-1 rounded-xl border border-slate-100 flex gap-1 overflow-x-auto no-scrollbar">
+    <div className="w-full bg-white border border-slate-200 rounded-xl pl-4 py-4">
+      <div className="flex justify-end mb-6 mr-4">
+        <div className="bg-slate-50 p-1 rounded-xl border border-slate-100 flex overflow-x-auto no-scrollbar">
           {TIME_FILTERS.map((filter) => (
             <button
               key={filter}
               onClick={() => onFilterChange(filter)}
-              className={`px-4 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap ${
+              className={`px-2.5 py-1.5 text-xs font-Regular rounded-lg transition-all whitespace-nowrap ${
                 activeFilter === filter
                   ? "bg-white text-slate-800 shadow-sm"
                   : "text-slate-400 hover:text-slate-600"
@@ -82,7 +82,7 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
         </div>
       </div>
 
-      <div className="w-full h-[320px]">
+      <div className="w-full h-[360px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}
@@ -90,14 +90,14 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
           >
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={themeColor} stopOpacity={0.3} />
-                <stop offset="95%" stopColor={themeColor} stopOpacity={0} />
+                <stop offset="5%" stopColor={themeColor} stopOpacity={0.4} />
+                <stop offset="95%" stopColor={themeColor} stopOpacity={0.04} />
               </linearGradient>
             </defs>
             <CartesianGrid
               strokeDasharray="3 3"
-              vertical={false}
-              stroke="#f1f5f9"
+              vertical={true}
+              stroke="rgba(148, 163, 184, 0.2)"
             />
             <XAxis
               dataKey="date"
@@ -125,7 +125,7 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
               type="linear"
               dataKey="price"
               stroke={themeColor} 
-              strokeWidth={2.5}
+              strokeWidth={1.7}
               fillOpacity={1}
               fill="url(#colorPrice)"
               connectNulls={true}

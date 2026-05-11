@@ -103,9 +103,9 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
         </div>
 
         {/* Disclaimer Card */}
-        <div className="bg-[#EFFFEC] rounded-xl px-4 py-2 flex items-start space-x-3 border border-green-100">
-          <Info className="w-4 h-4 text-[#329B0D] mt-0.5 flex-shrink-0" />
-          <p className="text-xs text-green-800 leading-relaxed">
+        <div className="bg-yellow-100 rounded-lg px-4 py-2 flex items-start space-x-3 border border-yellow-100">
+          <Info className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+          <p className="text-xs text-yellow-800 leading-relaxed">
             Ini adalah saldo virtual untuk simulasi investasi. Tidak ada uang
             nyata yang digunakan.
           </p>

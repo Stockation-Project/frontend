@@ -52,13 +52,13 @@ const StockDetailPage: React.FC = () => {
         <div className="xl:col-span-7 flex flex-col gap-6">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-4xl font-extrabold text-slate-900 mb-1">
+              <h1 className="text-3xl font-semibold text-slate-900 mb-0.5 tracking-tight">
                 {data.ticker}
               </h1>
-              <p className="text-xl text-slate-600 mb-3">{data.name}</p>
+              <p className="text-lg text-slate-600 mb-1">{data.name}</p>
               <Badge
                 variant="outline"
-                className="bg-green-50 text-[#329B0D] border-[#329B0D] hover:bg-green-100 font-semibold px-3 py-1 rounded-full text-xs"
+                className="bg-green-50 text-[#329B0D] border-[#329B0D] hover:bg-green-100 font-medium px-3 py-2 rounded-sm text-xs"
               >
                 Sektor: {data.sector}
               </Badge>
@@ -66,18 +66,18 @@ const StockDetailPage: React.FC = () => {
             <Button
               variant="outline"
               size="icon"
-              className="rounded-2xl h-12 w-12 border-slate-200 text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100"
+              className="rounded-xl h-12 w-12 border-slate-200 text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100"
             >
               <Bookmark className="w-5 h-5" />
             </Button>
           </div>
 
-          <div className="flex items-end gap-4 mt-2">
-            <h2 className="text-5xl font-extrabold text-slate-900 tracking-tight">
+          <div className="flex items-end gap-2">
+            <h2 className="text-4xl font-semibold text-slate-900 tracking-tight">
               {formatCurrencyIDR(data.current_price)}
             </h2>
             <span
-              className={`text-lg font-bold mb-1 ${priceChange.isPositive ? "text-[#329B0D]" : "text-red-500"}`}
+              className={`text-sm sm:text-md font-semibold mb-1 ${priceChange.isPositive ? "text-[#329B0D]" : "text-red-500"}`}
             >
               {priceChange.isPositive ? "▲" : "▼"} {priceChange.percent}%
             </span>
