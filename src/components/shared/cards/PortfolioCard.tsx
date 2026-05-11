@@ -46,7 +46,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
       {/* 2. Bagian Tengah (Progress Bar Alokasi) */}
       <div className="mb-6">
         {/* Bar */}
-        <div className="w-full h-2.5 flex rounded-full overflow-hidden bg-slate-100 mb-2 gap-0.5">
+        <div className="w-full h-2 flex rounded-full overflow-hidden bg-slate-100 mb-2 gap-0.5">
           {allocations.length > 0 ? (
             allocations.map((item, idx) => (
               <div
