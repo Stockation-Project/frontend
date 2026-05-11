@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import { createPortfolioService } from "@/services/portfolio.service";
 import PageHeader from "@/components/shared/layout/PageHeader";
+import PortfolioSection from "@/components/dashboard/PortfolioSection";
 
 function mapRecommendedStocks(
   stocks: DashboardRecommendedStock[],
