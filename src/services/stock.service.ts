@@ -39,17 +39,30 @@ export async function fetchStockDetail(ticker: string): Promise<StockDetailData>
 }
 
 /**
+ * Map raw backend data to SearchStockItem
+ */
+const mapToSearchStockItem = (raw: any): SearchStockItem => ({
+  ticker: raw.ticker,
+  name: raw.name,
+  currentPrice: raw.current_price || 0,
+  changePercent: raw.change_percent || 0,
+  isPositive: (raw.change_percent || 0) >= 0,
+});
+
+/**
  * Fetch recommended stocks based on user's risk profile.
  */
 export async function fetchRecommendedStocks(): Promise<SearchStockItem[]> {
-  const response = await apiClient.get<RecommendedStocksResponse>("/stocks/recommendations");
-  return response.data.data.recommendations;
+  const response = await apiClient.get<any>("/stocks/recommendations");
+  const rawData = response.data.data.recommendations || [];
+  return rawData.map(mapToSearchStockItem);
 }
 
 /**
  * Fetch all stocks to be used for search/explore.
  */
 export async function searchStocks(): Promise<SearchStockItem[]> {
-  const response = await apiClient.get<ExploreStocksResponse>("/stocks/explore");
-  return response.data.data.all_stocks;
+  const response = await apiClient.get<any>("/stocks/explore");
+  const rawData = response.data.data.all_stocks || [];
+  return rawData.map(mapToSearchStockItem);
 }

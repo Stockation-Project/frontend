@@ -63,6 +63,16 @@ const DashboardPages: React.FC = () => {
   // Map portfolios ke format WalletSummary melalui utilitas terpusat
   const walletAllocations = mapPortfoliosToAllocations(portfolios);
 
+  // Map warna UI untuk masing-masing saham di dalam setiap dompet
+  const ALLOCATION_COLORS = ["bg-[#329B0D]", "bg-green-500", "bg-green-300", "bg-emerald-600", "bg-teal-500"];
+  const portfoliosWithColors = portfolios.map(p => ({
+    ...p,
+    allocations: (p.allocations || []).map((alloc, idx) => ({
+      ...alloc,
+      color: ALLOCATION_COLORS[idx % ALLOCATION_COLORS.length]
+    }))
+  }));
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -91,7 +101,7 @@ const DashboardPages: React.FC = () => {
 
           {/* Portfolio Section — Dompet investasi */}
           <PortfolioSection
-            portfolios={portfolios}
+            portfolios={portfoliosWithColors}
             userRiskProfile={user_info.risk_profile}
             onAddClick={() => setIsCreatePortoOpen(true)}
           />
