@@ -36,23 +36,23 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className="w-full bg-white border border-slate-100 rounded-[2rem] p-6 lg:p-8 shadow-sm">
-      <h3 className="text-base font-medium text-slate-600 mb-2">
+    <div className="w-full bg-white border border-slate-200 rounded-xl p-2 lg:p-4">
+      <h3 className="text-base font-medium text-slate-600 mb-4">
         Ringkasan Dompet
       </h3>
 
       {/* Bagian Atas: Donut Chart & Info Total */}
-      <div className="flex items-center gap-6 mb-8">
+      <div className="flex gap-8 md:gap-30 lg:gap-8 mb-6 justify-center">
         {/* Donut Chart SVG */}
-        <div className="relative w-28 h-28 flex-shrink-0 flex items-center justify-center">
-          <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+        <div className="relative w-40 h-40 flex-shrink-0 flex items-center justify-center">
+          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 112 112" preserveAspectRatio="xMidYMid meet">
             {/* Background Circle (Abu-abu) */}
             <circle
               cx="56"
               cy="56"
               r={radius}
               stroke="currentColor"
-              strokeWidth="10"
+              strokeWidth="7"
               fill="transparent"
               className="text-slate-100"
             />
@@ -62,7 +62,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
               cy="56"
               r={radius}
               stroke="currentColor"
-              strokeWidth="10"
+              strokeWidth="7"
               fill="transparent"
               strokeDasharray={circumference}
               strokeDashoffset={strokeDashoffset}
@@ -72,28 +72,28 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
           </svg>
 
           {/* Teks di tengah Donut Chart */}
-          <div className="text-center z-10 flex flex-col items-center justify-center">
-            <span className="text-2xl font-extrabold text-slate-900 leading-none">
+          <div className="absolute text-center flex flex-col items-center justify-center">
+            <span className="text-xl font-semibold text-slate-900 leading-none">
               {Math.round(percentage)}%
             </span>
-            <span className="text-[10px] text-slate-500 font-medium">
+            <span className="text-[10px] text-slate-500 font-regular">
               Teralokasi
             </span>
           </div>
         </div>
 
         {/* Info Total Alokasi (Kanan) */}
-        <div className="flex flex-col justify-center">
-          <span className="text-xs font-bold text-slate-800 mb-1">
+        <div className="flex flex-col justify-start items-start">
+          <span className="text-xs font-medium text-slate-800 mb-1">
             Total Alokasi
           </span>
-          <div className="flex items-baseline gap-1">
-            <span className="text-3xl font-extrabold text-slate-900 leading-none">
+          <div className="flex items-baseline">
+            <span className="text-2xl font-semibold text-slate-900 leading-none">
               {formatJT(totalAllocated).replace("JT", "")}
             </span>
             <span className="text-sm font-bold text-slate-900">JT</span>
           </div>
-          <span className="text-[10px] text-slate-400 font-medium mt-1">
+          <span className="text-[10px] text-slate-400 font-regular">
             dari {formatJT(totalWallet)}
           </span>
         </div>
@@ -105,11 +105,11 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
           const itemPercentage = (item.amount / totalWallet) * 100;
           return (
             <div key={item.id} className="w-full">
-              <div className="flex justify-between items-end mb-1.5">
-                <span className="text-xs font-medium text-slate-600">
+              <div className="flex justify-between items-end mb-1">
+                <span className="text-xs font-regular text-slate-600">
                   {item.name}
                 </span>
-                <span className="text-xs font-bold text-slate-400">
+                <span className="text-xs font-medium text-slate-400">
                   {formatJT(item.amount)}
                 </span>
               </div>

@@ -24,7 +24,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
     <div className="w-full">
       <h3 className="text-base font-medium text-slate-600 mb-2">{title}</h3>
 
-      <div className="flex flex-col border-t border-slate-100 max-h-[380px] overflow-y-auto pr-2">
+      <div className="flex flex-col border border-slate-200 max-h-[380px] overflow-y-auto px-4 rounded-xl">
         {stocks.map((stock, index) => (
           <motion.div
             key={stock.id}
@@ -32,14 +32,14 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             onClick={() => navigate(`/dashboard/stock/${stock.ticker}`)}
-            className="group flex items-center justify-between py-4 border-b border-slate-100 hover:bg-slate-50 px-2 -mx-2 rounded-xl transition-colors cursor-pointer"
+            className="group flex items-center justify-between py-2 border-b border-slate-200 hover:bg-slate-100 px-2 -mx-2  transition-colors cursor-pointer"
           >
             {/* Kolom 1: Ticker & Nama */}
             <div className="flex-1 min-w-[150px]">
-              <h4 className="font-bold text-slate-900 text-base">
+              <h4 className="font-medium text-slate-900 text-sm">
                 {stock.ticker}
               </h4>
-              <p className="text-sm text-slate-500 truncate">{stock.name}</p>
+              <p className="text-xs font-regular text-slate-500 truncate">{stock.name}</p>
             </div>
 
             {/* Kolom 2: Grafik Mini (Sparkline) */}
@@ -113,7 +113,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
 
             {/* Kolom 3: Harga saat ini */}
             <div className="flex-1 text-right md:text-center min-w-[100px]">
-              <span className="font-semibold text-slate-900 text-sm md:text-base">
+              <span className="font-medium text-slate-900 text-sm md:text-sm">
                 {formatCurrencyIDR(stock.price)}
               </span>
             </div>
@@ -121,7 +121,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
             {/* Kolom 4: Indikator % */}
             <div className="flex-1 flex justify-end items-center min-w-[80px]">
               <span
-                className={`flex items-center text-sm md:text-base font-bold ${stock.isPositive ? "text-[#329B0D]" : "text-red-500"}`}
+                className={`flex items-center text-xs md:text-sm font-medium ${stock.isPositive ? "text-[#329B0D]" : "text-red-500"}`}
               >
                 {/* Segitiga Solid Kustom */}
                 <svg

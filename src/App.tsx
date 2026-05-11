@@ -52,7 +52,11 @@ function App() {
       <BrowserRouter>
         <AnimatedRoutes />
       </BrowserRouter>
-      <Toaster position="top-center" richColors />
+      {/* Mobile: atas tengah */}
+      <Toaster position="top-center" className="sm:hidden" />
+
+      {/* Desktop: bawah kiri */}
+      <Toaster position="bottom-left" className="hidden sm:block"/>
     </AuthProvider>
   );
 }
