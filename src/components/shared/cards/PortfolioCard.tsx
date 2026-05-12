@@ -31,20 +31,20 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
   const isProfit = profitAmount >= 0;
 
   return (
-    <div className="h-full min-w-[320px] w-[320px] bg-[radial-gradient(ellipse_at_top_right,_#ffffff_0%,_#ffffff_60%,_#f8f8f8_60%,_#ECFBE4_100%)] border-3 border-white rounded-xl p-3 flex flex-col justify-between shadow-[0_0_15px_rgba(0,0,0,0.08)] hover:shadow-lg transition-shadow cursor-pointer">
+    <div className="h-full min-w-[320px] w-[320px] bg-[radial-gradient(ellipse_at_top_right,_#ffffff_0%,_#ffffff_60%,_#f8f8f8_60%,_#ECFBE4_100%)] border-3 border-white rounded-xl overflow-hidden flex flex-col justify-between shadow-[0_0_15px_rgba(0,0,0,0.08)] hover:shadow-lg transition-shadow cursor-pointer">
       {/* 1. Bagian Atas (Header) */}
-      <div className="flex items-start gap-3 mb-5">
-        <div className="w-8 h-8 bg-[#329B0D] rounded-md flex items-center justify-center flex-shrink-0">
-          <Wallet className="w-5 h-5 text-slate-100 stroke-[1.5px]" />
+      <div className="flex items-start gap-3 bg-[#329B0D] p-3">
+        <div className="w-8 h-8 bg-slate-100 rounded-md flex items-center justify-center flex-shrink-0">
+          <Wallet className="w-5 h-5 text-[#329B0D] stroke-[1.5px]" />
         </div>
         <div>
-          <h4 className="font-medium text-sm text-slate-900 leading-tight">{name}</h4>
-          <p className="text-xs text-slate-400 font-regular truncate max-w-[200px]">{id}</p>
+          <h4 className="font-medium text-sm text-white leading-tight">{name}</h4>
+          <p className="text-xs text-slate-300 font-regular truncate max-w-[200px]">{id}</p>
         </div>
       </div>
 
       {/* 2. Bagian Tengah (Progress Bar Alokasi) */}
-      <div className="mb-4">
+      <div className=" p-3">
         {/* Bar */}
         <div className="w-full h-2 flex rounded-full overflow-hidden bg-slate-100 mb-2 gap-0.5">
           {allocations.length > 0 ? (
@@ -81,7 +81,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
       </div>
 
       {/* 3. Bagian Bawah (Footer: Terpakai & Tersedia) */}
-      <div className="flex items-start justify-between items-end pt-2 border-t border-slate-100 min-h-[60px]">
+      <div className="flex items-start justify-between items-end p-3 border-t border-slate-100 min-h-[60px]">
         {/* Kiri: Terpakai (Invested) */}
         <div>
           <p className="text-[10px] text-slate-500 font-medium mb-0.5">
