@@ -46,11 +46,11 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
         {cart.map((item) => (
           <div
             key={item.ticker}
-            className="border-1 m-2 border-slate-200 rounded-lg bg-white"
+            className="border-1 m-2 border-slate-200 rounded-lg overflow-hidden bg-white"
           >
             {/* Header Item */}
             <div
-              className={`px-3 py-2 flex items-center justify-between cursor-pointer transition-colors ${
+              className={`px-3 py-2 flex items-center justify-between cursor-pointer transition-colors  ${
               item.isExpanded ? "bg-[#F1F8EE]" : "hover:bg-slate-50"}`}
               onClick={() => onToggleExpand(item.ticker)}>
               <div>
