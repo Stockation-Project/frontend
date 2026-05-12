@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Logo from "@/components/shared/Logo";
+import Logo from "@/components/shared/brand/Logo";
 import ProgressBar from "@/components/questionnaire/ProgressBar";
 import OptionCard from "@/components/questionnaire/OptionCard";
 import { riskQuestions } from "@/data/questionnaire";
@@ -47,14 +47,14 @@ const QuestionnairePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header dengan Logo */}
-      <header className="py-3 px-5 sticky top-0 z-10 bg-white border-b border-slate-100 flex-shrink-0">
+      <header className="px-4 py-3 bg-white border-b border-slate-200 sticky top-0 z-10 flex-shrink-0 h-fit">
         <Logo variant="color" showText={true} />
       </header>
 
       {/* Area Utama */}
-      <main className="flex-1 flex flex-col items-center px-4 py-2 max-w-4xl mx-auto w-full">
+      <main className="flex-1 flex flex-col items-center px-4 max-w-4xl mx-auto w-full">
         {/* Progress Bar (Ditambah 1 karena currentStep dimulai dari 0) */}
-        <div className="w-full mb-6 mt-4">
+        <div className="w-full py-4">
           <ProgressBar
             currentStep={currentStep + 1}
             totalSteps={riskQuestions.length}
@@ -71,14 +71,14 @@ const QuestionnairePage: React.FC = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-full flex flex-col items-center"
+            className="w-full flex flex-col gap-4 md:gap-8 items-center"
           >
-            <div className="text-center mb-6 w-full max-w-2xl">
-              <h1 className="text-3xl md:text-2xl font-medium text-slate-900 tracking-tight mb-4 leading-tight">
+            <div className="text-center w-full max-w-5xl">
+              <h1 className="text-xl md:text-2xl font-regular text-slate-900 tracking-tight leading-tight">
                 {currentQuestion.question}
               </h1>
               {currentQuestion.subtitle && (
-                <p className="text-slate-500 text-lg">
+                <p className="text-slate-500 text-xs md:text-sm">
                   {currentQuestion.subtitle}
                 </p>
               )}
@@ -101,13 +101,13 @@ const QuestionnairePage: React.FC = () => {
       </main>
 
       {/* Footer Navigasi Lengket di Bawah */}
-      <footer className="py-6 px-4 sm:px-8 border-t border-slate-100 bg-white sticky bottom-0 z-10 w-full">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+      <footer className="py-4 bg-white border-t border-slate-200 sticky bottom-0 z-10 w-full">
+        <div className="px-4 sm:px-8 md:px-16 lg:px-40 mx-auto flex items-center justify-between">
           <Button
             variant="outline"
             onClick={handleBack}
             disabled={currentStep === 0} // Matikan jika di halaman pertama
-            className="h-12 px-6 rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 font-medium"
+            className="h-11 px-6 rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 font-medium"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Kembali
@@ -116,7 +116,7 @@ const QuestionnairePage: React.FC = () => {
           <Button
             onClick={handleNext}
             disabled={!hasAnsweredCurrent || isSubmitting} // Matikan jika belum memilih
-            className="h-12 px-8 rounded-xl bg-green-700 hover:bg-green-800 text-white font-medium shadow-md transition-all"
+            className="h-11 px-8 rounded-xl bg-green-700 hover:bg-green-800 text-white font-medium shadow-md transition-all"
           >
             {isLastStep
               ? isSubmitting
