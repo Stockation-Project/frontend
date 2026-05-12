@@ -21,21 +21,21 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
   onToggleExpand,
 }) => {
   return (
-    <div className="bg-[#F8FDF6] border border-slate-200 rounded-2xl flex flex-col h-[600px] shadow-sm overflow-hidden">
+    <div className="border border-slate-200 rounded-lg flex flex-col h-[600px] overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-slate-200/60 bg-[#F1F8EE] flex justify-between items-center">
+      <div className="p-3 border-b border-slate-200/60 bg-[#F1F8EE] flex justify-between items-center">
         <div>
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">
-            DOMPET TERPILIH
+          <p className="text-xs font-medium text-slate-800 tracking-wider mb-0.5">
+            Dompet Terpilih
           </p>
-          <h3 className="font-extrabold text-slate-900">
+          <h3 className="font-semibold text-sm text-slate-900">
             {selectedPortfolio ? selectedPortfolio.name : "Pilih Dompet"}
           </h3>
         </div>
-        <div className="text-right">
+        <div className="text-medium font-medium">
           <p className="text-xs text-slate-500">
             {selectedPortfolio
-              ? `${formatCurrencyIDR(selectedPortfolio.cash_balance)} tersedia`
+              ? `${formatCurrencyIDR(selectedPortfolio.cash_balance)} Saldo tersisa`
               : "-"}
           </p>
         </div>
@@ -46,22 +46,24 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
         {cart.map((item) => (
           <div
             key={item.ticker}
-            className="border-b border-slate-200/60 bg-white"
+            className="border-1 m-2 border-slate-200 rounded-lg overflow-hidden bg-white"
           >
             {/* Header Item */}
             <div
-              className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50 transition-colors"
-              onClick={() => onToggleExpand(item.ticker)}
-            >
+              className={`px-3 py-2 flex items-center justify-between cursor-pointer transition-colors  ${
+              item.isExpanded ? "bg-[#F1F8EE]" : "hover:bg-slate-50"}`}
+              onClick={() => onToggleExpand(item.ticker)}>
               <div>
-                <h4 className="font-bold text-slate-900">{item.ticker}</h4>
-                <p className="text-xs text-slate-500 truncate max-w-[150px]">
+                <h4 className="font-medium text-slate-900 text-xs truncate max-w-[150px]">
+                  {item.ticker}
+                </h4>
+                <p className="text-xs text-slate-500 truncate max-w-[170px]">
                   {item.name}
                 </p>
               </div>
 
               <div className="flex items-center gap-4">
-                <p className="text-sm font-bold text-slate-900">
+                <p className="text-xs font-medium text-slate-900">
                   {formatCurrencyIDR(item.currentPrice)}
                 </p>
                 <div className="flex items-center gap-2">
@@ -70,15 +72,15 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
                       e.stopPropagation();
                       onRemove(item.ticker);
                     }}
-                    className="w-7 h-7 flex items-center justify-center border border-slate-200 rounded-lg text-slate-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-colors"
+                    className="w-6 h-6 flex items-center justify-center border border-slate-200 rounded-sm text-slate-600 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-colors"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-3 h-3" />
                   </button>
-                  <button className="w-7 h-7 flex items-center justify-center border border-slate-200 rounded-lg text-slate-600 bg-slate-50 hover:bg-slate-100 transition-colors">
+                  <button className="w-6 h-6 flex items-center justify-center  rounded-sm text-slate-600 hover:bg-slate-100 transition-colors">
                     {item.isExpanded ? (
-                      <ChevronUp className="w-4 h-4" />
+                      <ChevronUp className="w-3 h-3" />
                     ) : (
-                      <ChevronDown className="w-4 h-4" />
+                      <ChevronDown className="w-3  h-3" />
                     )}
                   </button>
                 </div>
@@ -87,30 +89,30 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
 
             {/* Expanded Body */}
             {item.isExpanded && (
-              <div className="p-4 bg-slate-50/50 border-t border-slate-100">
+              <div className="p-4 bg-slate-50/50 border-t border-slate-200">
                 {/* Mock Chart Area (kept simple for performance) */}
                 <div className="w-full h-24 bg-gradient-to-t from-green-50 to-transparent border-b-2 border-[#329B0D] mb-6 rounded-t-xl opacity-50 relative">
                   <span className="absolute bottom-2 left-2 text-[10px] text-slate-400 font-medium">Chart trend</span>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-slate-500">
+                    <span className="text-xs font-Regular text-slate-500">
                       Harga per Lembar
                     </span>
-                    <span className="font-bold text-slate-900">
+                    <span className="font-medium text-xs text-slate-900">
                       {formatCurrencyIDR(item.currentPrice)}
                     </span>
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-slate-500">Jumlah Lot</span>
-                    <div className="flex items-center border border-slate-200 rounded-xl bg-white overflow-hidden">
+                    <span className="text-xs text-slate-500">Jumlah Lot</span>
+                    <div className="flex items-center border border-slate-200 rounded-lg bg-white overflow-hidden">
                       <button
                         onClick={() => onUpdateLot(item.ticker, item.lots - 1)}
-                        className="px-3 py-2 text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+                        className="p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-colors"
                       >
-                        <Minus className="w-4 h-4" />
+                        <Minus className="w-3 h-3" />
                       </button>
                       <input
                         type="number"
@@ -122,20 +124,20 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
                             parseInt(e.target.value) || 1
                           )
                         }
-                        className="w-12 text-center text-sm font-bold border-x border-slate-200 py-2 outline-none appearance-none"
+                        className="h-full p-2 w-11 text-center text-xs font-medium border-x border-slate-200  outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
                       <button
                         onClick={() => onUpdateLot(item.ticker, item.lots + 1)}
-                        className="px-3 py-2 text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+                        className="p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-colors"
                       >
-                        <Plus className="w-4 h-4" />
+                        <Plus className="w-3 h-3" />
                       </button>
                     </div>
                   </div>
 
                   <div className="flex justify-between items-center pt-2 border-t border-slate-200/60">
-                    <span className="text-sm text-slate-500">Nilai posisi</span>
-                    <span className="font-extrabold text-slate-900">
+                    <span className="text-xs font-Regular text-slate-500">Subtotal pembelian</span>
+                    <span className="font-medium text-xs text-slate-900">
                       {formatCurrencyIDR(item.currentPrice * item.lots * 100)}
                     </span>
                   </div>

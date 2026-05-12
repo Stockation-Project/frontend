@@ -56,18 +56,18 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
         {/* Card Saldo Saat Ini & Setelah Top Up */}
         <div className="bg-white rounded-xl p-4 border border-slate-200 flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4">
           <div>
-            <p className="text-xs text-slate-500 font-Regular ">
+            <p className="text-[10px] text-slate-500 font-medium ">
               Saldo saat ini
             </p>
-            <p className="text-lg font-semibold text-slate-900">
+            <p className="text-sm font-medium text-slate-900">
               {formatCurrencyIDR(currentBalance)}
             </p>
           </div>
           <div className="text-left sm:text-right">
-            <p className="text-xs text-slate-500 font-Regular ">
+            <p className="text-[10px] text-slate-500 font-medium ">
               Setelah top up
             </p>
-            <p className="text-lg font-semibold text-[#329B0D]">
+            <p className="text-sm font-medium text-[#329B0D]">
               {selectedAmount
                 ? formatCurrencyIDR(currentBalance + selectedAmount)
                 : "--"}
@@ -77,7 +77,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
 
         {/* Pilihan Nominal */}
         <div>
-          <p className="text-sm font-medium text-slate-600 mb-2">
+          <p className="text-xs font-medium text-slate-600 mb-2">
             Pilih nominal top up
           </p>
           <div className="grid grid-cols-2 gap-4">
@@ -85,16 +85,16 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
               <button
                 key={option.id}
                 onClick={() => setSelectedAmount(option.value)}
-                className={`py-4 px-2 rounded-xl border-2 transition-all flex flex-col items-center justify-center ${
+                className={`py-3 rounded-lg border-1 transition-all flex flex-col items-center justify-center ${
                   selectedAmount === option.value
                     ? "border-[#329B0D] bg-green-50"
                     : "border-slate-200 bg-white hover:border-green-200"
                 }`}
               >
-                <span className="text-lg font-semibold text-slate-800 ">
+                <span className="text-sm font-medium text-slate-800 ">
                   {option.label}
                 </span>
-                <span className="text-sm text-slate-500">
+                <span className="text-xs text-slate-500">
                   {formatCurrencyIDR(option.value)}
                 </span>
               </button>
