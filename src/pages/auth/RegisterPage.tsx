@@ -118,11 +118,11 @@ const RegisterPage: React.FC = () => {
 
             {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}
             {isLoading ? (
-              <Skeleton className="w-full h-11 rounded-xl bg-slate-200" />
+              <Skeleton className="w-full h-10 rounded-xl bg-slate-200" />
             ) : (
               <Button
                 type="submit"
-                className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
+                className="w-full h-10 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
               >
                 Daftar
               </Button>

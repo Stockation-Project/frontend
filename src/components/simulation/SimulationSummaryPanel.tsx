@@ -32,7 +32,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
   // Recharts needs valid hex colors, but we have tailwind classes.
   // We'll map the tailwind classes back to hex for recharts.
   const colorMap: Record<string, string> = {
-    "bg-[#329B0D]": "#329B0D",
+    "bg-green-700": "green-700",
     "bg-green-500": "#22c55e",
     "bg-green-300": "#86efac",
     "bg-emerald-600": "#059669",
@@ -156,10 +156,10 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
           disabled={
             isBuying || cart.length === 0 || !isBalanceSufficient || !selectedPortfolio
           }
-          className={`w-full py-4 mt-auto rounded-2xl font-bold text-lg transition-all shadow-md ${
+          className={`w-full py-3 mt-auto rounded-xl font-medium text-sm transition-all shadow-md ${
             isBuying || cart.length === 0 || !isBalanceSufficient || !selectedPortfolio
               ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-              : "bg-[#329B0D] hover:bg-green-800 text-white shadow-green-700/20 active:scale-[0.98]"
+              : "bg-green-700 hover:bg-green-800 active:bg-green-900 text-white shadow-green-700/20 active:scale-[0.98]"
           }`}
         >
           {isBuying ? "Memproses..." : "Konfirmasi Beli"}

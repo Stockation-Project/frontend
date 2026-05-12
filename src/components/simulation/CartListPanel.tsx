@@ -91,7 +91,7 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
             {item.isExpanded && (
               <div className="p-4 bg-slate-50/50 border-t border-slate-200">
                 {/* Mock Chart Area (kept simple for performance) */}
-                <div className="w-full h-24 bg-gradient-to-t from-green-50 to-transparent border-b-2 border-[#329B0D] mb-6 rounded-t-xl opacity-50 relative">
+                <div className="w-full h-24 bg-gradient-to-t from-green-50 to-transparent border-b-2 border-green-700 mb-6 rounded-t-xl opacity-50 relative">
                   <span className="absolute bottom-2 left-2 text-[10px] text-slate-400 font-medium">Chart trend</span>
                 </div>
 
