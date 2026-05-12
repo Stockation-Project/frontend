@@ -37,10 +37,10 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
           >
             {/* Kolom 1: Ticker & Nama */}
             <div className="flex-1 min-w-[150px]">
-              <h4 className="font-medium text-slate-900 text-sm">
+              <h4 className="font-medium text-slate-900 text-xs">
                 {stock.ticker}
               </h4>
-              <p className="text-xs font-regular text-slate-500 truncate">{stock.name}</p>
+              <p className="text-[10px] font-regular text-slate-500 truncate">{stock.name}</p>
             </div>
 
             {/* Kolom 2: Grafik Mini (Sparkline) */}

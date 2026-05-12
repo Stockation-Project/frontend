@@ -15,9 +15,9 @@ const SimulationBuyPage: React.FC = () => {
 
   if (state.isLoading) {
     return (
-      <div className="w-full h-[600px] flex flex-col items-center justify-center text-slate-500">
+      <div className="w-full h-screen flex flex-col items-center justify-center text-slate-500">
         <Loader2 className="w-10 h-10 animate-spin text-[#329B0D] mb-4" />
-        <p className="font-semibold">Memuat data simulasi...</p>
+        <p className="font-medium">Memuat data simulasi...</p>
       </div>
     );
   }
@@ -36,14 +36,14 @@ const SimulationBuyPage: React.FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className="w-full p-6 md:p-10 pb-20"
+      className="w-full"
     >
       <PageHeader title="" showBackButton={true} />
 
-      <div className="max-w-[1400px] mx-auto space-y-8">
+      <div className="w-full mx-auto">
         {/* SECTION 1: Pilih Dompet */}
-        <div>
-          <h2 className="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">
+        <div className="flex flex-col p-4 gap-2">
+          <h2 className="text-sm font-medium text-slate-500 uppercase tracking-wide">
             Pilih dompet
           </h2>
           <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
@@ -72,9 +72,9 @@ const SimulationBuyPage: React.FC = () => {
 
         {/* SECTION 2: Tabs Rekomendasi / Manual */}
         <div>
-          <div className="flex border-b border-slate-200 mb-6">
+          <div className="flex border-b border-slate-200 mb-4">
             <button
-              className={`flex-1 pb-4 text-center font-bold text-base transition-colors ${
+              className={`flex-1 py-2 text-center font-medium text-sm transition-colors ${
                 mainTab === "Rekomendasi"
                   ? "border-b-2 border-[#329B0D] text-[#329B0D]"
                   : "text-slate-400 hover:text-slate-600"
@@ -84,7 +84,7 @@ const SimulationBuyPage: React.FC = () => {
               Rekomendasi
             </button>
             <button
-              className={`flex-1 pb-4 text-center font-bold text-base transition-colors ${
+              className={`flex-1 py-2 text-center font-medium text-sm transition-colors ${
                 mainTab === "Manual"
                   ? "border-b-2 border-[#329B0D] text-[#329B0D]"
                   : "text-slate-400 hover:text-slate-600"
@@ -113,9 +113,9 @@ const SimulationBuyPage: React.FC = () => {
 
           {/* TAB CONTENT: Manual (The 3 Columns) */}
           {mainTab === "Manual" && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="flex gap-4 items-start">
               {/* Kolom Kiri: Search */}
-              <div className="lg:col-span-3">
+              <div className="w-full min-w-[300px] max-w-[30%]">
                 <StockSearchPanel
                   searchQuery={state.searchQuery}
                   setSearchQuery={handlers.setSearchQuery}
@@ -126,7 +126,7 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               {/* Kolom Tengah: Cart */}
-              <div className="lg:col-span-6">
+              <div className="w-full min-w-[300px] max-w-[40%]">
                 <CartListPanel
                   selectedPortfolio={state.selectedPortfolio}
                   cart={state.cart}
@@ -137,7 +137,7 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               {/* Kolom Kanan: Summary */}
-              <div className="lg:col-span-3">
+              <div className="w-full min-w-[300px] max-w-[30%]">
                 <SimulationSummaryPanel
                   cart={state.cart}
                   selectedPortfolio={state.selectedPortfolio}
