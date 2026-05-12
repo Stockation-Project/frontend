@@ -40,7 +40,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-6 flex flex-col h-[600px]">
+    <div className="bg-white border border-slate-200 rounded-lg p-3 flex flex-col h-[600px]">
       {/* Donut Chart Area */}
       <div className="h-[200px] flex items-center justify-center mb-6 relative">
         {donutChartData.length > 0 ? (
@@ -52,7 +52,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
                     data={donutChartData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={55}
+                    innerRadius={70}
                     outerRadius={80}
                     paddingAngle={2}
                     dataKey="percentage"
@@ -69,10 +69,10 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
               </ResponsiveContainer>
               {/* Inner Circle Info */}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-[10px] text-slate-400 font-bold">
+                <span className="text-[10px] text-slate-400 font-medium">
                   Total
                 </span>
-                <span className="text-sm font-extrabold text-slate-800">
+                <span className="text-sm font-semibold text-slate-800">
                   {donutChartData.length} Saham
                 </span>
               </div>
@@ -83,9 +83,9 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
               {donutChartData.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
                   <div
-                    className={`w-3 h-3 rounded-full ${item.color} flex-shrink-0`}
+                    className={`w-2 h-2 rounded-full ${item.color} flex-shrink-0`}
                   />
-                  <span className="text-xs font-semibold text-slate-600">
+                  <span className="text-[10px] font-medium text-slate-600">
                     {item.ticker} {item.percentage}%
                   </span>
                 </div>
@@ -103,31 +103,31 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
 
       {/* Rincian Pembayaran */}
       <div className="flex-1 flex flex-col">
-        <h3 className="font-extrabold text-slate-900 mb-4 text-lg">
+        <h3 className="font-medium text-slate-900 mb-4 text-sm">
           Rincian Pembayaran
         </h3>
         
         <div className="space-y-3 mb-6">
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-xs">
             <span className="text-slate-500">Total Unit Saham</span>
-            <span className="font-bold text-slate-900">{totalUnit}</span>
+            <span className="font-medium text-slate-900">{totalUnit}</span>
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-xs">
             <span className="text-slate-500">Total Lot</span>
-            <span className="font-bold text-slate-900">
+            <span className="font-medium text-slate-900">
               {totalLot} Lot ({totalShares} Lembar)
             </span>
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-xs">
             <span className="text-slate-500">Total Investasi</span>
-            <span className="font-bold text-slate-900">
+            <span className="font-medium text-slate-900">
               {formatCurrencyIDR(totalInvestment)}
             </span>
           </div>
-          <div className="flex justify-between text-sm pt-3 border-t border-slate-200/60">
-            <span className="text-slate-500 font-semibold">Sisa Saldo</span>
+          <div className="flex justify-between text-xs pt-3 border-t border-slate-200/60">
+            <span className="text-slate-700 font-medium">Sisa Saldo</span>
             <span
-              className={`font-extrabold ${
+              className={`font-medium ${
                 !isBalanceSufficient ? "text-red-500" : "text-slate-900"
               }`}
             >
@@ -140,7 +140,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
 
         {/* Validation Errors */}
         {!isBalanceSufficient && selectedPortfolio && (
-          <p className="text-xs text-red-500 font-medium mb-3 text-center">
+          <p className="text-xs text-red-500 font-regular mb-3 text-start">
             Saldo tidak mencukupi untuk pembelian ini.
           </p>
         )}
