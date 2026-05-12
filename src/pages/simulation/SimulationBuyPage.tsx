@@ -16,7 +16,7 @@ const SimulationBuyPage: React.FC = () => {
   if (state.isLoading) {
     return (
       <div className="w-full h-screen flex flex-col items-center justify-center text-slate-500">
-        <Loader2 className="w-10 h-10 animate-spin text-[#329B0D] mb-4" />
+        <Loader2 className="w-10 h-10 animate-spin text-green-700 mb-4" />
         <p className="font-medium">Memuat data simulasi...</p>
       </div>
     );
@@ -76,7 +76,7 @@ const SimulationBuyPage: React.FC = () => {
             <button
               className={`flex-1 py-2 text-center font-medium text-sm transition-colors ${
                 mainTab === "Rekomendasi"
-                  ? "border-b-2 border-[#329B0D] text-[#329B0D]"
+                  ? "border-b-2 border-green-700 text-green-700"
                   : "text-slate-400 hover:text-slate-600"
               }`}
               onClick={() => setMainTab("Rekomendasi")}
@@ -86,7 +86,7 @@ const SimulationBuyPage: React.FC = () => {
             <button
               className={`flex-1 py-2 text-center font-medium text-sm transition-colors ${
                 mainTab === "Manual"
-                  ? "border-b-2 border-[#329B0D] text-[#329B0D]"
+                  ? "border-b-2 border-green-700 text-green-700"
                   : "text-slate-400 hover:text-slate-600"
               }`}
               onClick={() => setMainTab("Manual")}

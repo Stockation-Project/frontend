@@ -32,7 +32,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
   // Recharts needs valid hex colors, but we have tailwind classes.
   // We'll map the tailwind classes back to hex for recharts.
   const colorMap: Record<string, string> = {
-    "bg-[#329B0D]": "#329B0D",
+    "bg-green-700": "green-700",
     "bg-green-500": "#22c55e",
     "bg-green-300": "#86efac",
     "bg-emerald-600": "#059669",

@@ -36,13 +36,13 @@ const WalletSelectCard: React.FC<WalletSelectCardProps> = ({
       onClick={onClick}
       className={`min-w-[240px] w-[240px] h-[100px] my-4 bg-white border rounded-lg flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer ${
         isSelected
-          ? "border-[#329B0D] ring-1 ring-[#329B0D]"
+          ? "border-green-700 ring-1 ring-green-700"
           : "border-slate-200 hover:border-slate-300"
       }`}
     >
       <div
         className={`px-4 py-2 font-medium text-sm ${
-          isSelected ? "bg-[#329B0D] text-white" : "bg-slate-100 text-slate-700"
+          isSelected ? "bg-green-700 text-white" : "bg-slate-100 text-slate-700"
         }`}
       >
         {name}

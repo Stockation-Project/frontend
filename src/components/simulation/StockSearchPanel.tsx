@@ -91,7 +91,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
               </p>
               <p
                 className={`text-[10px] font-regular ${
-                  stock.isPositive ? "text-[#329B0D]" : "text-red-500"
+                  stock.isPositive ? "text-green-700" : "text-red-500"
                 }`}
               >
                 {stock.isPositive ? "▲" : "▼"} {stock.changePercent.toFixed(2)}%
@@ -100,7 +100,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
 
             <button
               onClick={() => onAddStock(stock)}
-              className="w-6 h-6 bg-[#329B0D] flex-shrink-0 flex items-center justify-center border border-[#329B0D] text-white rounded-sm hover:bg-green-600 transition-colors"
+              className="w-6 h-6 bg-green-700 flex-shrink-0 flex items-center justify-center border border-green-700 text-white rounded-sm hover:bg-green-600 transition-colors"
             >
               <Plus className="w-3 h-3" />
             </button>
