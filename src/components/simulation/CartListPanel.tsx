@@ -21,7 +21,7 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
   onToggleExpand,
 }) => {
   return (
-    <div className="bg-[#F8FDF6] border border-slate-200 rounded-2xl flex flex-col h-[600px] shadow-sm overflow-hidden">
+    <div className="bg-[#F8FDF6] border border-slate-200 rounded-lg flex flex-col h-[600px] overflow-hidden">
       {/* Header */}
       <div className="p-4 border-b border-slate-200/60 bg-[#F1F8EE] flex justify-between items-center">
         <div>

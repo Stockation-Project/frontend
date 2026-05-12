@@ -40,7 +40,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col h-[600px] shadow-sm">
+    <div className="bg-white border border-slate-200 rounded-lg p-6 flex flex-col h-[600px]">
       {/* Donut Chart Area */}
       <div className="h-[200px] flex items-center justify-center mb-6 relative">
         {donutChartData.length > 0 ? (

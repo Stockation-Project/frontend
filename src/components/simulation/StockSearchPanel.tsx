@@ -28,7 +28,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
       : filteredStocks;
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col h-[600px] shadow-sm">
+    <div className="bg-white border border-slate-200 rounded-lg p-4 flex flex-col h-[600px]">
       {/* Search Input */}
       <div className="relative mb-4">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
