@@ -28,7 +28,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
       : filteredStocks;
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-4 flex flex-col h-[600px]">
+    <div className="bg-white border border-slate-200 rounded-lg p-2 flex flex-col h-[600px]">
       {/* Search Input */}
       <div className="relative mb-4">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -41,15 +41,15 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
               setActiveTab("Manual"); // auto switch if typing
             }
           }}
-          className="pl-9 bg-slate-50 border-slate-200 rounded-xl"
+          className="pl-9 bg-slate-50 border-slate-200 rounded-lg"
         />
       </div>
 
       {/* Mini Toggle */}
       <div className="flex justify-end mb-4">
-        <div className="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+        <div className="bg-slate-50 p-1 rounded-xl border border-slate-100 flex overflow-x-auto no-scrollbar text-xs font-medium">
           <button
-            className={`px-3 py-1.5 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 rounded-lg transition-all whitespace-nowrap ${
               activeTab === "Rekomendasi"
                 ? "bg-white text-slate-900 shadow-sm"
                 : "text-slate-500 hover:text-slate-700"
@@ -66,31 +66,31 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
             }`}
             onClick={() => setActiveTab("Manual")}
           >
-            Manual
+            Semua
           </button>
         </div>
       </div>
 
       {/* List */}
-      <div className="flex-1 overflow-y-auto no-scrollbar space-y-3 pr-1">
+      <div className="flex-1 overflow-y-auto no-scrollbar">
         {displayList.map((stock) => (
           <div
             key={stock.ticker}
-            className="flex items-center justify-between p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition-colors"
+            className="flex gap-2 items-center justify-between py-3 px-2 border-b border-slate-200 hover:bg-slate-50 transition-colors "
           >
-            <div className="flex-1 min-w-0 pr-3">
-              <h4 className="font-bold text-slate-900 truncate">
+            <div className="min-w-0 max-w-[160px] ">
+              <h4 className="font-medium text-slate-900 truncate text-xs">
                 {stock.ticker}
               </h4>
-              <p className="text-xs text-slate-500 truncate">{stock.name}</p>
+              <p className="text-[10px] text-slate-500 truncate">{stock.name}</p>
             </div>
             
-            <div className="text-right pr-4">
-              <p className="text-sm font-bold text-slate-900">
+            <div className="text-right flex-1 min-w-0">
+              <p className="text-xs font-medium text-slate-900">
                 {formatCurrencyIDR(stock.currentPrice).replace("Rp", "Rp ")}
               </p>
               <p
-                className={`text-[10px] font-bold ${
+                className={`text-[10px] font-regular ${
                   stock.isPositive ? "text-[#329B0D]" : "text-red-500"
                 }`}
               >
@@ -100,9 +100,9 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
 
             <button
               onClick={() => onAddStock(stock)}
-              className="w-8 h-8 flex-shrink-0 flex items-center justify-center border border-[#329B0D] text-[#329B0D] rounded-lg hover:bg-green-50 transition-colors"
+              className="w-6 h-6 bg-[#329B0D] flex-shrink-0 flex items-center justify-center border border-[#329B0D] text-white rounded-sm hover:bg-green-600 transition-colors"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-3 h-3" />
             </button>
           </div>
         ))}
