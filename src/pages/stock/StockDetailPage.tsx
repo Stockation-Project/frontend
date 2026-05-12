@@ -144,10 +144,9 @@ const StockDetailPage: React.FC = () => {
             onClick={() => navigate('/dashboard/simulation')}
           >
             Beli Saham Ini
-            </Button>
-          </div>
-          
+          </Button>
         </div>
+      </div>
     </motion.div>
   );
 };

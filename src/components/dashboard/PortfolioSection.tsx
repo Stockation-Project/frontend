@@ -10,12 +10,18 @@ interface PortfolioSectionProps {
   portfolios: DashboardPortfolio[];
   userRiskProfile: string;
   onAddClick: () => void;
+  /** Callback saat user klik portfolio card. Jika tidak disediakan, card tidak clickable. */
+  onCardClick?: (portfolioId: string) => void;
+  /** ID portfolio yang sedang aktif/dilihat — untuk highlight visual. */
+  activePortfolioId?: string;
 }
 
 const PortfolioSection: React.FC<PortfolioSectionProps> = ({
   portfolios,
   userRiskProfile,
   onAddClick,
+  onCardClick,
+  activePortfolioId,
 }) => {
   return (
     <div className="w-full flex flex-col">
@@ -31,15 +37,21 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
         <div className="flex gap-4 overflow-x-auto p-4 no-scrollbar scroll-smooth snap-x">
           {portfolios.map((porto, index) => (
             <div key={porto.id || index} className="snap-start">
-              <PortfolioCard
-                id={porto.id}
-                name={porto.name}
-                cashBalance={porto.cash_balance || 0}
-                investedBalance={porto.invested_balance || 0}
-                allocations={porto.allocations || []}
-                profitAmount={porto.profitAmount || 0}
-                profitPercentage={porto.profitPercentage || 0}
-              />
+              <div
+                onClick={() => onCardClick?.(porto.id)}
+                className={`transition-all ${onCardClick ? "cursor-pointer" : ""}`}
+              >
+                <PortfolioCard
+                  id={porto.id}
+                  name={porto.name}
+                  cashBalance={porto.cash_balance || 0}
+                  investedBalance={porto.invested_balance || 0}
+                  allocations={porto.allocations || []}
+                  profitAmount={porto.profitAmount || 0}
+                  profitPercentage={porto.profitPercentage || 0}
+                  isActive={activePortfolioId === porto.id}
+                />
+              </div>
             </div>
           ))}
 

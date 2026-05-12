@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { AlertCircle } from "lucide-react";
 import { useDashboard } from "@/hooks/useDashboard";
 import { useWalletActions } from "@/hooks/useWalletActions";
@@ -16,6 +17,7 @@ import PageHeader from "@/components/shared/layout/PageHeader";
 import PortfolioSection from "@/components/dashboard/PortfolioSection";
 
 const DashboardPages: React.FC = () => {
+  const navigate = useNavigate();
   const { data, isLoading, error, refreshData } = useDashboard();
   const { handleTopUp, handleCreatePortfolio } = useWalletActions({ onRefresh: refreshData });
 
@@ -104,6 +106,9 @@ const DashboardPages: React.FC = () => {
             portfolios={portfoliosWithColors}
             userRiskProfile={user_info.risk_profile}
             onAddClick={() => setIsCreatePortoOpen(true)}
+            onCardClick={(portfolioId) =>
+              navigate(`/portfolio/${portfolioId}`)
+            }
           />
 
           <CreatePortfolioModal
