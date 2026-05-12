@@ -146,6 +146,7 @@ const StockDetailPage: React.FC = () => {
             Beli Saham Ini
           </Button>
         </div>
+      </div>
     </motion.div>
   );
 };
