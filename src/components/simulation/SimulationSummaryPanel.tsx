@@ -156,10 +156,10 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
           disabled={
             isBuying || cart.length === 0 || !isBalanceSufficient || !selectedPortfolio
           }
-          className={`w-full py-4 mt-auto rounded-2xl font-bold text-lg transition-all shadow-md ${
+          className={`w-full py-3 mt-auto rounded-xl font-medium text-sm transition-all shadow-md ${
             isBuying || cart.length === 0 || !isBalanceSufficient || !selectedPortfolio
               ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-              : "bg-[#329B0D] hover:bg-green-800 text-white shadow-green-700/20 active:scale-[0.98]"
+              : "bg-green-700 hover:bg-green-800 active:bg-green-900 text-white shadow-green-700/20 active:scale-[0.98]"
           }`}
         >
           {isBuying ? "Memproses..." : "Konfirmasi Beli"}

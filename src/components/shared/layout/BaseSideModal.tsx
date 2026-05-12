@@ -56,7 +56,7 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
           <Button
             onClick={onAction}
             disabled={isActionDisabled || isLoading}
-            className="flex-1 min-w-0 bg-[#329B0D] hover:bg-green-800 text-white py-3 sm:py-5 rounded-xl font-medium"
+            className="flex-1 h-10 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
           >
             {isLoading ? "Memproses..." : actionText}
           </Button>
@@ -64,7 +64,7 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
             variant="outline"
             onClick={onClose}
             disabled={isLoading}
-            className="flex-1 min-w-0 py-3 sm:py-5 rounded-xl text-slate-600 border-slate-300 hover:bg-slate-50 font-medium"
+            className="flex-1 h-10 bg-transparent border border-slate-900 hover:bg-slate-50 active:bg-slate-100 text-slate-900 rounded-xl text-sm font-regular transition-all duration-200 cursor-pointer"
           >
             Tutup
           </Button>

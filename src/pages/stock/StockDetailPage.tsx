@@ -140,7 +140,7 @@ const StockDetailPage: React.FC = () => {
           </div>
 
           <Button 
-            className="w-full h-11 bg-[#329B0D] hover:bg-green-800 text-white font-bold text-lg rounded-2xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98]"
+            className="w-full h-10 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
             onClick={() => navigate('/dashboard/simulation')}
           >
             Beli Saham Ini
