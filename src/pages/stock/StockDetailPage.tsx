@@ -140,7 +140,7 @@ const StockDetailPage: React.FC = () => {
           </div>
 
           <Button 
-            className="w-full h-14 bg-[#329B0D] hover:bg-green-800 text-white font-bold text-lg rounded-2xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98]"
+            className="w-full h-11 bg-[#329B0D] hover:bg-green-800 text-white font-bold text-lg rounded-2xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98]"
             onClick={() => navigate('/dashboard/simulation')}
           >
             Beli Saham Ini
@@ -148,7 +148,6 @@ const StockDetailPage: React.FC = () => {
           </div>
           
         </div>
-      </div>
     </motion.div>
   );
 };

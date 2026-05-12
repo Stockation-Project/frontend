@@ -28,7 +28,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
         />
       ) : (
         // Container Daftar Portfolio
-        <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar scroll-smooth snap-x">
+        <div className="flex gap-4 overflow-x-auto p-4 no-scrollbar scroll-smooth snap-x">
           {portfolios.map((porto, index) => (
             <div key={porto.id || index} className="snap-start">
               <PortfolioCard
