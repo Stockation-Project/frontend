@@ -72,22 +72,22 @@ export const riskQuestions: Question[] = [
       },
       {
         id: "3c",
-        text: "Pergi liburan dengan alasan mengulur waktu untuk persiapan mencari pekerjaan baru?",
+        text: "Pergi liburan dengan alasan mengulur waktu untuk persiapan mencari pekerjaan baru",
         point: 2,
       },
       {
         id: "3d",
         text: "Pergi dan menambah waktu liburan karena “hidup hanya satu kali”",
         point: 1,
-      },
+      },    
     ],
   },
   {
     id: 4,
     question:
-      "Jika Anda tiba-tiba mendapatkan uang sebesar 300 juta khusus untuk investasi. Apa yang akan Anda lakukan?",
+      "Anda tiba-tiba mendapatkan uang sebesar 300 juta khusus untuk investasi. Apa yang akan Anda lakukan?",
     subtitle:
-      "Bayangkan Anda memiliki modal besar, kemana Anda akan mengalokasikannya?",
+      "Bayangkan Anda memiliki modal besar, ke mana Anda akan mengalokasikannya?",
     options: [
       {
         id: "4a",
@@ -198,7 +198,7 @@ export const riskQuestions: Question[] = [
   {
     id: 10,
     question:
-      "Anda diberi uang sebesar 2 juta rupiah. Pilihlah salah satu opsi berikut.",
+      "Anda diberi uang sebesar 2 juta rupiah. Pilihlah salah satu opsi berikut!",
     subtitle: "Bagaimana Anda menghadapi skenario kerugian finansial?",
     options: [
       { id: "10a", text: "Langsung kehilangan uang 500 ribu", point: 1 },
@@ -263,7 +263,7 @@ export const riskQuestions: Question[] = [
   {
     id: 13,
     question:
-      "Beberapa teman yang kamu percaya, salah satunya seorang ahli geologis, mengajak kamu berinvestasi dalam eksplorasi tambang emas dengan peluang keberhasilan sebesar 20%. Jika berhasil, keuntungannya bisa 50-100 kali lipat. Jika gagal, modal hilang total. Berapa banyak uang yang akan Anda investasikan?",
+      "Beberapa teman yang kamu percaya, salah satunya seorang ahli geologis berpengalaman, mengajak kamu berinvestasi dalam eksplorasi tambang emas dengan peluang keberhasilan sebesar 20%. Jika berhasil, keuntungannya bisa 50 hingga 100 kali lipat dari modal. Jika gagal, keseluruhan modal akan hilang. Berapa banyak uang yang akan Anda investasikan?",
     subtitle:
       "Peluang besar dengan risiko total. Berapa batas keberanian Anda?",
     options: [

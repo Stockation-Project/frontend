@@ -69,7 +69,7 @@ const LoginPage: React.FC = () => {
             ) : (
               <Button
                 type="submit"
-                className="w-full h-10 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
+                className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand-950 text-white rounded-xl text-sm font-regular shadow-lg shadow-brand-700/20 transition-all duration-200 cursor-pointer"
               >
                 Masuk
               </Button>
@@ -81,7 +81,7 @@ const LoginPage: React.FC = () => {
             Belum Punya Akun?{" "}
             <Link
               to="/register"
-              className="font-semibold text-green-700 hover:text-green-800 transition-colors"
+              className="font-semibold text-brand hover:text-brand-800 transition-colors"
             >
               Daftar Sekarang
             </Link>

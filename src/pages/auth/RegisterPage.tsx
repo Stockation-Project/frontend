@@ -58,7 +58,7 @@ const RegisterPage: React.FC = () => {
           {/* Header */}
           <AuthHeader
             title="Gabung Stockation"
-            description="Daftar sekarang, buat dompet virtual, dan mulai susun strategi investasi saham tanpa risiko di Stocketion."
+            description="Daftar sekarang, buat dompet virtual, dan mulai susun strategi investasi saham tanpa risiko di Stockation."
           />
 
           {/* Form */}
