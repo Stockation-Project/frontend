@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
  */
 const DashboardSkeleton: React.FC = () => {
   return (
-    <div className="w-full animate-in fade-in duration-300">
+    <div className="w-full animate-in fade-in duration-200">
       {/* Header Skeleton */}
       <div className="mb-8">
         <Skeleton className="h-9 w-48 rounded-lg" />
