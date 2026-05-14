@@ -190,7 +190,7 @@ export const riskQuestions: Question[] = [
       },
       {
         id: "9b",
-        text: "Mendapat kesempatan 50% untuk menerima 1 juta dengan risiko 50% tidak mendapatkan apa-apa",
+        text: "Mendapat kesempatan 50% untuk menerima 2 juta dengan risiko 50% tidak mendapatkan apa-apa",
         point: 3,
       },
     ],

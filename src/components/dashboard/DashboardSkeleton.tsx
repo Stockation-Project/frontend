@@ -35,11 +35,11 @@ const DashboardSkeleton: React.FC = () => {
           {/* StockTable Skeleton */}
           <div>
             <Skeleton className="h-6 w-56 mb-4 rounded-md" />
-            <div className="space-y-0 border-t border-slate-100">
+            <div className="space-y-0 border-t border-border-secondary">
               {Array.from({ length: 3 }).map((_, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between py-4 border-b border-slate-100 px-2"
+                  className="flex items-center justify-between py-4 border-b border-border-secondary px-2"
                 >
                   <div className="flex-1 min-w-[150px] space-y-2">
                     <Skeleton className="h-5 w-16 rounded-md" />

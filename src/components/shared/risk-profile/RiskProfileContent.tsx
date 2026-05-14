@@ -67,11 +67,11 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
             {isModal ? "Level Risiko" : "Level Resiko"}
           </span>
           {isModal ? (
-            <div className="px-6 py-1.5 bg-green-50 border border-green-600 text-green-700 rounded-md text-base font-medium">
+            <div className="px-6 py-1.5 bg-brand-50 border border-brand text-brand rounded-md text-base font-medium">
               {label}
             </div>
           ) : (
-            <span className="text-sm font-medium text-green-700 bg-green-50 border border-green-200 px-3 py-1 rounded-md">
+            <span className="text-sm font-medium text-brand bg-brand-50 border border-brand px-3 py-1 rounded-md">
               {label}
             </span>
           )}

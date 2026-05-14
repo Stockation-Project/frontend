@@ -80,8 +80,11 @@
     --chart-13: var(--brand-1000);
     --color-ring: var(--ring);
     --color-input: var(--input);
+    --color-border: var(--border-primary);
     --color-border-primary:   var(--border-primary);
     --color-border-secondary: var(--border-secondary);
+    --color-background-primary:   var(--background-primary);
+    --color-background-secondary: var(--background-secondary);
     --color-destructive: var(--destructive);
     --color-accent-foreground: var(--accent-foreground);
     --color-accent: var(--accent);
@@ -127,6 +130,8 @@
     --input: oklch(0.922 0 0);
     --ring: oklch(0.708 0 0);
     --radius: 0.625rem;
+    --background-primary:   oklch(1 0 0);           /* #FFFFFF */
+    --background-secondary: oklch(0.984 0.003 247.858); /* ~slate-50 */
     --sidebar: oklch(0.985 0 0);
     --sidebar-foreground: oklch(0.145 0 0);
     --sidebar-primary: oklch(0.205 0 0);
