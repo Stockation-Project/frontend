@@ -93,12 +93,12 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
             placeholder="contoh: Dompet High Risk"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-[#329B0D] focus:border-transparent transition-all"
+            className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-brand focus:border-transparent transition-all"
           />
         </div>
 
         {/* Area Nominal */}
-        <div className="bg-[#F6FDF4] p-4 rounded-lg border border-green-100">
+        <div className="bg-brand-25 p-4 rounded-lg border border-brand-100">
           <label className="block text-xs font-medium text-slate-700 mb-3">
             Nominal
           </label>
@@ -121,14 +121,14 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
             placeholder="Rp 0"
             value={amountText}
             onChange={handleAmountChange}
-            className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-[#329B0D] font-medium text-md text-slate-800 "
+            className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-brand font-medium text-md text-slate-800 "
           />
 
           {/* Info Saldo Tersedia */}
           <div className="flex justify-between items-center text-xs mt-1">
             <span className="text-slate-500">Saldo tersedia:</span>
             <span
-              className={`font-medium ${amount > currentBalance ? "text-red-500" : "text-slate-700"}`}
+              className={`font-medium ${amount > currentBalance ? "text-error-500" : "text-slate-700"}`}
             >
               {formatCurrencyIDR(currentBalance)}
             </span>
@@ -136,7 +136,7 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
 
           {/* Pesan Error Jika Saldo Kurang */}
           {amount > currentBalance && (
-            <p className="text-red-500 text-[10px] font-medium">
+            <p className="text-error-500 text-[10px] font-medium">
               Saldo Dompet Utama tidak mencukupi.
             </p>
           )}

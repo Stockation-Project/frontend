@@ -28,9 +28,9 @@ const PortfolioDetailSkeleton: React.FC = () => {
       {/* Detail Card Skeleton */}
       <div>
         <Skeleton className="h-6 w-40 mb-4 rounded-md" />
-        <div className="border border-slate-200 rounded-xl overflow-hidden">
+        <div className="border border-border-primary rounded-xl overflow-hidden">
           {/* Card Header */}
-          <div className="p-5 border-b border-slate-100">
+          <div className="p-5 border-b border-border-secondary">
             <div className="flex items-start gap-3 mb-4">
               <Skeleton className="w-10 h-10 rounded-lg" />
               <div className="space-y-2">
@@ -51,7 +51,7 @@ const PortfolioDetailSkeleton: React.FC = () => {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="grid grid-cols-12 gap-4 items-center py-3 border-b border-slate-100"
+                className="grid grid-cols-12 gap-4 items-center py-3 border-b border-border-secondary"
               >
                 <div className="col-span-3 space-y-2">
                   <Skeleton className="h-4 w-14 rounded-md" />

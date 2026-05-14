@@ -28,7 +28,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
       : filteredStocks;
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-2 flex flex-col h-[600px]">
+    <div className="bg-background-primary border border-border-primary rounded-lg p-2 flex flex-col h-[600px]">
       {/* Search Input */}
       <div className="relative mb-4">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -41,17 +41,17 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
               setActiveTab("Manual"); // auto switch if typing
             }
           }}
-          className="pl-9 bg-slate-50 border-slate-200 rounded-lg"
+          className="pl-9 bg-background-secondary border-border-primary rounded-lg"
         />
       </div>
 
       {/* Mini Toggle */}
       <div className="flex justify-end mb-4">
-        <div className="bg-slate-50 p-1 rounded-xl border border-slate-100 flex overflow-x-auto no-scrollbar text-xs font-medium">
+        <div className="bg-background-secondary p-1 rounded-xl border border-border-secondary flex overflow-x-auto no-scrollbar text-xs font-medium">
           <button
             className={`px-3 py-1.5 rounded-lg transition-all whitespace-nowrap ${
               activeTab === "Rekomendasi"
-                ? "bg-white text-slate-900 shadow-sm"
+                ? "bg-background-primary text-slate-900 shadow-sm"
                 : "text-slate-500 hover:text-slate-700"
             }`}
             onClick={() => setActiveTab("Rekomendasi")}
@@ -61,7 +61,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
           <button
             className={`px-3 py-1.5 rounded-lg transition-colors ${
               activeTab === "Manual"
-                ? "bg-white text-slate-900 shadow-sm"
+                ? "bg-background-primary text-slate-900 shadow-sm"
                 : "text-slate-500 hover:text-slate-700"
             }`}
             onClick={() => setActiveTab("Manual")}
@@ -76,7 +76,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
         {displayList.map((stock) => (
           <div
             key={stock.ticker}
-            className="flex gap-2 items-center justify-between py-3 px-2 border-b border-slate-200 hover:bg-slate-50 transition-colors "
+            className="flex gap-2 items-center justify-between py-3 px-2 border-b border-border-primary hover:bg-background-secondary transition-colors "
           >
             <div className="min-w-0 max-w-[160px] ">
               <h4 className="font-medium text-slate-900 truncate text-xs">
@@ -91,7 +91,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
               </p>
               <p
                 className={`text-[10px] font-regular ${
-                  stock.isPositive ? "text-green-700" : "text-red-500"
+                  stock.isPositive ? "text-brand" : "text-error-500"
                 }`}
               >
                 {stock.isPositive ? "▲" : "▼"} {stock.changePercent.toFixed(2)}%
@@ -100,7 +100,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
 
             <button
               onClick={() => onAddStock(stock)}
-              className="w-6 h-6 bg-green-700 flex-shrink-0 flex items-center justify-center border border-green-700 text-white rounded-sm hover:bg-green-600 transition-colors"
+              className="w-6 h-6 bg-brand flex-shrink-0 flex items-center justify-center border border-brand text-white rounded-sm hover:bg-brand-800 transition-colors"
             >
               <Plus className="w-3 h-3" />
             </button>

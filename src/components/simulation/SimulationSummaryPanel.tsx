@@ -32,15 +32,15 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
   // Recharts needs valid hex colors, but we have tailwind classes.
   // We'll map the tailwind classes back to hex for recharts.
   const colorMap: Record<string, string> = {
-    "bg-green-700": "green-700",
-    "bg-green-500": "#22c55e",
+    "bg-brand": "var(--color-brand)",
+    "bg-brand-500": "var(--color-brand-500)",
     "bg-green-300": "#86efac",
     "bg-emerald-600": "#059669",
     "bg-teal-500": "#14b8a6",
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-3 flex flex-col h-[600px]">
+    <div className="bg-background-primary border border-border-primary rounded-lg p-3 flex flex-col h-[600px]">
       {/* Donut Chart Area */}
       <div className="h-[200px] flex items-center justify-center mb-6 relative">
         {donutChartData.length > 0 ? (
@@ -61,7 +61,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
                     {donutChartData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={colorMap[entry.color] || "#329B0D"}
+                        fill={colorMap[entry.color] || "var(--color-brand)"}
                       />
                     ))}
                   </Pie>
@@ -128,7 +128,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
             <span className="text-slate-700 font-medium">Sisa Saldo</span>
             <span
               className={`font-medium ${
-                !isBalanceSufficient ? "text-red-500" : "text-slate-900"
+                !isBalanceSufficient ? "text-error-500" : "text-slate-900"
               }`}
             >
               {selectedPortfolio
@@ -140,12 +140,12 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
 
         {/* Validation Errors */}
         {!isBalanceSufficient && selectedPortfolio && (
-          <p className="text-xs text-red-500 font-regular mb-3 text-start">
+          <p className="text-xs text-error-500 font-regular mb-3 text-start">
             Saldo tidak mencukupi untuk pembelian ini.
           </p>
         )}
         {!selectedPortfolio && (
-          <p className="text-xs text-amber-500 font-medium mb-3 text-center">
+          <p className="text-xs text-warning-500 font-medium mb-3 text-center">
             Pilih dompet terlebih dahulu di atas.
           </p>
         )}
@@ -158,8 +158,8 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
           }
           className={`w-full py-3 mt-auto rounded-xl font-medium text-sm transition-all shadow-md ${
             isBuying || cart.length === 0 || !isBalanceSufficient || !selectedPortfolio
-              ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-              : "bg-green-700 hover:bg-green-800 active:bg-green-900 text-white shadow-green-700/20 active:scale-[0.98]"
+              ? "bg-border-primary text-slate-400 cursor-not-allowed shadow-none"
+              : "bg-brand hover:bg-brand-800 active:bg-brand-900 text-white shadow-brand/20 active:scale-[0.98]"
           }`}
         >
           {isBuying ? "Memproses..." : "Konfirmasi Beli"}

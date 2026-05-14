@@ -25,7 +25,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
     <div className="w-full">
       <SectionHeader title={title} />
 
-      <div className="flex flex-col border border-slate-200 max-h-[380px] overflow-y-auto px-4 rounded-xl">
+      <div className="flex flex-col border border-border-primary max-h-[380px] overflow-y-auto px-4 rounded-xl">
         {stocks.map((stock, index) => (
           <motion.div
             key={stock.id}
@@ -33,7 +33,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             onClick={() => navigate(`/dashboard/stock/${stock.ticker}`)}
-            className="group flex items-center justify-between py-2 border-b border-slate-200 hover:bg-slate-100 px-2 -mx-2  transition-colors cursor-pointer"
+            className="group flex items-center justify-between py-2 border-b border-border-primary hover:bg-background-secondary px-2 -mx-2  transition-colors cursor-pointer"
           >
             {/* Kolom 1: Ticker & Nama */}
             <div className="flex-1 min-w-[150px]">
@@ -56,7 +56,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
                   <>
                     <path
                       d="M0 20 L10 15 L20 22 L30 10 L40 18 L50 5 L60 2"
-                      stroke="#329B0D"
+                      stroke="var(--color-brand)"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -75,8 +75,8 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
                         y2="24"
                         gradientUnits="userSpaceOnUse"
                       >
-                        <stop stopColor="#329B0D" />
-                        <stop offset="1" stopColor="#329B0D" stopOpacity="0" />
+                        <stop stopColor="var(--color-brand)" />
+                        <stop offset="1" stopColor="var(--color-brand)" stopOpacity="0" />
                       </linearGradient>
                     </defs>
                   </>
@@ -84,7 +84,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
                   <>
                     <path
                       d="M0 5 L10 10 L20 2 L30 15 L40 8 L50 20 L60 22"
-                      stroke="#EF4444"
+                      stroke="var(--color-error-500)"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -103,8 +103,8 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
                         y2="24"
                         gradientUnits="userSpaceOnUse"
                       >
-                        <stop stopColor="#EF4444" />
-                        <stop offset="1" stopColor="#EF4444" stopOpacity="0" />
+                        <stop stopColor="var(--color-error-500)" />
+                        <stop offset="1" stopColor="var(--color-error-500)" stopOpacity="0" />
                       </linearGradient>
                     </defs>
                   </>
@@ -122,7 +122,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
             {/* Kolom 4: Indikator % */}
             <div className="flex-1 flex justify-end items-center min-w-[80px]">
               <span
-                className={`flex items-center text-xs md:text-sm font-medium ${stock.isPositive ? "text-[#329B0D]" : "text-red-500"}`}
+                className={`flex items-center text-xs md:text-sm font-medium ${stock.isPositive ? "text-brand" : "text-error-500"}`}
               >
                 {/* Segitiga Solid Kustom */}
                 <svg

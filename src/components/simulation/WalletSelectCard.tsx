@@ -23,7 +23,7 @@ const WalletSelectCard: React.FC<WalletSelectCardProps> = ({
     return (
       <div
         onClick={onClick}
-        className="min-w-[240px] w-[240px] h-[100px] border-2 border-dashed border-slate-200 rounded-lg py-4 flex items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 transition-colors text-slate-400 hover:text-slate-600"
+        className="min-w-[240px] w-[240px] h-[100px] border-2 border-dashed border-border-primary rounded-lg py-4 flex items-center justify-center gap-2 cursor-pointer hover:bg-background-secondary transition-colors text-slate-400 hover:text-slate-600"
       >
         <Plus className="w-5 h-5" />
         <span className="text-sm font-medium">Tambah dompet baru</span>
@@ -34,15 +34,15 @@ const WalletSelectCard: React.FC<WalletSelectCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`min-w-[240px] w-[240px] h-[100px] my-4 bg-white border rounded-lg flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer ${
+      className={`min-w-[240px] w-[240px] h-[100px] my-4 bg-background-primary border rounded-lg flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer ${
         isSelected
-          ? "border-green-700 ring-1 ring-green-700"
-          : "border-slate-200 hover:border-slate-300"
+          ? "border-brand ring-1 ring-brand"
+          : "border-border-primary hover:border-border-secondary"
       }`}
     >
       <div
         className={`px-4 py-2 font-medium text-sm ${
-          isSelected ? "bg-green-700 text-white" : "bg-slate-100 text-slate-700"
+          isSelected ? "bg-brand text-white" : "bg-slate-100 text-slate-700"
         }`}
       >
         {name}

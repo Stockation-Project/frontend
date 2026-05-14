@@ -54,7 +54,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
     >
       <div className="space-y-6 ">
         {/* Card Saldo Saat Ini & Setelah Top Up */}
-        <div className="bg-white rounded-xl p-4 border border-slate-200 flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4">
+        <div className="bg-background-primary rounded-xl p-4 border border-border-primary flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4">
           <div>
             <p className="text-[10px] text-slate-500 font-medium ">
               Saldo saat ini
@@ -67,7 +67,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
             <p className="text-[10px] text-slate-500 font-medium ">
               Setelah top up
             </p>
-            <p className="text-sm font-medium text-[#329B0D]">
+            <p className="text-sm font-medium text-brand">
               {selectedAmount
                 ? formatCurrencyIDR(currentBalance + selectedAmount)
                 : "--"}
@@ -87,8 +87,8 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
                 onClick={() => setSelectedAmount(option.value)}
                 className={`py-3 rounded-lg border-1 transition-all flex flex-col items-center justify-center ${
                   selectedAmount === option.value
-                    ? "border-[#329B0D] bg-green-50"
-                    : "border-slate-200 bg-white hover:border-green-200"
+                    ? "border-brand bg-brand-50"
+                    : "border-border-primary bg-background-primary hover:border-brand-200"
                 }`}
               >
                 <span className="text-sm font-medium text-slate-800 ">
@@ -103,9 +103,9 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
         </div>
 
         {/* Disclaimer Card */}
-        <div className="bg-yellow-100 rounded-lg px-4 py-2 flex items-start space-x-3 border border-yellow-100">
-          <Info className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-          <p className="text-xs text-yellow-800 leading-relaxed">
+        <div className="bg-warning-50 rounded-lg px-4 py-2 flex items-start space-x-3 border border-warning-100">
+          <Info className="w-4 h-4 text-warning-500 mt-0.5 flex-shrink-0" />
+          <p className="text-xs text-warning-800 leading-relaxed">
             Ini adalah saldo virtual untuk simulasi investasi. Tidak ada uang
             nyata yang digunakan.
           </p>

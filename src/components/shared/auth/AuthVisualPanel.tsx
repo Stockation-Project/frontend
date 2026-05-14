@@ -30,7 +30,7 @@ const AuthVisualPanel: React.FC<AuthVisualPanelProps> = ({
           <h1 className="text-base xl:text-lg font-medium leading-tight tracking-tight drop-shadow-md">
             {title}
           </h1>
-          <p className="text-xs text-green-100/90 font-light leading-relaxed drop-shadow-sm">
+          <p className="text-xs text-brand-100/90 font-light leading-relaxed drop-shadow-sm">
             {description}
           </p>
         </div>

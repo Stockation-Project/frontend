@@ -123,3 +123,16 @@ Ketika mengedit file yang masih menggunakan warna lama:
 6. Cari semua `text-yellow-*` / `bg-yellow-*` → ganti dengan `warning-*`
 7. Cari semua `text-green-*` / `bg-green-*` → ganti dengan `brand-*`
 8. Cari semua hex hijau (`#329B0D`, `#2C8500`, dll) → ganti `brand` token yang sesuai
+
+### PENTING: Jangan mapping berdasarkan shade number
+Semua `green-*` apapun shadenya TIDAK boleh langsung diganti ke `brand-*` dengan shade yang sama.
+Gunakan konteks elemen untuk menentukan token yang tepat:
+
+| Konteks | Token |
+|---------|-------|
+| Elemen utama (button, icon aktif, border aktif) | `brand` |
+| Hover button | `brand-950` |
+| Active/pressed button | `brand` |
+| Background subtle/tipis | `brand-50` atau `brand-25` |
+| Border hijau | `brand-300` |
+| Teks hijau | `brand` |
