@@ -79,6 +79,7 @@
     --chart-12: var(--brand-950);
     --chart-13: var(--brand-1000);
     --color-ring: var(--ring);
+    --color-border: var(--border-primary);
     --color-input: var(--input);
     --color-border: var(--border-primary);
     --color-border-primary:   var(--border-primary);
@@ -229,7 +230,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border-primary outline-ring/50;
     }
   body {
     @apply bg-background text-foreground;

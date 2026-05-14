@@ -94,7 +94,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
         <div className="mx-6 border-b border-border-primary"></div>
 
         {/* Body Section — Tabel Detail Holdings */}
-        <PortfolioDetailTable holdings={holdings} />
+        <PortfolioDetailTable holdings={holdings} portfolioId={portfolioId} />
       </div>
     </div>
   );
