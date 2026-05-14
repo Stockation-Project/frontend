@@ -62,5 +62,5 @@ export interface AllocationChartItem {
   ticker: string;
   percentage: number;
   totalCost: number;
-  color: string; // Tailwind bg-color class, e.g. "bg-green-700"
+  color: string; // Tailwind bg-color class, e.g. "bg-brand"
 }

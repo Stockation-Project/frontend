@@ -59,10 +59,10 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           <div className="snap-start">
             <button
               onClick={onAddClick}
-              className="min-w-[320px] w-[320px] h-full bg-transparent border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-500 hover:text-[#329B0D] hover:border-[#329B0D] hover:bg-green-50/50 transition-all cursor-pointer group"
+              className="min-w-[320px] w-[320px] h-full bg-transparent border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-500 hover:text-brand hover:border-brand hover:bg-brand-50/50 transition-all cursor-pointer group"
             >
-              <div className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-100 transition-colors">
-                <Plus className="w-7 h-7 text-slate-400 group-hover:text-[#329B0D] transition-colors" />
+              <div className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-brand-100 transition-colors">
+                <Plus className="w-7 h-7 text-slate-400 group-hover:text-brand transition-colors" />
               </div>
               <span className="font-medium text-sm">Buat Dompet Baru</span>
             </button>

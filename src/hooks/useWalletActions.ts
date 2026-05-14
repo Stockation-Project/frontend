@@ -6,15 +6,15 @@ import { createPortfolioService } from "@/services/portfolio.service";
 
 // Konfigurasi class Sonner toast yang konsisten untuk seluruh aksi wallet
 const TOAST_CLASS_SUCCESS = {
-  title: "!text-green-700 !font-semibold",
+  title: "!text-brand !font-semibold",
   description: "!text-slate-500",
-  toast: "!bg-white !border !border-green-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
+  toast: "!bg-white !border !border-brand-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
 } as const;
 
 const TOAST_CLASS_ERROR = {
-  title: "!text-red-700 !font-semibold",
+  title: "!text-error-700 !font-semibold",
   description: "!text-slate-500",
-  toast: "!bg-white !border !border-red-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
+  toast: "!bg-white !border !border-error-400 !shadow-lg !rounded-xl !font-[Zalando_Sans_SemiExpanded]",
 } as const;
 
 const TOAST_DURATION = 10000;

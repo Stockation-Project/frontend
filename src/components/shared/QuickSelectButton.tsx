@@ -23,8 +23,8 @@ const QuickSelectButton: React.FC<QuickSelectButtonProps> = ({
       onClick={onClick}
       className={`px-4 py-2 rounded-lg text-xs font-medium border transition-all ${
         isSelected
-          ? "border-[#329B0D] bg-green-100 text-green-800"
-          : "border-slate-200 bg-white text-slate-600 hover:border-green-300"
+          ? "border-brand bg-brand-50 text-brand"
+          : "border-border-primary bg-background-primary text-slate-600 hover:border-brand-300"
       } ${className}`}
     >
       {label}

@@ -28,7 +28,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
       {/* onOpenChange kosong agar user tidak bisa menutup modal dengan klik di luar atau tombol ESC */}
-      <DialogContent className="!max-w-xs sm:!max-w-md md:!max-w-xl w-full p-4 rounded-2xl bg-white border-0 shadow-2xl outline-none [&>button]:hidden">
+      <DialogContent className="!max-w-xs sm:!max-w-md md:!max-w-xl w-full p-4 rounded-2xl bg-background-primary border-0 shadow-2xl outline-none [&>button]:hidden">
         {/* [&>button]:hidden digunakan untuk menyembunyikan tombol "X" (Close) bawaan Shadcn */}
         <DialogTitle className="sr-only">
           Hasil Kuesioner Profil Risiko
@@ -51,10 +51,9 @@ const ResultModal: React.FC<ResultModalProps> = ({
             variant="modal"
           />
 
-          {/* Tombol Lanjut */}
           <Button
             onClick={onContinue}
-            className="h-11 px-8 rounded-xl bg-green-700 hover:bg-green-800 text-white font-medium shadow-md transition-all w-full"
+            className="h-11 px-8 rounded-xl bg-brand hover:bg-brand-950 text-brand-foreground font-medium shadow-md transition-all w-full"
           >
             Lanjut
             <ArrowRight className="w-4 h-4 ml-2" />

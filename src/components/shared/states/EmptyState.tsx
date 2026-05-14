@@ -21,10 +21,10 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   actionIcon: ActionIcon,
 }) => {
   return (
-    <div className="w-full bg-white border border-slate-100 rounded-[2rem] p-10 flex flex-col items-center justify-center text-center shadow-sm">
+    <div className="w-full bg-background-primary border border-border-secondary rounded-[2rem] p-10 flex flex-col items-center justify-center text-center shadow-sm">
       {/* Icon Area dengan lingkaran soft green */}
-      <div className="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center mb-6">
-        <Icon className="w-8 h-8 text-[#329B0D]" />
+      <div className="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center mb-6">
+        <Icon className="w-8 h-8 text-brand" />
       </div>
 
       <div className="max-w-sm space-y-2 mb-8">
@@ -36,7 +36,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       {actionLabel && onAction && (
         <Button
           onClick={onAction}
-          className="bg-[#329B0D] hover:bg-green-800 text-white rounded-xl px-8 h-12 text-base font-bold shadow-lg shadow-green-700/20 transition-all active:scale-95"
+          className="bg-brand hover:bg-brand-950 text-white rounded-xl px-8 h-12 text-base font-bold shadow-lg shadow-brand/20 transition-all active:scale-95"
         >
           {ActionIcon && <ActionIcon className="w-5 h-5 mr-2 stroke-[3]" />}
           {actionLabel}

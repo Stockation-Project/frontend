@@ -30,13 +30,13 @@ const RiskProfileCard: React.FC<RiskProfileCardProps> = ({
   if (!profile) return null;
 
   return (
-    <div className="w-full bg-white border border-slate-200 rounded-2xl p-4">
+    <div className="w-full bg-background-primary border border-border-primary rounded-2xl p-4">
       {/* Header Widget (Conditional) */}
       {showHeader && (
         <div className="flex flex-col justify-between items-start mb-6">
           <h3 className="text-base font-medium text-slate-600 mb-2">Profil Resiko</h3>
           {updatedAt && (
-            <span className="text-[10px] font-medium items-center text-slate-400 bg-slate-50 px-2 py-1 rounded-md">
+            <span className="text-[10px] font-medium items-center text-slate-400 bg-background-secondary px-2 py-1 rounded-md">
               Diperbarui {updatedAt}
             </span>
           )}
@@ -65,7 +65,7 @@ const RiskProfileCard: React.FC<RiskProfileCardProps> = ({
           <Button
             variant="outline"
             onClick={() => navigate("/questionnaire")}
-            className="w-full h-10 bg-transparent border border-green-700 hover:bg-green-50 active:bg-green-100 text-green-700 rounded-xl text-sm font-regular transition-all duration-200 cursor-pointer"
+            className="w-full h-10 bg-transparent border border-brand hover:bg-brand-50 active:bg-brand-100 text-brand rounded-xl text-sm font-regular transition-all duration-200 cursor-pointer"
           >
             Tes Ulang
           </Button>

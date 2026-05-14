@@ -38,7 +38,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
     <div className="w-full">
       <SectionHeader title="Detail Portofolio" />
 
-      <div className="w-full bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+      <div className="w-full bg-background-primary border border-border-primary rounded-2xl shadow-sm overflow-hidden">
         {/* Header Section — Nama, Info, Ringkasan Saldo */}
         <div className="p-6 pb-4">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
@@ -58,7 +58,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
               </h3>
               {investedBalance > 0 && (
                 <p
-                  className={`text-sm font-medium mt-1 ${isProfit ? "text-[#329B0D]" : "text-red-500"}`}
+                  className={`text-sm font-medium mt-1 ${isProfit ? "text-brand" : "text-error-500"}`}
                 >
                   ({isProfit ? "+" : ""}{totalProfitPercentage.toFixed(1)}%){" "}
                   {isProfit ? "+" : ""}
@@ -72,7 +72,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
           <div className="mt-4">
             <p className="text-sm text-slate-600 mb-3">Persentase alokasi aset</p>
             {/* Progress Bar */}
-            <div className="w-full h-3 flex rounded-full overflow-hidden bg-slate-100 mb-3 gap-1">
+            <div className="w-full h-3 flex rounded-full overflow-hidden bg-border-secondary mb-3 gap-1">
               {allocations.length > 0 ? (
                 allocations.map((item, idx) => (
                   <div
@@ -83,7 +83,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
                   />
                 ))
               ) : (
-                <div className="w-full h-full bg-slate-200" />
+                <div className="w-full h-full bg-border-primary" />
               )}
             </div>
             <PortfolioLegend allocations={allocations} />
@@ -91,7 +91,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
         </div>
 
         {/* Divider */}
-        <div className="mx-6 border-b border-slate-200"></div>
+        <div className="mx-6 border-b border-border-primary"></div>
 
         {/* Body Section — Tabel Detail Holdings */}
         <PortfolioDetailTable holdings={holdings} portfolioId={portfolioId} />

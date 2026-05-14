@@ -28,7 +28,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           variant="outline"
           size="icon"
           onClick={() => navigate(-1)}
-          className="mb-4 rounded-xl text-slate-600 hover:text-slate-900 border-slate-200 h-10 w-10"
+          className="mb-4 rounded-xl text-slate-600 hover:text-slate-900 border-border-primary h-10 w-10"
         >
           <ChevronLeft className="w-5 h-5" />
         </Button>

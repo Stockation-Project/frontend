@@ -23,8 +23,7 @@ const RegisterPage: React.FC = () => {
 
   return (
     <motion.div
-      className="h-screen overflow-hidden w-full flex px-2 py-2"
-      style={{ backgroundColor: "#ffffff" }}
+      className="h-screen overflow-hidden w-full flex px-2 py-2 bg-background-primary"
       initial={{ opacity: 0, x: 80 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -80 }}
@@ -122,7 +121,7 @@ const RegisterPage: React.FC = () => {
             ) : (
               <Button
                 type="submit"
-                className="w-full h-10 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
+                className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
               >
                 Daftar
               </Button>
@@ -134,7 +133,7 @@ const RegisterPage: React.FC = () => {
             Sudah Punya Akun?{" "}
             <Link
               to="/login"
-              className="font-semibold text-green-700 hover:text-green-800 transition-colors"
+              className="font-semibold text-brand hover:text-brand-950 transition-colors"
             >
               Masuk Sekarang
             </Link>

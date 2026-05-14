@@ -12,9 +12,9 @@ import type { Allocation } from "@/components/shared/cards/PortfolioCard";
 
 // Warna UI untuk alokasi saham di bar/legenda
 const ALLOCATION_COLORS = [
-  "bg-[#329B0D]",
-  "bg-green-500",
-  "bg-green-300",
+  "bg-brand",
+  "bg-brand-500",
+  "bg-brand-300",
   "bg-emerald-600",
   "bg-teal-500",
 ];

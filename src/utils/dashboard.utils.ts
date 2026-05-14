@@ -4,9 +4,9 @@ import type { StockItem } from "@/components/shared/cards/StockTable";
 
 // Warna untuk setiap portfolio berdasarkan index (dapat diperluas)
 const PORTFOLIO_COLORS = [
-  "bg-green-700",
-  "bg-green-400",
-  "bg-green-300",
+  "bg-brand",
+  "bg-brand-400",
+  "bg-brand-300",
   "bg-teal-500",
   "bg-emerald-400",
 ];
@@ -40,6 +40,6 @@ export function mapPortfoliosToAllocations(portfolios: DashboardPortfolio[]): Wa
     id: portfolio.id || String(index + 1),
     name: portfolio.name,
     amount: portfolio.total_value,
-    color: PORTFOLIO_COLORS[index] ?? "bg-green-400",
+    color: PORTFOLIO_COLORS[index] ?? "bg-brand-400",
   }));
 }

@@ -45,9 +45,9 @@ const QuestionnairePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-background-primary flex flex-col">
       {/* Header dengan Logo */}
-      <header className="px-4 py-3 bg-white border-b border-slate-200 sticky top-0 z-10 flex-shrink-0 h-fit">
+      <header className="px-4 py-3 bg-background-primary border-b border-border-primary sticky top-0 z-10 flex-shrink-0 h-fit">
         <Logo variant="color" showText={true} />
       </header>
 
@@ -101,13 +101,13 @@ const QuestionnairePage: React.FC = () => {
       </main>
 
       {/* Footer Navigasi Lengket di Bawah */}
-      <footer className="py-4 bg-white border-t border-slate-200 sticky bottom-0 z-10 w-full">
+      <footer className="py-4 bg-background-primary border-t border-border-primary sticky bottom-0 z-10 w-full">
         <div className="px-4 sm:px-8 md:px-16 lg:px-40 mx-auto flex items-center justify-between">
           <Button
             variant="outline"
             onClick={handleBack}
             disabled={currentStep === 0} // Matikan jika di halaman pertama
-            className="h-11 px-6 rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 font-medium"
+            className="h-11 px-6 rounded-xl border-border-primary text-slate-600 hover:bg-background-secondary font-medium"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Kembali
@@ -116,7 +116,7 @@ const QuestionnairePage: React.FC = () => {
           <Button
             onClick={handleNext}
             disabled={!hasAnsweredCurrent || isSubmitting} // Matikan jika belum memilih
-            className="h-11 px-8 rounded-xl bg-green-700 hover:bg-green-800 text-white font-medium shadow-md transition-all"
+            className="h-11 px-8 rounded-xl bg-brand hover:bg-brand-950 text-white font-medium shadow-md transition-all"
           >
             {isLastStep
               ? isSubmitting

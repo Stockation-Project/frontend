@@ -21,9 +21,9 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
   onToggleExpand,
 }) => {
   return (
-    <div className="border border-slate-200 rounded-lg flex flex-col h-[600px] overflow-hidden">
+    <div className="border border-border-primary rounded-lg flex flex-col h-[600px] overflow-hidden">
       {/* Header */}
-      <div className="p-3 border-b border-slate-200/60 bg-[#F1F8EE] flex justify-between items-center">
+      <div className="p-3 border-b border-border-secondary bg-brand-50 flex justify-between items-center">
         <div>
           <p className="text-xs font-medium text-slate-800 tracking-wider mb-0.5">
             Dompet Terpilih
@@ -46,12 +46,12 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
         {cart.map((item) => (
           <div
             key={item.ticker}
-            className="border-1 m-2 border-slate-200 rounded-lg overflow-hidden bg-white"
+            className="border-1 m-2 border-border-primary rounded-lg overflow-hidden bg-background-primary"
           >
             {/* Header Item */}
             <div
               className={`px-3 py-2 flex items-center justify-between cursor-pointer transition-colors  ${
-              item.isExpanded ? "bg-[#F1F8EE]" : "hover:bg-slate-50"}`}
+              item.isExpanded ? "bg-brand-50" : "hover:bg-background-secondary"}`}
               onClick={() => onToggleExpand(item.ticker)}>
               <div>
                 <h4 className="font-medium text-slate-900 text-xs truncate max-w-[150px]">
@@ -72,11 +72,11 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
                       e.stopPropagation();
                       onRemove(item.ticker);
                     }}
-                    className="w-6 h-6 flex items-center justify-center border border-slate-200 rounded-sm text-slate-600 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-colors"
+                    className="w-6 h-6 flex items-center justify-center border border-border-primary rounded-sm text-slate-600 hover:text-error-500 hover:border-error-200 hover:bg-error-50 transition-colors"
                   >
                     <X className="w-3 h-3" />
                   </button>
-                  <button className="w-6 h-6 flex items-center justify-center  rounded-sm text-slate-600 hover:bg-slate-100 transition-colors">
+                  <button className="w-6 h-6 flex items-center justify-center  rounded-sm text-slate-600 hover:bg-background-secondary transition-colors">
                     {item.isExpanded ? (
                       <ChevronUp className="w-3 h-3" />
                     ) : (
@@ -89,9 +89,9 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
 
             {/* Expanded Body */}
             {item.isExpanded && (
-              <div className="p-4 bg-slate-50/50 border-t border-slate-200">
+              <div className="p-4 bg-background-secondary border-t border-border-primary">
                 {/* Mock Chart Area (kept simple for performance) */}
-                <div className="w-full h-24 bg-gradient-to-t from-green-50 to-transparent border-b-2 border-green-700 mb-6 rounded-t-xl opacity-50 relative">
+                <div className="w-full h-24 bg-gradient-to-t from-brand-50 to-transparent border-b-2 border-brand mb-6 rounded-t-xl opacity-50 relative">
                   <span className="absolute bottom-2 left-2 text-[10px] text-slate-400 font-medium">Chart trend</span>
                 </div>
 
@@ -107,10 +107,10 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
 
                   <div className="flex justify-between items-center">
                     <span className="text-xs text-slate-500">Jumlah Lot</span>
-                    <div className="flex items-center border border-slate-200 rounded-lg bg-white overflow-hidden">
+                    <div className="flex items-center border border-border-primary rounded-lg bg-background-primary overflow-hidden">
                       <button
                         onClick={() => onUpdateLot(item.ticker, item.lots - 1)}
-                        className="p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+                        className="p-2 text-slate-400 hover:bg-background-secondary hover:text-slate-700 transition-colors"
                       >
                         <Minus className="w-3 h-3" />
                       </button>
@@ -124,11 +124,11 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
                             parseInt(e.target.value) || 1
                           )
                         }
-                        className="h-full p-2 w-11 text-center text-xs font-medium border-x border-slate-200  outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        className="h-full p-2 w-11 text-center text-xs font-medium border-x border-border-primary  outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
                       <button
                         onClick={() => onUpdateLot(item.ticker, item.lots + 1)}
-                        className="p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+                        className="p-2 text-slate-400 hover:bg-background-secondary hover:text-slate-700 transition-colors"
                       >
                         <Plus className="w-3 h-3" />
                       </button>

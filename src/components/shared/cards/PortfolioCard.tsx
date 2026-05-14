@@ -36,15 +36,15 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
   return (
     <div className={`h-full min-w-[320px] w-[320px] border rounded-xl flex flex-col justify-between hover:shadow-md transition-all cursor-pointer overflow-hidden ${
       isActive 
-        ? "bg-white border-[#329B0D] ring-1 ring-[#329B0D]" 
-        : "bg-white border-slate-200 hover:border-slate-300"
+        ? "bg-background-primary border-brand ring-1 ring-brand" 
+        : "bg-background-primary border-border-primary hover:border-slate-300"
     }`}>
       {/* 1. Bagian Atas (Header) */}
       <div className={`px-4 py-3 flex items-start gap-3 ${
-        isActive ? "bg-[#329B0D]" : "bg-slate-50 border-b border-slate-100"
+        isActive ? "bg-brand" : "bg-background-secondary border-b border-border-secondary"
       }`}>
         <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-          isActive ? "bg-white/20" : "bg-white border border-slate-200"
+          isActive ? "bg-white/20" : "bg-background-primary border border-border-primary"
         }`}>
           <Wallet className={`w-5 h-5 stroke-[1.5px] ${
             isActive ? "text-white" : "text-slate-400"
@@ -64,7 +64,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
         {/* 2. Bagian Tengah (Progress Bar Alokasi) */}
         <div className="mb-4">
         {/* Bar */}
-        <div className="w-full h-2 flex rounded-full overflow-hidden bg-slate-100 mb-2 gap-0.5">
+        <div className="w-full h-2 flex rounded-full overflow-hidden bg-border-secondary mb-2 gap-0.5">
           {allocations.length > 0 ? (
             allocations.map((item, idx) => (
               <div
@@ -84,7 +84,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
       </div>
 
       {/* 3. Bagian Bawah (Footer: Terpakai & Tersedia) */}
-      <div className="flex items-end justify-between pt-4 border-t border-slate-100 min-h-[60px]">
+      <div className="flex items-end justify-between pt-4 border-t border-border-secondary min-h-[60px]">
         {/* Kiri: Tersedia (Cash) */}
         <div>
           <p className="text-[10px] font-medium mb-0.5 text-slate-500">
@@ -107,7 +107,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
           {investedBalance > 0 && (
             <p
               className={`text-[10px] font-medium mt-0.5 ${
-                isProfit ? "text-[#329B0D]" : "text-red-500"
+                isProfit ? "text-brand" : "text-error-500"
               }`}
             >
               ({isProfit ? "+" : ""}{profitPercentage.toFixed(1)}%) {isProfit ? "+" : ""}

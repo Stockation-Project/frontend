@@ -33,7 +33,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
   return (
     <div className="w-full overflow-x-auto">
       {/* Table Header */}
-      <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 text-[11px] font-semibold text-slate-500 capitalize tracking-wide border-b border-slate-200 bg-white">
+      <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 text-[11px] font-semibold text-slate-500 capitalize tracking-wide border-b border-border-primary bg-background-primary">
         <div className="col-span-3">Emiten</div>
         <div className="col-span-3 text-center">Alokasi</div>
         <div className="col-span-2 text-center">Jumlah Lot</div>
@@ -49,7 +49,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.05 }}
-            className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-center px-4 py-3 border-b border-slate-100 hover:bg-slate-50/70 transition-colors"
+            className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-center px-4 py-3 border-b border-border-secondary hover:bg-background-secondary/70 transition-colors"
           >
             {/* Kolom 1: Emiten — Ticker & Nama */}
             <div className="md:col-span-3">
@@ -92,7 +92,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
               <div className="flex flex-col items-center gap-0.5">
                 {/* Persentase */}
                 <span
-                  className={`flex items-center text-sm font-medium ${holding.isProfit ? "text-[#329B0D]" : "text-red-500"}`}
+                  className={`flex items-center text-sm font-medium ${holding.isProfit ? "text-brand" : "text-error-500"}`}
                 >
                   <svg
                     className="w-3.5 h-3.5 mr-1"
@@ -117,7 +117,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
                 </span>
                 {/* Nominal */}
                 <span
-                  className={`flex items-center text-sm font-medium ${holding.isProfit ? "text-[#329B0D]" : "text-red-500"}`}
+                  className={`flex items-center text-sm font-medium ${holding.isProfit ? "text-brand" : "text-error-500"}`}
                 >
                   <svg
                     className="w-3.5 h-3.5 mr-1"
@@ -151,7 +151,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
                 onClick={() =>
                   navigate(`/portfolio/${portfolioId}/stocks/${holding.ticker}`)
                 }
-                className="px-4 py-1.5 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-all cursor-pointer flex items-center gap-1"
+                className="px-4 py-1.5 text-xs font-medium text-slate-600 bg-background-primary border border-border-primary rounded-lg hover:bg-background-secondary transition-all cursor-pointer flex items-center gap-1"
               >
                 Detail
                 <svg
