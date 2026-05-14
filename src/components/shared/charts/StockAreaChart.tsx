@@ -35,10 +35,10 @@ const CustomTooltip = ({ active, payload, label, isPositive }: any) => {
       year: "numeric",
     });
 
-    const colorClass = isPositive ? "text-[#329B0D]" : "text-red-500";
+    const colorClass = isPositive ? "text-brand" : "text-error-500";
 
     return (
-      <div className="bg-white p-2 border border-slate-200 rounded-lg shadow-lg">
+      <div className="bg-background-primary p-2 border border-border-primary rounded-lg shadow-lg">
         <p className="text-xs text-slate-500 font-medium mb-1">{date}</p>
         <p className={`text-sm font-semibold ${colorClass}`}>
           {formatCurrencyIDR(payload[0].value)}
@@ -60,19 +60,19 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
     return date.toLocaleDateString("id-ID", { day: "numeric", month: "short" });
   };
 
-  const themeColor = isPositive ? "#329B0D" : "#EF4444";
+  const themeColor = isPositive ? "var(--color-brand)" : "var(--color-error-500)";
 
   return (
-    <div className="w-full bg-white border border-slate-200 rounded-xl pl-4 py-4">
+    <div className="w-full bg-background-primary border border-border-primary rounded-xl pl-4 py-4">
       <div className="flex justify-end mb-6 mr-4">
-        <div className="bg-slate-50 p-1 rounded-xl border border-slate-100 flex overflow-x-auto no-scrollbar">
+        <div className="bg-background-secondary p-1 rounded-xl border border-border-secondary flex overflow-x-auto no-scrollbar">
           {TIME_FILTERS.map((filter) => (
             <button
               key={filter}
               onClick={() => onFilterChange(filter)}
               className={`px-2.5 py-1.5 text-xs font-Regular rounded-lg transition-all whitespace-nowrap ${
                 activeFilter === filter
-                  ? "bg-white text-slate-800 shadow-sm"
+                  ? "bg-background-primary text-slate-800 shadow-sm"
                   : "text-slate-400 hover:text-slate-600"
               }`}
             >

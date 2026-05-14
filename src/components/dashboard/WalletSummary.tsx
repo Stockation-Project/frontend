@@ -35,7 +35,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className="w-full bg-white border border-slate-200 rounded-xl p-2 lg:p-4">
+    <div className="w-full bg-background-primary border border-border-primary rounded-xl p-2 lg:p-4">
       <SectionHeader title="Ringkasan Dompet" className="mb-4" />
 
       {/* Bagian Atas: Donut Chart & Info Total */}
@@ -63,7 +63,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
               fill="transparent"
               strokeDasharray={circumference}
               strokeDashoffset={strokeDashoffset}
-              className="text-[#329B0D] transition-all duration-1000 ease-out"
+              className="text-brand transition-all duration-1000 ease-out"
               strokeLinecap="round"
             />
           </svg>

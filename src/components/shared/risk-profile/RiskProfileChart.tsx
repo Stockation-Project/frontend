@@ -59,7 +59,7 @@ const RiskProfileChart: React.FC<RiskProfileChartProps> = ({
           fill="transparent"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
-          className="text-[#329B0D] transition-all duration-1000 ease-out"
+          className="text-brand transition-all duration-1000 ease-out"
           strokeLinecap="round"
         />
       </svg>

@@ -16,7 +16,7 @@ const SimulationBuyPage: React.FC = () => {
   if (state.isLoading) {
     return (
       <div className="w-full h-screen flex flex-col items-center justify-center text-slate-500">
-        <Loader2 className="w-10 h-10 animate-spin text-green-700 mb-4" />
+        <Loader2 className="w-10 h-10 animate-spin text-brand mb-4" />
         <p className="font-medium">Memuat data simulasi...</p>
       </div>
     );
@@ -25,7 +25,7 @@ const SimulationBuyPage: React.FC = () => {
   if (state.error) {
     return (
       <div className="w-full p-10 text-center">
-        <p className="text-red-500 font-bold text-xl mb-2">Terjadi Kesalahan</p>
+        <p className="text-error-500 font-bold text-xl mb-2">Terjadi Kesalahan</p>
         <p className="text-slate-500">{state.error}</p>
       </div>
     );
@@ -72,11 +72,11 @@ const SimulationBuyPage: React.FC = () => {
 
         {/* SECTION 2: Tabs Rekomendasi / Manual */}
         <div>
-          <div className="flex border-b border-slate-200 mb-4">
+          <div className="flex border-b border-border-primary mb-4">
             <button
               className={`flex-1 py-2 text-center font-medium text-sm transition-colors ${
                 mainTab === "Rekomendasi"
-                  ? "border-b-2 border-green-700 text-green-700"
+                  ? "border-b-2 border-brand text-brand"
                   : "text-slate-400 hover:text-slate-600"
               }`}
               onClick={() => setMainTab("Rekomendasi")}
@@ -86,7 +86,7 @@ const SimulationBuyPage: React.FC = () => {
             <button
               className={`flex-1 py-2 text-center font-medium text-sm transition-colors ${
                 mainTab === "Manual"
-                  ? "border-b-2 border-green-700 text-green-700"
+                  ? "border-b-2 border-brand text-brand"
                   : "text-slate-400 hover:text-slate-600"
               }`}
               onClick={() => setMainTab("Manual")}
@@ -97,7 +97,7 @@ const SimulationBuyPage: React.FC = () => {
 
           {/* TAB CONTENT: Rekomendasi */}
           {mainTab === "Rekomendasi" && (
-            <div className="py-10 text-center bg-slate-50 rounded-2xl border border-slate-200 border-dashed">
+            <div className="py-10 text-center bg-background-secondary rounded-2xl border border-border-primary border-dashed">
               <h3 className="text-lg font-bold text-slate-700 mb-2">Mode Rekomendasi Cepat</h3>
               <p className="text-slate-500 max-w-lg mx-auto">
                 Fitur ini akan secara otomatis membelikan komposisi saham terbaik sesuai profil risiko Anda tanpa perlu memilih manual. (Segera Hadir)

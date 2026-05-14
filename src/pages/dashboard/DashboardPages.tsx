@@ -42,8 +42,8 @@ const DashboardPages: React.FC = () => {
           title="Dashboard"
         />
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4">
-            <AlertCircle className="w-8 h-8 text-red-500" />
+          <div className="w-16 h-16 bg-error-50 rounded-full flex items-center justify-center mb-4">
+            <AlertCircle className="w-8 h-8 text-error-500" />
           </div>
           <h3 className="text-lg font-bold text-slate-800 mb-2">
             Gagal Memuat Dashboard
@@ -66,7 +66,7 @@ const DashboardPages: React.FC = () => {
   const walletAllocations = mapPortfoliosToAllocations(portfolios);
 
   // Map warna UI untuk masing-masing saham di dalam setiap dompet
-  const ALLOCATION_COLORS = ["bg-[#329B0D]", "bg-green-500", "bg-green-300", "bg-emerald-600", "bg-teal-500"];
+  const ALLOCATION_COLORS = ["bg-brand", "bg-brand-700", "bg-brand-500", "bg-brand-800", "bg-brand-600"];
   const portfoliosWithColors = portfolios.map(p => ({
     ...p,
     allocations: (p.allocations || []).map((alloc, idx) => ({

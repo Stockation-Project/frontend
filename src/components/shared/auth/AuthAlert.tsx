@@ -16,7 +16,7 @@ interface AuthAlertProps {
 const AuthAlert: React.FC<AuthAlertProps> = ({ type, title, message }) => {
   if (type === "error") {
     return (
-      <Alert variant="destructive" className="bg-red-50 border-red-200 text-red-800">
+      <Alert variant="destructive" className="bg-error-50 border-error-200 text-error-800">
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>{title}</AlertTitle>
         <AlertDescription>{message}</AlertDescription>
@@ -25,8 +25,8 @@ const AuthAlert: React.FC<AuthAlertProps> = ({ type, title, message }) => {
   }
 
   return (
-    <Alert className="bg-green-50 border-green-200 text-green-800">
-      <CheckCircle2 className="h-4 w-4 text-green-600" />
+    <Alert className="bg-brand-50 border-brand-300 text-brand">
+      <CheckCircle2 className="h-4 w-4 text-brand" />
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>{message}</AlertDescription>
     </Alert>

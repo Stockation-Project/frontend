@@ -86,7 +86,7 @@ export const useSimulationBuy = () => {
   }, [selectedPortfolio, totalInvestment]);
 
   // Donut chart colors
-  const CHART_COLORS = ["bg-[#329B0D]", "bg-green-500", "bg-green-300", "bg-emerald-600", "bg-teal-500"];
+  const CHART_COLORS = ["bg-brand", "bg-brand-500", "bg-brand-300", "bg-emerald-600", "bg-teal-500"];
   
   const donutChartData = useMemo<AllocationChartItem[]>(() => {
     if (totalInvestment === 0) return [];

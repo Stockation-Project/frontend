@@ -16,11 +16,11 @@ interface MiniProgressBarProps {
  */
 const MiniProgressBar: React.FC<MiniProgressBarProps> = ({
   percentage,
-  colorClass = "bg-green-500",
+  colorClass = "bg-brand",
   heightClass = "h-1.5",
 }) => {
   return (
-    <div className={`w-full ${heightClass} bg-slate-100 rounded-full overflow-hidden`}>
+    <div className={`w-full ${heightClass} bg-border-secondary rounded-full overflow-hidden`}>
       <div
         className={`h-full ${colorClass} rounded-full transition-all duration-500`}
         style={{ width: `${Math.min(percentage, 100)}%` }}

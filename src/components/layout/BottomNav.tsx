@@ -15,7 +15,7 @@ const BottomNav: React.FC = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl border-t border-slate-100 flex items-center justify-between px-10 py-3 md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background-primary rounded-t-2xl border-t border-border-secondary flex items-center justify-between px-10 py-3 md:hidden">
       {menuItems.map((item) => {
         const isActive = location.pathname.includes(item.path);
         const Icon = item.icon;
@@ -28,12 +28,12 @@ const BottomNav: React.FC = () => {
           >
             <Icon
               className={`w-4 h-4 transition-colors duration-200 ${
-                isActive ? "text-green-700" : "text-slate-400"
+                isActive ? "text-brand" : "text-slate-400"
               }`}
             />
             <span
               className={`text-[8px] transition-colors duration-200 ${
-                isActive ? "text-green-700" : "text-slate-500"
+                isActive ? "text-brand" : "text-slate-500"
               }`}
             >
               {item.label}

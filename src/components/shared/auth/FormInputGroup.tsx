@@ -25,10 +25,10 @@ const FormInputGroup: React.FC<FormInputGroupProps> = ({
       <Input
         id={id}
         type={type}
-        className={`focus-visible:ring-0.6 h-10 bg-white border-slate-300 placeholder:text-slate-400 focus-visible:ring-green-600 focus-visible:border-green-600 rounded-base transition-colors ${error ? "border-red-500 focus-visible:ring-red-500" : ""}`}
+        className={`focus-visible:ring-0.6 h-10 bg-background-primary border-slate-300 placeholder:text-slate-400 focus-visible:ring-brand focus-visible:border-brand rounded-base transition-colors ${error ? "border-error-500 focus-visible:ring-error-500" : ""}`}
         {...props}
       />
-      {error && <span className="text-xs text-red-600">{error}</span>}
+      {error && <span className="text-xs text-error-600">{error}</span>}
     </div>
   );
 };

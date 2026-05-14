@@ -33,7 +33,7 @@ const StockDetailPage: React.FC = () => {
     );
   if (error || !data)
     return (
-      <div className="p-8 text-center text-red-500 font-bold">{error}</div>
+      <div className="p-8 text-center text-error-500 font-bold">{error}</div>
     );
 
   // --- Render UI Utama ---
@@ -59,7 +59,7 @@ const StockDetailPage: React.FC = () => {
               <p className="text-lg text-slate-600 mb-1">{data.name}</p>
               <Badge
                 variant="outline"
-                className="bg-green-50 text-[#329B0D] border-[#329B0D] hover:bg-green-100 font-medium px-3 py-2 rounded-sm text-xs"
+                className="bg-brand-50 text-brand border-brand hover:bg-brand-100 font-medium px-3 py-2 rounded-sm text-xs"
               >
                 Sektor: {data.sector}
               </Badge>
@@ -67,7 +67,7 @@ const StockDetailPage: React.FC = () => {
             <Button
               variant="outline"
               size="icon"
-              className="rounded-xl h-12 w-12 border-slate-200 text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100"
+              className="rounded-xl h-12 w-12 border-border-primary text-slate-400 hover:text-slate-900 bg-background-secondary hover:bg-border-secondary"
             >
               <Bookmark className="w-5 h-5" />
             </Button>
@@ -78,7 +78,7 @@ const StockDetailPage: React.FC = () => {
               {formatCurrencyIDR(data.current_price)}
             </h2>
             <span
-              className={`text-sm sm:text-md font-semibold mb-1 ${priceChange.isPositive ? "text-[#329B0D]" : "text-red-500"}`}
+              className={`text-sm sm:text-md font-semibold mb-1 ${priceChange.isPositive ? "text-brand" : "text-error-500"}`}
             >
               {priceChange.isPositive ? "▲" : "▼"} {priceChange.percent}%
             </span>
@@ -93,7 +93,7 @@ const StockDetailPage: React.FC = () => {
         </div>
 
         <div className="xl:col-span-5 flex flex-col gap-4 relative">
-          <div className="bg-white px-2">
+          <div className="bg-background-primary px-2">
             <h3 className="text-base font-medium text-slate-600 mb-2">
               Statistik Saham
             </h3>
@@ -123,7 +123,7 @@ const StockDetailPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white px-2">
+          <div className="bg-background-primary px-2">
             <h3 className="text-base font-medium text-slate-600 mb-2">
               Pergerakan Anomali
             </h3>
@@ -140,7 +140,7 @@ const StockDetailPage: React.FC = () => {
           </div>
 
           <Button 
-            className="w-full h-10 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
+            className="w-full h-10 bg-brand hover:bg-brand-800 active:bg-brand-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
             onClick={() => navigate('/dashboard/simulation')}
           >
             Beli Saham Ini
