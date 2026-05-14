@@ -7,6 +7,7 @@ import type { EnrichedHolding } from "@/types/portfolio";
 
 interface PortfolioDetailTableProps {
   holdings: EnrichedHolding[];
+  portfolioId: string;
 }
 
 /**
@@ -15,6 +16,7 @@ interface PortfolioDetailTableProps {
  */
 const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
   holdings,
+  portfolioId,
 }) => {
   const navigate = useNavigate();
 
@@ -147,13 +149,23 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             <div className="md:col-span-2 flex justify-center">
               <button
                 onClick={() =>
-                  navigate(`/dashboard/stock/${holding.ticker}`)
+                  navigate(`/portfolio/${portfolioId}/stocks/${holding.ticker}`)
                 }
                 className="px-4 py-1.5 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-all cursor-pointer flex items-center gap-1"
               >
                 Detail
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                <svg
+                  className="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </button>
             </div>
