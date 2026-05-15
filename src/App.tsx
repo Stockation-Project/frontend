@@ -21,6 +21,7 @@ import StockDetailPage from "./pages/stock/StockDetailPage";
 import SimulationBuyPage from "./pages/simulation/SimulationBuyPage";
 import PortfolioDetailPage from "./pages/portfolio/PortfolioDetailPage";
 import PortfolioStockDetailPage from "./pages/portfolio/PortfolioStockDetailPage";
+import WalletPage from "./pages/wallet/WalletPage";
 
 // import component shadcn
 import { Toaster } from "./components/ui/sonner";
@@ -49,8 +50,7 @@ function AnimatedRoutes() {
           />
           <Route path="/portfolio" element={<PortfolioDetailPage />} />
           <Route path="/portfolio/:id" element={<PortfolioDetailPage />} />
-          {/* Nanti Anda bisa tambahkan rute lain di sini: */}
-          {/* <Route path="/wallet" element={<WalletPage />} /> */}
+          <Route path="/wallet" element={<WalletPage />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/register" replace />} />

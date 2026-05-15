@@ -111,11 +111,11 @@ Project dianggap selesai jika:
 
 ---
 
-## Struktur Folder Frontend (React + TypeScript)
+## Struktur Folder Frontend (React + TypeScript) (STRUKTUR LAMA)
 Untuk menjaga codebase Stockation tetap bersih dan scalable saat AI Agent bekerja, pastikan ia mematuhi hierarki folder ini:
 
 ```text
-stockation-frontend/
+frontend/
 ├── public/               # File publik statis (favicon, logo mentah)
 ├── src/
 │   ├── assets/           # Media statis
@@ -175,6 +175,85 @@ stockation-frontend/
 ```
 
 ---
+
+## STRUKTUR BARU (IKUTI INI !!!)
+NEW ARSITEKTUR
+
+frontend/
+├── public/               # (Tetap) File publik statis
+├── src/
+│   ├── assets/           # (Tetap) Media statis (images, icons, logo)
+│   │
+│   ├── components/       # (BERUBAH: HANYA KOMPONEN GLOBAL)
+│   │   ├── ui/           # Komponen Shadcn (Button, Input, Card, dll)
+│   │   ├── shared/       # Komponen global (Navbar, Sidebar, Footer, PageHeader)
+│   │   └── layout/       # Pembungkus halaman global (DashboardLayout, AuthLayout)
+│   │
+│   ├── contexts/         # (Tetap) Context global murni seperti ThemeContext (Auth bisa pindah ke feature)
+│   │
+│   ├── lib/              # (BARU) Konfigurasi library pihak ketiga
+│   │   └── axios.ts      # Pindahan dari services/api.ts (Instance Axios dasar)
+│   │
+│   ├── utils/            # (Tetap) Utility murni (formatCurrency.ts)
+│   │
+│   ├── features/         # 🌟 (BARU: INI JANTUNG ARSITEKTURNYA)
+│   │   │
+│   │   ├── auth/         # Semua tentang Login & Register
+│   │   │   ├── components/
+│   │   │   ├── hooks/    # useAuth.ts
+│   │   │   ├── services/ # auth.service.ts
+│   │   │   ├── types/    # auth.ts (User, Token)
+│   │   │   └── index.ts  # Export public untuk fitur ini
+│   │   │
+│   │   ├── questionnaire/# Semua tentang Onboarding & Profil Risiko
+│   │   │   ├── components/ 
+│   │   │   ├── data/     # questionnaire.ts, riskProfiles.ts
+│   │   │   ├── hooks/    # useQuestionnaire.ts
+│   │   │   ├── services/ # questionnaire.service.ts
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── portfolio/    # Semua tentang Dompet, Alokasi, & Detail Portofolio
+│   │   │   ├── components/ # PortfolioCard, TransactionHistoryTable
+│   │   │   ├── hooks/    # usePortfolioDetail.ts, useWalletActions.ts
+│   │   │   ├── services/ # portfolio.service.ts
+│   │   │   ├── types/    # portfolio.ts
+│   │   │   └── index.ts  #Barrel Export (WAJIB)
+|   |   |
+│   │   ├── wallet/       # Semua tentang Wallet
+│   │   │   ├── components/ # WalletCard, TopUpForm
+│   │   │   ├── hooks/    # useWallet.ts, useTopUp.ts
+│   │   │   ├── services/ # wallet.service.ts
+│   │   │   ├── types/    # wallet.ts
+│   │   │   └── index.ts  #Barrel Export (WAJIB)
+│   │   │
+│   │   ├── stock/        # Semua tentang Explore & Simulasi Saham
+│   │   │   ├── components/ # StockChart, StockActionWidget
+│   │   │   ├── hooks/    # useStockDetail.ts, useChartFilter.ts
+│   │   │   └── index.ts  #Barrel Export (WAJIB)
+│   │   │
+│   │   ├── dashboard/    # Ringkasan utama (Overview)
+│   │   │   ├── components/ 
+│   │   │   ├── hooks/    # useDashboard.ts
+│   │   │   └── index.ts  #Barrel Export (WAJIB)
+│   │   │
+│   │   └── profile/      # Halaman profil user
+│   │   │   ├── components/ # ProfileHeader, SecuritySettings
+│   │   │   ├── hooks/    # useProfile.ts
+│   │   │   ├── services/ # profile.service.ts
+│   │   │   └── index.ts  #Barrel Export (WAJIB)
+│   │
+│   ├── pages/            # (BERUBAH: HANYA MENYATUKAN FITUR)
+│   │   ├── auth/         # LoginPage.tsx, RegisterPage.tsx
+│   │   ├── dashboard/    # DashboardPage.tsx
+│   │   ├── portfolio/    # PortfolioDetailPage.tsx
+│   │   └── stock/        # StockExplorePage.tsx, StockDetailPage.tsx
+|   |   └── wallet/       # WalletPage.tsx
+│   │
+│   ├── App.tsx           # Entry point utama (Routing)
+│   └── main.tsx          # Render DOM
+│
+├── tailwind.config.js
+└── package.json
 
 ## 📂 Struktur Folder Backend (Node.js / Express)
 
