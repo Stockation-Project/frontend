@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Folder Catatan Pribadi
+prompt/
+dist/
+
