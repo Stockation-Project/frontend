@@ -30,13 +30,13 @@ const GlobalWalletCard: React.FC<GlobalWalletCardProps> = ({ balance, onTopUpCli
         <div className="flex items-center gap-3">
           <Button
             onClick={onTopUpClick}
-            className="px-6 h-10 bg-background-primary hover:bg-brand-50 active:bg-brand-100 text-brand rounded-xl text-sm font-regular shadow-sm transition-all duration-200 cursor-pointer"
+            className="px-6 h-10 bg-background-primary active:bg-brand-100 text-brand hover:text-brand-950 rounded-xl text-sm font-regular shadow-sm transition-all duration-200 cursor-pointer"
           >
             <Plus className="w-4 h-4 mr-2 stroke-[2.5]" />
             Isi Saldo
           </Button>
 
-          <Button className="px-6 h-10 bg-background-primary hover:bg-brand-50 active:bg-brand-100 text-brand rounded-xl text-sm font-regular shadow-sm transition-all duration-200 cursor-pointer">
+          <Button className="px-6 h-10 bg-background-primary active:bg-brand-100 text-brand hover:text-brand-950 rounded-xl text-sm font-regular shadow-sm transition-all duration-200 cursor-pointer">
             <ArrowUpRight className="w-4 h-4 mr-2 stroke-[2.5]" />
             Alokasikan
           </Button>
