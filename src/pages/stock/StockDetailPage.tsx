@@ -11,6 +11,8 @@ import { Badge } from "@/components/ui/badge";
 import StockAreaChart from "@/components/shared/charts/StockAreaChart";
 import AnomalyTable from "@/components/shared/cards/AnomalyTable";
 import PageHeader from "@/components/shared/layout/PageHeader";
+import { toggleWatchlist } from "@/features/explore/services/explore.service";
+import { toast } from "sonner";
 
 const StockDetailPage: React.FC = () => {
   const { ticker } = useParams<{ ticker: string }>();
@@ -18,6 +20,28 @@ const StockDetailPage: React.FC = () => {
 
   // 1. Ambil data dari Backend
   const { data, isLoading, error } = useStockDetail(ticker);
+  const [isWatchlist, setIsWatchlist] = React.useState(false);
+
+  // Sinkronkan state lokal dengan data dari backend saat berhasil dimuat
+  React.useEffect(() => {
+    if (data) {
+      setIsWatchlist(!!data.is_watchlist);
+    }
+  }, [data]);
+
+  const handleToggleWatchlist = async () => {
+    if (!ticker) return;
+    
+    try {
+      const result = await toggleWatchlist(ticker);
+      if (result.success) {
+        setIsWatchlist(!isWatchlist);
+        toast.success(result.message);
+      }
+    } catch (err: any) {
+      toast.error("Gagal mengubah daftar pantau");
+    }
+  };
 
   // 2. Serahkan data mentah ke Custom Hook untuk diproses
   const chartRawData = data?.chart_data || data?.chart_1M || [];
@@ -67,9 +91,14 @@ const StockDetailPage: React.FC = () => {
             <Button
               variant="outline"
               size="icon"
-              className="rounded-xl h-12 w-12 border-border-primary text-slate-400 hover:text-slate-900 bg-background-secondary hover:bg-border-secondary"
+              onClick={handleToggleWatchlist}
+              className={`rounded-xl h-12 w-12 border-border-primary transition-all active:scale-95 ${
+                isWatchlist 
+                  ? "bg-brand text-white border-brand hover:bg-brand-600" 
+                  : "text-slate-400 hover:text-slate-900 bg-background-secondary hover:bg-border-secondary"
+              }`}
             >
-              <Bookmark className="w-5 h-5" />
+              <Bookmark className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`} />
             </Button>
           </div>
 

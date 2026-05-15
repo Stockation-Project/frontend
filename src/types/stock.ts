@@ -32,5 +32,6 @@ export interface StockDetailData {
   sector: string;
   about_company: string;
   ai_summary: string;
+  is_watchlist?: boolean;
   anomaly_history: AnomalyHistory[];
 }
