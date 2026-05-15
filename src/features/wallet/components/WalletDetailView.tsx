@@ -87,18 +87,11 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
       </div>
 
       {/* Action Buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Button
-          onClick={onTopUp}
-          className="bg-brand hover:bg-brand-600 text-white rounded-xl h-12 px-6 font-bold shadow-lg shadow-brand/10 transition-all active:scale-95"
-        >
-          <Plus className="w-5 h-5 mr-2 stroke-[2.5]" />
-          Tambah Saldo
-        </Button>
+      <div className="flex md:grid-cols-2 gap-4">
         <Button
           onClick={onWithdraw}
           variant="outline"
-          className="border-brand text-brand hover:bg-brand/5 rounded-xl h-12 px-6 font-bold active:scale-95 transition-all"
+          className="w-full border-brand text-brand hover:bg-brand/5 rounded-xl h-12 px-6 font-bold active:scale-95 transition-all"
         >
           <ArrowUpRight className="w-5 h-5 mr-2 stroke-[2.5]" />
           Tarik ke Utama

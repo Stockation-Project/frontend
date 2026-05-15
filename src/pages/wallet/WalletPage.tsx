@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import AllocateModal from "@/components/shared/modal/AllocateModal";
+import WithdrawModal from "@/components/shared/modal/WithdrawModal";
 
 const WalletPage: React.FC = () => {
   const {
@@ -99,6 +100,13 @@ const WalletPage: React.FC = () => {
         portfolios={portfolios}
         onSuccess={actions.handleAllocate}
         initialPortfolioId={selectedPortfolioId}
+      />
+
+      <WithdrawModal
+        isOpen={isWithdrawOpen}
+        onClose={() => setIsWithdrawOpen(false)}
+        portfolio={selectedPortfolio || null}
+        onSuccess={actions.handleWithdraw}
       />
     </div>
   );
