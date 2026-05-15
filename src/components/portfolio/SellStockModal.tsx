@@ -65,7 +65,7 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] rounded-[32px] p-8 border-none">
+      <DialogContent className="sm:max-w-[425px] rounded-lg p-8 border-none">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-slate-900">
             Jual Saham {ticker}

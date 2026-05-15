@@ -49,8 +49,8 @@ const StockDetailPage: React.FC = () => {
         showBackButton={true}
       />
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-        <div className="xl:col-span-7 flex flex-col gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="lg:col-span-8 space-y-6">
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-semibold text-slate-900 mb-0.5 tracking-tight">
@@ -92,7 +92,7 @@ const StockDetailPage: React.FC = () => {
           />
         </div>
 
-        <div className="xl:col-span-5 flex flex-col gap-4 relative">
+        <div className="lg:col-span-4 space-y-8">
           <div className="bg-background-primary px-2">
             <h3 className="text-base font-medium text-slate-600 mb-2">
               Statistik Saham

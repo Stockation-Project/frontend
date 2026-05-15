@@ -110,10 +110,10 @@ const PortfolioStockDetailPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Kolom Kiri: Chart & Transactions */}
-        <div className="xl:col-span-8 space-y-10">
-          <div className="bg-white border border-slate-100 rounded-[40px] p-4 md:p-8 shadow-sm">
+        <div className="lg:col-span-8 space-y-10">
+          <div className="bg-white">
             <StockAreaChart
               data={filteredChartData}
               activeFilter={activeFilter}
@@ -128,10 +128,10 @@ const PortfolioStockDetailPage = () => {
         </div>
 
         {/* Kolom Kanan: Stats, Anomaly, Summary, Position */}
-        <div className="xl:col-span-4 space-y-8">
+        <div className="lg:col-span-4 space-y-8">
           {/* Statistik Saham */}
           <div className="space-y-4">
-            <h3 className="text-base font-bold text-slate-600 ml-1">Statistik Saham</h3>
+            <h3 className="text-base font-medium text-slate-600 ml-1">Statistik Saham</h3>
             <div className="grid grid-cols-2 gap-3">
               <StatCard
                 title="Rata-rata tumbuh per tahun"
@@ -168,13 +168,13 @@ const PortfolioStockDetailPage = () => {
 
           {/* Pergerakan Anomali */}
           <div className="space-y-4">
-            <h3 className="text-base font-bold text-slate-600 ml-1">Pergerakan anomali</h3>
+            <h3 className="text-base font-medium text-slate-600 ml-1">Pergerakan anomali</h3>
             <AnomalyTable data={stockData.anomaly_history || []} />
           </div>
 
           {/* Rangkuman */}
           <div className="space-y-4">
-            <h3 className="text-base font-bold text-slate-600 ml-1">Rangkuman</h3>
+            <h3 className="text-base font-medium text-slate-600 ml-1">Rangkuman</h3>
             <div className="bg-white p-2">
               <p className="text-xs text-slate-500 leading-relaxed text-justify">
                 {stockData.about_company || `${stockData.name} (${stockData.ticker}) adalah salah satu perusahaan terkemuka di sektornya. Perusahaan ini memiliki fundamental yang kuat dan prospek pertumbuhan yang menjanjikan dalam jangka panjang.`}

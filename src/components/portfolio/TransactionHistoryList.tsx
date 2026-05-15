@@ -21,8 +21,8 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
     <div className="space-y-4">
       {/* Header & Filter */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-slate-900">Riwayat Transaksi</h2>
-        <div className="flex bg-slate-100 p-1 rounded-xl">
+        <h2 className="text-base font-medium text-slate-600">Riwayat Transaksi</h2>
+        <div className="flex bg-border-primary p-1 rounded-xl">
           {["ALL", "BUY", "SELL"].map((f) => (
             <button
               key={f}
