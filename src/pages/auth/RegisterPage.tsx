@@ -1,85 +1,29 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useRegister } from "@/hooks/useRegister";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import FormInputGroup from "@/components/shared/FormInputGroup";
-import PasswordInputField from "@/components/shared/PasswordInputField";
-import AuthVisualPanel from "@/components/shared/AuthVisualPanel";
+import FormInputGroup from "@/components/shared/auth/FormInputGroup";
+import PasswordInputField from "@/components/shared/auth/PasswordInputField";
+import AuthVisualPanel from "@/components/shared/auth/AuthVisualPanel";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
-import authService from "@/services/auth.service";
-import AuthHeader from "@/components/shared/AuthHeader";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import AuthHeader from "@/components/shared/auth/AuthHeader";
+import AuthAlert from "@/components/shared/auth/AuthAlert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 const RegisterPage: React.FC = () => {
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
-
-    // validasi konfirm pw
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Konfirmasi Kata Sandi Tidak Cocok");
-      return;
-    }
-
-    // state loading
-    setIsLoading(true);
-
-    try {
-      // mapping data
-      const payload = {
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-      };
-
-      // hit api nya
-      const response = await authService.register(payload);
-
-      // validasi
-      if (response.success) {
-        setSuccessMessage(
-          "Registrasi berhasil! Mengalihkan ke halaman login...",
-        );
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
-      }
-    } catch (error: any) {
-      setErrorMessage(error.message);
-    } finally {
-      if (!successMessage) {
-        setIsLoading(false);
-      }
-    }
-  };
+  const {
+    formData,
+    isLoading,
+    errorMessage,
+    successMessage,
+    handleInputChange,
+    handleSubmit,
+  } = useRegister();
 
   return (
     <motion.div
-      className="min-h-screen w-full flex"
-      style={{ backgroundColor: "#ffffff" }}
+      className="h-screen overflow-hidden w-full flex px-2 py-2 bg-background-primary"
       initial={{ opacity: 0, x: 80 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -80 }}
@@ -87,7 +31,7 @@ const RegisterPage: React.FC = () => {
     >
       {/* --- KOLOM KIRI (Panel Visual & Branding) --- */}
       <motion.div
-        className="hidden lg:block lg:w-[40%] xl:w-[40%] flex-shrink-0"
+        className="hidden lg:block lg:w-1/2 flex-shrink-0"
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 40 }}
@@ -102,7 +46,8 @@ const RegisterPage: React.FC = () => {
 
       {/* --- KOLOM KANAN (Panel Form Register) --- */}
       <motion.div
-        className="flex-1 flex items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20"
+        className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20 overflow-y-auto h-full"
+        style={{ scrollbarWidth: "none" }}
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -40 }}
@@ -112,12 +57,12 @@ const RegisterPage: React.FC = () => {
           {/* Header */}
           <AuthHeader
             title="Gabung Stockation"
-            description="Daftar sekarang, buat dompet virtual, dan mulai susun strategi investasi saham tanpa risiko di Stocketion."
+            description="Daftar sekarang, buat dompet virtual, dan mulai susun strategi investasi saham tanpa risiko di Stockation."
           />
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <FormInputGroup
                 id="firstName"
                 label="Nama depan"
@@ -161,33 +106,22 @@ const RegisterPage: React.FC = () => {
               required
             />
 
-            {/* 2. AREA ALERT UNTUK ERROR & SUCCESS */}
+            {/* Area Alert untuk Error & Success */}
             {errorMessage && (
-              <Alert
-                variant="destructive"
-                className="bg-red-50 border-red-200 text-red-800"
-              >
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Gagal Mendaftar</AlertTitle>
-                <AlertDescription>{errorMessage}</AlertDescription>
-              </Alert>
+              <AuthAlert type="error" title="Gagal Mendaftar" message={errorMessage} />
             )}
 
             {successMessage && (
-              <Alert className="bg-green-50 border-green-200 text-green-800">
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
-                <AlertTitle>Berhasil!</AlertTitle>
-                <AlertDescription>{successMessage}</AlertDescription>
-              </Alert>
+              <AuthAlert type="success" title="Berhasil!" message={successMessage} />
             )}
 
             {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}
             {isLoading ? (
-              <Skeleton className="w-full h-11 rounded-full bg-slate-200" />
+              <Skeleton className="w-full h-10 rounded-xl bg-slate-200" />
             ) : (
               <Button
                 type="submit"
-                className="w-full h-11 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white rounded-full text-base font-semibold shadow-lg shadow-green-700/20 transition-all duration-200 cursor-pointer"
+                className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
               >
                 Daftar
               </Button>
@@ -195,11 +129,11 @@ const RegisterPage: React.FC = () => {
           </form>
 
           {/* Footer link */}
-          <div className="text-center text-sm text-slate-500">
+          <div className="text-center text-xs text-slate-500">
             Sudah Punya Akun?{" "}
             <Link
               to="/login"
-              className="font-semibold text-green-700 hover:text-green-800 transition-colors"
+              className="font-semibold text-brand hover:text-brand-950 transition-colors"
             >
               Masuk Sekarang
             </Link>
