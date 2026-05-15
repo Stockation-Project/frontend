@@ -125,8 +125,8 @@ const AllocateModal: React.FC<AllocateModalProps> = ({
         </div>
 
         {/* Input Nominal */}
-        <div className="bg-[#E8F5E9]/50 p-5 rounded-2xl border border-brand/10 space-y-4">
-          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">
+        <div className="bg-brand-25 p-5 rounded-lg border border-brand/10 space-y-4">
+          <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider">
             NOMINAL
           </label>
 
