@@ -23,6 +23,7 @@ import PortfolioDetailPage from "./pages/portfolio/PortfolioDetailPage";
 import PortfolioStockDetailPage from "./pages/portfolio/PortfolioStockDetailPage";
 import WalletPage from "./pages/wallet/WalletPage";
 import ProfilePage from "./pages/profile/ProfilePage";
+import ExplorePage from "./pages/explore/ExplorePage";
 
 // import component shadcn
 import { Toaster } from "./components/ui/sonner";
@@ -52,6 +53,7 @@ function AnimatedRoutes() {
           <Route path="/portfolio" element={<PortfolioDetailPage />} />
           <Route path="/portfolio/:id" element={<PortfolioDetailPage />} />
           <Route path="/wallet" element={<WalletPage />} />
+          <Route path="/explore" element={<ExplorePage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
