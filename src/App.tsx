@@ -36,10 +36,6 @@ function AnimatedRoutes() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/questionnaire" element={<QuestionnairePage />} />
-        <Route
-          path="/portfolio/:portfolioId/stocks/:ticker"
-          element={<PortfolioStockDetailPage />}
-        />
 
         {/* Rute Utama (Dengan Sidebar) */}
         <Route element={<DashboardLayout />}>
@@ -48,6 +44,10 @@ function AnimatedRoutes() {
           <Route
             path="/dashboard/stock/:ticker"
             element={<StockDetailPage />}
+          />
+          <Route
+            path="/portfolio/:portfolioId/stocks/:ticker"
+            element={<PortfolioStockDetailPage />}
           />
           <Route path="/portfolio" element={<PortfolioDetailPage />} />
           <Route path="/portfolio/:id" element={<PortfolioDetailPage />} />
