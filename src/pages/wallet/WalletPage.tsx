@@ -8,6 +8,7 @@ import TopUpModal from "@/components/shared/modal/TopUpModal";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import AllocateModal from "@/components/shared/modal/AllocateModal";
 import WithdrawModal from "@/components/shared/modal/WithdrawModal";
+import PageHeader from "@/components/shared/layout/PageHeader";
 
 const WalletPage: React.FC = () => {
   const {
@@ -31,7 +32,10 @@ const WalletPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-slate-900">Dompet</h1>
+      <PageHeader 
+        title="Dompet"
+        description="Kelola aset digital dan portofolio Anda"
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Kolom Kiri - 30% */}

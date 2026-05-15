@@ -65,10 +65,6 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
             {portfolio.id} . Dibuat {new Date(portfolio.updated_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
           </p>
         </div>
-        <Button variant="outline" size="sm" className="h-8 px-3 rounded-lg border-slate-200 text-slate-600 text-xs gap-1">
-          <Edit3 className="w-3.5 h-3.5" />
-          edit
-        </Button>
       </div>
 
       {/* Stats Grid */}
