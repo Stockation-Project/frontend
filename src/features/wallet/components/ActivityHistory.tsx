@@ -31,11 +31,11 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
   const getIcon = (type: string) => {
     switch (type) {
       case "TOP_UP":
-        return <Plus className="stroke-[1.5px] w-full h-full text-brand bg-gradient-to-b from-brand-100 to-brand-50 p-2 rounded-lg" />;
+        return <Plus className="stroke-[1.5px] w-full h-full text-warning-700 bg-gradient-to-b from-warning-100 to-warning-50 p-2 rounded-lg" />;
       case "ALLOCATE":
         return <ArrowLeftRight className="stroke-[1.5px] w-full h-full text-warning-700 bg-gradient-to-b from-warning-100 to-warning-50 p-2 rounded-lg" />;
       case "WITHDRAW":
-        return <ArrowDownFromLine className="stroke-[1.5px] w-full h-full text-brand bg-gradient-to-b from-blue-100 to-blue-50 p-2 rounded-lg" />;
+        return <ArrowDownFromLine className="stroke-[1.5px] w-full h-full text-blue-500 bg-gradient-to-b from-blue-100 to-blue-50 p-2 rounded-lg" />;
       case "BUY":
         return <ArrowUpRight className="stroke-[1.5px] w-full h-full text-brand bg-gradient-to-b from-brand-100 to-brand-50 p-2 rounded-lg" />;
       case "SELL":
@@ -74,7 +74,7 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
   const grouped = groupActivities();
 
   return (
-    <div className="space-y-3 h-[300px] overflow-y-auto">
+    <div className="space-y-3 h-[310px] overflow-hidden">
       <div className="flex items-center justify-between pb-2 border-b border-border-primary">
         <h3 className="text-sm font-medium text-slate-500">Riwayat Mutasi</h3>
         <div className="flex gap-1 bg-border-secondary p-1 rounded-xl">
@@ -94,9 +94,9 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
         </div>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-4 overflow-y-auto h-full pb-12">
         {Object.keys(grouped).length === 0 ? (
-          <div className="py-12 text-center text-slate-400 text-sm italic">
+          <div className="py-4 text-center text-slate-400 text-sm italic">
             Tidak ada riwayat aktivitas
           </div>
         ) : (

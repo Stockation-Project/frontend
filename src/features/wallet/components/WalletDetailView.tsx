@@ -101,7 +101,7 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
       </div>
 
       {/* History */}
-      <div className="py-2 border-border-primary">
+      <div className="pt-2 border-border-primary">
         <ActivityHistory
           activities={activities}
           currentFilter={filter}
