@@ -30,12 +30,12 @@ const PortfolioSidebarList: React.FC<PortfolioSidebarListProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <h3 className="text-base font-bold text-slate-900 mt-4">
+    <div className="flex flex-col gap-1 h-[320px]">
+      <h3 className="text-sm font-medium text-slate-500">
         Dompet Investasi
       </h3>
       
-      <div className="space-y-4">
+      <div className="space-y-4 overflow-y-auto flex-1 pr-1 pb-4 no-scrollbar scroll-smooth">
         {portfolios.map((portfolio) => (
           <SidebarPortfolioCard
             key={portfolio.id}

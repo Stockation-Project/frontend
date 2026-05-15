@@ -86,7 +86,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
             </div>
             <div className="text-right">
               <p className="text-[10px] text-slate-400 uppercase font-medium">Saldo Kas</p>
-              <p className="text-sm font-bold text-slate-900">{formatCurrencyIDR(availableBalance)}</p>
+              <p className="text-sm font-semibold text-slate-900">{formatCurrencyIDR(availableBalance)}</p>
             </div>
           </div>
         </div>
@@ -114,14 +114,14 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
         </div>
 
         {/* Input Nominal */}
-        <div className="bg-orange-50/50 p-5 rounded-2xl border border-orange-100 space-y-4">
+        <div className="bg-brand-25 p-4 rounded-lg border border-brand-100 space-y-4">
           <div className="flex justify-between items-center">
-            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider">
               NOMINAL TARIK
             </label>
             <button 
               onClick={handleMaxClick}
-              className="text-[10px] font-bold text-brand uppercase hover:underline"
+              className="text-[10px] font-semibold text-brand uppercase hover:underline"
             >
               Tarik Semua
             </button>
@@ -133,19 +133,19 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
               placeholder="Rp 0"
               value={amountText}
               onChange={handleAmountChange}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand font-bold text-xl text-slate-900 bg-white"
+              className="w-full px-4 py- rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand font-semibold text-base text-slate-900 bg-white"
             />
           </div>
 
           <div className="flex justify-between items-center">
             <span className="text-xs text-slate-500">Maksimal penarikan:</span>
-            <span className={`text-xs font-bold ${amount > availableBalance ? "text-error-500" : "text-slate-700"}`}>
+            <span className={`text-xs font-semibold ${amount > availableBalance ? "text-error-500" : "text-slate-700"}`}>
               {formatCurrencyIDR(availableBalance)}
             </span>
           </div>
           
           {amount > availableBalance && (
-            <p className="text-error-500 text-[10px] font-medium">
+            <p className="text-error-500 text-xs font-medium">
               Saldo kas di portofolio ini tidak mencukupi.
             </p>
           )}
@@ -153,7 +153,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
 
         <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 flex gap-3">
           <div className="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">i</div>
-          <p className="text-[11px] text-blue-700 leading-relaxed">
+          <p className="text-xs text-blue-700 leading-relaxed">
             Dana yang ditarik akan segera tersedia di Dompet Utama Anda dan dapat dialokasikan kembali ke portofolio lain.
           </p>
         </div>
