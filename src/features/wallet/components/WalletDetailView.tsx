@@ -56,28 +56,34 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
   ];
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-8">
+    <div className="bg-white rounded-xl border border-border-primary p-4 space-y-4">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900">{portfolio.name}</h2>
-          <p className="text-sm text-slate-400 font-medium">
-            {portfolio.id} . Dibuat {new Date(portfolio.updated_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+          <h2 className="text-xl font-medium text-brand">{portfolio.name}</h2>
+          <p className="text-xs text-slate-400 font-regular tracking-wide">
+          <span className="uppercase">{portfolio.id}</span>
+          {" • Dibuat "}
+          {new Date(portfolio.updated_at).toLocaleDateString('id-ID', { 
+            day: 'numeric', 
+            month: 'short', 
+            year: 'numeric' 
+            })}
           </p>
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
         {statItems.map((item, idx) => (
           <div
             key={idx}
-            className="bg-[#E8F5E9] p-4 rounded-xl border border-[#C8E6C9]/30"
+            className="bg-gradient-to-b from-brand-50 to-brand-25 p-4 rounded-lg border border-[#C8E6C9]/30"
           >
-            <p className="text-[10px] font-medium text-brand/70 mb-1 uppercase tracking-tight">
+            <p className="text-xs font-medium text-slate-500 mb-1 tracking-tight">
               {item.label}
             </p>
-            <p className="text-base font-bold text-slate-900">{item.value}</p>
+            <p className="text-base font-semibold text-slate-900">{item.value}</p>
           </div>
         ))}
       </div>
@@ -87,7 +93,7 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
         <Button
           onClick={onWithdraw}
           variant="outline"
-          className="w-full border-brand text-brand hover:bg-brand/5 rounded-xl h-12 px-6 font-bold active:scale-95 transition-all"
+          className="w-full border-brand text-brand hover:text-white hover:bg-brand rounded-xl h-10 px-6 font-medium active:scale-95 transition-all"
         >
           <ArrowUpRight className="w-5 h-5 mr-2 stroke-[2.5]" />
           Tarik ke Utama
@@ -95,7 +101,7 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
       </div>
 
       {/* History */}
-      <div className="pt-4 border-t border-slate-100">
+      <div className="py-2 border-border-primary">
         <ActivityHistory
           activities={activities}
           currentFilter={filter}

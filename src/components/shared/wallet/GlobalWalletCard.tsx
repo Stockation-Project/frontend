@@ -27,7 +27,7 @@ const GlobalWalletCard: React.FC<GlobalWalletCardProps> = ({ balance, onTopUpCli
           {formattedBalance}
         </p>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 ">
           <Button
             onClick={onTopUpClick}
             className="px-6 h-10 bg-background-primary active:bg-brand-100 text-brand hover:text-brand-950 rounded-xl text-sm font-regular shadow-sm transition-all duration-200 cursor-pointer"

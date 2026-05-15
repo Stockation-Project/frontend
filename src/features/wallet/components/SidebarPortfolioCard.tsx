@@ -30,14 +30,14 @@ const SidebarPortfolioCard: React.FC<SidebarPortfolioCardProps> = ({
           : "text-slate-900 border border-border-primary"
       }`} 
     >
-      <div className={`border-b border-border-secondary p-4 flex items-center gap-3 ${isActive ? "bg-brand" : "bg-background-secondary"}`}>
+      <div className={`border-b border-border-secondary px-4 py-3 flex items-center gap-3 ${isActive ? "bg-brand" : "bg-background-secondary"}`}>
         <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
           isActive ? "bg-white/20" : "bg-white border border-border-primary"
         }`}>
           <Wallet className={`w-5 h-5 stroke-[1.5px] ${isActive ? "text-white" : "text-slate-400"}`} />
         </div>
         <div>
-          <h4 className="font-bold text-sm leading-tight">{name}</h4>
+          <h4 className="font-semibold text-sm leading-tight mb-1">{name}</h4>
           <p className={`text-[10px] font-medium uppercase tracking-wider max-w-[200px] truncate ${
             isActive ? "text-white/70" : "text-slate-400"
           }`}>
@@ -46,7 +46,7 @@ const SidebarPortfolioCard: React.FC<SidebarPortfolioCardProps> = ({
         </div>
       </div>
 
-      <div className="p-4 ">
+      <div className="px-4 py-3">
         <p className={`text-[10px] font-medium ${
           isActive ? "text-slate-500" : "text-slate-500"
         }`}>
@@ -57,7 +57,7 @@ const SidebarPortfolioCard: React.FC<SidebarPortfolioCardProps> = ({
         </p>
       </div>
 
-      <div className="p-4 flex justify-between items-center pt-3 border-t border-border-secondary">
+      <div className="px-4 py-3 flex justify-between items-center pt-3 border-t border-border-secondary">
         <div>
           <p className={`text-[10px] font-medium mb-0.5 ${
             isActive ? "text-slate-500" : "text-slate-500"
