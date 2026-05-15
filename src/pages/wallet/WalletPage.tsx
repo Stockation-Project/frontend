@@ -6,6 +6,7 @@ import { useWallet } from "@/features/wallet";
 import { Skeleton } from "@/components/ui/skeleton";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
+import AllocateModal from "@/components/shared/modal/AllocateModal";
 
 const WalletPage: React.FC = () => {
   const {
@@ -44,6 +45,7 @@ const WalletPage: React.FC = () => {
               <GlobalWalletCard
                 balance={Number(globalWallet?.balance || 0)}
                 onTopUpClick={() => setIsTopUpOpen(true)}
+                onAllocateClick={() => setIsAllocateOpen(true)}
               />
             )}
           </div>
@@ -90,23 +92,14 @@ const WalletPage: React.FC = () => {
         onSuccess={actions.handleCreatePortfolio}
       />
 
-      {/* TODO: Implement Allocate & Withdraw Modals when components are ready */}
-      {isAllocateOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl max-w-md w-full">
-            <h3 className="text-xl font-bold mb-4">Alokasi Saldo</h3>
-            <p className="text-slate-500 mb-6 text-sm">
-              Gunakan Modal Alokasi untuk memindahkan saldo dari Dompet Utama ke Portofolio ini.
-            </p>
-            <button 
-              onClick={() => setIsAllocateOpen(false)}
-              className="w-full bg-brand text-white py-2 rounded-lg font-bold"
-            >
-              Mengerti
-            </button>
-          </div>
-        </div>
-      )}
+      <AllocateModal
+        isOpen={isAllocateOpen}
+        onClose={() => setIsAllocateOpen(false)}
+        currentBalance={Number(globalWallet?.balance || 0)}
+        portfolios={portfolios}
+        onSuccess={actions.handleAllocate}
+        initialPortfolioId={selectedPortfolioId}
+      />
     </div>
   );
 };
