@@ -16,10 +16,10 @@ const AuthHeader: React.FC<AuthHeaderProps> = ({ title, description }) => {
 
       {/* Text */}
       <div className="space-y-0.5">
-        <h2 className="text-lg font-medium text-slate-950 tracking-tight">
+        <h2 className="text-lg font-medium text-text-primary tracking-tight">
           {title}
         </h2>
-        <p className="text-slate-500 text-xs leading-relaxed">{description}</p>
+        <p className="text-text-muted text-xs leading-relaxed">{description}</p>
       </div>
     </div>
   );

@@ -19,13 +19,13 @@ const FormInputGroup: React.FC<FormInputGroupProps> = ({
 }) => {
   return (
     <div className={`space-y-1 ${className}`}>
-      <Label htmlFor={id} className="text-xs font-Regular text-slate-700">
+      <Label htmlFor={id} className="text-xs font-Regular text-text-secondary">
         {label}
       </Label>
       <Input
         id={id}
         type={type}
-        className={`focus-visible:ring-0.6 h-10 bg-background-primary border-slate-300 placeholder:text-slate-400 focus-visible:ring-brand focus-visible:border-brand rounded-base transition-colors ${error ? "border-error-500 focus-visible:ring-error-500" : ""}`}
+        className={`focus-visible:ring-0.6 h-10 bg-background-primary border-slate-300 placeholder:text-text-subtle focus-visible:ring-brand focus-visible:border-brand rounded-base transition-colors ${error ? "border-error-500 focus-visible:ring-error-500" : ""}`}
         {...props}
       />
       {error && <span className="text-xs text-error-600">{error}</span>}
