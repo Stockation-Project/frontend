@@ -21,15 +21,15 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
     <div className="space-y-4">
       {/* Header & Filter */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-slate-900">Riwayat Transaksi</h2>
-        <div className="flex bg-slate-100 p-1 rounded-xl">
+        <h2 className="text-xl font-bold text-text-primary">Riwayat Transaksi</h2>
+        <div className="flex bg-border-secondary p-1 rounded-xl">
           {["ALL", "BUY", "SELL"].map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f as any)}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${filter === f
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700"
+                  ? "bg-background-primary text-text-primary shadow-sm"
+                  : "text-text-muted hover:text-text-secondary"
                 }`}
             >
               {f === "ALL" ? "Semua" : f === "BUY" ? "Beli" : "Jual"}
@@ -41,14 +41,14 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
       {/* Transaction Cards */}
       <div className="space-y-4">
         {filteredData.length === 0 ? (
-          <div className="text-center py-12 border-2 border-dashed border-slate-100 rounded-3xl">
-            <p className="text-slate-400 text-sm">Belum ada riwayat transaksi.</p>
+          <div className="text-center py-12 border-2 border-dashed border-border-primary rounded-3xl">
+            <p className="text-text-muted text-sm">Belum ada riwayat transaksi.</p>
           </div>
         ) : (
           filteredData.map((tx) => (
             <div
               key={tx.id}
-              className="bg-white border border-slate-100 rounded-3xl p-6 hover:border-slate-200 transition-all group"
+              className="bg-background-primary border border-border-primary rounded-3xl p-6 hover:border-border-secondary transition-all group"
             >
               {/* Card Header */}
               <div className="flex justify-between items-start mb-6">
@@ -56,17 +56,17 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
                   <div
                     className={`px-3 py-1 rounded-lg text-xs font-bold ${
                       tx.type === "BUY"
-                        ? "bg-green-50 text-[#329B0D]"
-                        : "bg-red-50 text-red-500"
+                        ? "bg-brand-50 text-brand"
+                        : "bg-error-50 text-error-500"
                       }`}
                   >
                     {tx.type === "BUY" ? "Beli" : "Jual"}
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 text-sm uppercase">
+                    <h4 className="font-bold text-text-primary text-sm uppercase">
                       #{tx.id.slice(0, 8)}
                     </h4>
-                    <p className="text-[10px] text-slate-400 mt-0.5">
+                    <p className="text-[10px] text-text-muted mt-0.5">
                       {new Date(tx.created_at).toLocaleDateString("id-ID", {
                         day: "numeric",
                         month: "short",
@@ -78,34 +78,34 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
                     </p>
                   </div>
                 </div>
-                <div className="bg-green-50 text-[#329B0D] px-3 py-1 rounded-lg text-[10px] font-bold">
+                <div className="bg-brand-50 text-brand px-3 py-1 rounded-lg text-[10px] font-bold">
                   Selesai
                 </div>
               </div>
 
               {/* Card Metrics */}
-              <div className="grid grid-cols-3 gap-4 mb-6 border-b border-slate-50 pb-6">
+              <div className="grid grid-cols-3 gap-4 mb-6 border-b border-border-secondary pb-6">
                 <div>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">
+                  <p className="text-[10px] text-text-muted uppercase tracking-wider mb-1">
                     Jumlah Lot
                   </p>
-                  <p className="text-sm font-bold text-slate-900">
+                  <p className="text-sm font-bold text-text-primary">
                     {tx.shares / 100} Lot
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">
+                  <p className="text-[10px] text-text-muted uppercase tracking-wider mb-1">
                     Jumlah Lembar
                   </p>
-                  <p className="text-sm font-bold text-slate-900">
+                  <p className="text-sm font-bold text-text-primary">
                     {tx.shares}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">
+                  <p className="text-[10px] text-text-muted uppercase tracking-wider mb-1">
                     Harga / Lembar
                   </p>
-                  <p className="text-sm font-bold text-slate-900">
+                  <p className="text-sm font-bold text-text-primary">
                     {formatCurrencyIDR(tx.price)}
                   </p>
                 </div>
@@ -113,15 +113,15 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
 
               {/* Card Footer */}
               <div className="flex flex-col gap-1">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wider">
+                <p className="text-[10px] text-text-muted uppercase tracking-wider">
                   {tx.type === "BUY" ? "Total Bayar" : "Total Diterima"}
                 </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-lg font-bold text-slate-900">
+                  <p className="text-lg font-bold text-text-primary">
                     {formatCurrencyIDR(tx.total_amount)}
                   </p>
                 </div>
-                <p className="text-[10px] text-slate-400">
+                <p className="text-[10px] text-text-muted">
                   Subtotal {formatCurrencyIDR(tx.total_amount)}
                 </p>
               </div>

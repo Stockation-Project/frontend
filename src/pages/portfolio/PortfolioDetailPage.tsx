@@ -23,9 +23,9 @@ import EmptyState from "@/components/shared/states/EmptyState";
 const ALLOCATION_COLORS = [
   "bg-brand",
   "bg-brand-500",
-  "bg-green-300",
-  "bg-emerald-600",
-  "bg-teal-500",
+  "bg-brand-300",
+  "bg-brand-600",
+  "bg-brand-400",
 ];
 
 const PortfolioDetailPage: React.FC = () => {
@@ -79,10 +79,10 @@ const PortfolioDetailPage: React.FC = () => {
           <div className="w-16 h-16 bg-error-50 rounded-full flex items-center justify-center mb-4">
             <AlertCircle className="w-8 h-8 text-error-500" />
           </div>
-          <h3 className="text-lg font-bold text-slate-800 mb-2">
+          <h3 className="text-lg font-bold text-text-primary mb-2">
             Gagal Memuat Detail Portofolio
           </h3>
-          <p className="text-sm text-slate-500 max-w-md">
+          <p className="text-sm text-text-muted max-w-md">
             {detailError ||
               "Data portofolio tidak tersedia. Silakan coba lagi nanti."}
           </p>
