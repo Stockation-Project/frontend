@@ -13,7 +13,7 @@ const ProfilePage: React.FC = () => {
       <div className="space-y-8 animate-in fade-in duration-500">
         <PageHeader title="Profil" description="Kelola informasi akun dan preferensi Anda" />
         
-        <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm space-y-12">
+        <div className="bg-background-primary rounded-3xl border border-border-secondary shadow-sm space-y-12 p-4">
           {/* Skeleton Header */}
           <div className="flex flex-col md:flex-row items-center gap-6">
             <Skeleton className="w-32 h-32 rounded-full" />
@@ -28,8 +28,8 @@ const ProfilePage: React.FC = () => {
           </div>
 
           {/* Skeleton Form */}
-          <div className="space-y-8">
-            <Skeleton className="h-6 w-48 border-b border-slate-50 pb-2" />
+          <div className="space-y-8 p-4">
+            <Skeleton className="h-6 w-48 border-b border-border-secondary pb-2" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
               {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
                 <div key={i} className="space-y-2">
@@ -54,13 +54,13 @@ const ProfilePage: React.FC = () => {
   if (!profile) return null;
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <PageHeader 
         title="Profil" 
         description="Kelola informasi akun dan preferensi Anda" 
       />
 
-      <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
+      <div className="bg-background-primary rounded-xl p-4 border border-border-primary">
         <ProfileHeader 
           user={profile} 
           onUpdateAvatar={(url) => updateProfile({ avatar_url: url })} 

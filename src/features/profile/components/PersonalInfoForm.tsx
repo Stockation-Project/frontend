@@ -32,23 +32,23 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
   };
 
   const getInputClass = (value: any) => {
-    const baseClass = "w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all font-medium text-slate-900";
+    const baseClass = "w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all font-regular text-text-primary text-sm";
     if (!value || value === "") {
-      return `${baseClass} border-red-100 bg-red-50/30 focus:border-red-300 focus:ring-red-200`;
+      return `${baseClass} border-brand-100 bg-brand-50/20 focus:border-brand-300 focus:ring-brand-200`;
     }
-    return `${baseClass} border-slate-200 bg-white focus:border-brand focus:ring-brand/20`;
+    return `${baseClass} border-border-primary bg-background-primary focus:border-brand focus:ring-brand/20`;
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl">
-      <h3 className="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2">
+    <form onSubmit={handleSubmit} className="space-y-8 w-full">
+      <h3 className="text-base font-medium text-text-primary border-b border-border-primary pb-2">
         Informasi personal
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
         {/* First Name */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Nama Depan</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">Nama Depan</label>
           <input 
             name="first_name"
             value={formData.first_name}
@@ -60,7 +60,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
 
         {/* Last Name */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Nama Belakang</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">Nama Belakang</label>
           <input 
             name="last_name"
             value={formData.last_name}
@@ -72,27 +72,27 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
 
         {/* Username - Actually using email or first name as username for now as there is no username column */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Username</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">Username</label>
           <input 
             value={user.first_name}
             readOnly
-            className="w-full px-4 py-3 rounded-xl border border-slate-100 bg-slate-50 text-slate-400 font-medium cursor-not-allowed"
+            className="w-full px-4 py-2 rounded-lg border border-border-primary bg-background-secondary text-text-subtle font-regular text-sm cursor-not-allowed"
           />
         </div>
 
         {/* Email */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Email</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">Email</label>
           <input 
             value={user.email}
             readOnly
-            className="w-full px-4 py-3 rounded-xl border border-slate-100 bg-slate-50 text-slate-400 font-medium cursor-not-allowed"
+            className="w-full px-4 py-2 rounded-lg border border-border-primary bg-background-secondary text-text-subtle font-regular text-sm cursor-not-allowed"
           />
         </div>
 
         {/* DOB */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Tanggal Lahir</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">Tanggal Lahir</label>
           <div className="relative">
             <input 
               type="date"
@@ -101,15 +101,12 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
               onChange={handleChange}
               className={getInputClass(formData.dob)}
             />
-            {!formData.dob && (
-              <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 pointer-events-none" />
-            )}
           </div>
         </div>
 
         {/* Place of Birth */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Tempat Lahir</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">Tempat Lahir</label>
           <input 
             name="place_of_birth"
             value={formData.place_of_birth || ""}
@@ -121,7 +118,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
 
         {/* Gender */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Jenis Kelamin</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">Jenis Kelamin</label>
           <select 
             name="gender"
             value={formData.gender || ""}
@@ -136,7 +133,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
 
         {/* Occupation */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Pekerjaan</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">Pekerjaan</label>
           <input 
             name="occupation"
             value={formData.occupation || ""}
@@ -149,7 +146,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
 
       {/* Address */}
       <div className="space-y-2">
-        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Alamat</label>
+        <label className="text-xs font-medium text-text-muted tracking-wider">Alamat</label>
         <textarea 
           name="address"
           value={formData.address || ""}
@@ -164,7 +161,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
         <Button 
           type="submit" 
           disabled={isLoading}
-          className="bg-brand hover:bg-brand-600 text-white px-10 py-6 rounded-xl font-bold shadow-lg shadow-brand/20 transition-all active:scale-95 disabled:opacity-70"
+          className="bg-brand hover:bg-brand-950 text-primary-foreground px-8 py-5  rounded-xl font-medium shadow-sm shadow-brand/20 transition-all active:scale-95 disabled:opacity-70"
         >
           {isLoading ? "Menyimpan..." : "Simpan Perubahan"}
         </Button>

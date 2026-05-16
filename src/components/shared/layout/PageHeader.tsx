@@ -28,7 +28,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           variant="outline"
           size="icon"
           onClick={() => navigate(-1)}
-          className="mb-4 rounded-xl text-slate-600 hover:text-slate-900 border-border-primary h-10 w-10"
+          className="mb-4 rounded-xl text-text-secondary hover:text-text-primary border-border-primary h-10 w-10"
         >
           <ChevronLeft className="w-5 h-5" />
         </Button>
@@ -37,11 +37,11 @@ const PageHeader: React.FC<PageHeaderProps> = ({
       <div className="flex items-center justify-between">
         {title && (
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-3xl font-extrabold text-text-primary tracking-tight">
               {title}
             </h1>
             {description && (
-              <p className="text-sm text-slate-500 mt-1">{description}</p>
+              <p className="text-sm text-text-muted mt-1">{description}</p>
             )}
           </div>
         )}

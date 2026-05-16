@@ -26,7 +26,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onUpdateAvatar }) =
   return (
     <div className="flex flex-col md:flex-row items-center gap-6 mb-12">
       <div className="relative group">
-        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-slate-100 flex items-center justify-center">
+        <div className="w-32 h-32 rounded-full overflow-hidden border-1 border-border-primary ring-3 ring-white ring-inset shadow-sm bg-brand-25 flex items-center justify-center">
           {user.avatar_url ? (
             <img 
               src={user.avatar_url} 
@@ -34,12 +34,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onUpdateAvatar }) =
               className="w-full h-full object-cover"
             />
           ) : (
-            <span className="text-4xl font-bold text-slate-300">
+            <span className="text-4xl font-bold text-text-subtle">
               {user.first_name[0]}{user.last_name ? user.last_name[0] : ""}
             </span>
           )}
         </div>
-        <label className="absolute inset-0 flex items-center justify-center bg-black/40 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+        <label className="absolute inset-0 flex items-center justify-center bg-black/40 text-text-inverse rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
           <Camera className="w-8 h-8" />
           <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
         </label>
@@ -47,18 +47,18 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onUpdateAvatar }) =
 
       <div className="text-center md:text-left space-y-3">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900">
+          <h2 className="text-xl font-semibold text-text-primary">
             {user.first_name} {user.last_name || ""}
           </h2>
-          <p className="text-sm text-slate-500 font-medium">
+          <p className="text-xs text-text-muted font-regular">
             Bergabung Sejak {joinDate}
           </p>
         </div>
 
-        <div className="flex items-center gap-3 justify-center md:justify-start">
+        <div className="flex items-center gap-2 justify-center md:justify-start">
           <Button 
             size="sm" 
-            className="bg-brand hover:bg-brand-600 text-white px-6 rounded-lg text-xs font-bold"
+            className="bg-brand hover:bg-brand-950 text-white px-4 rounded-lg text-xs font-regular shadow-sm shadow-brand/30 cursor-pointer"
             onClick={() => document.querySelector<HTMLInputElement>('input[type="file"]')?.click()}
           >
             Ganti
@@ -66,7 +66,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onUpdateAvatar }) =
           <Button 
             size="sm" 
             variant="outline" 
-            className="border-slate-200 text-slate-600 hover:bg-slate-50 px-6 rounded-lg text-xs font-bold"
+            className="border-border-primary text-text-secondary hover:bg-background-secondary px-4 rounded-lg text-xs font-regular cursor-pointer"
             onClick={() => onUpdateAvatar(null)}
           >
             Hapus
