@@ -9,8 +9,8 @@ import {
   usePortfolioDetail, 
   PortfolioDetailCard, 
   PortfolioDetailSkeleton,
-  useWalletActions
 } from "@/features/portfolio";
+import { useWallet } from "@/features/wallet";
 import { 
   useDashboard, 
   PortfolioSection 
@@ -50,9 +50,10 @@ const PortfolioDetailPage: React.FC = () => {
     refreshData,
   } = useDashboard();
 
-  const { handleCreatePortfolio } = useWalletActions({
-    onRefresh: refreshData,
+  const { actions } = useWallet({
+    onSuccess: refreshData,
   });
+  const { handleCreatePortfolio } = actions;
 
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
 

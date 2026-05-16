@@ -12,20 +12,26 @@ import {
   DashboardSkeleton,
   PortfolioSection
 } from "@/features/dashboard";
-import { useWalletActions } from "@/features/portfolio";
+import { useWallet } from "@/features/wallet";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
+import AllocateModal from "@/components/shared/modal/AllocateModal";
 import PageHeader from "@/components/shared/layout/PageHeader";
 
 const DashboardPages: React.FC = () => {
   const navigate = useNavigate();
   const { data, isLoading, error, refreshData } = useDashboard();
-  const { handleTopUp, handleCreatePortfolio } = useWalletActions({ onRefresh: refreshData });
+  
+  const { actions, selectedPortfolioId, setSelectedPortfolioId, portfolios: walletPortfolios } = useWallet({ 
+    onSuccess: refreshData 
+  });
+  const { handleTopUp, handleCreatePortfolio, handleAllocate } = actions;
 
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
+  const [isAllocateOpen, setIsAllocateOpen] = useState(false);
 
   // ini buat loading ya lek yaa
   if (isLoading) {
@@ -95,6 +101,7 @@ const DashboardPages: React.FC = () => {
           <GlobalWalletCard
             balance={wallet_summary.main_wallet_balance}
             onTopUpClick={() => setIsTopUpOpen(true)}
+            onAllocateClick={() => setIsAllocateOpen(true)}
           />
 
           <TopUpModal
@@ -102,6 +109,16 @@ const DashboardPages: React.FC = () => {
             onClose={() => setIsTopUpOpen(false)}
             currentBalance={data?.wallet_summary?.main_wallet_balance || 0}
             onSuccess={handleTopUp}
+          />
+
+          <AllocateModal
+            isOpen={isAllocateOpen}
+            onClose={() => setIsAllocateOpen(false)}
+            portfolios={portfolios}
+            selectedPortfolioId={selectedPortfolioId || ""}
+            onPortfolioSelect={setSelectedPortfolioId}
+            currentBalance={wallet_summary.main_wallet_balance}
+            onSuccess={handleAllocate}
           />
 
           {/* Portfolio Section — Dompet investasi */}

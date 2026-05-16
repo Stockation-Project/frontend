@@ -26,7 +26,12 @@ const TOAST_CLASS_ERROR = {
 
 const TOAST_DURATION = 5000;
 
-export const useWallet = () => {
+interface UseWalletOptions {
+  onSuccess?: () => void | Promise<void>;
+}
+
+export const useWallet = (options: UseWalletOptions = {}) => {
+  const { onSuccess } = options;
   const [globalWallet, setGlobalWallet] = useState<Wallet | null>(null);
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [selectedPortfolioId, setSelectedPortfolioId] = useState<string | null>(
@@ -86,6 +91,7 @@ export const useWallet = () => {
       await topUpApi(amount);
       await fetchData();
       await fetchHistory();
+      if (onSuccess) await onSuccess();
       toast.success("Top Up Berhasil!", {
         description: `Saldo sebesar Rp ${amount.toLocaleString("id-ID")} telah masuk ke dompet utama.`,
         classNames: TOAST_CLASS_SUCCESS,
@@ -105,6 +111,7 @@ export const useWallet = () => {
       await allocateApi(selectedPortfolioId, amount);
       await fetchData();
       await fetchHistory();
+      if (onSuccess) await onSuccess();
       toast.success("Alokasi Berhasil!", {
         description: `Dana sebesar Rp ${amount.toLocaleString("id-ID")} telah dipindahkan ke portofolio.`,
         classNames: TOAST_CLASS_SUCCESS,
@@ -124,6 +131,7 @@ export const useWallet = () => {
       await withdrawApi(selectedPortfolioId, amount);
       await fetchData();
       await fetchHistory();
+      if (onSuccess) await onSuccess();
       toast.success("Penarikan Berhasil!", {
         description: `Dana sebesar Rp ${amount.toLocaleString("id-ID")} telah ditarik ke dompet utama.`,
         classNames: TOAST_CLASS_SUCCESS,
@@ -141,6 +149,7 @@ export const useWallet = () => {
     try {
       await createApi(name, amount);
       await fetchData();
+      if (onSuccess) await onSuccess();
       toast.success("Dompet Berhasil Dibuat!", {
         description: `Dompet ${name} sudah siap digunakan.`,
         classNames: TOAST_CLASS_SUCCESS,

@@ -8,7 +8,6 @@ export * from "./services/transaction.service";
 // Hooks
 export * from "./hooks/usePortfolioDetail";
 export * from "./hooks/usePortfolioStockDetail";
-export * from "./hooks/useWalletActions";
 
 // Components
 export { default as PortfolioDetailCard } from "./components/PortfolioDetailCard";
