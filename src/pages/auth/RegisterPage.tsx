@@ -1,14 +1,8 @@
-import React from "react";
-import { useRegister } from "@/hooks/useRegister";
+import { useRegister, FormInputGroup, PasswordInputField, AuthVisualPanel, AuthHeader, AuthAlert } from "@/features/auth";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import FormInputGroup from "@/components/shared/auth/FormInputGroup";
-import PasswordInputField from "@/components/shared/auth/PasswordInputField";
-import AuthVisualPanel from "@/components/shared/auth/AuthVisualPanel";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
-import AuthHeader from "@/components/shared/auth/AuthHeader";
-import AuthAlert from "@/components/shared/auth/AuthAlert";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const RegisterPage: React.FC = () => {

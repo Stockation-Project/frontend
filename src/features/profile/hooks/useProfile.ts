@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { getUserProfile, updateUserProfile } from "../services/profile.service";
-import type { User } from "@/types/auth";
+import type { User } from "@/features/auth";
 import type { ProfileUpdatePayload } from "../types/profile";
 import { toast } from "sonner";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/features/auth";
 
 export const useProfile = () => {
   const { login } = useAuth();

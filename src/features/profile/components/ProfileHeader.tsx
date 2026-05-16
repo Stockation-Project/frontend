@@ -1,5 +1,5 @@
 import React from "react";
-import type { User } from "@/types/auth";
+import type { User } from "@/features/auth";
 import { Button } from "@/components/ui/button";
 import { Camera, Trash2 } from "lucide-react";
 import { toast } from "sonner";

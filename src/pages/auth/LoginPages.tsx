@@ -1,13 +1,8 @@
-import { useLogin } from "@/hooks/useLogin";
-import PasswordInputField from "@/components/shared/auth/PasswordInputField";
-import FormInputGroup from "@/components/shared/auth/FormInputGroup";
+import { useLogin, PasswordInputField, FormInputGroup, AuthVisualPanel, AuthHeader, AuthAlert } from "@/features/auth";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import AuthVisualPanel from "@/components/shared/auth/AuthVisualPanel";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
-import AuthHeader from "@/components/shared/auth/AuthHeader";
-import AuthAlert from "@/components/shared/auth/AuthAlert";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const LoginPage: React.FC = () => {

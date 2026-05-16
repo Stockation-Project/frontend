@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { User } from "@/types/auth";
+import type { User } from "@/features/auth";
 import type { ProfileUpdatePayload } from "../types/profile";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
