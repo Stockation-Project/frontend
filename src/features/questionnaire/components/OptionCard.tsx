@@ -34,7 +34,7 @@ const OptionCard: React.FC<OptionCardProps> = ({
           ${
             isSelected
               ? "border-brand text-brand bg-background-primary"
-              : "border-border-primary text-slate-600 bg-background-primary"
+              : "border-border-primary text-text-secondary bg-background-primary"
           }
         `}
       >
@@ -43,7 +43,7 @@ const OptionCard: React.FC<OptionCardProps> = ({
 
       {/* Teks Jawaban */}
       <span
-        className={`text-base md:text-[15px] font-medium leading-snug ${isSelected ? "text-brand" : "text-slate-800"}`}
+        className={`text-base md:text-[15px] font-medium leading-snug ${isSelected ? "text-brand" : "text-text-primary"}`}
       >
         {text}
       </span>

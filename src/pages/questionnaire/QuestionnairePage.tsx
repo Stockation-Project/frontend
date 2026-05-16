@@ -70,11 +70,11 @@ const QuestionnairePage: React.FC = () => {
             className="w-full flex flex-col gap-4 md:gap-8 items-center"
           >
             <div className="text-center w-full max-w-5xl">
-              <h1 className="text-xl md:text-2xl font-regular text-slate-900 tracking-tight leading-tight">
+              <h1 className="text-xl md:text-2xl font-regular text-text-primary tracking-tight leading-tight">
                 {currentQuestion.question}
               </h1>
               {currentQuestion.subtitle && (
-                <p className="text-slate-500 text-xs md:text-sm">
+                <p className="text-text-muted text-xs md:text-sm">
                   {currentQuestion.subtitle}
                 </p>
               )}
@@ -103,7 +103,7 @@ const QuestionnairePage: React.FC = () => {
             variant="outline"
             onClick={handleBack}
             disabled={currentStep === 0} // Matikan jika di halaman pertama
-            className="h-11 px-6 rounded-xl border-border-primary text-slate-600 hover:bg-background-secondary font-medium"
+            className="h-11 px-6 rounded-xl border-border-primary text-text-secondary hover:bg-background-secondary font-medium"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Kembali

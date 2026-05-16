@@ -53,9 +53,9 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
           <Button
             onClick={onContinue}
-            className="h-11 px-8 rounded-xl bg-brand hover:bg-brand-950 text-brand-foreground font-medium shadow-md transition-all w-full"
+            className="h-11 px-8 rounded-xl bg-brand hover:bg-brand-950 text-primary-foreground font-medium shadow-md transition-all w-full"
           >
-            Lanjut
+            Yuk Mulai Investasi!
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
