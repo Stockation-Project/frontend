@@ -9,7 +9,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 
 // context
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider } from "@/features/auth";
 
 // Pages
 import RegisterPage from "./pages/auth/RegisterPage";
