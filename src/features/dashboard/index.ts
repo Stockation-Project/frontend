@@ -18,3 +18,6 @@ export { default as DashboardSkeleton } from "./components/DashboardSkeleton";
 export { default as PortfolioCard } from "./components/PortfolioCard";
 export { default as PortfolioLegend } from "./components/PortfolioLegend";
 export { default as EmptyPortfolioState } from "./components/EmptyPortfolioState";
+
+// Named exports from components (if any)
+export * from "./components/PortfolioCard";
