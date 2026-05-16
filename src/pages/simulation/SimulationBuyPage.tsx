@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import PageHeader from "@/components/shared/layout/PageHeader";
-import WalletSelectCard from "@/components/simulation/WalletSelectCard";
-import StockSearchPanel from "@/components/simulation/StockSearchPanel";
-import CartListPanel from "@/components/simulation/CartListPanel";
-import SimulationSummaryPanel from "@/components/simulation/SimulationSummaryPanel";
-import { useSimulationBuy } from "@/hooks/useSimulationBuy";
+import { 
+  useSimulationBuy, 
+  WalletSelectCard, 
+  StockSearchPanel, 
+  CartListPanel, 
+  SimulationSummaryPanel 
+} from "@/features/stock";
 import { Loader2 } from "lucide-react";
 
 const SimulationBuyPage: React.FC = () => {
