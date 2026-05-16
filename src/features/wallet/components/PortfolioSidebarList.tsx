@@ -31,7 +31,7 @@ const PortfolioSidebarList: React.FC<PortfolioSidebarListProps> = ({
 
   return (
     <div className="flex flex-col gap-1 h-[320px]">
-      <h3 className="text-sm font-medium text-slate-500">
+      <h3 className="text-sm font-medium text-text-muted">
         Dompet Investasi
       </h3>
 
@@ -51,12 +51,12 @@ const PortfolioSidebarList: React.FC<PortfolioSidebarListProps> = ({
         {/* Buat Dompet Baru Placeholder */}
         <div
           onClick={onCreateNew}
-          className="w-full h-[180px] bg-[#F3F4F6] rounded-xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-100 transition-colors"
+          className="w-full h-[180px] bg-background-secondary rounded-xl border-2 border-dashed border-border-primary flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-background-secondary/80 transition-colors"
         >
-          <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-slate-400">
+          <div className="w-10 h-10 rounded-full bg-background-primary flex items-center justify-center text-text-subtle">
             <Plus className="w-6 h-6" />
           </div>
-          <p className="text-sm font-medium text-slate-400">Buat Dompet Baru</p>
+          <p className="text-sm font-medium text-text-subtle">Buat Dompet Baru</p>
         </div>
       </div>
     </div>

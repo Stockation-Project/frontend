@@ -41,7 +41,7 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
       case "SELL":
         return <ArrowDownLeft className="stroke-[1.5px] w-full h-full text-error-700 bg-gradient-to-b from-error-100 to-error-50 p-2 rounded-lg" />;
       default:
-        return <Plus className="stroke-[1.5px] w-full h-full text-slate-400 w-5 h-5" />;
+        return <Plus className="stroke-[1.5px] w-full h-full text-text-subtle w-5 h-5" />;
     }
   };
 
@@ -76,7 +76,7 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
   return (
     <div className="space-y-3 h-[310px] overflow-hidden">
       <div className="flex items-center justify-between pb-2 border-b border-border-primary">
-        <h3 className="text-sm font-medium text-slate-500">Riwayat Mutasi</h3>
+        <h3 className="text-sm font-medium text-text-muted">Riwayat Mutasi</h3>
         <div className="flex gap-1 bg-border-secondary p-1 rounded-xl">
           {filters.map((f) => (
             <button
@@ -84,8 +84,8 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
               onClick={() => onFilterChange(f.value)}
               className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 currentFilter === f.value
-                  ? "bg-background-primary text-slate-900 shadow-sm"
-                  : "text-slate-400 hover:text-slate-600"
+                  ? "bg-background-primary text-text-primary shadow-sm"
+                  : "text-text-muted hover:text-text-secondary"
               }`}
             >
               {f.label}
@@ -96,31 +96,31 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
 
       <div className="space-y-4 overflow-y-auto h-full pb-12">
         {Object.keys(grouped).length === 0 ? (
-          <div className="py-4 text-center text-slate-400 text-sm italic">
+          <div className="py-4 text-center text-text-subtle text-sm italic">
             Tidak ada riwayat aktivitas
           </div>
         ) : (
           Object.entries(grouped).map(([date, items]) => (
             <div key={date} className="space-y-0">
-              <h4 className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">
+              <h4 className="text-[10px] font-medium text-text-subtle uppercase tracking-wider">
                 {date}
               </h4>
-              <div className="space-y-0 divide-y divide-slate-50 border-t border-b border-slate-50">
+              <div className="space-y-0 divide-y divide-border-primary border-t border-b border-border-primary">
                 {items.map((activity) => (
                   <div
                     key={activity.id}
-                    className="py-2 flex items-center justify-between hover:bg-slate-50/50 transition-colors"
+                    className="py-2 flex items-center justify-between hover:bg-background-secondary/50 transition-colors"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-9 h-9 rounded-lg flex items-center justify-center">
                         {getIcon(activity.type)}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-900">
+                        <p className="text-sm font-medium text-text-primary">
                           {activity.description}
                         </p>
                         {activity.metadata && (
-                          <p className="text-xs text-slate-400 font-regular">
+                          <p className="text-xs text-text-muted font-regular">
                             {activity.metadata.shares / 100} Lot . {formatCurrencyIDR(activity.metadata.price || 0)}/lembar
                           </p>
                         )}
@@ -137,7 +137,7 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
                           : "+"}
                         {formatCurrencyIDR(activity.amount)}
                       </p>
-                      <p className="text-[10px] font-regular text-slate-400">
+                      <p className="text-[10px] font-regular text-text-subtle">
                         {new Date(activity.created_at).toLocaleTimeString("id-ID", {
                           hour: "2-digit",
                           minute: "2-digit",

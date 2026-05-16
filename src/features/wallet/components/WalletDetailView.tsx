@@ -26,10 +26,10 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
 }) => {
   if (!portfolio) {
     return (
-      <div className="h-full flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-slate-100 shadow-sm">
-        <Landmark className="w-16 h-16 text-slate-200 mb-4" />
-        <h3 className="text-xl font-bold text-slate-900 mb-2">Pilih Portofolio</h3>
-        <p className="text-slate-500 max-w-xs">
+      <div className="h-full flex flex-col items-center justify-center p-12 text-center bg-background-primary rounded-2xl border border-border-secondary shadow-sm">
+        <Landmark className="w-16 h-16 text-text-subtle mb-4" />
+        <h3 className="text-xl font-bold text-text-primary mb-2">Pilih Portofolio</h3>
+        <p className="text-text-muted max-w-xs">
           Silakan pilih salah satu portofolio di sisi kiri untuk melihat detail transaksi dan saldo.
         </p>
       </div>
@@ -61,7 +61,7 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-xl font-medium text-brand">{portfolio.name}</h2>
-          <p className="text-xs text-slate-400 font-regular tracking-wide">
+          <p className="text-xs text-text-muted font-regular tracking-wide">
             <span className="uppercase">{portfolio.id}</span>
             {" • Dibuat "}
             {new Date(portfolio.updated_at).toLocaleDateString('id-ID', {
@@ -78,12 +78,13 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
         {statItems.map((item, idx) => (
           <div
             key={idx}
-            className="bg-gradient-to-b from-brand-50 to-brand-25 p-4 rounded-lg border border-[#C8E6C9]/30"
+            className="bg-gradient-to-b from-brand-50 to-brand-25 p-4 rounded-lg border border-brand/30"
+            style={{ borderColor: 'var(--color-brand-300)' }}
           >
-            <p className="text-xs font-medium text-slate-500 mb-1 tracking-tight">
+            <p className="text-xs font-medium text-text-muted mb-1 tracking-tight">
               {item.label}
             </p>
-            <p className="text-base font-semibold text-slate-900">{item.value}</p>
+            <p className="text-base font-semibold text-text-primary">{item.value}</p>
           </div>
         ))}
       </div>
