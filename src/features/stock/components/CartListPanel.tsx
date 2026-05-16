@@ -3,7 +3,7 @@ import React from "react";
 import { X, ChevronDown, ChevronUp, Minus, Plus } from "lucide-react";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import type { CartItem } from "../types/simulation";
-import type { DashboardPortfolio } from "@/types/dashboard";
+import type { DashboardPortfolio } from "@/features/dashboard";
 
 interface CartListPanelProps {
   selectedPortfolio: DashboardPortfolio | null;

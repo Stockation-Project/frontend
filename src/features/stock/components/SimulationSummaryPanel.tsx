@@ -3,7 +3,7 @@ import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import type { AllocationChartItem, CartItem } from "../types/simulation";
-import type { DashboardPortfolio } from "@/types/dashboard";
+import type { DashboardPortfolio } from "@/features/dashboard";
 
 interface SimulationSummaryPanelProps {
   cart: CartItem[];

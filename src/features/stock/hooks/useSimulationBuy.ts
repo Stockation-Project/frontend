@@ -1,9 +1,8 @@
 // src/features/stock/hooks/useSimulationBuy.ts
 import { useState, useEffect, useMemo } from "react";
-import { fetchDashboardData } from "@/services/dashboard.service";
+import { fetchDashboardData, type DashboardPortfolio } from "@/features/dashboard";
 import { searchStocks, fetchRecommendedStocks } from "../services/stock.service";
-import { bulkBuyStockService } from "@/services/transaction.service";
-import type { DashboardPortfolio } from "@/types/dashboard";
+import { bulkBuyStockService } from "@/features/portfolio";
 import type {
   CartItem,
   SearchStockItem,
