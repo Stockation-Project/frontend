@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { RISK_PROFILES, type RiskProfileKey } from "@/data/riskProfile";
+import { RISK_PROFILES, type RiskProfileKey } from "@/features/questionnaire";
 import RiskProfileChart from "./RiskProfileChart";
 import RiskProfileContent from "./RiskProfileContent";
 

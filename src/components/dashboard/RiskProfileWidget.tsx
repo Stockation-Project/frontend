@@ -1,6 +1,6 @@
 // src/components/dashboard/RiskProfileWidget.tsx
 import React from "react";
-import type { RiskProfileKey } from "@/data/riskProfile";
+import type { RiskProfileKey } from "@/features/questionnaire";
 import RiskProfileCard from "@/components/shared/risk-profile/RiskProfileCard";
 
 interface RiskProfileWidgetProps {
