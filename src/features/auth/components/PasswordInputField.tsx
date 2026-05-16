@@ -25,7 +25,7 @@ const PasswordInputField: React.FC<PasswordInputFieldProps> = (props) => {
       <button
         type="button"
         onClick={() => setShowPassword(!showPassword)}
-        className="absolute right-3 top-[34px] text-slate-400 hover:text-slate-700 transition-colors"
+        className="absolute right-3 top-[34px] text-text-subtle hover:text-text-secondary transition-colors"
         aria-label={showPassword ? "Hide password" : "Show password"}
       >
         {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}

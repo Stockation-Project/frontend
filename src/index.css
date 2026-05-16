@@ -108,6 +108,15 @@
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+
+    /* Semantic Text Colors */
+    --color-text-primary:   var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-muted:     var(--text-muted);
+    --color-text-subtle:    var(--text-subtle);
+    --color-text-brand:     var(--text-brand);
+    --color-text-error:     var(--text-error);
+    --color-text-inverse:   var(--text-inverse);
 }
 
 :root {
@@ -141,6 +150,15 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+
+    /* Text semantic tokens (Light Mode) */
+    --text-primary:   oklch(0.145 0 0);           /* slate-900 */
+    --text-secondary: oklch(0.447 0 0);           /* slate-600 */
+    --text-muted:     oklch(0.556 0 0);           /* slate-500 */
+    --text-subtle:    oklch(0.708 0 0);           /* slate-400 */
+    --text-brand:     var(--brand);
+    --text-error:     var(--error-600);
+    --text-inverse:   oklch(1 0 0);               /* white */
 
     /* ===== Brand Palette (Hijau) ===== */
     --brand-25:   oklch(0.986 0.016 134.056); /* #F6FDF2 — hampir putih kehijauan */
@@ -222,6 +240,15 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+
+    /* Text semantic tokens (Dark Mode) */
+    --text-primary:   oklch(0.985 0 0);           /* slate-50 */
+    --text-secondary: oklch(0.822 0 0);           /* slate-300 */
+    --text-muted:     oklch(0.708 0 0);           /* slate-400 */
+    --text-subtle:    oklch(0.556 0 0);           /* slate-500 */
+    --text-brand:     var(--brand-500);
+    --text-error:     var(--error-400);
+    --text-inverse:   oklch(0.145 0 0);           /* slate-900 */
 }
 
 * {

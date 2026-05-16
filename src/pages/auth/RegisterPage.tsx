@@ -123,7 +123,7 @@ const RegisterPage: React.FC = () => {
           </form>
 
           {/* Footer link */}
-          <div className="text-center text-xs text-slate-500">
+          <div className="text-center text-xs text-text-muted">
             Sudah Punya Akun?{" "}
             <Link
               to="/login"

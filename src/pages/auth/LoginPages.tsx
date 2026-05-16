@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
           </form>
 
           {/* Footer link */}
-          <div className="text-center text-xs text-slate-500">
+          <div className="text-center text-xs text-text-muted">
             Belum Punya Akun?{" "}
             <Link
               to="/register"
