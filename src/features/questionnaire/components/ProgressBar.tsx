@@ -19,7 +19,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         value={progressPercentage}
         className="h-1.5 md:h-2 w-full bg-border-secondary [&>div]:bg-brand"
       />
-      <span className="text-sm font-medium text-slate-500">
+      <span className="text-sm font-medium text-text-muted">
         {currentStep} dari {totalSteps}
       </span>
     </div>

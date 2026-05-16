@@ -35,8 +35,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
           <span
             className={
               isModal
-                ? "text-lg md:text-2xl font-semibold text-slate-900 leading-none block"
-                : "text-lg md:text-2xl font-semibold text-slate-900 block leading-none"
+                ? "text-lg md:text-2xl font-semibold text-text-primary leading-none block"
+                : "text-lg md:text-2xl font-semibold text-text-primary block leading-none"
             }
           >
             {scale10Score}
@@ -44,8 +44,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
           <span
             className={
               isModal
-                ? "text-xs text-slate-500 font-regular mt-1 block"
-                : "text-xs text-slate-400 font-regular"
+                ? "text-xs text-text-muted font-regular mt-1 block"
+                : "text-xs text-text-subtle font-regular"
             }
           >
             dari 10
@@ -60,8 +60,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
           <span
             className={
               isModal
-                ? "text-[10px] text-slate-500 font-regular uppercase tracking-wider mb-1 block"
-                : "text-[10px] text-slate-400 font-regular uppercase tracking-wider block mb-1"
+                ? "text-[10px] text-text-muted font-regular uppercase tracking-wider mb-1 block"
+                : "text-[10px] text-text-subtle font-regular uppercase tracking-wider block mb-1"
             }
           >
             {isModal ? "Level Risiko" : "Level Resiko"}
@@ -95,8 +95,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
         <h4
           className={
             isModal
-              ? "text-sm  font-semibold text-slate-900"
-              : "text-sm  font-semibold text-slate-800"
+              ? "text-sm  font-semibold text-text-primary"
+              : "text-sm  font-semibold text-text-primary"
           }
         >
           {label}
@@ -105,8 +105,8 @@ const RiskProfileContent: React.FC<RiskProfileContentProps> = ({
         <p
           className={
             isModal
-              ? "text-[10px] md:text-xs text-slate-500 leading-relaxed"
-              : "text-[10px] md:text-xs text-slate-500 leading-relaxed"
+              ? "text-[10px] md:text-xs text-text-muted leading-relaxed"
+              : "text-[10px] md:text-xs text-text-muted leading-relaxed"
           }
         >
           {description}
