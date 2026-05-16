@@ -1,7 +1,7 @@
 // src/services/transaction.service.ts
 // Service layer untuk semua endpoint transaksi (beli/jual saham)
 import apiClient from "./api";
-import type { BuyStockPayload, BuyStockResponse } from "@/types/simulation";
+import type { BuyStockPayload, BuyStockResponse } from "@/features/stock";
 
 /**
  * Mengirim request pembelian SATU saham ke backend.
