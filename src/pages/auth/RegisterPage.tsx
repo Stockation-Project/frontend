@@ -109,17 +109,24 @@ const RegisterPage: React.FC = () => {
               <AuthAlert type="success" title="Berhasil!" message={successMessage} />
             )}
 
-            {/* 3. IMPLEMENTASI SKELETON SAAT LOADING */}
-            {isLoading ? (
-              <Skeleton className="w-full h-10 rounded-xl bg-slate-200" />
-            ) : (
-              <Button
-                type="submit"
-                className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
-              >
-                Daftar
-              </Button>
-            )}
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                  />
+                  <span>Memproses...</span>
+                </div>
+              ) : (
+                "Daftar"
+              )}
+            </Button>
           </form>
 
           {/* Footer link */}
