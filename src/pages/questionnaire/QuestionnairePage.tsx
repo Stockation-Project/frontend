@@ -3,12 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Logo from "@/components/shared/brand/Logo";
-import ProgressBar from "@/components/questionnaire/ProgressBar";
-import OptionCard from "@/components/questionnaire/OptionCard";
-import { riskQuestions } from "@/data/questionnaire";
+import { useQuestionnaire, ProgressBar, OptionCard, riskQuestions, ResultModal } from "@/features/questionnaire";
 import { motion, AnimatePresence } from "framer-motion";
-import { useQuestionnaire } from "@/hooks/useQuestionnaire";
-import ResultModal from "@/components/questionnaire/ResultModal"; // Import Modal
 
 const QuestionnairePage: React.FC = () => {
   const {

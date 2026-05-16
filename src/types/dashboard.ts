@@ -1,4 +1,4 @@
-import type { RiskProfileKey } from "@/data/riskProfile";
+import type { RiskProfileKey } from "@/features/questionnaire";
 
 // --- Sub-interfaces ---
 
