@@ -3,18 +3,21 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { AlertCircle } from "lucide-react";
-import { useDashboard } from "@/hooks/useDashboard";
+import { 
+  useDashboard, 
+  mapRecommendedStocks, 
+  mapPortfoliosToAllocations,
+  WalletSummary,
+  RiskProfileWidget,
+  DashboardSkeleton,
+  PortfolioSection
+} from "@/features/dashboard";
 import { useWalletActions } from "@/hooks/useWalletActions";
-import { mapRecommendedStocks, mapPortfoliosToAllocations } from "@/utils/dashboard.utils";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
-import WalletSummary from "@/components/dashboard/WalletSummary";
-import RiskProfileWidget from "@/components/dashboard/RiskProfileWidget";
-import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import PageHeader from "@/components/shared/layout/PageHeader";
-import PortfolioSection from "@/components/dashboard/PortfolioSection";
 
 const DashboardPages: React.FC = () => {
   const navigate = useNavigate();
