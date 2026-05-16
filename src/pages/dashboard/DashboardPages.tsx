@@ -54,10 +54,10 @@ const DashboardPages: React.FC = () => {
           <div className="w-16 h-16 bg-error-50 rounded-full flex items-center justify-center mb-4">
             <AlertCircle className="w-8 h-8 text-error-500" />
           </div>
-          <h3 className="text-lg font-bold text-slate-800 mb-2">
+          <h3 className="text-lg font-bold text-text-primary mb-2">
             Gagal Memuat Dashboard
           </h3>
-          <p className="text-sm text-slate-500 max-w-md">
+          <p className="text-sm text-text-muted max-w-md">
             {error || "Data dashboard tidak tersedia. Silakan coba lagi nanti."}
           </p>
         </div>
@@ -129,6 +129,7 @@ const DashboardPages: React.FC = () => {
             onCardClick={(portfolioId) =>
               navigate(`/portfolio/${portfolioId}`)
             }
+            cardVariant="dashboard"
           />
 
           <CreatePortfolioModal

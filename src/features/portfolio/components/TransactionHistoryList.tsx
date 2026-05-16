@@ -27,11 +27,10 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
             <button
               key={f}
               onClick={() => setFilter(f as any)}
-              className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                filter === f
+              className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${filter === f
                   ? "bg-white text-slate-900 shadow-sm"
                   : "text-slate-500 hover:text-slate-700"
-              }`}
+                }`}
             >
               {f === "ALL" ? "Semua" : f === "BUY" ? "Beli" : "Jual"}
             </button>
@@ -59,7 +58,7 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
                       tx.type === "BUY"
                         ? "bg-green-50 text-[#329B0D]"
                         : "bg-red-50 text-red-500"
-                    }`}
+                      }`}
                   >
                     {tx.type === "BUY" ? "Beli" : "Jual"}
                   </div>

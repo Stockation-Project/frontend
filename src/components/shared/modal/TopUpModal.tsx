@@ -56,15 +56,15 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
         {/* Card Saldo Saat Ini & Setelah Top Up */}
         <div className="bg-background-primary rounded-xl p-4 border border-border-primary flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4">
           <div>
-            <p className="text-[10px] text-slate-500 font-medium ">
+            <p className="text-[10px] text-text-muted font-medium ">
               Saldo saat ini
             </p>
-            <p className="text-sm font-medium text-slate-900">
+            <p className="text-sm font-medium text-text-primary">
               {formatCurrencyIDR(currentBalance)}
             </p>
           </div>
           <div className="text-left sm:text-right">
-            <p className="text-[10px] text-slate-500 font-medium ">
+            <p className="text-[10px] text-text-muted font-medium ">
               Setelah top up
             </p>
             <p className="text-sm font-medium text-brand">
@@ -77,7 +77,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
 
         {/* Pilihan Nominal */}
         <div>
-          <p className="text-xs font-medium text-slate-600 mb-2">
+          <p className="text-xs font-medium text-text-secondary mb-2">
             Pilih nominal top up
           </p>
           <div className="grid grid-cols-2 gap-4">
@@ -91,10 +91,10 @@ const TopUpModal: React.FC<TopUpModalProps> = ({
                     : "border-border-primary bg-background-primary hover:border-brand-200"
                 }`}
               >
-                <span className="text-sm font-medium text-slate-800 ">
+                <span className="text-sm font-medium text-text-primary ">
                   {option.label}
                 </span>
-                <span className="text-xs text-slate-500">
+                <span className="text-xs text-text-muted">
                   {formatCurrencyIDR(option.value)}
                 </span>
               </button>

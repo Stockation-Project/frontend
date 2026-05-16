@@ -34,7 +34,7 @@ const RiskProfileChart: React.FC<RiskProfileChartProps> = ({
   const cx = isModal ? "80" : "72";
   const cy = isModal ? "80" : "72";
   const strokeWidth = isModal ? "12" : "10";
-  const bgCircleClass = isModal ? "text-slate-200" : "text-slate-100";
+  const bgCircleClass = isModal ? "text-border-primary" : "text-border-secondary";
 
   return (
     <div className={containerClass}>
