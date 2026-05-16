@@ -2,24 +2,6 @@
 import apiClient from "@/lib/axios";
 import type { PortfolioDetailApiResponse } from "../types/portfolio";
 
-export interface CreatePortfolioPayload {
-  name: string;
-  allocated_fund: number;
-}
-
-export const createPortfolioService = async (
-  payload: CreatePortfolioPayload,
-) => {
-  try {
-    const response = await apiClient.post("/portfolios", payload);
-    return response.data;
-  } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || "Gagal membuat portofolio",
-    );
-  }
-};
-
 /**
  * Fetch detail sebuah portofolio berdasarkan ID.
  * Endpoint: GET /api/portfolios/:id
@@ -60,14 +42,3 @@ export const fetchStockPrice = async (
   }
 };
 
-export const topUpWalletService = async (amount: number) => {
-  try {
-    const response = await apiClient.post("/wallets/topup", { amount });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message ||
-        "Terjadi kesalahan saat melakukan top up",
-    );
-  }
-};
