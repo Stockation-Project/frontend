@@ -12,7 +12,7 @@ import {
   DashboardSkeleton,
   PortfolioSection
 } from "@/features/dashboard";
-import { useWalletActions } from "@/hooks/useWalletActions";
+import { useWalletActions } from "@/features/portfolio";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
 import TopUpModal from "@/components/shared/modal/TopUpModal";

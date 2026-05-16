@@ -4,20 +4,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { AlertCircle, Briefcase } from "lucide-react";
 
-// Hooks (Business Logic)
-import { usePortfolioDetail } from "@/hooks/usePortfolioDetail";
-import { useDashboard } from "@/hooks/useDashboard";
-import { useWalletActions } from "@/hooks/useWalletActions";
-
-// Layout & Shared Components
+// Features (New Architecture)
+import { 
+  usePortfolioDetail, 
+  PortfolioDetailCard, 
+  PortfolioDetailSkeleton,
+  useWalletActions
+} from "@/features/portfolio";
+import { 
+  useDashboard, 
+  PortfolioSection 
+} from "@/features/dashboard";
 import PageHeader from "@/components/shared/layout/PageHeader";
-import PortfolioSection from "@/components/dashboard/PortfolioSection";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import EmptyState from "@/components/shared/states/EmptyState";
-
-// Portfolio Components
-import PortfolioDetailCard from "@/components/portfolio/PortfolioDetailCard";
-import PortfolioDetailSkeleton from "@/components/portfolio/PortfolioDetailSkeleton";
 
 // Warna alokasi (konsisten dengan DashboardPages)
 const ALLOCATION_COLORS = [
