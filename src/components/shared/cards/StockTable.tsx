@@ -27,7 +27,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
 
       <div className="flex flex-col border border-border-primary max-h-[380px] overflow-y-auto px-4 rounded-xl">
         {/* Header Bar */}
-        <div className="flex items-center justify-between py-3 border-b border-border-primary px-2 -mx-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="flex items-center justify-between py-3 border-b border-border-primary px-2 -mx-2 text-[10px] font-medium text-slate-400 uppercase tracking-wider">
           <div className="flex-1 min-w-[150px]">Emiten</div>
           <div className="hidden md:block flex-1 text-center">Chart (1D)</div>
           <div className="flex-1 text-right md:text-center min-w-[100px]">Harga</div>

@@ -62,12 +62,12 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
         <div>
           <h2 className="text-xl font-medium text-brand">{portfolio.name}</h2>
           <p className="text-xs text-slate-400 font-regular tracking-wide">
-          <span className="uppercase">{portfolio.id}</span>
-          {" • Dibuat "}
-          {new Date(portfolio.updated_at).toLocaleDateString('id-ID', { 
-            day: 'numeric', 
-            month: 'short', 
-            year: 'numeric' 
+            <span className="uppercase">{portfolio.id}</span>
+            {" • Dibuat "}
+            {new Date(portfolio.updated_at).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric'
             })}
           </p>
         </div>

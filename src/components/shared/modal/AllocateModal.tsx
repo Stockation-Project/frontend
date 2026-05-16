@@ -84,15 +84,15 @@ const AllocateModal: React.FC<AllocateModalProps> = ({
       <div className="space-y-6">
         {/* Sumber: Dompet Utama */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <label className="text-xs font-medium text-text-muted uppercase tracking-wider">
             Global Wallet
           </label>
-          <div className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+          <div className="w-full px-4 py-3 rounded-xl border border-border-primary bg-background-secondary flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-brand/10 flex items-center justify-center">
                 <Wallet className="w-4 h-4 text-brand" />
               </div>
-              <span className="font-bold text-slate-900">
+              <span className="font-bold text-text-primary">
                 Dompet Utama - {formatCurrencyIDR(currentBalance)}
               </span>
             </div>
@@ -101,20 +101,20 @@ const AllocateModal: React.FC<AllocateModalProps> = ({
 
         {/* Ikon Panah Down */}
         <div className="flex justify-center -my-2">
-          <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 shadow-sm z-10">
-            <ArrowDown className="w-5 h-5 text-slate-400" />
+          <div className="w-10 h-10 rounded-full bg-background-secondary flex items-center justify-center border border-border-primary shadow-sm z-10">
+            <ArrowDown className="w-5 h-5 text-text-subtle" />
           </div>
         </div>
 
         {/* Tujuan: Pilih Portofolio */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <label className="text-xs font-medium text-text-muted uppercase tracking-wider">
             Ke Dompet:
           </label>
           <select
             value={selectedPortfolioId}
             onChange={(e) => setSelectedPortfolioId(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand font-bold text-slate-900 appearance-none cursor-pointer"
+            className="w-full px-4 py-3 rounded-xl border border-border-primary bg-background-primary focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand font-bold text-text-primary appearance-none cursor-pointer"
           >
             {portfolios.map((p) => (
               <option key={p.id} value={p.id}>
@@ -126,7 +126,7 @@ const AllocateModal: React.FC<AllocateModalProps> = ({
 
         {/* Input Nominal */}
         <div className="bg-brand-25 p-5 rounded-lg border border-brand/10 space-y-4">
-          <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <label className="block text-xs font-medium text-text-muted uppercase tracking-wider">
             NOMINAL
           </label>
 
@@ -147,12 +147,12 @@ const AllocateModal: React.FC<AllocateModalProps> = ({
               placeholder="Rp 0"
               value={amountText}
               onChange={handleAmountChange}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand font-bold text-xl text-slate-900 bg-white"
+              className="w-full px-4 py-3 rounded-xl border border-border-primary focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand font-bold text-xl text-text-primary bg-background-primary"
             />
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-xs text-slate-500">Saldo tersedia: {formatCurrencyIDR(currentBalance)}</span>
+            <span className="text-xs text-text-muted">Saldo tersedia: {formatCurrencyIDR(currentBalance)}</span>
             {amount > currentBalance && (
               <span className="text-xs font-bold text-error-500">Saldo tidak cukup</span>
             )}

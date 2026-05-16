@@ -15,7 +15,7 @@ interface StockAreaChartProps {
   data: ChartData[];
   activeFilter: string;
   onFilterChange: (filter: string) => void;
-  isPositive: boolean; 
+  isPositive: boolean;
 }
 
 export const TIME_FILTERS = [
@@ -53,7 +53,7 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
   data,
   activeFilter,
   onFilterChange,
-  isPositive, 
+  isPositive,
 }) => {
   const formatXAxis = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -70,11 +70,10 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
             <button
               key={filter}
               onClick={() => onFilterChange(filter)}
-              className={`px-2.5 py-1.5 text-xs font-Regular rounded-lg transition-all whitespace-nowrap ${
-                activeFilter === filter
+              className={`px-2.5 py-1.5 text-xs font-Regular rounded-lg transition-all whitespace-nowrap ${activeFilter === filter
                   ? "bg-background-primary text-slate-800 shadow-sm"
                   : "text-slate-400 hover:text-slate-600"
-              }`}
+                }`}
             >
               {filter}
             </button>
@@ -124,7 +123,7 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
             <Area
               type="linear"
               dataKey="price"
-              stroke={themeColor} 
+              stroke={themeColor}
               strokeWidth={1.7}
               fillOpacity={1}
               fill="url(#colorPrice)"

@@ -10,7 +10,7 @@ interface GlobalWalletCardProps {
   onAllocateClick: () => void;
 }
 
-const GlobalWalletCard: React.FC<GlobalWalletCardProps> = ({ balance, onTopUpClick,onAllocateClick   }) => {
+const GlobalWalletCard: React.FC<GlobalWalletCardProps> = ({ balance, onTopUpClick, onAllocateClick }) => {
   const formattedBalance = formatCurrencyIDR(balance);
 
   return (

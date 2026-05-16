@@ -6,8 +6,8 @@ import MiniProgressBar from "@/components/shared/MiniProgressBar";
 interface AllocationDetail {
   id: string;
   name: string;
-  amount: number; 
-  color: string; 
+  amount: number;
+  color: string;
 }
 
 interface WalletSummaryProps {
@@ -39,7 +39,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
       <SectionHeader title="Ringkasan Dompet" className="mb-4" />
 
       {/* Bagian Atas: Donut Chart & Info Total */}
-      <div className="flex gap-8 md:gap-30 lg:gap-8 mb-6 justify-center">
+      <div className="flex gap-4 md:gap-30 lg:gap-4 mb-6 justify-center">
         {/* Donut Chart SVG */}
         <div className="relative w-40 h-40 flex-shrink-0 flex items-center justify-center">
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 112 112" preserveAspectRatio="xMidYMid meet">
@@ -51,7 +51,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
               stroke="currentColor"
               strokeWidth="7"
               fill="transparent"
-              className="text-slate-100"
+              className="text-border-secondary"
             />
             {/* Progress Circle (Hijau) */}
             <circle
@@ -70,27 +70,35 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
 
           {/* Teks di tengah Donut Chart */}
           <div className="absolute text-center flex flex-col items-center justify-center">
-            <span className="text-xl font-semibold text-slate-900 leading-none">
+            <span className="text-xl font-semibold text-text-primary leading-none">
               {Math.round(percentage)}%
             </span>
-            <span className="text-[10px] text-slate-500 font-regular">
+            <span className="text-[10px] text-text-muted font-regular">
               Teralokasi
             </span>
           </div>
         </div>
 
         {/* Info Total Alokasi (Kanan) */}
-        <div className="flex flex-col justify-start items-start">
-          <span className="text-xs font-medium text-slate-800 mb-1">
+        <div className="flex flex-col justify-start items-start min-w-0 overflow-hidden">
+          <span className="text-xs font-medium text-text-primary mb-1 whitespace-nowrap">
             Total Alokasi
           </span>
-          <div className="flex items-baseline">
-            <span className="text-2xl font-semibold text-slate-900 leading-none">
-              {formatJT(totalAllocated).replace("JT", "")}
-            </span>
-            <span className="text-sm font-bold text-slate-900">JT</span>
+          <div className="flex items-baseline flex-wrap">
+            {(() => {
+              const formattedValue = formatJT(totalAllocated).replace("JT", "").trim();
+              const isLong = formattedValue.length >= 6;
+              return (
+                <>
+                  <span className={`${isLong ? "text-xl" : "text-2xl"} font-semibold text-text-primary leading-none transition-all duration-300`}>
+                    {formattedValue}
+                  </span>
+                  <span className={`${isLong ? "text-xs" : "text-sm"} font-bold text-text-primary ml-0.5`}>JT</span>
+                </>
+              );
+            })()}
           </div>
-          <span className="text-[10px] text-slate-400 font-regular">
+          <span className="text-[10px] text-text-subtle font-regular truncate w-full">
             dari {formatJT(totalWallet)}
           </span>
         </div>
@@ -103,10 +111,10 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
           return (
             <div key={item.id} className="w-full">
               <div className="flex justify-between items-end mb-1">
-                <span className="text-xs font-regular text-slate-600">
+                <span className="text-xs font-regular text-text-secondary">
                   {item.name}
                 </span>
-                <span className="text-xs font-medium text-slate-400">
+                <span className="text-xs font-medium text-text-subtle">
                   {formatJT(item.amount)}
                 </span>
               </div>
@@ -117,7 +125,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
 
         {/* Jika belum ada alokasi sama sekali */}
         {allocations.length === 0 && (
-          <div className="text-center py-4 text-xs text-slate-400">
+          <div className="text-center py-4 text-xs text-text-subtle">
             Belum ada dana yang dialokasikan.
           </div>
         )}

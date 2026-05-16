@@ -21,24 +21,24 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   actionIcon: ActionIcon,
 }) => {
   return (
-    <div className="w-full bg-background-primary border border-border-secondary rounded-[2rem] p-10 flex flex-col items-center justify-center text-center shadow-sm">
+    <div className="w-full bg-background-primary border border-border-primary rounded-xl p-4 flex flex-col items-center justify-center text-center">
       {/* Icon Area dengan lingkaran soft green */}
-      <div className="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center mb-6">
-        <Icon className="w-8 h-8 text-brand" />
+      <div className="w-12 h-12 p-3 bg-brand-50 rounded-lg flex items-center justify-center mb-4">
+        <Icon className="w-full h-full text-brand" />
       </div>
 
-      <div className="max-w-sm space-y-2 mb-8">
-        <h3 className="text-xl font-bold text-slate-900">{title}</h3>
-        <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
+      <div className="max-w-sm space-y-2 mb-4">
+        <h3 className="text-base font-medium text-text-primary">{title}</h3>
+        <p className="text-xs text-text-muted leading-relaxed">{description}</p>
       </div>
 
       {/* Button Action */}
       {actionLabel && onAction && (
         <Button
           onClick={onAction}
-          className="bg-brand hover:bg-brand-950 text-white rounded-xl px-8 h-12 text-base font-bold shadow-lg shadow-brand/20 transition-all active:scale-95"
+          className="bg-brand hover:bg-brand-950 text-white rounded-xl px-6 h-10 text-base font-medium shadow-sm cursor-pointer shadow-brand/20 transition-all active:scale-95"
         >
-          {ActionIcon && <ActionIcon className="w-5 h-5 mr-2 stroke-[3]" />}
+          {ActionIcon && <ActionIcon className="w-3 h-3 mr-2 stroke-[1.5]" />}
           {actionLabel}
         </Button>
       )}

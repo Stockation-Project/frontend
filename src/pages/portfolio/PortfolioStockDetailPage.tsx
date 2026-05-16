@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Bookmark, ChevronLeft } from "lucide-react";
-import { 
-  StockAreaChart, 
-  useStockDetail, 
-  useChartFilter, 
-  AnomalyTable 
+import {
+  StockAreaChart,
+  useStockDetail,
+  useChartFilter,
+  AnomalyTable
 } from "@/features/stock";
-import { 
-  usePortfolioStockDetail, 
-  TransactionHistoryList, 
-  PortfolioPositionWidget, 
-  SellStockModal 
+import {
+  usePortfolioStockDetail,
+  TransactionHistoryList,
+  PortfolioPositionWidget,
+  SellStockModal
 } from "@/features/portfolio";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import StatCard from "@/components/shared/cards/StatCard";
