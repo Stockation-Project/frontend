@@ -40,7 +40,7 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
             {isOwned ? `${lots} lot (${totalShares} lembar)` : "0 lot"}
           </span>
         </div>
-        
+
         <div className="flex justify-between items-center">
           <span className="text-slate-500 font-medium text-xs">Harga beli rata-rata</span>
           <span className="font-bold text-slate-900 text-sm">
@@ -51,11 +51,10 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
         <div className="flex justify-between items-center border-t border-slate-50 pt-4">
           <span className="text-slate-500 font-medium text-xs">Laba/Rugi</span>
           <span
-            className={`font-bold text-sm ${
-              isOwned 
-                ? (isProfit ? "text-[#329B0D]" : "text-red-500") 
+            className={`font-bold text-sm ${isOwned
+                ? (isProfit ? "text-[#329B0D]" : "text-red-500")
                 : "text-slate-300"
-            }`}
+              }`}
           >
             {isOwned ? (
               <>

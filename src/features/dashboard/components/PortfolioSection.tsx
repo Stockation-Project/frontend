@@ -14,6 +14,8 @@ interface PortfolioSectionProps {
   onCardClick?: (portfolioId: string) => void;
   /** ID portfolio yang sedang aktif/dilihat — untuk highlight visual. */
   activePortfolioId?: string;
+  /** Varian tampilan kartu di dalam section ini */
+  cardVariant?: "default" | "dashboard";
 }
 
 const PortfolioSection: React.FC<PortfolioSectionProps> = ({
@@ -22,6 +24,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
   onAddClick,
   onCardClick,
   activePortfolioId,
+  cardVariant = "default",
 }) => {
   return (
     <div className="w-full flex flex-col">
@@ -50,6 +53,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                   profitAmount={porto.profitAmount || 0}
                   profitPercentage={porto.profitPercentage || 0}
                   isActive={activePortfolioId === porto.id}
+                  variant={cardVariant}
                 />
               </div>
             </div>
@@ -59,10 +63,10 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           <div className="snap-start">
             <button
               onClick={onAddClick}
-              className="min-w-[320px] w-[320px] h-full bg-transparent border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-500 hover:text-brand hover:border-brand hover:bg-brand-50/50 transition-all cursor-pointer group"
+              className="min-w-[320px] w-[320px] h-full bg-transparent border-2 border-dashed border-border-primary rounded-xl flex flex-col items-center justify-center text-text-muted hover:text-brand hover:border-brand hover:bg-brand-50/50 transition-all cursor-pointer group"
             >
-              <div className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-brand-100 transition-colors">
-                <Plus className="w-7 h-7 text-slate-400 group-hover:text-brand transition-colors" />
+              <div className="w-14 h-14 bg-background-secondary rounded-full flex items-center justify-center mb-4 group-hover:bg-brand-100 transition-colors">
+                <Plus className="w-7 h-7 text-text-subtle group-hover:text-brand transition-colors" />
               </div>
               <span className="font-medium text-sm">Buat Dompet Baru</span>
             </button>

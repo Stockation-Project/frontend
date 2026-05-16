@@ -18,7 +18,7 @@ const EmptyPortfolioState: React.FC<EmptyPortfolioStateProps> = ({
       description={
         <>
           Buat dompet pertamamu dan mulai alokasikan dana sesuai profil{" "}
-          <span className="font-semibold text-slate-700">{riskProfile}-mu</span>
+          <span className="font-semibold text-text-primary">{riskProfile}-mu</span>
           . Danamu aman ini adalah simulasi investasi virtual.
         </>
       }

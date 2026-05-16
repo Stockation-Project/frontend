@@ -34,7 +34,7 @@ const PortfolioSidebarList: React.FC<PortfolioSidebarListProps> = ({
       <h3 className="text-sm font-medium text-slate-500">
         Dompet Investasi
       </h3>
-      
+
       <div className="space-y-4 overflow-y-auto flex-1 pr-1 pb-4 no-scrollbar scroll-smooth">
         {portfolios.map((portfolio) => (
           <SidebarPortfolioCard
@@ -49,7 +49,7 @@ const PortfolioSidebarList: React.FC<PortfolioSidebarListProps> = ({
         ))}
 
         {/* Buat Dompet Baru Placeholder */}
-        <div 
+        <div
           onClick={onCreateNew}
           className="w-full h-[180px] bg-[#F3F4F6] rounded-xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-100 transition-colors"
         >
