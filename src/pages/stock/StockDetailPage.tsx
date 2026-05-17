@@ -62,12 +62,7 @@ const StockDetailPage: React.FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      // ======================================================================
-      // LAYOUT RESPONSIF:
-      // Mobile/Tablet: Scroll halaman normal (w-full h-auto)
-      // Desktop (xl): Scroll kolom independen (h-[calc(100vh-2rem)] overflow-hidden)
-      // ======================================================================
-      className="w-full xl:h-[calc(100vh-2rem)] xl:flex xl:flex-col xl:overflow-hidden"
+      className="w-full h-full flex flex-col overflow-hidden"
     >
       <PageHeader
         title=""
@@ -77,7 +72,7 @@ const StockDetailPage: React.FC = () => {
       {/* ============================================================== */}
       {/* GRID CONTAINER RESPONSIF */}
       {/* ============================================================== */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 xl:overflow-hidden">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">
         {/* Pembungkus Kolom Info Kiri (7/12) */}
         {/* ====================================================================== */}
         {/* KOLOM KIRI: Scroll independen hanya aktif di desktop (xl) */}

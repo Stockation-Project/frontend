@@ -90,11 +90,11 @@ const DashboardPages: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.4 }}
-      className="w-full"
+      className="w-full h-full flex flex-col overflow-hidden"
     >
       <PageHeader title="Dasboard" description={user_info.greeting} />
-      {/* Grid Utama (70% Kiri, 30% Kanan) */}
-      <div className="grid grid-cols-1 xl:grid-cols-10 gap-8">
+      {/* Grid Utama (70% Kiri, 30% Kanan) - scrollable secara independen di bawah header */}
+      <div className="grid grid-cols-1 xl:grid-cols-10 gap-8 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         {/* KOLOM KIRI  */}
         <div className="xl:col-span-7 space-y-8">
           {/* Global Wallet Card — Saldo dompet utama */}

@@ -21,31 +21,36 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   const navigate = useNavigate();
 
   return (
-    <header className="mb-4">
-      {/* Tombol Kembali — hanya tampil jika showBackButton=true */}
-      {showBackButton && (
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => navigate(-1)}
-          className=" rounded-xl text-text-secondary hover:text-text-primary border-border-primary h-10 w-10"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </Button>
-      )}
+    <header className="flex-shrink-0 w-full mb-0 px-4 py-2 border-b border-border-primary bg-background-primary">
+      <div className="max-w-[1400px] mx-auto w-full flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3 min-w-0">
+          {/* Tombol Kembali — sejajar horizontal dengan judul */}
+          {showBackButton && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => navigate(-1)}
+              className="rounded-xl text-text-secondary hover:text-text-primary border-border-primary h-9 w-9 flex-shrink-0"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </Button>
+          )}
 
-      <div className="flex items-center justify-between">
-        {title && (
-          <div>
-            <h1 className="text-3xl font-extrabold text-text-primary tracking-tight">
-              {title}
-            </h1>
+          <div className="min-w-0">
+            {title && (
+              <h1 className="text-base sm:text-lg font-semibold text-text-primary tracking-tight truncate leading-tight">
+                {title}
+              </h1>
+            )}
             {description && (
-              <p className="text-sm text-text-muted mt-1">{description}</p>
+              <p className="text-xs text-text-muted mt-0.5 truncate hidden sm:block">
+                {description}
+              </p>
             )}
           </div>
-        )}
-        {action && <div>{action}</div>}
+        </div>
+
+        {action && <div className="flex-shrink-0 flex items-center">{action}</div>}
       </div>
     </header>
   );
