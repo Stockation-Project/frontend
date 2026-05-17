@@ -14,7 +14,7 @@ export interface StockItem {
 }
 
 interface StockTableProps {
-  title: string;
+  title?: string;
   stocks: StockItem[];
 }
 
@@ -23,11 +23,11 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
 
   return (
     <div className="w-full">
-      <SectionHeader title={title} />
+      {title && <SectionHeader title={title} />}
 
       <div className="flex flex-col border border-border-primary max-h-[380px] overflow-y-auto px-4 rounded-xl">
         {/* Header Bar */}
-        <div className="flex items-center justify-between py-3 border-b border-border-primary px-2 -mx-2 text-[10px] font-medium text-slate-400 uppercase tracking-wider">
+        <div className="flex items-center justify-between py-3 border-b border-border-primary px-2 -mx-2 text-[10px] font-medium text-text-muted uppercase tracking-wider">
           <div className="flex-1 min-w-[150px]">Emiten</div>
           <div className="hidden md:block flex-1 text-center">Chart (1D)</div>
           <div className="flex-1 text-right md:text-center min-w-[100px]">Harga</div>
@@ -45,10 +45,10 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
           >
             {/* Kolom 1: Ticker & Nama */}
             <div className="flex-1 min-w-[150px]">
-              <h4 className="font-medium text-slate-900 text-xs">
+              <h4 className="font-medium text-text-primary text-xs">
                 {stock.ticker}
               </h4>
-              <p className="text-[10px] font-regular text-slate-500 truncate">{stock.name}</p>
+              <p className="text-[10px] font-regular text-text-muted truncate">{stock.name}</p>
             </div>
 
             {/* Kolom 2: Grafik Mini (Sparkline) */}
@@ -122,7 +122,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
 
             {/* Kolom 3: Harga saat ini */}
             <div className="flex-1 text-right md:text-center min-w-[100px]">
-              <span className="font-medium text-slate-900 text-sm md:text-sm">
+              <span className="font-medium text-text-primary text-sm md:text-sm">
                 {formatCurrencyIDR(stock.price)}
               </span>
             </div>
