@@ -30,30 +30,30 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
   const isProfit = profitLossRaw >= 0;
 
   return (
-    <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
-      <h3 className="text-base font-bold text-slate-900 mb-4">Posisi kamu</h3>
+    <div className="bg-background-primary border border-border-primary rounded-3xl p-6 shadow-sm">
+      <h3 className="text-base font-bold text-text-primary mb-4">Posisi kamu</h3>
 
       <div className="space-y-4 text-sm">
         <div className="flex justify-between items-center">
-          <span className="text-slate-500 font-medium text-xs">Kepemilikan</span>
-          <span className="font-bold text-slate-900 text-sm">
+          <span className="text-text-muted font-medium text-xs">Kepemilikan</span>
+          <span className="font-bold text-text-primary text-sm">
             {isOwned ? `${lots} lot (${totalShares} lembar)` : "0 lot"}
           </span>
         </div>
 
         <div className="flex justify-between items-center">
-          <span className="text-slate-500 font-medium text-xs">Harga beli rata-rata</span>
-          <span className="font-bold text-slate-900 text-sm">
+          <span className="text-text-muted font-medium text-xs">Harga beli rata-rata</span>
+          <span className="font-bold text-text-primary text-sm">
             {formatCurrencyIDR(avgPrice)}
           </span>
         </div>
 
-        <div className="flex justify-between items-center border-t border-slate-50 pt-4">
-          <span className="text-slate-500 font-medium text-xs">Laba/Rugi</span>
+        <div className="flex justify-between items-center border-t border-border-secondary pt-4">
+          <span className="text-text-muted font-medium text-xs">Laba/Rugi</span>
           <span
             className={`font-bold text-sm ${isOwned
-                ? (isProfit ? "text-[#329B0D]" : "text-red-500")
-                : "text-slate-300"
+                ? (isProfit ? "text-brand" : "text-error-500")
+                : "text-text-subtle"
               }`}
           >
             {isOwned ? (
@@ -69,14 +69,14 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
       <div className="grid grid-cols-2 gap-3 mt-8">
         <Button
           onClick={onBuy}
-          className="w-full h-11 bg-[#329B0D] hover:bg-green-700 text-white rounded-xl text-sm font-bold shadow-md shadow-green-700/10 transition-all cursor-pointer"
+          className="w-full h-11 bg-brand hover:bg-brand-700 text-text-inverse rounded-xl text-sm font-bold shadow-md shadow-brand/10 transition-all cursor-pointer"
         >
           Beli
         </Button>
         <Button
           onClick={onSell}
           disabled={!isOwned}
-          className="w-full h-11 bg-[#C40000] hover:bg-red-700 text-white rounded-xl text-sm font-bold shadow-md shadow-red-700/10 transition-all cursor-pointer disabled:bg-slate-100 disabled:text-slate-300 disabled:shadow-none"
+          className="w-full h-11 bg-error-500 hover:bg-error-700 text-text-inverse rounded-xl text-sm font-bold shadow-md shadow-error-500/10 transition-all cursor-pointer disabled:bg-background-secondary disabled:text-text-subtle disabled:shadow-none"
         >
           Jual
         </Button>
