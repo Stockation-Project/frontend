@@ -78,18 +78,22 @@ const PortfolioStockDetailPage = () => {
       exit={{ opacity: 0, y: 20 }}
       className="w-full max-w-7xl mx-auto p-4 md:p-10 space-y-8"
     >
-      {/* Header Info */}
-      <div className="flex flex-col md:flex-row justify-between items-start gap-6">
-        <div className="space-y-4 w-full md:w-auto">
-          <div className="flex justify-between md:justify-start items-start gap-4">
+      {/* ============================================================== */}
+      {/* [BAGIAN 1] HEADER INFO EMITEN & DETAIL HARGA (Grid Kolom 7) */}
+      {/* ============================================================== */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+        {/* Pembungkus Kolom Info Kiri (7/12) */}
+        <div className="xl:col-span-7 flex flex-col gap-6">
+          {/* 1a. INFORMASI EMITEN (Nama, Ticker, Sektor, Bookmark) */}
+          <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-4xl font-bold text-text-primary tracking-tight">
+              <h1 className="text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
                 {stockData.ticker}
               </h1>
-              <p className="text-lg text-text-muted font-medium">{stockData.name}</p>
+              <p className="text-lg text-text-muted mb-1">{stockData.name}</p>
               <Badge
                 variant="outline"
-                className="mt-2 bg-brand-50 text-brand border-brand-100 font-bold px-3 py-1 rounded-lg text-[10px] uppercase"
+                className="bg-brand-50 text-brand border-brand hover:bg-brand-100 font-medium px-3 py-2 rounded-sm text-xs"
               >
                 Sektor: {stockData.sector || "Umum"}
               </Badge>
@@ -97,105 +101,99 @@ const PortfolioStockDetailPage = () => {
             <Button
               variant="outline"
               size="icon"
-              className="rounded-2xl h-12 w-12 border-border-primary text-text-subtle hover:text-text-primary bg-background-primary hover:bg-background-secondary transition-all shrink-0 md:ml-4"
+              className="rounded-xl h-12 w-12 border-border-primary transition-all active:scale-95"
             >
               <Bookmark className="w-5 h-5 fill-current" />
             </Button>
           </div>
 
-          <div className="flex items-end gap-3 pt-2">
-            <h2 className="text-5xl font-bold text-text-primary tracking-tighter">
+          {/* 1b. HARGA SAHAM REALTIME */}
+          <div className="flex items-end gap-2">
+            <h2 className="text-4xl font-semibold text-text-primary tracking-tight">
               {formatCurrencyIDR(stockData.current_price)}
             </h2>
-            <div className={`flex items-center gap-1 text-base font-bold mb-2 ${priceChange.isPositive ? "text-brand" : "text-error-500"}`}>
+            <span
+              className={`text-sm sm:text-md font-semibold mb-1 ${priceChange.isPositive ? "text-brand" : "text-error-500"}`}
+            >
               {priceChange.isPositive ? "▲" : "▼"} {priceChange.percent}%
-            </div>
+            </span>
           </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-        {/* Kolom Kiri: Chart & Transactions */}
-        <div className="xl:col-span-8 space-y-10">
-          <div className="bg-background-primary border border-border-primary rounded-[40px] p-4 md:p-8 shadow-sm">
+          {/* 2a. CHART AREA */}
+          
             <StockAreaChart
               data={filteredChartData}
               activeFilter={activeFilter}
               onFilterChange={setActiveFilter}
               isPositive={priceChange.isPositive}
             />
-          </div>
-
-          <div className="bg-background-primary border border-border-secondary rounded-[40px] p-4 md:p-8">
             <TransactionHistoryList transactions={transactions} />
           </div>
-        </div>
 
-        {/* Kolom Kanan: Stats, Anomaly, Summary, Position */}
-        <div className="xl:col-span-4 space-y-8">
-          {/* Statistik Saham */}
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-text-secondary ml-1">Statistik Saham</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <StatCard
-                title="Rata-rata tumbuh per tahun"
-                value={stockData.cagr ? `${(stockData.cagr * 100).toFixed(1)}%` : "+15.4%"}
-                tooltipText="CAGR dalam 3 tahun terakhir."
-              />
-              <StatCard
-                title="Tingkat hutang perusahaan"
-                value={stockData.der ? `${(stockData.der / 100).toFixed(1)}x` : "0.5x"}
-                tooltipText="Debt to Equity Ratio (DER)."
-              />
-              <StatCard
-                title="Harga vs keuntungan"
-                value={stockData.per ? `${stockData.per.toFixed(1)}x` : "12.5x"}
-                tooltipText="Price to Earnings Ratio (PER)."
-              />
-              <StatCard
-                title="Penghasilan tanpa jual saham"
-                value={stockData.dividend ? `${(stockData.dividend * 100).toFixed(1)}%` : "4.2%"}
-                tooltipText="Dividend Yield."
-              />
-              <StatCard
-                title="Harga terendah tahun ini"
-                value={formatCurrencyIDR(stockData.day_low || 4489)}
-                tooltipText="Harga terendah dalam 52 minggu terakhir."
-              />
-              <StatCard
-                title="Harga tertinggi tahun ini"
-                value={formatCurrencyIDR(stockData.day_high || 9000)}
-                tooltipText="Harga tertinggi dalam 52 minggu terakhir."
-              />
+          {/* KONTEN PELENGKAP - SEBELAH KANAN (4/12) */}
+          <div className="xl:col-span-5 flex flex-col gap-4 relative">
+            {/* 3a. WIDGET STATISTIK SAHAM */}
+            <div className="space-y-4">
+              <h3 className="text-base font-bold text-text-secondary ml-1">Statistik Saham</h3>
+              <div className="grid grid-cols-2 gap-3">
+                <StatCard
+                  title="Rata-rata tumbuh per tahun"
+                  value={stockData.cagr ? `${(stockData.cagr * 100).toFixed(1)}%` : "+15.4%"}
+                  tooltipText="CAGR dalam 3 tahun terakhir."
+                />
+                <StatCard
+                  title="Tingkat hutang perusahaan"
+                  value={stockData.der ? `${(stockData.der / 100).toFixed(1)}x` : "0.5x"}
+                  tooltipText="Debt to Equity Ratio (DER)."
+                />
+                <StatCard
+                  title="Harga vs keuntungan"
+                  value={stockData.per ? `${stockData.per.toFixed(1)}x` : "12.5x"}
+                  tooltipText="Price to Earnings Ratio (PER)."
+                />
+                <StatCard
+                  title="Penghasilan tanpa jual saham"
+                  value={stockData.dividend ? `${(stockData.dividend * 100).toFixed(1)}%` : "4.2%"}
+                  tooltipText="Dividend Yield."
+                />
+                <StatCard
+                  title="Harga terendah tahun ini"
+                  value={formatCurrencyIDR(stockData.day_low || 4489)}
+                  tooltipText="Harga terendah dalam 52 minggu terakhir."
+                />
+                <StatCard
+                  title="Harga tertinggi tahun ini"
+                  value={formatCurrencyIDR(stockData.day_high || 9000)}
+                  tooltipText="Harga tertinggi dalam 52 minggu terakhir."
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Pergerakan Anomali */}
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-text-secondary ml-1">Pergerakan anomali</h3>
-            <AnomalyTable data={stockData.anomaly_history || []} />
-          </div>
-
-          {/* Rangkuman */}
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-text-secondary ml-1">Rangkuman</h3>
-            <div className="bg-background-primary p-2">
-              <p className="text-xs text-text-muted leading-relaxed text-justify">
-                {stockData.about_company || `${stockData.name} (${stockData.ticker}) adalah salah satu perusahaan terkemuka di sektornya. Perusahaan ini memiliki fundamental yang kuat dan prospek pertumbuhan yang menjanjikan dalam jangka panjang.`}
-              </p>
+            {/* 3b. WIDGET PERGERAKAN ANOMALI */}
+            <div className="space-y-4">
+              <h3 className="text-base font-bold text-text-secondary ml-1">Pergerakan anomali</h3>
+              <AnomalyTable data={stockData.anomaly_history || []} />
             </div>
-          </div>
 
-          {/* Posisi Kamu Widget */}
-          <PortfolioPositionWidget
-            symbol={ticker!}
-            holding={holding}
-            currentPrice={stockData.current_price}
-            onBuy={handleBuy}
-            onSell={handleSell}
-          />
+            {/* 3c. WIDGET RANGKUMAN PERUSAHAAN */}
+            <div className="space-y-4">
+              <h3 className="text-base font-bold text-text-secondary ml-1">Rangkuman</h3>
+              <div className="bg-background-primary p-2">
+                <p className="text-xs text-text-muted leading-relaxed text-justify">
+                  {stockData.about_company || `${stockData.name} (${stockData.ticker}) adalah salah satu perusahaan terkemuka di sektornya. Perusahaan ini memiliki fundamental yang kuat dan prospek pertumbuhan yang menjanjikan dalam jangka panjang.`}
+                </p>
+              </div>
+            </div>
+
+            {/* [KHUSUS PORTFOLIO] 3d. WIDGET POSISI KAMU / TOMBOL JUAL & BELI */}
+            <PortfolioPositionWidget
+              symbol={ticker!}
+              holding={holding}
+              currentPrice={stockData.current_price}
+              onBuy={handleBuy}
+              onSell={handleSell}
+            />
+          </div>
         </div>
-      </div>
 
       <SellStockModal
         isOpen={isSellModalOpen}
