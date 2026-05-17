@@ -166,6 +166,7 @@ const SimulationBuyPage: React.FC = () => {
                   remainingBalance={state.remainingBalance}
                   isBuying={state.isBuying}
                   onConfirmBuy={() => handlers.handleConfirmBuy()}
+                  optimizationMetrics={state.optimizationMetrics}
                 />
               </div>
             </div>
@@ -208,6 +209,7 @@ const SimulationBuyPage: React.FC = () => {
                   onConfirmBuy={() => handlers.handleConfirmBuy(() => {
                     // Optional callback on success, e.g. navigate back to portfolio detail
                   })}
+                  optimizationMetrics={state.optimizationMetrics}
                 />
               </div>
             </div>

@@ -11,6 +11,14 @@ import type {
 } from "../types/simulation";
 import { toast } from "sonner";
 
+export interface OptimizationMetrics {
+  expectedReturn: number;
+  volatility: number;
+  sharpeRatio: number;
+  method: string;
+  riskProfile: string;
+}
+
 export const useSimulationBuy = () => {
   // --- States ---
   const [portfolios, setPortfolios] = useState<DashboardPortfolio[]>([]);
@@ -25,6 +33,7 @@ export const useSimulationBuy = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isBuying, setIsBuying] = useState(false);
   const [isOptimizing, setIsOptimizing] = useState(false);
+  const [optimizationMetrics, setOptimizationMetrics] = useState<OptimizationMetrics | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // --- Initial Data Fetching ---
@@ -59,6 +68,10 @@ export const useSimulationBuy = () => {
 
     loadInitialData();
   }, []);
+
+  useEffect(() => {
+    setOptimizationMetrics(null);
+  }, [selectedPortfolioId]);
 
   // --- Derived State & Calculations ---
 
@@ -110,6 +123,7 @@ export const useSimulationBuy = () => {
   };
 
   const addStockToCart = (stock: SearchStockItem) => {
+    setOptimizationMetrics(null);
     setCart((prev) => {
       // Check if already in cart
       const existing = prev.find((item) => item.ticker === stock.ticker);
@@ -137,11 +151,13 @@ export const useSimulationBuy = () => {
   };
 
   const removeStockFromCart = (ticker: string) => {
+    setOptimizationMetrics(null);
     setCart((prev) => prev.filter((item) => item.ticker !== ticker));
   };
 
   const updateStockLot = (ticker: string, lots: number) => {
     if (lots < 1) return;
+    setOptimizationMetrics(null);
     setCart((prev) =>
       prev.map((item) => (item.ticker === ticker ? { ...item, lots } : item))
     );
@@ -188,6 +204,13 @@ export const useSimulationBuy = () => {
       });
 
       setCart(updatedCart);
+      setOptimizationMetrics({
+        expectedReturn: res.data.metrics.expected_return,
+        volatility: res.data.metrics.volatility,
+        sharpeRatio: res.data.metrics.sharpe_ratio,
+        method: res.data.method,
+        riskProfile: res.data.risk_profile,
+      });
       toast.success("Alokasi portofolio otomatis berhasil diterapkan!");
     } catch (err: any) {
       toast.error(err.message || "Gagal mengalokasikan portofolio secara otomatis.");
@@ -257,6 +280,7 @@ export const useSimulationBuy = () => {
       totalInvestment,
       remainingBalance,
       donutChartData,
+      optimizationMetrics,
     },
     handlers: {
       setSearchQuery,
