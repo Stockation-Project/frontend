@@ -106,7 +106,7 @@ const PortfolioDetailPage: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.4 }}
-      className="w-full"
+      className="w-full h-full flex flex-col overflow-hidden"
     >
       {/* Header dengan tombol kembali */}
       <PageHeader
@@ -115,46 +115,49 @@ const PortfolioDetailPage: React.FC = () => {
         showBackButton={false}
       />
 
-      {/* Section 1: Slider Daftar Portfolio (sama seperti dashboard) */}
-      <div className="mb-8">
-        <PortfolioSection
-          portfolios={portfoliosWithColors}
-          userRiskProfile={dashboardData?.user_info?.risk_profile || ""}
-          onAddClick={() => setIsCreatePortoOpen(true)}
-          onCardClick={(portfolioId) =>
-            navigate(`/portfolio/${portfolioId}`)
-          }
-          activePortfolioId={id}
-        />
+      {/* Konten Utama di bawah Header yang bisa di-scroll secara independen */}
+      <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-8 no-scrollbar">
+        {/* Section 1: Slider Daftar Portfolio (sama seperti dashboard) */}
+        <div>
+          <PortfolioSection
+            portfolios={portfoliosWithColors}
+            userRiskProfile={dashboardData?.user_info?.risk_profile || ""}
+            onAddClick={() => setIsCreatePortoOpen(true)}
+            onCardClick={(portfolioId) =>
+              navigate(`/portfolio/${portfolioId}`)
+            }
+            activePortfolioId={id}
+          />
 
-        <CreatePortfolioModal
-          isOpen={isCreatePortoOpen}
-          onClose={() => setIsCreatePortoOpen(false)}
-          currentBalance={
-            dashboardData?.wallet_summary?.main_wallet_balance || 0
-          }
-          onSuccess={handleCreatePortfolio}
-        />
+          <CreatePortfolioModal
+            isOpen={isCreatePortoOpen}
+            onClose={() => setIsCreatePortoOpen(false)}
+            currentBalance={
+              dashboardData?.wallet_summary?.main_wallet_balance || 0
+            }
+            onSuccess={handleCreatePortfolio}
+          />
+        </div>
+
+        {/* Section 2: Detail Portfolio Card atau Empty State */}
+        {!id || !portfolio ? (
+          <EmptyState
+            icon={Briefcase}
+            title="Pilih Dompet Investasi"
+            description="Silakan pilih salah satu dompet di atas untuk melihat rincian saham, alokasi, dan performanya."
+          />
+        ) : (
+          <PortfolioDetailCard
+            portfolioName={portfolio.name}
+            portfolioId={portfolio.id}
+            investedBalance={portfolio.invested_balance}
+            totalProfitAmount={totalProfitAmount}
+            totalProfitPercentage={totalProfitPercentage}
+            allocations={allocations}
+            holdings={enrichedHoldings}
+          />
+        )}
       </div>
-
-      {/* Section 2: Detail Portfolio Card atau Empty State */}
-      {!id || !portfolio ? (
-        <EmptyState
-          icon={Briefcase}
-          title="Pilih Dompet Investasi"
-          description="Silakan pilih salah satu dompet di atas untuk melihat rincian saham, alokasi, dan performanya."
-        />
-      ) : (
-        <PortfolioDetailCard
-          portfolioName={portfolio.name}
-          portfolioId={portfolio.id}
-          investedBalance={portfolio.invested_balance}
-          totalProfitAmount={totalProfitAmount}
-          totalProfitPercentage={totalProfitPercentage}
-          allocations={allocations}
-          holdings={enrichedHoldings}
-        />
-      )}
     </motion.div>
   );
 };

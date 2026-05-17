@@ -52,14 +52,7 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
         <div className="flex-1 overflow-y-auto p-6">{children}</div>
 
         {/* Footer Reusable */}
-        <div className="px-4 py-2 border-t border-border-primary bg-background-primary flex flex-col sm:flex-row-reverse gap-3">
-          <Button
-            onClick={onAction}
-            disabled={isActionDisabled || isLoading}
-            className="flex-1 h-10 bg-brand hover:bg-brand-950 active:bg-brand text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
-          >
-            {isLoading ? "Memproses..." : actionText}
-          </Button>
+        <div className="px-4 py-3 border-t border-border-primary bg-background-primary flex flex-row gap-3">
           <Button
             variant="outline"
             onClick={onClose}
@@ -67,6 +60,13 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
             className="flex-1 h-10 bg-transparent border border-slate-900 hover:bg-slate-50 active:bg-slate-100 text-slate-900 rounded-xl text-sm font-regular transition-all duration-200 cursor-pointer"
           >
             Tutup
+          </Button>
+          <Button
+            onClick={onAction}
+            disabled={isActionDisabled || isLoading}
+            className="flex-1 h-10 bg-brand hover:bg-brand-950 active:bg-brand text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
+          >
+            {isLoading ? "Memproses..." : actionText}
           </Button>
         </div>
       </SheetContent>
