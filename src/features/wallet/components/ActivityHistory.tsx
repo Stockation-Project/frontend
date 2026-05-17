@@ -41,7 +41,7 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
       case "SELL":
         return <ArrowDownLeft className="stroke-[1.5px] w-full h-full text-error-700 bg-gradient-to-b from-error-100 to-error-50 p-2 rounded-lg" />;
       default:
-        return <Plus className="stroke-[1.5px] w-full h-full text-slate-400 w-5 h-5" />;
+        return <Plus className="stroke-[1.5px] w-full h-full text-text-subtle p-2" />;
     }
   };
 
@@ -74,18 +74,19 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
   const grouped = groupActivities();
 
   return (
-    <div className="space-y-3 h-[310px] overflow-hidden">
-      <div className="flex items-center justify-between pb-2 border-b border-border-primary">
-        <h3 className="text-sm font-medium text-slate-500">Riwayat Mutasi</h3>
-        <div className="flex gap-1 bg-border-secondary p-1 rounded-xl">
+    <div className="space-y-3 h-[310px] overflow-hidden flex flex-col">
+      {/* Header Responsif: Bertumpuk di mobile, sejajar di desktop */}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pb-2 border-b border-border-primary flex-shrink-0">
+        <h3 className="text-xs sm:text-sm font-semibold text-text-muted">Riwayat Mutasi</h3>
+        <div className="flex gap-0.5 bg-border-secondary p-0.5 rounded-lg overflow-x-auto no-scrollbar max-w-full">
           {filters.map((f) => (
             <button
               key={f.value}
               onClick={() => onFilterChange(f.value)}
-              className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${
+              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-md text-[10px] sm:text-xs font-semibold transition-all whitespace-nowrap ${
                 currentFilter === f.value
-                  ? "bg-background-primary text-slate-900 shadow-sm"
-                  : "text-slate-400 hover:text-slate-600"
+                  ? "bg-background-primary text-text-primary shadow-sm"
+                  : "text-text-muted hover:text-text-secondary"
               }`}
             >
               {f.label}
@@ -94,41 +95,41 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
         </div>
       </div>
 
-      <div className="space-y-4 overflow-y-auto h-full pb-12">
+      <div className="space-y-4 overflow-y-auto flex-1 pb-4 pr-1 scrollbar-thin">
         {Object.keys(grouped).length === 0 ? (
-          <div className="py-4 text-center text-slate-400 text-sm italic">
+          <div className="py-8 text-center text-text-subtle text-xs sm:text-sm italic">
             Tidak ada riwayat aktivitas
           </div>
         ) : (
           Object.entries(grouped).map(([date, items]) => (
-            <div key={date} className="space-y-0">
-              <h4 className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">
+            <div key={date} className="space-y-1 mt-2 first:mt-0">
+              <h4 className="text-[9px] font-semibold text-text-subtle uppercase tracking-wider">
                 {date}
               </h4>
-              <div className="space-y-0 divide-y divide-slate-50 border-t border-b border-slate-50">
+              <div className="space-y-0 divide-y divide-border-primary border-t border-b border-border-primary">
                 {items.map((activity) => (
                   <div
                     key={activity.id}
-                    className="py-2 flex items-center justify-between hover:bg-slate-50/50 transition-colors"
+                    className="py-2 flex items-center justify-between hover:bg-background-secondary/40 transition-colors px-1"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="w-9 h-9 rounded-lg flex items-center justify-center">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0">
                         {getIcon(activity.type)}
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-slate-900">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs sm:text-sm font-medium text-text-primary truncate max-w-[150px] sm:max-w-none">
                           {activity.description}
                         </p>
                         {activity.metadata && (
-                          <p className="text-xs text-slate-400 font-regular">
+                          <p className="text-[10px] sm:text-xs text-text-muted font-regular truncate">
                             {activity.metadata.shares / 100} Lot . {formatCurrencyIDR(activity.metadata.price || 0)}/lembar
                           </p>
                         )}
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex-shrink-0 pl-2">
                       <p
-                        className={`text-sm font-medium ${getAmountColor(
+                        className={`text-xs sm:text-sm font-semibold ${getAmountColor(
                           activity.type
                         )}`}
                       >
@@ -137,7 +138,7 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
                           : "+"}
                         {formatCurrencyIDR(activity.amount)}
                       </p>
-                      <p className="text-[10px] font-regular text-slate-400">
+                      <p className="text-[9px] sm:text-[10px] font-regular text-text-subtle">
                         {new Date(activity.created_at).toLocaleTimeString("id-ID", {
                           hour: "2-digit",
                           minute: "2-digit",
