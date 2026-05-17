@@ -32,13 +32,13 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
 
   return (
     <div className="w-full overflow-x-auto">
-      {/* Table Header - Menggunakan grid-cols-4 di mobile dan grid-cols-12 di desktop */}
-      <div className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-4 px-3 md:px-6 py-3.5 text-[9px] md:text-xs font-semibold text-text-muted uppercase tracking-wider border-b border-border-primary bg-background-primary/50">
-        <div className="col-span-1 md:col-span-3">Emiten</div>
-        <div className="col-span-1 md:col-span-3 text-center">Alokasi</div>
-        <div className="col-span-1 md:col-span-2 text-center">Jumlah Lot</div>
-        <div className="col-span-1 md:col-span-2 text-center">Laba/Rugi</div>
-        <div className="hidden md:block md:col-span-2 text-right">Aksi</div>
+      {/* Table Header - Menggunakan grid-cols-12 baik di mobile maupun desktop dengan col-span responsif */}
+      <div className="grid grid-cols-12 gap-1.5 md:gap-4 px-3 md:px-6 py-3.5 text-[9px] md:text-xs font-semibold text-text-muted uppercase tracking-wider border-b border-border-primary bg-background-primary/50">
+        <div className="col-span-4 md:col-span-3">Emiten</div>
+        <div className="col-span-3 md:col-span-3 text-center">Alokasi</div>
+        <div className="col-span-2 md:col-span-2 text-center">Jumlah Lot</div>
+        <div className="col-span-2 md:col-span-2 text-center">Laba/Rugi</div>
+        <div className="col-span-1 md:col-span-2 text-right">Aksi</div>
       </div>
 
       {/* Table Body */}
@@ -52,10 +52,10 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             onClick={() =>
               navigate(`/portfolio/${portfolioId}/stocks/${holding.ticker}`)
             }
-            className="grid grid-cols-4 md:grid-cols-12 gap-1.5 md:gap-4 items-center px-3 md:px-6 py-2.5 md:py-3 border-b border-border-secondary hover:bg-background-secondary/70 active:bg-background-secondary/90 transition-colors cursor-pointer"
+            className="grid grid-cols-12 gap-1.5 md:gap-4 items-center px-3 md:px-6 py-2.5 md:py-3 border-b border-border-secondary hover:bg-background-secondary/70 active:bg-background-secondary/90 transition-colors cursor-pointer"
           >
             {/* Kolom 1: Emiten — Ticker & Nama */}
-            <div className="col-span-1 md:col-span-3">
+            <div className="col-span-4 md:col-span-3">
               <div className="flex items-center gap-2">
                 <div>
                   <h4 className="font-semibold text-text-primary text-[11px] sm:text-xs md:text-sm">
@@ -69,7 +69,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             </div>
 
             {/* Kolom 2: Alokasi — Jumlah investasi & persentase */}
-            <div className="col-span-1 md:col-span-3 text-center">
+            <div className="col-span-3 md:col-span-3 text-center">
               <p className="font-medium text-text-primary text-[10px] sm:text-xs md:text-sm">
                 {formatCurrencyIDR(holding.investedAmount)}
               </p>
@@ -81,7 +81,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             </div>
 
             {/* Kolom 3: Jumlah Lot */}
-            <div className="col-span-1 md:col-span-2 text-center">
+            <div className="col-span-2 md:col-span-2 text-center">
               <p className="font-medium text-text-primary text-[10px] sm:text-xs md:text-sm">
                 {holding.totalLots} Lot
               </p>
@@ -91,7 +91,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             </div>
 
             {/* Kolom 4: Laba/Rugi */}
-            <div className="col-span-1 md:col-span-2 text-center">
+            <div className="col-span-2 md:col-span-2 text-center">
               <div className="flex flex-col items-center gap-0.5">
                 {/* Persentase */}
                 <span
@@ -140,30 +140,50 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
               </div>
             </div>
 
-            {/* Kolom 5: Aksi - Desktop Only */}
-            <div className="hidden md:flex md:col-span-2 justify-end">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation(); // Mencegah onClick pada baris terpicu
-                  navigate(`/portfolio/${portfolioId}/stocks/${holding.ticker}`);
-                }}
-                className="px-4 py-1.5 text-xs font-medium text-text-secondary bg-background-primary border border-border-primary rounded-lg hover:bg-background-secondary transition-all cursor-pointer flex items-center gap-1"
-              >
-                Detail
+            {/* Kolom 5: Aksi - Chevron Navigasi di Mobile & Tombol Detail di Desktop */}
+            <div className="col-span-1 md:col-span-2 flex justify-end items-center">
+              {/* Chevron Arrow Kanan di Mobile */}
+              <div className="block md:hidden">
                 <svg
-                  className="w-3 h-3"
+                  className="w-3.5 h-3.5 text-slate-400 hover:text-brand transition-colors"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  strokeWidth="2.5"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
-              </button>
+              </div>
+
+              {/* Tombol Aksi di Desktop */}
+              <div className="hidden md:block">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // Mencegah onClick pada baris terpicu
+                    navigate(`/portfolio/${portfolioId}/stocks/${holding.ticker}`);
+                  }}
+                  className="px-4 py-1.5 text-xs font-medium text-text-secondary bg-background-primary border border-border-primary rounded-lg hover:bg-background-secondary transition-all cursor-pointer flex items-center gap-1"
+                >
+                  Detail
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </motion.div>
         ))}
