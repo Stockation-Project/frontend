@@ -1,5 +1,5 @@
 // src/components/simulation/WalletSelectCard.tsx
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Wallet, Plus } from "lucide-react";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 
@@ -19,11 +19,24 @@ const WalletSelectCard: React.FC<WalletSelectCardProps> = ({
   onClick,
   isAddCard = false,
 }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isSelected && cardRef.current) {
+      const isMobile = window.innerWidth < 768; // HP (< 768px)
+      cardRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: isMobile ? "center" : "start", // HP di tengah, laptop/tablet di kiri (start)
+      });
+    }
+  }, [isSelected]);
+
   if (isAddCard) {
     return (
       <div
         onClick={onClick}
-        className="min-w-[240px] w-[240px] h-[100px] border-2 border-dashed border-border-primary rounded-lg py-4 flex items-center justify-center gap-2 cursor-pointer hover:bg-background-secondary transition-colors text-slate-400 hover:text-slate-600"
+        className="min-w-[240px] w-[240px] h-[100px] border-2 border-dashed border-border-primary rounded-lg py-4 flex items-center justify-center gap-2 cursor-pointer hover:bg-background-secondary transition-colors text-slate-400 hover:text-slate-600 flex-shrink-0"
       >
         <Plus className="w-5 h-5" />
         <span className="text-sm font-medium">Tambah dompet baru</span>
@@ -33,8 +46,9 @@ const WalletSelectCard: React.FC<WalletSelectCardProps> = ({
 
   return (
     <div
+      ref={cardRef}
       onClick={onClick}
-      className={`min-w-[240px] w-[240px] h-[100px] my-4 bg-background-primary border rounded-lg flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer ${
+      className={`min-w-[240px] w-[240px] h-[100px] my-4 bg-background-primary border rounded-lg flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer flex-shrink-0 ${
         isSelected
           ? "border-brand ring-1 ring-brand"
           : "border-border-primary hover:border-border-secondary"
