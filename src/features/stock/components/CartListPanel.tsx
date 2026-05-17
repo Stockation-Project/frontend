@@ -11,6 +11,7 @@ interface CartListPanelProps {
   onRemove: (ticker: string) => void;
   onUpdateLot: (ticker: string, lots: number) => void;
   onToggleExpand: (ticker: string) => void;
+  isReadOnlyLots?: boolean;
 }
 
 const CartListPanel: React.FC<CartListPanelProps> = ({
@@ -19,6 +20,7 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
   onRemove,
   onUpdateLot,
   onToggleExpand,
+  isReadOnlyLots = false,
 }) => {
   return (
     <div className="border border-border-primary rounded-lg flex flex-col h-[600px] overflow-hidden">
@@ -107,32 +109,38 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
 
                   <div className="flex justify-between items-center">
                     <span className="text-xs text-slate-500">Jumlah Lot</span>
-                    <div className="flex items-center border border-border-primary rounded-lg bg-background-primary overflow-hidden">
-                      <button
-                        onClick={() => onUpdateLot(item.ticker, item.lots - 1)}
-                        className="p-2 text-slate-400 hover:bg-background-secondary hover:text-slate-700 transition-colors"
-                      >
-                        <Minus className="w-3 h-3" />
-                      </button>
-                      <input
-                        type="number"
-                        min="1"
-                        value={item.lots}
-                        onChange={(e) =>
-                          onUpdateLot(
-                            item.ticker,
-                            parseInt(e.target.value) || 1
-                          )
-                        }
-                        className="h-full p-2 w-11 text-center text-xs font-medium border-x border-border-primary  outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                      />
-                      <button
-                        onClick={() => onUpdateLot(item.ticker, item.lots + 1)}
-                        className="p-2 text-slate-400 hover:bg-background-secondary hover:text-slate-700 transition-colors"
-                      >
-                        <Plus className="w-3 h-3" />
-                      </button>
-                    </div>
+                    {isReadOnlyLots ? (
+                      <div className="px-3 py-1.5 bg-slate-100 border border-slate-200/60 rounded-lg text-xs font-semibold text-slate-700">
+                        {item.lots} Lot
+                      </div>
+                    ) : (
+                      <div className="flex items-center border border-border-primary rounded-lg bg-background-primary overflow-hidden">
+                        <button
+                          onClick={() => onUpdateLot(item.ticker, item.lots - 1)}
+                          className="p-2 text-slate-400 hover:bg-background-secondary hover:text-slate-700 transition-colors"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                        <input
+                          type="number"
+                          min="1"
+                          value={item.lots}
+                          onChange={(e) =>
+                            onUpdateLot(
+                              item.ticker,
+                              parseInt(e.target.value) || 1
+                            )
+                          }
+                          className="h-full p-2 w-11 text-center text-xs font-medium border-x border-border-primary  outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        />
+                        <button
+                          onClick={() => onUpdateLot(item.ticker, item.lots + 1)}
+                          className="p-2 text-slate-400 hover:bg-background-secondary hover:text-slate-700 transition-colors"
+                        >
+                          <Plus className="w-3 h-3" />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex justify-between items-center pt-2 border-t border-slate-200/60">
