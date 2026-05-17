@@ -117,7 +117,7 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
           </div>
         </div>
 
-        <DialogFooter className="flex flex-col sm:flex-row gap-3">
+        <DialogFooter className="flex flex-row gap-3">
           <Button
             variant="ghost"
             onClick={onClose}

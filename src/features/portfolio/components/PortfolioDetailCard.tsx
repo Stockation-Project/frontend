@@ -40,28 +40,35 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
       <div className="w-full bg-background-primary border border-border-primary rounded-xl overflow-hidden">
         {/* Header Section — Nama, Info, Ringkasan Saldo */}
         <div className="p-6 pb-4">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
-            {/* Kiri: Identitas Portfolio */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 border-b border-slate-100 pb-6">
+            {/* Kiri: Identitas Portfolio (Kapsul Aktif Premium) */}
             <div>
-              <p className="text-sm text-text-muted mb-1">Nama dompet</p>
-              <h3 className="font-semibold text-xl text-text-primary">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-brand uppercase tracking-wider mb-2">
+                Dompet Investasi
+              </span>
+              <h3 className="font-bold text-sm md:text-base text-slate-800 bg-slate-50 border border-slate-200/50 px-3 py-1.5 rounded-xl w-fit flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
                 {portfolioName}
               </h3>
             </div>
 
             {/* Kanan: Ringkasan Saldo */}
-            <div className="text-right">
-              <p className="text-sm text-text-muted mb-1">Total Investasi</p>
-              <h3 className="font-semibold text-xl text-text-primary">
+            <div className="text-left md:text-right">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                Total Investasi
+              </span>
+              <h3 className="font-bold text-base md:text-lg text-slate-800">
                 {formatCurrencyIDR(investedBalance, { absolute: true })}
               </h3>
               {investedBalance > 0 && (
                 <p
-                  className={`text-sm font-medium mt-1 ${isProfit ? "text-brand" : "text-error-500"}`}
+                  className={`text-[10px] font-bold mt-1.5 px-2.5 py-0.5 rounded-full w-fit md:ml-auto border ${
+                    isProfit 
+                      ? "bg-brand-50 text-brand border-brand-200/60" 
+                      : "bg-error-50 text-error-500 border-error-200/60"
+                  }`}
                 >
-                  ({isProfit ? "+" : ""}{totalProfitPercentage.toFixed(1)}%){" "}
-                  {isProfit ? "+" : ""}
-                  {formatCurrencyIDR(totalProfitAmount, { absolute: false })}
+                  {isProfit ? "▲" : "▼"} {totalProfitPercentage.toFixed(1)}% ({isProfit ? "+" : ""}{formatCurrencyIDR(totalProfitAmount, { absolute: false })})
                 </p>
               )}
             </div>

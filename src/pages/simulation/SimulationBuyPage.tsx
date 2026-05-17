@@ -17,7 +17,7 @@ const SimulationBuyPage: React.FC = () => {
 
   if (state.isLoading) {
     return (
-      <div className="w-full h-screen flex flex-col items-center justify-center text-slate-500">
+      <div className="w-full h-full flex flex-col items-center justify-center text-slate-500">
         <Loader2 className="w-10 h-10 animate-spin text-brand mb-4" />
         <p className="font-medium">Memuat data simulasi...</p>
       </div>
@@ -44,7 +44,7 @@ const SimulationBuyPage: React.FC = () => {
 
       <div className="w-full mx-auto flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         {/* SECTION 1: Pilih Dompet */}
-        <div className="flex flex-col p-4 gap-2">
+        <div className="flex flex-col py-2 gap-2">
           <h2 className="text-sm font-medium text-slate-500 uppercase tracking-wide">
             Pilih dompet
           </h2>
@@ -99,9 +99,9 @@ const SimulationBuyPage: React.FC = () => {
 
           {/* TAB CONTENT: Rekomendasi */}
           {mainTab === "Rekomendasi" && (
-            <div className="flex gap-4 items-start animate-fade-in">
+            <div className="grid grid-cols-1 xl:grid-cols-10 gap-6 items-start animate-fade-in">
               {/* Kolom Kiri: Search & Banner Info */}
-              <div className="w-full min-w-[300px] max-w-[30%] flex flex-col gap-4">
+              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
                 {/* Banner Informasi Mode Alokasi Otomatis */}
                 <div className="p-4 bg-brand-50 border border-brand-200 rounded-xl shadow-sm flex flex-col gap-2">
                   <h4 className="text-xs font-bold text-brand-900 flex items-center gap-1.5">
@@ -112,17 +112,20 @@ const SimulationBuyPage: React.FC = () => {
                   </p>
                 </div>
 
-                <StockSearchPanel
-                  searchQuery={state.searchQuery}
-                  setSearchQuery={handlers.setSearchQuery}
-                  recommendedStocks={state.recommendedStocks}
-                  filteredStocks={state.filteredStocks}
-                  onAddStock={handlers.addStockToCart}
-                />
+                {/* Tinggi dibatasi 320px (4-5 baris saham) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full">
+                  <StockSearchPanel
+                    searchQuery={state.searchQuery}
+                    setSearchQuery={handlers.setSearchQuery}
+                    recommendedStocks={state.recommendedStocks}
+                    filteredStocks={state.filteredStocks}
+                    onAddStock={handlers.addStockToCart}
+                  />
+                </div>
               </div>
 
               {/* Kolom Tengah: Cart & Tombol Trigger AI */}
-              <div className="w-full min-w-[300px] max-w-[40%] flex flex-col gap-4">
+              <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[650px]">
                 {state.cart.length >= 2 && (
                   <button
                     onClick={handlers.handleAutoAllocation}
@@ -146,71 +149,86 @@ const SimulationBuyPage: React.FC = () => {
                   </button>
                 )}
 
-                <CartListPanel
-                  selectedPortfolio={state.selectedPortfolio}
-                  cart={state.cart}
-                  onRemove={handlers.removeStockFromCart}
-                  onUpdateLot={handlers.updateStockLot}
-                  onToggleExpand={handlers.toggleExpandStock}
-                  isReadOnlyLots={true} // Kunci input lot manual
-                />
+                {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
+                  <CartListPanel
+                    selectedPortfolio={state.selectedPortfolio}
+                    cart={state.cart}
+                    onRemove={handlers.removeStockFromCart}
+                    onUpdateLot={handlers.updateStockLot}
+                    onToggleExpand={handlers.toggleExpandStock}
+                    isReadOnlyLots={true} // Kunci input lot manual
+                  />
+                </div>
               </div>
 
               {/* Kolom Kanan: Summary */}
-              <div className="w-full min-w-[300px] max-w-[30%]">
-                <SimulationSummaryPanel
-                  cart={state.cart}
-                  selectedPortfolio={state.selectedPortfolio}
-                  donutChartData={state.donutChartData}
-                  totalInvestment={state.totalInvestment}
-                  remainingBalance={state.remainingBalance}
-                  isBuying={state.isBuying}
-                  onConfirmBuy={() => handlers.handleConfirmBuy()}
-                  optimizationMetrics={state.optimizationMetrics}
-                />
+              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
+                {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
+                  <SimulationSummaryPanel
+                    cart={state.cart}
+                    selectedPortfolio={state.selectedPortfolio}
+                    donutChartData={state.donutChartData}
+                    totalInvestment={state.totalInvestment}
+                    remainingBalance={state.remainingBalance}
+                    isBuying={state.isBuying}
+                    onConfirmBuy={() => handlers.handleConfirmBuy()}
+                    optimizationMetrics={state.optimizationMetrics}
+                  />
+                </div>
               </div>
             </div>
           )}
 
           {/* TAB CONTENT: Manual (The 3 Columns) */}
           {mainTab === "Manual" && (
-            <div className="flex gap-4 items-start">
+            <div className="grid grid-cols-1 xl:grid-cols-10 gap-6 items-start">
               {/* Kolom Kiri: Search */}
-              <div className="w-full min-w-[300px] max-w-[30%]">
-                <StockSearchPanel
-                  searchQuery={state.searchQuery}
-                  setSearchQuery={handlers.setSearchQuery}
-                  recommendedStocks={state.recommendedStocks}
-                  filteredStocks={state.filteredStocks}
-                  onAddStock={handlers.addStockToCart}
-                />
+              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
+                {/* Tinggi dibatasi 320px (4-5 baris saham) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full">
+                  <StockSearchPanel
+                    searchQuery={state.searchQuery}
+                    setSearchQuery={handlers.setSearchQuery}
+                    recommendedStocks={state.recommendedStocks}
+                    filteredStocks={state.filteredStocks}
+                    onAddStock={handlers.addStockToCart}
+                  />
+                </div>
               </div>
 
               {/* Kolom Tengah: Cart */}
-              <div className="w-full min-w-[300px] max-w-[40%]">
-                <CartListPanel
-                  selectedPortfolio={state.selectedPortfolio}
-                  cart={state.cart}
-                  onRemove={handlers.removeStockFromCart}
-                  onUpdateLot={handlers.updateStockLot}
-                  onToggleExpand={handlers.toggleExpandStock}
-                />
+              <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[650px]">
+                {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
+                  <CartListPanel
+                    selectedPortfolio={state.selectedPortfolio}
+                    cart={state.cart}
+                    onRemove={handlers.removeStockFromCart}
+                    onUpdateLot={handlers.updateStockLot}
+                    onToggleExpand={handlers.toggleExpandStock}
+                  />
+                </div>
               </div>
 
               {/* Kolom Kanan: Summary */}
-              <div className="w-full min-w-[300px] max-w-[30%]">
-                <SimulationSummaryPanel
-                  cart={state.cart}
-                  selectedPortfolio={state.selectedPortfolio}
-                  donutChartData={state.donutChartData}
-                  totalInvestment={state.totalInvestment}
-                  remainingBalance={state.remainingBalance}
-                  isBuying={state.isBuying}
-                  onConfirmBuy={() => handlers.handleConfirmBuy(() => {
-                    // Optional callback on success, e.g. navigate back to portfolio detail
-                  })}
-                  optimizationMetrics={state.optimizationMetrics}
-                />
+              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
+                {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
+                  <SimulationSummaryPanel
+                    cart={state.cart}
+                    selectedPortfolio={state.selectedPortfolio}
+                    donutChartData={state.donutChartData}
+                    totalInvestment={state.totalInvestment}
+                    remainingBalance={state.remainingBalance}
+                    isBuying={state.isBuying}
+                    onConfirmBuy={() => handlers.handleConfirmBuy(() => {
+                      // Optional callback on success, e.g. navigate back to portfolio detail
+                    })}
+                    optimizationMetrics={state.optimizationMetrics}
+                  />
+                </div>
               </div>
             </div>
           )}
