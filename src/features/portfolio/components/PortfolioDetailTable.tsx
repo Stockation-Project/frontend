@@ -23,7 +23,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
   if (holdings.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-text-muted">
           Belum ada saham di dalam portofolio ini.
         </p>
       </div>
@@ -33,7 +33,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
   return (
     <div className="w-full overflow-x-auto">
       {/* Table Header */}
-      <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 text-[11px] font-semibold text-slate-500 capitalize tracking-wide border-b border-border-primary bg-background-primary">
+      <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 text-[11px] font-semibold text-text-muted capitalize tracking-wide border-b border-border-primary bg-background-primary">
         <div className="col-span-3">Emiten</div>
         <div className="col-span-3 text-center">Alokasi</div>
         <div className="col-span-2 text-center">Jumlah Lot</div>
@@ -55,10 +55,10 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             <div className="md:col-span-3">
               <div className="flex items-center gap-2">
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm">
+                  <h4 className="font-bold text-text-primary text-sm">
                     {holding.ticker}
                   </h4>
-                  <p className="text-xs text-slate-500 truncate max-w-[180px] mt-0.5">
+                  <p className="text-xs text-text-muted truncate max-w-[180px] mt-0.5">
                     {holding.name}
                   </p>
                 </div>
@@ -67,10 +67,10 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
 
             {/* Kolom 2: Alokasi — Jumlah investasi & persentase */}
             <div className="md:col-span-3 text-center">
-              <p className="font-bold text-slate-900 text-sm">
+              <p className="font-bold text-text-primary text-sm">
                 {formatCurrencyIDR(holding.investedAmount)}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-text-muted mt-0.5">
                 {holding.investedAmount > 0
                   ? `${((holding.investedAmount / holdings.reduce((sum, h) => sum + h.investedAmount, 0)) * 100).toFixed(0)}% dari investasi`
                   : "0%"}
@@ -79,10 +79,10 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
 
             {/* Kolom 3: Jumlah Lot */}
             <div className="md:col-span-2 text-center">
-              <p className="font-bold text-slate-900 text-sm">
+              <p className="font-bold text-text-primary text-sm">
                 {holding.totalLots} Lot
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-text-muted mt-0.5">
                 {holding.totalShares.toLocaleString("id-ID")} Lembar
               </p>
             </div>
@@ -151,7 +151,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
                 onClick={() =>
                   navigate(`/portfolio/${portfolioId}/stocks/${holding.ticker}`)
                 }
-                className="px-4 py-1.5 text-xs font-medium text-slate-600 bg-background-primary border border-border-primary rounded-lg hover:bg-background-secondary transition-all cursor-pointer flex items-center gap-1"
+                className="px-4 py-1.5 text-xs font-medium text-text-secondary bg-background-primary border border-border-primary rounded-lg hover:bg-background-secondary transition-all cursor-pointer flex items-center gap-1"
               >
                 Detail
                 <svg
