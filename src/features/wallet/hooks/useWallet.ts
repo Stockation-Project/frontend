@@ -169,7 +169,7 @@ export const useWallet = (options: UseWalletOptions = {}) => {
   const stats: WalletStats = {
     totalBalance: selectedPortfolio
       ? Number(selectedPortfolio.cash_balance) +
-        Number(selectedPortfolio.invested_balance)
+      Number(selectedPortfolio.invested_balance)
       : 0,
     availableBalance: selectedPortfolio ? Number(selectedPortfolio.cash_balance) : 0,
     investedBalance: selectedPortfolio

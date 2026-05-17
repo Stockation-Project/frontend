@@ -21,7 +21,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   const navigate = useNavigate();
 
   return (
-    <header className="flex-shrink-0 w-full mb-0 px-4 py-2 border-b border-border-primary bg-background-primary">
+    <header className="flex-shrink-0 w-full mb-0 px-4 sm:py-2 py-4 border-b border-border-primary bg-background-primary/80 backdrop-blur-md">
       <div className="max-w-[1400px] mx-auto w-full flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">
           {/* Tombol Kembali — sejajar horizontal dengan judul */}
