@@ -33,7 +33,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
   return (
     <div className="w-full overflow-x-auto">
       {/* Table Header */}
-      <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 text-[11px] font-semibold text-text-muted capitalize tracking-wide border-b border-border-primary bg-background-primary">
+      <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 text-xs font-medium text-text-muted capitalize tracking-wide border-b border-border-primary bg-background-primary">
         <div className="col-span-3">Emiten</div>
         <div className="col-span-3 text-center">Alokasi</div>
         <div className="col-span-2 text-center">Jumlah Lot</div>
@@ -55,7 +55,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             <div className="md:col-span-3">
               <div className="flex items-center gap-2">
                 <div>
-                  <h4 className="font-bold text-text-primary text-sm">
+                  <h4 className="font-medium text-text-primary text-sm">
                     {holding.ticker}
                   </h4>
                   <p className="text-xs text-text-muted truncate max-w-[180px] mt-0.5">
@@ -67,7 +67,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
 
             {/* Kolom 2: Alokasi — Jumlah investasi & persentase */}
             <div className="md:col-span-3 text-center">
-              <p className="font-bold text-text-primary text-sm">
+              <p className="font-medium text-text-primary text-sm">
                 {formatCurrencyIDR(holding.investedAmount)}
               </p>
               <p className="text-xs text-text-muted mt-0.5">
@@ -79,7 +79,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
 
             {/* Kolom 3: Jumlah Lot */}
             <div className="md:col-span-2 text-center">
-              <p className="font-bold text-text-primary text-sm">
+              <p className="font-medium text-text-primary text-sm">
                 {holding.totalLots} Lot
               </p>
               <p className="text-xs text-text-muted mt-0.5">
