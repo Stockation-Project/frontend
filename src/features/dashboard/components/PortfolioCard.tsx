@@ -1,5 +1,5 @@
 // src/components/shared/cards/PortfolioCard.tsx
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Wallet } from "lucide-react";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import PortfolioLegend from "./PortfolioLegend";
@@ -34,9 +34,23 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
 }) => {
   const isProfit = profitAmount >= 0;
   const isHeaderGreen = variant === "dashboard" || isActive;
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isActive && cardRef.current) {
+      const isMobile = window.innerWidth < 768; // HP (< 768px)
+      cardRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: isMobile ? "center" : "start", // HP di tengah, laptop/tablet di kiri (start)
+      });
+    }
+  }, [isActive]);
 
   return (
-    <div className={`h-full min-w-[320px] w-[320px] border rounded-xl flex flex-col justify-between hover:shadow-md transition-all cursor-pointer overflow-hidden ${isActive
+    <div
+      ref={cardRef}
+      className={`h-full min-w-[320px] w-[320px] border rounded-xl flex flex-col justify-between hover:shadow-md transition-all cursor-pointer overflow-hidden ${isActive
         ? "bg-background-primary border-brand ring-1 ring-brand"
         : "bg-background-primary border-border-primary hover:border-border-secondary"
       }`}>

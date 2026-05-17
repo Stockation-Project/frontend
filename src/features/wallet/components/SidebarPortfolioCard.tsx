@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Wallet } from "lucide-react";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 
@@ -20,9 +20,22 @@ const SidebarPortfolioCard: React.FC<SidebarPortfolioCardProps> = ({
   onClick,
 }) => {
   const totalBalance = Number(cashBalance) + Number(investedBalance);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isActive && cardRef.current) {
+      const isMobile = window.innerWidth < 768; // HP (< 768px)
+      cardRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: isMobile ? "center" : "start", // HP di tengah, laptop/tablet di kiri (start)
+      });
+    }
+  }, [isActive]);
 
   return (
     <div
+      ref={cardRef}
       onClick={onClick}
       className={`bg-background-primary rounded-xl cursor-pointer transition-all border overflow-hidden hover:shadow-md active:shadow-sm ${
         isActive

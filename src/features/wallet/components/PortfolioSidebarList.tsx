@@ -21,37 +21,38 @@ const PortfolioSidebarList: React.FC<PortfolioSidebarListProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="space-y-4 pt-4">
+      <div className="flex flex-row lg:flex-col gap-4 overflow-x-auto lg:overflow-y-auto pb-4 w-full no-scrollbar">
         {[1, 2].map((i) => (
-          <Skeleton key={i} className="h-[180px] w-full rounded-xl" />
+          <Skeleton key={i} className="h-[180px] w-[280px] min-w-[280px] flex-shrink-0 lg:w-full lg:min-w-0 rounded-xl" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-1 h-[320px]">
+    <div className="flex flex-col gap-2 h-auto lg:h-[320px]">
       <h3 className="text-sm font-medium text-text-muted">
         Dompet Investasi
       </h3>
 
-      <div className="space-y-4 overflow-y-auto flex-1 pr-1 pb-4 no-scrollbar scroll-smooth">
+      <div className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-y-auto gap-4 flex-1 pb-4 pr-1 no-scrollbar scroll-smooth w-full">
         {portfolios.map((portfolio) => (
-          <SidebarPortfolioCard
-            key={portfolio.id}
-            id={portfolio.id}
-            name={portfolio.name}
-            cashBalance={Number(portfolio.cash_balance)}
-            investedBalance={Number(portfolio.invested_balance)}
-            isActive={selectedId === portfolio.id}
-            onClick={() => onSelect(portfolio.id)}
-          />
+          <div key={portfolio.id} className="w-[280px] min-w-[280px] flex-shrink-0 lg:w-full lg:min-w-0">
+            <SidebarPortfolioCard
+              id={portfolio.id}
+              name={portfolio.name}
+              cashBalance={Number(portfolio.cash_balance)}
+              investedBalance={Number(portfolio.invested_balance)}
+              isActive={selectedId === portfolio.id}
+              onClick={() => onSelect(portfolio.id)}
+            />
+          </div>
         ))}
 
         {/* Buat Dompet Baru Placeholder */}
         <div
           onClick={onCreateNew}
-          className="w-full h-[180px] bg-background-secondary rounded-xl border-2 border-dashed border-border-primary flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-background-secondary/80 transition-colors"
+          className="w-[280px] min-w-[280px] flex-shrink-0 lg:w-full lg:min-w-0 h-[180px] bg-background-secondary rounded-xl border-2 border-dashed border-border-primary flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-background-secondary/80 transition-colors"
         >
           <div className="w-10 h-10 rounded-full bg-background-primary flex items-center justify-center text-text-subtle">
             <Plus className="w-6 h-6" />
