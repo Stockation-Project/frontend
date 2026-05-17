@@ -57,13 +57,17 @@ const StockDetailPage: React.FC = () => {
       <div className="p-8 text-center text-error-500 font-bold">{error}</div>
     );
 
-  // --- Render UI Utama ---
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className="w-full p-10"
+      // ======================================================================
+      // LAYOUT RESPONSIF:
+      // Mobile/Tablet: Scroll halaman normal (w-full h-auto)
+      // Desktop (xl): Scroll kolom independen (h-[calc(100vh-2rem)] overflow-hidden)
+      // ======================================================================
+      className="w-full xl:h-[calc(100vh-2rem)] xl:flex xl:flex-col xl:overflow-hidden"
     >
       <PageHeader
         title=""
@@ -71,32 +75,34 @@ const StockDetailPage: React.FC = () => {
       />
 
       {/* ============================================================== */}
-      {/* [BAGIAN 1] HEADER INFO EMITEN & DETAIL HARGA (Grid Kolom 7) */}
+      {/* GRID CONTAINER RESPONSIF */}
       {/* ============================================================== */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 xl:overflow-hidden">
         {/* Pembungkus Kolom Info Kiri (7/12) */}
-        <div className="xl:col-span-7 flex flex-col gap-6">
+        {/* ====================================================================== */}
+        {/* KOLOM KIRI: Scroll independen hanya aktif di desktop (xl) */}
+        {/* ====================================================================== */}
+        <div className="xl:col-span-7 flex flex-col gap-6 xl:h-full xl:overflow-y-auto pr-2 pb-6 scrollbar-thin">
           {/* 1a. INFORMASI EMITEN (Nama, Ticker, Sektor, Bookmark) */}
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
                 {data.ticker}
               </h1>
-              <p className="text-lg text-text-muted mb-1">{data.name}</p>
-              <Badge
-                variant="outline"
-                className="bg-brand-50 text-brand border-brand hover:bg-brand-100 font-medium px-3 py-2 rounded-sm text-xs"
+              <p className="text-sm sm:text-base md:text-lg text-text-muted mb-1">{data.name}</p>
+              <span
+                className="inline-block px-2.5 py-0.5 text-[10px] font-medium bg-gradient-to-b from-brand-100 to-brand-25 text-brand border border-brand rounded-full whitespace-nowrap"
               >
-                Sektor: {data.sector}
-              </Badge>
+                Sektor: {data.sector || "Umum"}
+              </span>
             </div>
             <Button
               variant="outline"
               size="icon"
               onClick={handleToggleWatchlist}
-              className={`rounded-xl h-12 w-12 border-border-primary transition-all active:scale-95 ${isWatchlist
-                  ? "bg-brand text-text-inverse border-brand hover:bg-brand-600"
-                  : "text-text-subtle hover:text-text-primary bg-background-secondary hover:bg-border-secondary"
+              className={`rounded-lg h-10 w-10 border-border-primary transition-all active:scale-95 ${isWatchlist
+                ? "bg-brand text-text-inverse border-brand hover:bg-brand-950"
+                : "text-text-subtle hover:text-background-primary bg-background-secondary hover:bg-border-secondary"
                 }`}
             >
               <Bookmark className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`} />
@@ -105,11 +111,11 @@ const StockDetailPage: React.FC = () => {
 
           {/* 1b. HARGA SAHAM REALTIME */}
           <div className="flex items-end gap-2">
-            <h2 className="text-4xl font-semibold text-text-primary tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-text-primary tracking-tight leading-none">
               {formatCurrencyIDR(data.current_price)}
             </h2>
             <span
-              className={`text-sm sm:text-md font-semibold mb-1 ${priceChange.isPositive ? "text-brand" : "text-error-500"}`}
+              className={`text-xs sm:text-sm font-semibold mb-0.5 ${priceChange.isPositive ? "text-brand" : "text-error-500"}`}
             >
               {priceChange.isPositive ? "▲" : "▼"} {priceChange.percent}%
             </span>
@@ -125,9 +131,18 @@ const StockDetailPage: React.FC = () => {
         </div>
 
         {/* KONTEN PELENGKAP - SEBELAH KANAN (5/12) */}
-        <div className="xl:col-span-5 flex flex-col gap-4 relative">
+        {/* ====================================================================== */}
+        {/* KOLOM KANAN: Scroll independen hanya aktif di desktop (xl) */}
+        {/* ====================================================================== */}
+        <div className="xl:col-span-5 flex flex-col gap-4 xl:h-full xl:overflow-y-auto pb-6 xl:pb-0 relative scrollbar-thin">
+          <Button
+            className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand-900 text-text-inverse rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
+            onClick={() => navigate('/dashboard/simulation')}
+          >
+            Beli Saham Ini
+          </Button>
           {/* 3a. WIDGET STATISTIK SAHAM */}
-          <div className="bg-background-primary px-2">
+          <div className="bg-background-primary">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Statistik Saham
             </h3>
@@ -168,7 +183,7 @@ const StockDetailPage: React.FC = () => {
           </div>
 
           {/* 3b. WIDGET PERGERAKAN ANOMALI */}
-          <div className="bg-background-primary px-2">
+          <div className="bg-background-primary">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
@@ -186,12 +201,7 @@ const StockDetailPage: React.FC = () => {
           </div>
 
           {/* [KHUSUS DETAIL PASAR] 3d. TOMBOL AKSI BELI SAHAM */}
-          <Button
-            className="w-full h-10 bg-brand hover:bg-brand-800 active:bg-brand-900 text-text-inverse rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
-            onClick={() => navigate('/dashboard/simulation')}
-          >
-            Beli Saham Ini
-          </Button>
+          
         </div>
       </div>
     </motion.div>

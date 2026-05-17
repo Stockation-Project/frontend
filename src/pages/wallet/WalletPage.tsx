@@ -41,7 +41,7 @@ const WalletPage: React.FC = () => {
         {/* Kolom Kiri - 30% */}
         <div className="lg:col-span-4 space-y-4">
           <div className="space-y-1">
-            <h3 className="text-sm font-medium text-slate-500">
+            <h3 className="text-sm font-medium text-text-muted">
               Dompet Utama
             </h3>
             {isLoading ? (

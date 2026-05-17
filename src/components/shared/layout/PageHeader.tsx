@@ -21,14 +21,14 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   const navigate = useNavigate();
 
   return (
-    <header className="mb-8">
+    <header className="mb-4">
       {/* Tombol Kembali — hanya tampil jika showBackButton=true */}
       {showBackButton && (
         <Button
           variant="outline"
           size="icon"
           onClick={() => navigate(-1)}
-          className="mb-4 rounded-xl text-text-secondary hover:text-text-primary border-border-primary h-10 w-10"
+          className=" rounded-xl text-text-secondary hover:text-text-primary border-border-primary h-10 w-10"
         >
           <ChevronLeft className="w-5 h-5" />
         </Button>

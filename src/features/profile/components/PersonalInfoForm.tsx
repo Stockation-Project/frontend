@@ -92,7 +92,9 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
 
         {/* DOB */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-text-muted tracking-wider">Tanggal Lahir</label>
+          <label className="text-xs font-medium text-text-muted tracking-wider">
+            Tanggal Lahir <span className="text-error-500 ml-0.5">*</span>
+          </label>
           <div className="relative">
             <input 
               type="date"
