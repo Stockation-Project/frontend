@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="h-screen bg-background-primary border-r border-border-secondary flex flex-col items-center py-2 px-3 gap-16 sticky top-0 flex-shrink-0 z-50">
+    <aside className="hidden md:flex h-screen bg-background-primary border-r border-border-secondary flex flex-col items-center py-2 px-3 gap-16 sticky top-0 flex-shrink-0 z-50">
       {/* Logo */}
       <div className="flex flex-col items-center gap-0.5 [&_span]:!text-[8px]">
         <Logo variant="color" className="flex flex-col" />
@@ -34,12 +34,12 @@ const Sidebar: React.FC = () => {
                 className={`flex items-center justify-center p-3 rounded-lg transition-all duration-200
                   ${isActive
                     ? "bg-brand shadow-md shadow-brand/20"
-                    : "bg-slate-100 hover:bg-slate-200"
+                    : "bg-background-secondary hover:bg-border-secondary"
                   }`}
               >
                 <Icon
                   className={`w-4 h-4 transition-colors duration-200 ${
-                    isActive ? "text-white" : "text-slate-500 hover:text-brand"
+                    isActive ? "text-text-inverse" : "text-text-muted hover:text-brand"
                   }`}
                 />
               </Link>
