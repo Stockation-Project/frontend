@@ -38,11 +38,11 @@ const SimulationBuyPage: React.FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className="w-full"
+      className="w-full h-full flex flex-col overflow-hidden"
     >
       <PageHeader title="" showBackButton={true} />
 
-      <div className="w-full mx-auto">
+      <div className="w-full mx-auto flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         {/* SECTION 1: Pilih Dompet */}
         <div className="flex flex-col p-4 gap-2">
           <h2 className="text-sm font-medium text-slate-500 uppercase tracking-wide">
