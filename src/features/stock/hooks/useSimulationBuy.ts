@@ -2,7 +2,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { fetchDashboardData, type DashboardPortfolio } from "@/features/dashboard";
 import { searchStocks, fetchRecommendedStocks } from "../services/stock.service";
-import { bulkBuyStockService } from "@/features/portfolio";
+import { bulkBuyStockService, optimizePortfolio } from "@/features/portfolio";
 import type {
   CartItem,
   SearchStockItem,
@@ -10,6 +10,14 @@ import type {
   AllocationChartItem,
 } from "../types/simulation";
 import { toast } from "sonner";
+
+export interface OptimizationMetrics {
+  expectedReturn: number;
+  volatility: number;
+  sharpeRatio: number;
+  method: string;
+  riskProfile: string;
+}
 
 export const useSimulationBuy = () => {
   // --- States ---
@@ -24,6 +32,8 @@ export const useSimulationBuy = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isBuying, setIsBuying] = useState(false);
+  const [isOptimizing, setIsOptimizing] = useState(false);
+  const [optimizationMetrics, setOptimizationMetrics] = useState<OptimizationMetrics | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // --- Initial Data Fetching ---
@@ -58,6 +68,10 @@ export const useSimulationBuy = () => {
 
     loadInitialData();
   }, []);
+
+  useEffect(() => {
+    setOptimizationMetrics(null);
+  }, [selectedPortfolioId]);
 
   // --- Derived State & Calculations ---
 
@@ -109,6 +123,7 @@ export const useSimulationBuy = () => {
   };
 
   const addStockToCart = (stock: SearchStockItem) => {
+    setOptimizationMetrics(null);
     setCart((prev) => {
       // Check if already in cart
       const existing = prev.find((item) => item.ticker === stock.ticker);
@@ -136,11 +151,13 @@ export const useSimulationBuy = () => {
   };
 
   const removeStockFromCart = (ticker: string) => {
+    setOptimizationMetrics(null);
     setCart((prev) => prev.filter((item) => item.ticker !== ticker));
   };
 
   const updateStockLot = (ticker: string, lots: number) => {
     if (lots < 1) return;
+    setOptimizationMetrics(null);
     setCart((prev) =>
       prev.map((item) => (item.ticker === ticker ? { ...item, lots } : item))
     );
@@ -152,6 +169,54 @@ export const useSimulationBuy = () => {
         item.ticker === ticker ? { ...item, isExpanded: !item.isExpanded } : item
       )
     );
+  };
+
+  const handleAutoAllocation = async () => {
+    if (cart.length < 2) {
+      toast.error("Tambahkan minimal 2 saham ke dalam keranjang untuk alokasi otomatis!");
+      return;
+    }
+    if (!selectedPortfolio) {
+      toast.error("Silakan pilih dompet simulasi terlebih dahulu!");
+      return;
+    }
+
+    try {
+      setIsOptimizing(true);
+      const tickers = cart.map((item) => item.ticker);
+      
+      // 1. Panggil API Optimasi
+      const res = await optimizePortfolio(tickers);
+      const weights = res.data.weights; // format: { "BBCA": 0.45, "TLKM": 0.55 }
+      
+      // 2. Terapkan kalkulasi lot otomatis
+      const totalCash = selectedPortfolio.cash_balance;
+      const updatedCart = cart.map((item) => {
+        const weight = weights[item.ticker] || 0;
+        const allocatedFund = weight * totalCash;
+        const calculatedShares = allocatedFund / item.currentPrice;
+        const lots = Math.max(1, Math.floor(calculatedShares / 100)); // Min 1 lot, floor agar tidak overbudget
+        
+        return {
+          ...item,
+          lots,
+        };
+      });
+
+      setCart(updatedCart);
+      setOptimizationMetrics({
+        expectedReturn: res.data.metrics.expected_return,
+        volatility: res.data.metrics.volatility,
+        sharpeRatio: res.data.metrics.sharpe_ratio,
+        method: res.data.method,
+        riskProfile: res.data.risk_profile,
+      });
+      toast.success("Alokasi portofolio otomatis berhasil diterapkan!");
+    } catch (err: any) {
+      toast.error(err.message || "Gagal mengalokasikan portofolio secara otomatis.");
+    } finally {
+      setIsOptimizing(false);
+    }
   };
 
   const handleConfirmBuy = async (onSuccessCallback?: () => void) => {
@@ -203,6 +268,7 @@ export const useSimulationBuy = () => {
     state: {
       isLoading,
       isBuying,
+      isOptimizing,
       error,
       portfolios,
       selectedPortfolioId,
@@ -214,6 +280,7 @@ export const useSimulationBuy = () => {
       totalInvestment,
       remainingBalance,
       donutChartData,
+      optimizationMetrics,
     },
     handlers: {
       setSearchQuery,
@@ -223,6 +290,7 @@ export const useSimulationBuy = () => {
       updateStockLot,
       toggleExpandStock,
       handleConfirmBuy,
+      handleAutoAllocation,
     },
   };
 };

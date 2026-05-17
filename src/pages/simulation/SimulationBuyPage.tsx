@@ -99,17 +99,76 @@ const SimulationBuyPage: React.FC = () => {
 
           {/* TAB CONTENT: Rekomendasi */}
           {mainTab === "Rekomendasi" && (
-            <div className="py-10 text-center bg-background-secondary rounded-2xl border border-border-primary border-dashed">
-              <h3 className="text-lg font-bold text-slate-700 mb-2">Mode Rekomendasi Cepat</h3>
-              <p className="text-slate-500 max-w-lg mx-auto">
-                Fitur ini akan secara otomatis membelikan komposisi saham terbaik sesuai profil risiko Anda tanpa perlu memilih manual. (Segera Hadir)
-              </p>
-              <button 
-                className="mt-6 px-6 py-2 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors"
-                onClick={() => setMainTab("Manual")}
-              >
-                Gunakan Mode Manual Saja
-              </button>
+            <div className="flex gap-4 items-start animate-fade-in">
+              {/* Kolom Kiri: Search & Banner Info */}
+              <div className="w-full min-w-[300px] max-w-[30%] flex flex-col gap-4">
+                {/* Banner Informasi Mode Alokasi Otomatis */}
+                <div className="p-4 bg-brand-50 border border-brand-200 rounded-xl shadow-sm flex flex-col gap-2">
+                  <h4 className="text-xs font-bold text-brand-900 flex items-center gap-1.5">
+                    ✨ Mode Alokasi Otomatis Aktif
+                  </h4>
+                  <p className="text-[10px] text-brand-700 leading-relaxed text-justify">
+                    Sistem sedang mengoptimalkan portofoliomu secara otomatis berdasarkan profil risikomu. Untuk menjaga akurasi strategi sistem, jumlah lot tidak dapat diubah manual di mode ini. Kamu tetap bisa menghapus atau mengurangi jenis saham terpilih.
+                  </p>
+                </div>
+
+                <StockSearchPanel
+                  searchQuery={state.searchQuery}
+                  setSearchQuery={handlers.setSearchQuery}
+                  recommendedStocks={state.recommendedStocks}
+                  filteredStocks={state.filteredStocks}
+                  onAddStock={handlers.addStockToCart}
+                />
+              </div>
+
+              {/* Kolom Tengah: Cart & Tombol Trigger AI */}
+              <div className="w-full min-w-[300px] max-w-[40%] flex flex-col gap-4">
+                {state.cart.length >= 2 && (
+                  <button
+                    onClick={handlers.handleAutoAllocation}
+                    disabled={state.isOptimizing}
+                    className={`w-full py-3 rounded-xl font-semibold text-xs transition-all shadow-md flex items-center justify-center gap-2 ${
+                      state.isOptimizing
+                        ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
+                        : "bg-brand hover:bg-brand-800 text-white shadow-brand/20 active:scale-[0.98] cursor-pointer"
+                    }`}
+                  >
+                    {state.isOptimizing ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        Mengoptimasi Portofolio...
+                      </>
+                    ) : (
+                      <>
+                        <span>🤖</span> Alokasi Otomatis (Optimisasi AI)
+                      </>
+                    )}
+                  </button>
+                )}
+
+                <CartListPanel
+                  selectedPortfolio={state.selectedPortfolio}
+                  cart={state.cart}
+                  onRemove={handlers.removeStockFromCart}
+                  onUpdateLot={handlers.updateStockLot}
+                  onToggleExpand={handlers.toggleExpandStock}
+                  isReadOnlyLots={true} // Kunci input lot manual
+                />
+              </div>
+
+              {/* Kolom Kanan: Summary */}
+              <div className="w-full min-w-[300px] max-w-[30%]">
+                <SimulationSummaryPanel
+                  cart={state.cart}
+                  selectedPortfolio={state.selectedPortfolio}
+                  donutChartData={state.donutChartData}
+                  totalInvestment={state.totalInvestment}
+                  remainingBalance={state.remainingBalance}
+                  isBuying={state.isBuying}
+                  onConfirmBuy={() => handlers.handleConfirmBuy()}
+                  optimizationMetrics={state.optimizationMetrics}
+                />
+              </div>
             </div>
           )}
 
@@ -150,6 +209,7 @@ const SimulationBuyPage: React.FC = () => {
                   onConfirmBuy={() => handlers.handleConfirmBuy(() => {
                     // Optional callback on success, e.g. navigate back to portfolio detail
                   })}
+                  optimizationMetrics={state.optimizationMetrics}
                 />
               </div>
             </div>

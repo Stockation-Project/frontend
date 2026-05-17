@@ -42,3 +42,34 @@ export const fetchStockPrice = async (
   }
 };
 
+export interface OptimizePortfolioResponse {
+  success: boolean;
+  data: {
+    weights: Record<string, number>;
+    metrics: {
+      expected_return: number;
+      volatility: number;
+      sharpe_ratio: number;
+    };
+    method: string;
+    risk_profile: string;
+  };
+}
+
+export const optimizePortfolio = async (
+  tickers: string[],
+): Promise<OptimizePortfolioResponse> => {
+  try {
+    const response = await apiClient.post<OptimizePortfolioResponse>(
+      "/portfolios/optimize",
+      { tickers },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Gagal mengoptimalkan portofolio",
+    );
+  }
+};
+
+

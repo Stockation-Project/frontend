@@ -28,7 +28,7 @@ const StockDetailPage: React.FC = () => {
 
   const handleToggleWatchlist = async () => {
     if (!ticker) return;
-    
+
     try {
       const result = await toggleWatchlist(ticker);
       if (result.success) {
@@ -48,7 +48,7 @@ const StockDetailPage: React.FC = () => {
   // --- Render Loading & Error ---
   if (isLoading)
     return (
-      <div className="p-8 text-center text-slate-500 font-medium animate-pulse">
+      <div className="p-8 text-center text-text-muted font-medium animate-pulse">
         Memuat data {ticker}...
       </div>
     );
@@ -57,59 +57,71 @@ const StockDetailPage: React.FC = () => {
       <div className="p-8 text-center text-error-500 font-bold">{error}</div>
     );
 
-  // --- Render UI Utama ---
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className="w-full p-10"
+      // ======================================================================
+      // LAYOUT RESPONSIF:
+      // Mobile/Tablet: Scroll halaman normal (w-full h-auto)
+      // Desktop (xl): Scroll kolom independen (h-[calc(100vh-2rem)] overflow-hidden)
+      // ======================================================================
+      className="w-full xl:h-[calc(100vh-2rem)] xl:flex xl:flex-col xl:overflow-hidden"
     >
       <PageHeader
         title=""
         showBackButton={true}
       />
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-        <div className="xl:col-span-7 flex flex-col gap-6">
+      {/* ============================================================== */}
+      {/* GRID CONTAINER RESPONSIF */}
+      {/* ============================================================== */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 xl:overflow-hidden">
+        {/* Pembungkus Kolom Info Kiri (7/12) */}
+        {/* ====================================================================== */}
+        {/* KOLOM KIRI: Scroll independen hanya aktif di desktop (xl) */}
+        {/* ====================================================================== */}
+        <div className="xl:col-span-7 flex flex-col gap-6 xl:h-full xl:overflow-y-auto pr-2 pb-6 scrollbar-thin">
+          {/* 1a. INFORMASI EMITEN (Nama, Ticker, Sektor, Bookmark) */}
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-semibold text-slate-900 mb-0.5 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
                 {data.ticker}
               </h1>
-              <p className="text-lg text-slate-600 mb-1">{data.name}</p>
-              <Badge
-                variant="outline"
-                className="bg-brand-50 text-brand border-brand hover:bg-brand-100 font-medium px-3 py-2 rounded-sm text-xs"
+              <p className="text-sm sm:text-base md:text-lg text-text-muted mb-1">{data.name}</p>
+              <span
+                className="inline-block px-2.5 py-0.5 text-[10px] font-medium bg-gradient-to-b from-brand-100 to-brand-25 text-brand border border-brand rounded-full whitespace-nowrap"
               >
-                Sektor: {data.sector}
-              </Badge>
+                Sektor: {data.sector || "Umum"}
+              </span>
             </div>
             <Button
               variant="outline"
               size="icon"
               onClick={handleToggleWatchlist}
-              className={`rounded-xl h-12 w-12 border-border-primary transition-all active:scale-95 ${
-                isWatchlist 
-                  ? "bg-brand text-white border-brand hover:bg-brand-600" 
-                  : "text-slate-400 hover:text-slate-900 bg-background-secondary hover:bg-border-secondary"
-              }`}
+              className={`rounded-lg h-10 w-10 border-border-primary transition-all active:scale-95 ${isWatchlist
+                ? "bg-brand text-text-inverse border-brand hover:bg-brand-950"
+                : "text-text-subtle hover:text-background-primary bg-background-secondary hover:bg-border-secondary"
+                }`}
             >
               <Bookmark className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`} />
             </Button>
           </div>
 
+          {/* 1b. HARGA SAHAM REALTIME */}
           <div className="flex items-end gap-2">
-            <h2 className="text-4xl font-semibold text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-text-primary tracking-tight leading-none">
               {formatCurrencyIDR(data.current_price)}
             </h2>
             <span
-              className={`text-sm sm:text-md font-semibold mb-1 ${priceChange.isPositive ? "text-brand" : "text-error-500"}`}
+              className={`text-xs sm:text-sm font-semibold mb-0.5 ${priceChange.isPositive ? "text-brand" : "text-error-500"}`}
             >
               {priceChange.isPositive ? "▲" : "▼"} {priceChange.percent}%
             </span>
           </div>
 
+          {/* 2a. CHART AREA */}
           <StockAreaChart
             data={filteredChartData}
             activeFilter={activeFilter}
@@ -118,9 +130,20 @@ const StockDetailPage: React.FC = () => {
           />
         </div>
 
-        <div className="xl:col-span-5 flex flex-col gap-4 relative">
-          <div className="bg-background-primary px-2">
-            <h3 className="text-base font-medium text-slate-600 mb-2">
+        {/* KONTEN PELENGKAP - SEBELAH KANAN (5/12) */}
+        {/* ====================================================================== */}
+        {/* KOLOM KANAN: Scroll independen hanya aktif di desktop (xl) */}
+        {/* ====================================================================== */}
+        <div className="xl:col-span-5 flex flex-col gap-4 xl:h-full xl:overflow-y-auto pb-6 xl:pb-0 relative scrollbar-thin">
+          <Button
+            className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand-900 text-text-inverse rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
+            onClick={() => navigate('/dashboard/simulation')}
+          >
+            Beli Saham Ini
+          </Button>
+          {/* 3a. WIDGET STATISTIK SAHAM */}
+          <div className="bg-background-primary">
+            <h3 className="text-base font-medium text-text-secondary mb-2">
               Statistik Saham
             </h3>
             <div className="grid grid-cols-2 gap-2">
@@ -146,31 +169,39 @@ const StockDetailPage: React.FC = () => {
                 }
                 tooltipText="Dividend Yield. Persentase keuntungan tunai tahunan yang dibagikan ke investor."
               />
+              <StatCard
+                title="Harga terendah tahun ini"
+                value={formatCurrencyIDR(data.day_low || 4489)}
+                tooltipText="Harga terendah dalam 52 minggu terakhir."
+              />
+              <StatCard
+                title="Harga tertinggi tahun ini"
+                value={formatCurrencyIDR(data.day_high || 9000)}
+                tooltipText="Harga tertinggi dalam 52 minggu terakhir."
+              />
             </div>
           </div>
 
-          <div className="bg-background-primary px-2">
-            <h3 className="text-base font-medium text-slate-600 mb-2">
+          {/* 3b. WIDGET PERGERAKAN ANOMALI */}
+          <div className="bg-background-primary">
+            <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
             <AnomalyTable data={data.anomaly_history} />
           </div>
 
+          {/* 3c. WIDGET RANGKUMAN PERUSAHAAN */}
           <div className="px-2">
-            <h3 className="text-base font-medium text-slate-600 mb-2">Rangkuman</h3>
+            <h3 className="text-base font-medium text-text-secondary mb-2">Rangkuman</h3>
             <div className="max-h-37 overflow-y-auto"> {/* TAMBAH: max-h-40 overflow-y-auto */}
-              <p className="text-sm text-slate-500 leading-relaxed text-justify">
+              <p className="text-sm text-text-muted leading-relaxed text-justify">
                 {data.about_company}
               </p>
             </div>
           </div>
 
-          <Button 
-            className="w-full h-10 bg-brand hover:bg-brand-800 active:bg-brand-900 text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
-            onClick={() => navigate('/dashboard/simulation')}
-          >
-            Beli Saham Ini
-          </Button>
+          {/* [KHUSUS DETAIL PASAR] 3d. TOMBOL AKSI BELI SAHAM */}
+          
         </div>
       </div>
     </motion.div>

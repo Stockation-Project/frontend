@@ -30,30 +30,35 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
   const isProfit = profitLossRaw >= 0;
 
   return (
-    <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
-      <h3 className="text-base font-bold text-slate-900 mb-4">Posisi kamu</h3>
+    // ======================================================================
+    // PILIHAN STYLE WIDGET:
+    // Opsi 1 (Cadangan): Widget Normal -> className="bg-background-primary border border-border-primary rounded-xl p-4"
+    // Opsi 2 (AKTIF): Widget Sticky (Mengambang) -> className="bg-background-primary border border-border-primary rounded-xl p-4 sticky bottom-0 z-10 shadow-lg mt-auto"
+    // ======================================================================
+    <div className="bg-background-primary border border-border-primary rounded-xl p-3">
+      <h3 className="text-base font-medium text-text-primary mb-1">Posisi kamu</h3>
 
-      <div className="space-y-4 text-sm">
-        <div className="flex justify-between items-center">
-          <span className="text-slate-500 font-medium text-xs">Kepemilikan</span>
-          <span className="font-bold text-slate-900 text-sm">
+      <div className=" text-sm">
+        <div className="flex justify-between items-center py-1">
+          <span className="text-text-muted font-regular text-xs">Kepemilikan</span>
+          <span className="font-medium text-text-primary text-xs">
             {isOwned ? `${lots} lot (${totalShares} lembar)` : "0 lot"}
           </span>
         </div>
 
-        <div className="flex justify-between items-center">
-          <span className="text-slate-500 font-medium text-xs">Harga beli rata-rata</span>
-          <span className="font-bold text-slate-900 text-sm">
+        <div className="flex justify-between items-center py-1">
+          <span className="text-text-muted font-regular text-xs">Harga beli rata-rata</span>
+          <span className="font-medium text-text-primary text-xs">
             {formatCurrencyIDR(avgPrice)}
           </span>
         </div>
 
-        <div className="flex justify-between items-center border-t border-slate-50 pt-4">
-          <span className="text-slate-500 font-medium text-xs">Laba/Rugi</span>
+        <div className="flex justify-between items-center border-t border-border-secondary pt-2">
+          <span className="text-text-muted font-regular text-xs">Laba/Rugi</span>
           <span
-            className={`font-bold text-sm ${isOwned
-                ? (isProfit ? "text-[#329B0D]" : "text-red-500")
-                : "text-slate-300"
+            className={`font-medium text-xs ${isOwned
+              ? (isProfit ? "text-brand" : "text-error-500")
+              : "text-text-subtle"
               }`}
           >
             {isOwned ? (
@@ -66,17 +71,17 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mt-8">
+      <div className="grid grid-cols-2 gap-3 mt-4">
         <Button
           onClick={onBuy}
-          className="w-full h-11 bg-[#329B0D] hover:bg-green-700 text-white rounded-xl text-sm font-bold shadow-md shadow-green-700/10 transition-all cursor-pointer"
+          className="w-full h-10 bg-brand hover:bg-brand-950 text-text-inverse rounded-xl text-sm font-medium shadow-sm shadow-brand/10 transition-all cursor-pointer"
         >
           Beli
         </Button>
         <Button
           onClick={onSell}
           disabled={!isOwned}
-          className="w-full h-11 bg-[#C40000] hover:bg-red-700 text-white rounded-xl text-sm font-bold shadow-md shadow-red-700/10 transition-all cursor-pointer disabled:bg-slate-100 disabled:text-slate-300 disabled:shadow-none"
+          className="w-full h-10 bg-error hover:bg-error-900 text-text-inverse rounded-xl text-sm font-medium shadow-sm shadow-error-500/10 transition-all cursor-pointer disabled:bg-background-secondary disabled:text-text-subtle disabled:shadow-none"
         >
           Jual
         </Button>

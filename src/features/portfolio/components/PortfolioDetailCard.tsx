@@ -37,22 +37,22 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
     <div className="w-full">
       <SectionHeader title="Detail Portofolio" />
 
-      <div className="w-full bg-background-primary border border-border-primary rounded-2xl shadow-sm overflow-hidden">
+      <div className="w-full bg-background-primary border border-border-primary rounded-xl overflow-hidden">
         {/* Header Section — Nama, Info, Ringkasan Saldo */}
         <div className="p-6 pb-4">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
             {/* Kiri: Identitas Portfolio */}
             <div>
-              <p className="text-sm text-slate-500 mb-1">Nama dompet</p>
-              <h3 className="font-bold text-2xl text-slate-900">
+              <p className="text-sm text-text-muted mb-1">Nama dompet</p>
+              <h3 className="font-semibold text-xl text-text-primary">
                 {portfolioName}
               </h3>
             </div>
 
             {/* Kanan: Ringkasan Saldo */}
             <div className="text-right">
-              <p className="text-sm text-slate-500 mb-1">Total Investasi</p>
-              <h3 className="font-bold text-2xl text-slate-900">
+              <p className="text-sm text-text-muted mb-1">Total Investasi</p>
+              <h3 className="font-semibold text-xl text-text-primary">
                 {formatCurrencyIDR(investedBalance, { absolute: true })}
               </h3>
               {investedBalance > 0 && (
@@ -69,9 +69,9 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
 
           {/* Allocation Bar + Legend */}
           <div className="mt-4">
-            <p className="text-sm text-slate-600 mb-3">Persentase alokasi aset</p>
+            <p className="text-sm text-text-secondary mb-3">Persentase alokasi aset</p>
             {/* Progress Bar */}
-            <div className="w-full h-3 flex rounded-full overflow-hidden bg-border-secondary mb-3 gap-1">
+            <div className="w-full h-2 flex rounded-full overflow-hidden bg-border-secondary mb-3 gap-1">
               {allocations.length > 0 ? (
                 allocations.map((item, idx) => (
                   <div
