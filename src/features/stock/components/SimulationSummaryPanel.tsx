@@ -5,6 +5,8 @@ import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import type { AllocationChartItem, CartItem } from "../types/simulation";
 import type { DashboardPortfolio } from "@/features/dashboard";
 
+import type { OptimizationMetrics } from "../hooks/useSimulationBuy";
+
 interface SimulationSummaryPanelProps {
   cart: CartItem[];
   selectedPortfolio: DashboardPortfolio | null;
@@ -13,6 +15,7 @@ interface SimulationSummaryPanelProps {
   remainingBalance: number;
   isBuying: boolean;
   onConfirmBuy: () => void;
+  optimizationMetrics?: OptimizationMetrics | null;
 }
 
 const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
@@ -23,6 +26,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
   remainingBalance,
   isBuying,
   onConfirmBuy,
+  optimizationMetrics = null,
 }) => {
   const totalUnit = cart.length;
   const totalLot = cart.reduce((acc, item) => acc + item.lots, 0);
@@ -137,6 +141,54 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
             </span>
           </div>
         </div>
+
+        {/* Explainable AI (XAI) Panel for Laypeople */}
+        {optimizationMetrics && (
+          <div className="mt-2 mb-4 p-3 bg-brand-50 border border-brand-200/60 rounded-xl flex flex-col gap-2.5 animate-fade-in shadow-sm">
+            {/* Header Widget */}
+            <div className="flex items-center gap-1.5 text-xs font-bold text-brand-900">
+              <span className="text-sm">🤖</span>
+              <span>Penjelasan Alokasi AI</span>
+            </div>
+
+            {/* Narasi Alasan Penentuan Bobot */}
+            <p className="text-[10px] text-brand-800 leading-relaxed text-justify">
+              {optimizationMetrics.method === "min_volatility" && (
+                "Karena kamu bertipe Konservatif (sangat hati-hati), AI menyusun alokasi ini dengan metode Keamanan Utama (Minimasi Volatilitas). Ini bertujuan agar nilainya stabil dan terhindar dari naik-turun harga yang ekstrem."
+              )}
+              {optimizationMetrics.method === "max_sharpe" && (
+                "Karena kamu bertipe Moderat (sedang), AI menyusun alokasi ini dengan metode Keseimbangan Optimal (Max Sharpe Ratio). AI menyeimbangkan antara potensi profit terbaik dan tingkat risiko yang wajar."
+              )}
+              {optimizationMetrics.method === "max_return" && (
+                "Karena kamu bertipe Agresif (pemberani), AI menyusun alokasi ini dengan metode Profit Maksimal (Maksimalkan Return). AI fokus mengejar keuntungan tertinggi sesuai dengan batas keberanian risikomu."
+              )}
+            </p>
+
+            {/* Metrik Kuantitatif AI Sederhana */}
+            <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-brand-100/60">
+              <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
+                <span className="text-[8px] text-slate-400 font-semibold mb-0.5">Potensi Profit</span>
+                <span className="text-[10px] font-bold text-brand-900">
+                  +{(optimizationMetrics.expectedReturn * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
+                <span className="text-[8px] text-slate-400 font-semibold mb-0.5">Tingkat Risiko</span>
+                <span className="text-[10px] font-bold text-slate-700">
+                  {(optimizationMetrics.volatility * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
+                <span className="text-[8px] text-slate-400 font-semibold mb-0.5">Skor Kinerja AI</span>
+                <span className={`text-[10px] font-bold ${
+                  optimizationMetrics.sharpeRatio > 1.0 ? "text-emerald-700" : "text-slate-700"
+                }`}>
+                  {optimizationMetrics.sharpeRatio > 1.0 ? "Sangat Sehat" : "Cukup Optimal"}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Validation Errors */}
         {!isBalanceSufficient && selectedPortfolio && (
