@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import PageHeader from "@/components/shared/layout/PageHeader";
-import { 
-  useSimulationBuy, 
-  WalletSelectCard, 
-  StockSearchPanel, 
-  CartListPanel, 
-  SimulationSummaryPanel 
+import {
+  useSimulationBuy,
+  WalletSelectCard,
+  StockSearchPanel,
+  CartListPanel,
+  SimulationSummaryPanel,
 } from "@/features/stock";
 import { Loader2 } from "lucide-react";
 
@@ -103,11 +103,11 @@ const SimulationBuyPage: React.FC = () => {
               {/* Kolom Kiri: Search & Banner Info */}
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
                 {/* Banner Informasi Mode Alokasi Otomatis */}
-                <div className="p-4 bg-brand-50 border border-brand-200 rounded-xl shadow-sm flex flex-col gap-2">
-                  <h4 className="text-xs font-bold text-brand-900 flex items-center gap-1.5">
+                <div className="p-4 bg-gradient-to-b from-brand-100 to-brand/5 border border-brand-200 rounded-xl shadow-sm flex flex-col gap-2">
+                  <h4 className="text-xs font-medium text-brand-900 flex items-center gap-1.5">
                     ✨ Mode Alokasi Otomatis Aktif
                   </h4>
-                  <p className="text-[10px] text-brand-700 leading-relaxed text-justify">
+                  <p className="text-[10px] font-regular text-brand leading-relaxed text-justify">
                     Sistem sedang mengoptimalkan portofoliomu secara otomatis berdasarkan profil risikomu. Untuk menjaga akurasi strategi sistem, jumlah lot tidak dapat diubah manual di mode ini. Kamu tetap bisa menghapus atau mengurangi jenis saham terpilih.
                   </p>
                 </div>
