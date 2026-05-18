@@ -43,7 +43,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
           <div className="flex flex-row items-start justify-between gap-4 mb-6 border-b border-border-secondary pb-6">
             {/* Kiri: Identitas Portfolio (Kapsul Aktif Premium) */}
             <div>
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-brand uppercase tracking-wider mb-2">
+              <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-brand uppercase tracking-wider mb-2">
                 Dompet Investasi
               </span>
               <h3 className="font-bold text-xs sm:text-sm md:text-base text-text-primary bg-background-secondary border border-border-secondary px-3 py-1.5 rounded-xl w-fit flex items-center gap-2">
@@ -62,10 +62,10 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
               </h3>
               {investedBalance > 0 && (
                 <p
-                  className={`text-[10px] font-bold mt-1.5 px-2.5 py-0.5 rounded-full ml-auto border ${
+                  className={`text-[10px] font-medium mt-1.5 px-2.5 py-0.5 rounded-full ml-auto border ${
                     isProfit 
                       ? "bg-brand-50 text-brand border-brand-200/60" 
-                      : "bg-error-50 text-error-500 border-error-200/60"
+                      : "bg-gradient-to-b from-error-200/90 to-error-50/90 text-error-500 border-error-200/60"
                   }`}
                 >
                   {isProfit ? "▲" : "▼"} {totalProfitPercentage.toFixed(1)}% ({isProfit ? "+" : ""}{formatCurrencyIDR(totalProfitAmount, { absolute: false })})
