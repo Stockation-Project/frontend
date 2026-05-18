@@ -40,24 +40,24 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
       <div className="w-full bg-background-primary border border-border-primary rounded-xl overflow-hidden">
         {/* Header Section — Nama, Info, Ringkasan Saldo */}
         <div className="p-6 pb-4">
-          <div className="flex flex-row md:items-center justify-between gap-4 mb-6 border-b border-slate-100 pb-6">
+          <div className="flex flex-row items-start justify-between gap-4 mb-6 border-b border-border-secondary pb-6">
             {/* Kiri: Identitas Portfolio (Kapsul Aktif Premium) */}
             <div>
               <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-brand uppercase tracking-wider mb-2">
                 Dompet Investasi
               </span>
-              <h3 className="font-bold text-sm md:text-base text-slate-800 bg-slate-50 border border-slate-200/50 px-3 py-1.5 rounded-xl w-fit flex items-center gap-2">
+              <h3 className="font-bold text-xs sm:text-sm md:text-base text-text-primary bg-background-secondary border border-border-secondary px-3 py-1.5 rounded-xl w-fit flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
                 {portfolioName}
               </h3>
             </div>
 
             {/* Kanan: Ringkasan Saldo */}
-            <div className="text-left md:text-right">
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
+            <div className="text-right">
+             <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-text-muted uppercase tracking-wider mb-2">
                 Total Investasi
               </span>
-              <h3 className="font-bold text-base md:text-lg text-slate-800">
+              <h3 className="font-bold text-sm sm:text-base md:text-lg text-text-primary">
                 {formatCurrencyIDR(investedBalance, { absolute: true })}
               </h3>
               {investedBalance > 0 && (
