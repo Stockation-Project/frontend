@@ -38,7 +38,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
         <div className="col-span-3 md:col-span-3 text-center">Alokasi</div>
         <div className="col-span-2 md:col-span-2 text-center">Jumlah Lot</div>
         <div className="col-span-2 md:col-span-2 text-center">Laba/Rugi</div>
-        <div className="col-span-1 md:col-span-2 text-right">Aksi</div>
+        <div className="col-span-1 md:col-span-2 text-right hidden md:block">Aksi</div>
       </div>
 
       {/* Table Body */}
@@ -134,7 +134,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
                     )}
                   </svg>
                   {formatCurrencyIDR(holding.profitLossAmount, {
-                    absolute: false,
+                    absolute: true,
                   })}
                 </span>
               </div>
