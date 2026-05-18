@@ -144,15 +144,15 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
 
         {/* Explainable AI (XAI) Panel for Laypeople */}
         {optimizationMetrics && (
-          <div className="mt-2 mb-4 p-3 bg-brand-50 border border-brand-200/60 rounded-xl flex flex-col gap-2.5 animate-fade-in shadow-sm">
+          <div className="mt-2 mb-4 p-3 bg-gradient-to-b from-brand-100 to-brand-50 border border-brand-200 rounded-xl flex flex-col gap-2.5 animate-fade-in shadow-sm">
             {/* Header Widget */}
-            <div className="flex items-center gap-1.5 text-xs font-bold text-brand-900">
-              <span className="text-sm">🤖</span>
-              <span>Penjelasan Alokasi AI</span>
+            <div className="flex items-center gap-1.5 text-xs font-bold">
+              <span className="text-xs">✨</span>
+              <span className="text-xs font-medium">Penjelasan Alokasi AI</span>
             </div>
 
             {/* Narasi Alasan Penentuan Bobot */}
-            <p className="text-[10px] text-brand-800 leading-relaxed text-justify">
+            <p className="text-[10px] text-brand font-regular leading-relaxed text-justify">
               {optimizationMetrics.method === "min_volatility" && (
                 "Karena kamu bertipe Konservatif (sangat hati-hati), AI menyusun alokasi ini dengan metode Keamanan Utama (Minimasi Volatilitas). Ini bertujuan agar nilainya stabil dan terhindar dari naik-turun harga yang ekstrem."
               )}
@@ -167,21 +167,21 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
             {/* Metrik Kuantitatif AI Sederhana */}
             <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-brand-100/60">
               <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
-                <span className="text-[8px] text-slate-400 font-semibold mb-0.5">Potensi Profit</span>
-                <span className="text-[10px] font-bold text-brand-900">
+                <span className="text-[8px] text-slate-400 font-medium mb-0.5">Potensi Profit</span>
+                <span className="text-[10px] font-medium text-brand">
                   +{(optimizationMetrics.expectedReturn * 100).toFixed(1)}%
                 </span>
               </div>
               <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
-                <span className="text-[8px] text-slate-400 font-semibold mb-0.5">Tingkat Risiko</span>
-                <span className="text-[10px] font-bold text-slate-700">
+                <span className="text-[8px] text-slate-400 font-medium mb-0.5">Tingkat Risiko</span>
+                <span className="text-[10px] font-medium text-text-secondary">
                   {(optimizationMetrics.volatility * 100).toFixed(1)}%
                 </span>
               </div>
               <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
-                <span className="text-[8px] text-slate-400 font-semibold mb-0.5">Skor Kinerja AI</span>
-                <span className={`text-[10px] font-bold ${
-                  optimizationMetrics.sharpeRatio > 1.0 ? "text-emerald-700" : "text-slate-700"
+                <span className="text-[8px] text-slate-400 font-medium mb-0.5">Skor Kinerja AI</span>
+                <span className={`text-[10px] font-medium ${
+                  optimizationMetrics.sharpeRatio > 1.0 ? "text-brand" : "text-brand-800"
                 }`}>
                   {optimizationMetrics.sharpeRatio > 1.0 ? "Sangat Sehat" : "Cukup Optimal"}
                 </span>
