@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getUserProfile, updateUserProfile } from "../services/profile.service";
+import { getUserProfile, updateUserProfile, uploadUserAvatar } from "../services/profile.service";
 import type { User } from "@/features/auth";
 import type { ProfileUpdatePayload } from "../types/profile";
 import { toast } from "sonner";
@@ -10,6 +10,7 @@ export const useProfile = () => {
   const [profile, setProfile] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
 
   const fetchProfile = async () => {
     setIsLoading(true);
@@ -42,6 +43,25 @@ export const useProfile = () => {
     }
   };
 
+  const uploadAvatar = async (base64Image: string) => {
+    setIsUploadingAvatar(true);
+    try {
+      const response = await uploadUserAvatar(base64Image);
+      setProfile(response.data);
+      // Update local storage and context
+      const token = localStorage.getItem("token") || "";
+      login(response.data, token);
+      
+      toast.success("Foto profil berhasil diperbarui");
+      return response.data;
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Gagal memperbarui foto profil");
+      throw error;
+    } finally {
+      setIsUploadingAvatar(false);
+    }
+  };
+
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -50,7 +70,9 @@ export const useProfile = () => {
     profile,
     isLoading,
     isUpdating,
+    isUploadingAvatar,
     updateProfile,
+    uploadAvatar,
     refreshProfile: fetchProfile,
   };
 };

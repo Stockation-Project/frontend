@@ -6,7 +6,7 @@ import PersonalInfoForm from "@/features/profile/components/PersonalInfoForm";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const ProfilePage: React.FC = () => {
-  const { profile, isLoading, isUpdating, updateProfile } = useProfile();
+  const { profile, isLoading, isUpdating, isUploadingAvatar, updateProfile, uploadAvatar } = useProfile();
 
   if (isLoading) {
     return (
@@ -66,7 +66,14 @@ const ProfilePage: React.FC = () => {
         <div className="bg-background-primary rounded-xl p-4 border border-border-primary">
           <ProfileHeader 
             user={profile} 
-            onUpdateAvatar={(url) => updateProfile({ avatar_url: url })} 
+            onUpdateAvatar={(url) => {
+              if (url === null) {
+                updateProfile({ avatar_url: null });
+              } else {
+                uploadAvatar(url);
+              }
+            }} 
+            isLoading={isUploadingAvatar}
           />
 
           <PersonalInfoForm 

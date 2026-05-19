@@ -12,3 +12,10 @@ export const updateUserProfile = async (
   const response = await apiClient.put("/users/profile", payload);
   return response.data;
 };
+
+export const uploadUserAvatar = async (
+  base64Image: string
+): Promise<ProfileResponse> => {
+  const response = await apiClient.post("/users/profile/avatar", { image: base64Image });
+  return response.data;
+};
