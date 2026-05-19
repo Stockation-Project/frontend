@@ -6,6 +6,7 @@ import type { AllocationChartItem, CartItem } from "../types/simulation";
 import type { DashboardPortfolio } from "@/features/dashboard";
 
 import type { OptimizationMetrics } from "../hooks/useSimulationBuy";
+import { Sparkles } from "lucide-react";
 
 interface SimulationSummaryPanelProps {
   cart: CartItem[];
@@ -147,12 +148,12 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
           <div className="mt-2 mb-4 p-3 bg-gradient-to-b from-brand-100 to-brand-50 border border-brand-200 rounded-xl flex flex-col gap-2.5 animate-fade-in shadow-sm">
             {/* Header Widget */}
             <div className="flex items-center gap-1.5 text-xs font-bold">
-              <span className="text-xs">✨</span>
-              <span className="text-xs font-medium">Penjelasan Alokasi AI</span>
+              <Sparkles className="w-3.5 h-3.5 text-brand" />
+              <span className="text-xs text-brand font-medium">Penjelasan Alokasi AI</span>
             </div>
 
             {/* Narasi Alasan Penentuan Bobot */}
-            <p className="text-[10px] text-brand font-regular leading-relaxed text-justify">
+            <p className="text-[10px] text-text-secondary font-regular leading-relaxed text-justify">
               {optimizationMetrics.method === "min_volatility" && (
                 "Karena kamu bertipe Konservatif (sangat hati-hati), AI menyusun alokasi ini dengan metode Keamanan Utama (Minimasi Volatilitas). Ini bertujuan agar nilainya stabil dan terhindar dari naik-turun harga yang ekstrem."
               )}
