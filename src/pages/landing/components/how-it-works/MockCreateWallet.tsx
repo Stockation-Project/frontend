@@ -4,12 +4,12 @@ import { Wallet } from "lucide-react";
 const MockCreateWallet = () => {
   const walletNameText = "Dompet Blue Chip";
   const GLOBAL_DURATION = 8;
+  const characters = walletNameText.split('');
 
   return (
     <div className="w-full max-w-[240px] relative h-[140px] flex items-center justify-center scale-[0.95] origin-center">
       <motion.div
         animate={{
-          y: [0, 0, -40, -40, 0, 0],
           opacity: [1, 1, 0.9, 0.9, 1, 1]
         }}
         transition={{
@@ -25,20 +25,44 @@ const MockCreateWallet = () => {
             <Wallet className="w-4 h-4 stroke-[1.5px]" />
           </div>
           <div className="overflow-hidden flex-1">
-            <div className="h-4 flex items-center font-mono text-[11px] font-semibold leading-none tracking-tight">
-              <motion.span
-                animate={{ width: ["0%", "100%", "100%", "0%", "0%"] }}
+            <div className="h-4 flex items-center font-sans text-[11px] font-semibold leading-none tracking-tight">
+              <motion.div
+                animate={{ opacity: [1, 1, 1, 0.5, 0.5] }}
                 transition={{
                   duration: GLOBAL_DURATION,
                   times: [0, 0.40, 0.85, 0.92, 1],
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="inline-block whitespace-nowrap overflow-hidden pr-0.5 border-r border-white/80"
-                style={{ borderRightWidth: '2px' }}
+                className="inline-block whitespace-nowrap overflow-hidden pr-0.5"
               >
-                {walletNameText}
-              </motion.span>
+                <div className="inline-flex relative">
+                  {characters.map((char, idx) => (
+                    <motion.span
+                      key={idx}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        delay: (idx * 0.05),
+                        duration: 0.05,
+                        repeat: Infinity,
+                        repeatDelay: GLOBAL_DURATION - (characters.length * 0.05)
+                      }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                  <motion.span
+                    animate={{ opacity: [1, 0] }}
+                    transition={{
+                      duration: 0.4,
+                      repeat: Infinity,
+                      repeatDelay: GLOBAL_DURATION - 0.4
+                    }}
+                    className="border-r-2 border-white/80 h-4 ml-0.5"
+                  />
+                </div>
+              </motion.div>
             </div>
             <p className="text-[8px] text-white/70 uppercase tracking-wider truncate mt-0.5">WLT-BLUECHIP</p>
           </div>

@@ -1,29 +1,36 @@
 import { motion } from "framer-motion";
+import { WalletCardsAnimation } from "./features/WalletCardsAnimation";
+
+// Import gambar secara manual di sini (sesuaikan relative path-nya)
+// Ganti bagian import atas dengan ini:
+import profilRisikoImg from "../../../assets/images/landing-page/profil-risiko.png";
+import tableImg from "../../../assets/images/landing-page/table.png";
+import alokasiImg from "../../../assets/images/landing-page/alokasi.png";
 
 const FEATURES = [
   {
     icon: "/icons/kantong.png",
     title: "Sistem Kantong (Sub-Dompet)",
     description: "Pisahkan strategi investasimu dengan membuat beberapa dompet. Setiap transaksi beli & jual hanya bisa dilakukan di dalam sub-dompet — persis seperti investor profesional mengelola portofolio.",
-    image: "/profil-risiko.png",
+    image: profilRisikoImg, // Gunakan variabel hasil import
   },
   {
     icon: "/icons/realtime.png",
     title: "Data Saham Real-Time",
     description: "Harga dan pergerakan saham dari pasar nyata. Belajar membaca chart dan memahami volatilitas tanpa uang asli yang terancam.",
-    image: "/profil-risiko.png",
+    image: tableImg, // Gunakan variabel hasil import
   },
   {
     icon: "/icons/alokasi.png",
     title: "Alokasi Pintar",
     description: "Rekomendasi alokasi saham berdasarkan profil risikomu. Sistem menyarankan komposisi portofolio yang optimal — kamu tinggal setujui dan eksekusi.",
-    image: "/profil-risiko.png",
+    image: alokasiImg, // Gunakan variabel hasil import
   },
   {
     icon: "/icons/keranjang.png",
     title: "Keranjang Simulasi",
     description: "Beli kombinasi saham sekaligus seperti keranjang belanja e-commerce. Preview portofolio sebelum eksekusi transaksi.",
-    image: "/profil-risiko.png",
+    image: tableImg, // Gunakan variabel hasil import
   },
 ];
 
@@ -52,7 +59,7 @@ const FeaturesSection = () => (
 
       <div className="flex flex-col gap-2">
 
-        {/* Card 1 — Full, konten kiri | foto kanan */}
+        {/* Card 1 — Full, konten kiri | animasi kanan */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -65,9 +72,10 @@ const FeaturesSection = () => (
             <h3 className="font-medium text-brand-950 text-sm">{FEATURES[0].title}</h3>
             <p className="text-xs text-text-muted leading-relaxed">{FEATURES[0].description}</p>
           </div>
-          {/* Foto */}
-          <div className="bg-brand-25 overflow-hidden">
-            <img src={FEATURES[0].image} alt={FEATURES[0].title} className="w-full h-full object-cover" />
+          {/* Animasi */}
+          <div className="bg-brand-25 overflow-hidden flex items-center justify-center">
+            <WalletCardsAnimation />
+            
           </div>
         </motion.div>
 
@@ -83,8 +91,8 @@ const FeaturesSection = () => (
             className="bg-background-primary border border-border-primary rounded-lg overflow-hidden flex flex-col"
           >
             {/* Foto */}
-            <div className="bg-brand-25 flex-1 min-h-40 overflow-hidden">
-              <img src={FEATURES[1].image} alt={FEATURES[1].title} className="w-full h-full object-cover" />
+            <div className="bg-brand-25 flex items-end justify-end min-h-48 overflow-hidden">
+              <img src={FEATURES[1].image} alt={FEATURES[1].title} className="w-auto h-40 object-contain object-right-bottom" />
             </div>
             {/* Konten */}
             <div className="flex flex-col gap-2 p-5">
@@ -109,8 +117,8 @@ const FeaturesSection = () => (
               <p className="text-xs text-text-muted leading-relaxed">{FEATURES[2].description}</p>
             </div>
             {/* Foto */}
-            <div className="bg-brand-25 flex-1 min-h-40 overflow-hidden">
-              <img src={FEATURES[2].image} alt={FEATURES[2].title} className="w-full h-full object-cover" />
+            <div className="bg-brand-25 flex items-center justify-center min-h-48 overflow-hidden">
+              <img src={FEATURES[2].image} alt={FEATURES[2].title} className="w-auto h-40 object-contain object-right-bottom" />
             </div>
           </motion.div>
 
