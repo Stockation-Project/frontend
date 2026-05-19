@@ -16,3 +16,4 @@ export { default as PortfolioDetailTable } from "./components/PortfolioDetailTab
 export { default as PortfolioPositionWidget } from "./components/PortfolioPositionWidget";
 export { default as SellStockModal } from "./components/SellStockModal";
 export { default as TransactionHistoryList } from "./components/TransactionHistoryList";
+export { default as PortfolioStockDetailSkeleton } from "./components/PortfolioStockDetailSkeleton";

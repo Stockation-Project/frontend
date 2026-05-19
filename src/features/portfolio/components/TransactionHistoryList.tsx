@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
+import TransactionHistorySkeleton from "./TransactionHistorySkeleton";
 
 interface TransactionHistoryListProps {
   transactions: any[];
@@ -10,6 +10,7 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
   transactions,
 }) => {
   const [filter, setFilter] = useState<"ALL" | "BUY" | "SELL">("ALL");
+  const [isLoadingTab, setIsLoadingTab] = useState(false);
 
   const safeTransactions = Array.isArray(transactions) ? transactions : [];
 
@@ -26,7 +27,14 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
           {["ALL", "BUY", "SELL"].map((f) => (
             <button
               key={f}
-              onClick={() => setFilter(f as any)}
+              onClick={() => {
+                if (f === filter) return;
+                setIsLoadingTab(true);
+                setFilter(f as any);
+                setTimeout(() => {
+                  setIsLoadingTab(false);
+                }, 350);
+              }}
               className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === f
                   ? "bg-background-primary text-text-primary shadow-sm"
                   : "text-text-muted hover:text-text-secondary"
@@ -40,7 +48,12 @@ const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
 
       {/* Transaction Cards */}
       <div className="space-y-1">
-        {filteredData.length === 0 ? (
+        {isLoadingTab ? (
+          <>
+            <TransactionHistorySkeleton />
+            <TransactionHistorySkeleton />
+          </>
+        ) : filteredData.length === 0 ? (
           <div className="text-center py-12 border-2 border-dashed border-border-primary rounded-xl">
             <p className="text-text-muted text-sm">Belum ada riwayat transaksi.</p>
           </div>

@@ -12,12 +12,12 @@ import {
   usePortfolioStockDetail,
   TransactionHistoryList,
   PortfolioPositionWidget,
-  SellStockModal
+  SellStockModal,
+  PortfolioStockDetailSkeleton
 } from "@/features/portfolio";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import StatCard from "@/components/shared/cards/StatCard";
 import PageHeader from "@/components/shared/layout/PageHeader";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toggleWatchlist } from "@/features/explore/services/explore.service";
 import { toast } from "sonner";
@@ -78,15 +78,7 @@ const PortfolioStockDetailPage = () => {
     refetchPortfolio(); // Refresh data holding dan transaksi
   };
 
-  if (loadingPortfolio || loadingStock)
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-8 h-8 border-4 border-brand border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-sm text-text-muted font-medium">Memuat data saham...</p>
-        </div>
-      </div>
-    );
+  if (loadingPortfolio || loadingStock) return <PortfolioStockDetailSkeleton />;
 
   if (!stockData) {
     return (
