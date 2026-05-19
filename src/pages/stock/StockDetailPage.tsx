@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Bookmark } from "lucide-react";
-import { useStockDetail, useChartFilter, StockAreaChart, AnomalyTable } from "@/features/stock";
+import { useStockDetail, useChartFilter, StockAreaChart, AnomalyTable, StockDetailSkeleton } from "@/features/stock";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import StatCard from "@/components/shared/cards/StatCard";
 import { Button } from "@/components/ui/button";
@@ -46,12 +46,8 @@ const StockDetailPage: React.FC = () => {
     useChartFilter(chartRawData, data?.current_price);
 
   // --- Render Loading & Error ---
-  if (isLoading)
-    return (
-      <div className="p-8 text-center text-text-muted font-medium animate-pulse">
-        Memuat data {ticker}...
-      </div>
-    );
+  if (isLoading) return <StockDetailSkeleton />;
+
   if (error || !data)
     return (
       <div className="p-8 text-center text-error-500 font-bold">{error}</div>
