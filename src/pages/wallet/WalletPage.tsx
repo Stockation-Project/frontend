@@ -19,6 +19,7 @@ const WalletPage: React.FC = () => {
     selectedPortfolio,
     activities,
     isLoading,
+    isLoadingHistory,
     filter,
     setFilter,
     stats,
@@ -72,6 +73,8 @@ const WalletPage: React.FC = () => {
             stats={stats}
             filter={filter}
             onFilterChange={setFilter}
+            isLoading={isLoading}
+            isLoadingHistory={isLoadingHistory}
             onTopUp={() => {
               setIsAllocateOpen(true);
             }}

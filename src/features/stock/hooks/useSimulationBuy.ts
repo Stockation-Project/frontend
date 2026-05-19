@@ -1,5 +1,6 @@
 // src/features/stock/hooks/useSimulationBuy.ts
 import { useState, useEffect, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { fetchDashboardData, type DashboardPortfolio } from "@/features/dashboard";
 import { searchStocks, fetchRecommendedStocks } from "../services/stock.service";
 import { bulkBuyStockService, optimizePortfolio } from "@/features/portfolio";
@@ -28,7 +29,23 @@ export const useSimulationBuy = () => {
   const [allStocks, setAllStocks] = useState<SearchStockItem[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const location = useLocation();
+  const prefillStock = location.state?.prefillStock;
+
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    if (prefillStock) {
+      // Membersihkan state location agar tidak ter-trigger lagi jika di-refresh
+      window.history.replaceState({}, document.title);
+      return [{
+        ticker: prefillStock.ticker,
+        name: prefillStock.name,
+        currentPrice: prefillStock.currentPrice,
+        lots: 1,
+        isExpanded: false,
+      }];
+    }
+    return [];
+  });
 
   const [isLoading, setIsLoading] = useState(true);
   const [isBuying, setIsBuying] = useState(false);
@@ -80,7 +97,7 @@ export const useSimulationBuy = () => {
   }, [portfolios, selectedPortfolioId]);
 
   const filteredStocks = useMemo(() => {
-    if (!searchQuery) return [];
+    if (!searchQuery) return allStocks;
     const query = searchQuery.toLowerCase();
     return allStocks.filter(
       (s) =>
