@@ -18,3 +18,4 @@ export { default as WalletSelectCard } from "./components/WalletSelectCard";
 export { default as StockSearchPanel } from "./components/StockSearchPanel";
 export { default as CartListPanel } from "./components/CartListPanel";
 export { default as SimulationSummaryPanel } from "./components/SimulationSummaryPanel";
+export { default as StockDetailSkeleton } from "./components/StockDetailSkeleton";

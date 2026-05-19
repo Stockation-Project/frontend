@@ -92,11 +92,6 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
             {/* Expanded Body */}
             {item.isExpanded && (
               <div className="p-4 bg-background-secondary border-t border-border-primary">
-                {/* Mock Chart Area (kept simple for performance) */}
-                <div className="w-full h-24 bg-gradient-to-t from-brand-50 to-transparent border-b-2 border-brand mb-6 rounded-t-xl opacity-50 relative">
-                  <span className="absolute bottom-2 left-2 text-[10px] text-slate-400 font-medium">Chart trend</span>
-                </div>
-
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-Regular text-slate-500">
