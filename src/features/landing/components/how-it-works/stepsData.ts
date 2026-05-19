@@ -1,4 +1,11 @@
-export const STEPS = [
+interface Step {
+  number: string;
+  label: string;
+  title: string;
+  description: string;
+}
+
+export const STEPS: Step[] = [
   {
     number: "01",
     label: "DAFTAR",

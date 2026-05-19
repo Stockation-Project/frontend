@@ -1,11 +1,11 @@
-import { motion } from "framer-motion"; // Pastikan ada huruf 'i' di depan 'mport'
-import LandingNavbar from "./components/LandingNavbar";
-import HeroSection from "./components/HeroSection";
-import StatsSection from "./components/StatsSection";
-import HowItWorksSection from "./components/HowItWorksSection";
-import FeaturesSection from "./components/FeaturesSection";
-import FAQSection from "./components/FAQSection";
-import CTASection from "./components/CTASection";
+import { motion } from "framer-motion";
+import LandingNavbar from "../../features/landing/components/LandingNavbar";
+import HeroSection from "../../features/landing/components/HeroSection";
+import StatsSection from "../../features/landing/components/StatsSection";
+import HowItWorksSection from "../../features/landing/components/HowItWorksSection";
+import FeaturesSection from "../../features/landing/components/FeaturesSection";
+import FAQSection from "../../features/landing/components/FAQSection";
+import CTASection from "../../features/landing/components/CTASection";
 
 const LandingPage = () => {
   return (
