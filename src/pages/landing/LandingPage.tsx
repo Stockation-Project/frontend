@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"; // Pastikan ada huruf 'i' di depan 'mport'
 import LandingNavbar from "./components/LandingNavbar";
 import HeroSection from "./components/HeroSection";
 import StatsSection from "./components/StatsSection";
@@ -18,10 +19,24 @@ const LandingPage = () => {
       <CTASection />
 
       {/* Footer */}
-      <footer className="py-6 px-4 sm:px-6 border-t border-border-primary text-center bg-background-primary">
-        <p className="text-xs text-text-muted">
-          © {new Date().getFullYear()} Stockation. Semua simulasi menggunakan data virtual.
-        </p>
+      <footer className="overflow-hidden flex items-end w-full relative bg-brand-1000 h-32">
+        {/* Kontainer animasi bergerak */}
+        <motion.div 
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ 
+            ease: "linear", 
+            duration: 25, 
+            repeat: Infinity 
+          }}
+          className="flex whitespace-nowrap window-clip select-none pointer-events-none pt-0 pb-0"
+        >
+          <p className="text-[clamp(3rem,12vw,15rem)] font-black text-white/5 tracking-widest leading-none pr-8">
+            STOCKATION • STOCKATION • STOCKATION • STOCKATION •
+          </p>
+          <p className="text-[clamp(3rem,12vw,15rem)] font-black text-white/5 tracking-widest leading-none pr-8">
+            STOCKATION • STOCKATION • STOCKATION • STOCKATION •
+          </p>
+        </motion.div>
       </footer>
     </div>
   );

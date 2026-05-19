@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Logo from "@/components/shared/brand/Logo";
 
 const NAV_LINKS = [
   { label: "Cara Kerja", href: "#cara-kerja" },
   { label: "Fitur", href: "#fitur" },
-  { label: "Profil Risiko", href: "#profil-risiko" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -16,14 +16,7 @@ const LandingNavbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background-primary/90 backdrop-blur-md border-b border-border-primary">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
         {/* Logo */}
-        <div className="flex items-center gap-2 font-bold text-text-primary">
-          <div className="w-7 h-7 bg-brand rounded-lg flex items-center justify-center">
-            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-          </div>
-          Stockation
-        </div>
+        <Logo variant="color" showText={true} />
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6 text-sm text-text-muted">
