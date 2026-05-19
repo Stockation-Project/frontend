@@ -8,7 +8,7 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 const ExplorePage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"trending" | "gainers" | "losers">("trending");
+  const [activeTab, setActiveTab] = useState<"all" | "trending" | "gainers" | "losers">("trending");
   const [watchlistSearch, setWatchlistSearch] = useState("");
   const [moversSearch, setMoversSearch] = useState("");
 
@@ -22,7 +22,7 @@ const ExplorePage: React.FC = () => {
       ticker: s.ticker,
       name: s.name,
       price: s.current_price,
-      change: s.change_percent,
+      change: Math.abs(parseFloat(s.change_percent.toFixed(2))),
       isPositive: s.change_percent >= 0,
     }));
   };
@@ -39,7 +39,8 @@ const ExplorePage: React.FC = () => {
     if (!marketData) return null;
 
     let displayStocks: any[] = [];
-    if (activeTab === "trending") displayStocks = marketData.all_stocks.slice(0, 10);
+    if (activeTab === "all") displayStocks = marketData.all_stocks;
+    else if (activeTab === "trending") displayStocks = marketData.all_stocks.slice(0, 10);
     else if (activeTab === "gainers") displayStocks = marketData.gainers;
     else if (activeTab === "losers") displayStocks = marketData.losers;
 
@@ -116,6 +117,13 @@ const ExplorePage: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex items-center justify-between bg-border-secondary p-1 rounded-xl w-fit">
                 <button
+                  onClick={() => setActiveTab("all")}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${activeTab === "all" ? "bg-background-primary text-text-primary shadow-sm" : "text-text-muted hover:text-text-secondary"
+                    }`}
+                >
+                  Semua
+                </button>
+                <button
                   onClick={() => setActiveTab("trending")}
                   className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${activeTab === "trending" ? "bg-background-primary text-text-primary shadow-sm" : "text-text-muted hover:text-text-secondary"
                     }`}
@@ -141,7 +149,7 @@ const ExplorePage: React.FC = () => {
               <div className="relative w-full md:w-80">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-subtle" />
                 <Input
-                  placeholder={`Cari di ${activeTab}...`}
+                  placeholder={`Cari di ${activeTab === "all" ? "semua saham" : activeTab}...`}
                   className="pl-10 h-10 rounded-xl bg-background-primary border-border-primary"
                   value={moversSearch}
                   onChange={(e) => setMoversSearch(e.target.value)}

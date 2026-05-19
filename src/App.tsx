@@ -12,6 +12,7 @@ import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/features/auth";
 
 // Pages
+import LandingPage from "./pages/landing/LandingPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPages";
 import QuestionnairePage from "./pages/questionnaire/QuestionnairePage";
@@ -41,9 +42,9 @@ function AnimatedRoutes() {
         {/* Rute Utama (Dengan Sidebar) */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPages />} />
-          <Route path="/dashboard/simulation" element={<SimulationBuyPage />} />
+          <Route path="/simulation" element={<SimulationBuyPage />} />
           <Route
-            path="/dashboard/stock/:ticker"
+            path="/stock/:ticker"
             element={<StockDetailPage />}
           />
           <Route
@@ -57,7 +58,7 @@ function AnimatedRoutes() {
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
-        <Route path="/" element={<Navigate to="/register" replace />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </AnimatePresence>
   );

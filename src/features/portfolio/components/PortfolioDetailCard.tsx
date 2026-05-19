@@ -54,7 +54,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
 
             {/* Kanan: Ringkasan Saldo */}
             <div className="text-right">
-             <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-text-muted uppercase tracking-wider mb-2">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-text-muted uppercase tracking-wider mb-2">
                 Total Investasi
               </span>
               <h3 className="font-bold text-sm sm:text-base md:text-lg text-text-primary">
@@ -62,7 +62,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
               </h3>
               {investedBalance > 0 && (
                 <p
-                  className={`text-[10px] font-medium mt-1.5 px-2.5 py-0.5 rounded-full w-fit md:ml-auto border ${
+                  className={`text-[10px] font-medium mt-1.5 px-2.5 py-0.5 rounded-full ml-auto border ${
                     isProfit 
                       ? "bg-brand-50 text-brand border-brand-200/60" 
                       : "bg-gradient-to-b from-error-200/90 to-error-50/90 text-error-500 border-error-200/60"
