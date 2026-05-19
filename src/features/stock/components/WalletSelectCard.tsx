@@ -36,10 +36,10 @@ const WalletSelectCard: React.FC<WalletSelectCardProps> = ({
     return (
       <div
         onClick={onClick}
-        className="min-w-[240px] w-[240px] h-[100px] border-2 border-dashed border-border-primary rounded-lg py-4 flex items-center justify-center gap-2 cursor-pointer hover:bg-background-secondary transition-colors text-slate-400 hover:text-slate-600 flex-shrink-0"
+        className="flex flex-col min-w-[240px] w-[240px] h-[100px] border-2 border-dashed border-border-primary rounded-lg my-4 py-4 flex items-center justify-center gap-2 cursor-pointer hover:bg-background-secondary transition-colors text-slate-400 hover:text-slate-600 flex-shrink-0"
       >
-        <Plus className="w-5 h-5" />
-        <span className="text-sm font-medium">Tambah dompet baru</span>
+        <Plus className="w-4 h-4" />
+        <span className="text-sm font-Regular">Tambah dompet baru</span>
       </div>
     );
   }

@@ -9,7 +9,7 @@ import {
   CartListPanel,
   SimulationSummaryPanel,
 } from "@/features/stock";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import SimulationBuySkeleton from "@/features/stock/components/SimulationBuySkeleton";
 
 const SimulationBuyPage: React.FC = () => {
@@ -102,10 +102,11 @@ const SimulationBuyPage: React.FC = () => {
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
                 {/* Banner Informasi Mode Alokasi Otomatis */}
                 <div className="p-4 bg-gradient-to-b from-brand-100 to-brand/5 border border-brand-200 rounded-xl shadow-sm flex flex-col gap-2">
-                  <h4 className="text-xs font-medium text-brand-900 flex items-center gap-1.5">
-                    ✨ Mode Alokasi Otomatis Aktif
-                  </h4>
-                  <p className="text-[10px] font-regular text-brand leading-relaxed text-justify">
+                  <h4 className="text-xs font-medium text-brand flex items-center gap-1.5 animate-pulse">
+  <Sparkles className="w-3.5 h-3.5 text-brand animate-pulse" />
+  Mode Alokasi Otomatis Aktif
+</h4>
+                  <p className="text-[10px] font-regular text-text-secondary leading-relaxed text-justify">
                     Sistem sedang mengoptimalkan portofoliomu secara otomatis berdasarkan profil risikomu. Untuk menjaga akurasi strategi sistem, jumlah lot tidak dapat diubah manual di mode ini. Kamu tetap bisa menghapus atau mengurangi jenis saham terpilih.
                   </p>
                 </div>
@@ -123,15 +124,15 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               {/* Kolom Tengah: Cart & Tombol Trigger AI */}
-              <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[650px]">
+              <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[685px]">
                 {state.cart.length >= 2 && (
                   <button
                     onClick={handlers.handleAutoAllocation}
                     disabled={state.isOptimizing}
-                    className={`w-full py-3 rounded-xl font-semibold text-xs transition-all shadow-md flex items-center justify-center gap-2 ${
+                    className={`w-full py-3 rounded-xl font-medium text-xs transition-all shadow-md flex items-center justify-center gap-2 ${
                       state.isOptimizing
                         ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-                        : "bg-brand hover:bg-brand-800 text-white shadow-brand/20 active:scale-[0.98] cursor-pointer"
+                        : "bg-brand hover:bg-brand-950 text-white shadow-brand/20 active:scale-[0.98] cursor-pointer"
                     }`}
                   >
                     {state.isOptimizing ? (
@@ -141,7 +142,8 @@ const SimulationBuyPage: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <span>🤖</span> Alokasi Otomatis (Optimisasi AI)
+                        <Sparkles className="w-3.5 h-3.5 text-background-primary" />
+                        Alokasi Otomatis (Optimisasi AI)
                       </>
                     )}
                   </button>
@@ -161,7 +163,7 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               {/* Kolom Kanan: Summary */}
-              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
+              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
                 {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
                   <SimulationSummaryPanel
@@ -183,7 +185,7 @@ const SimulationBuyPage: React.FC = () => {
           {mainTab === "Manual" && (
             <div className="grid grid-cols-1 xl:grid-cols-10 gap-6 items-start">
               {/* Kolom Kiri: Search */}
-              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
+              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
                 {/* Tinggi dibatasi 320px (4-5 baris saham) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full">
                   <StockSearchPanel
@@ -197,7 +199,7 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               {/* Kolom Tengah: Cart */}
-              <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[650px]">
+              <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[685px]">
                 {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
                   <CartListPanel
@@ -211,7 +213,7 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               {/* Kolom Kanan: Summary */}
-              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
+              <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
                 {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
                   <SimulationSummaryPanel
