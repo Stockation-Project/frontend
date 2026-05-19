@@ -132,7 +132,7 @@ const StockDetailPage: React.FC = () => {
         <div className="xl:col-span-5 flex flex-col gap-4 xl:h-full xl:overflow-y-auto pb-6 xl:pb-0 relative scrollbar-thin">
           <Button
             className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand-900 text-text-inverse rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
-            onClick={() => navigate('/dashboard/simulation')}
+            onClick={() => navigate('/simulation')}
           >
             Beli Saham Ini
           </Button>

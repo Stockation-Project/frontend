@@ -67,7 +67,7 @@ const PortfolioStockDetailPage = () => {
 
   const handleBuy = () => {
     // Navigasi ke simulasi beli
-    navigate("/dashboard/simulation");
+    navigate("/simulation");
   };
 
   const handleSell = () => {
