@@ -97,7 +97,7 @@ export const useSimulationBuy = () => {
   }, [portfolios, selectedPortfolioId]);
 
   const filteredStocks = useMemo(() => {
-    if (!searchQuery) return [];
+    if (!searchQuery) return allStocks;
     const query = searchQuery.toLowerCase();
     return allStocks.filter(
       (s) =>
