@@ -67,7 +67,15 @@ const PortfolioStockDetailPage = () => {
 
   const handleBuy = () => {
     // Navigasi ke simulasi beli
-    navigate("/simulation");
+    navigate("/simulation", {
+      state: {
+        prefillStock: {
+          ticker: stockData.ticker,
+          name: stockData.name,
+          currentPrice: stockData.current_price
+        }
+      }
+    });
   };
 
   const handleSell = () => {
