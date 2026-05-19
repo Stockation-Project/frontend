@@ -42,9 +42,9 @@ function AnimatedRoutes() {
         {/* Rute Utama (Dengan Sidebar) */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPages />} />
-          <Route path="/dashboard/simulation" element={<SimulationBuyPage />} />
+          <Route path="/simulation" element={<SimulationBuyPage />} />
           <Route
-            path="/dashboard/stock/:ticker"
+            path="/stock/:ticker"
             element={<StockDetailPage />}
           />
           <Route

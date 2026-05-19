@@ -39,6 +39,7 @@ export const useWallet = (options: UseWalletOptions = {}) => {
   );
   const [activities, setActivities] = useState<Activity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
 
@@ -66,6 +67,7 @@ export const useWallet = (options: UseWalletOptions = {}) => {
   }, [selectedPortfolioId]);
 
   const fetchHistory = useCallback(async () => {
+    setIsLoadingHistory(true);
     try {
       const historyData = await getActivityHistory(
         selectedPortfolioId || undefined,
@@ -74,6 +76,8 @@ export const useWallet = (options: UseWalletOptions = {}) => {
       setActivities(historyData);
     } catch (err: any) {
       console.error("Gagal mengambil riwayat:", err);
+    } finally {
+      setIsLoadingHistory(false);
     }
   }, [selectedPortfolioId, filter]);
 
@@ -189,6 +193,7 @@ export const useWallet = (options: UseWalletOptions = {}) => {
     selectedPortfolio,
     activities,
     isLoading,
+    isLoadingHistory,
     error,
     filter,
     setFilter,

@@ -10,6 +10,7 @@ import {
   SimulationSummaryPanel,
 } from "@/features/stock";
 import { Loader2 } from "lucide-react";
+import SimulationBuySkeleton from "@/features/stock/components/SimulationBuySkeleton";
 
 const SimulationBuyPage: React.FC = () => {
   const { state, handlers } = useSimulationBuy();
@@ -17,10 +18,7 @@ const SimulationBuyPage: React.FC = () => {
 
   if (state.isLoading) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center text-slate-500">
-        <Loader2 className="w-10 h-10 animate-spin text-brand mb-4" />
-        <p className="font-medium">Memuat data simulasi...</p>
-      </div>
+      <SimulationBuySkeleton />
     );
   }
 
