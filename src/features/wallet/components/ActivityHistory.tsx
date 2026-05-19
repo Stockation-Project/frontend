@@ -2,6 +2,7 @@ import React from "react";
 import type { Activity } from "../types/wallet";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import { formatDate } from "@/lib/utils/formatDate";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   ArrowUpRight,
   ArrowDownLeft,
@@ -14,18 +15,39 @@ interface ActivityHistoryProps {
   activities: Activity[];
   currentFilter: string;
   onFilterChange: (filter: string) => void;
+  isLoading?: boolean;
 }
+
+const ActivitySkeleton: React.FC = () => (
+  <div className="space-y-1 pt-2">
+    {[1, 2, 3, 4].map((i) => (
+      <div key={i} className="flex items-center gap-3 py-2 px-1">
+        <Skeleton className="w-8 h-8 rounded-lg flex-shrink-0" />
+        <div className="flex-1 space-y-1.5">
+          <Skeleton className="h-3 w-3/4 rounded" />
+          <Skeleton className="h-2.5 w-1/2 rounded" />
+        </div>
+        <div className="space-y-1.5 text-right">
+          <Skeleton className="h-3 w-20 rounded" />
+          <Skeleton className="h-2.5 w-12 rounded" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 const ActivityHistory: React.FC<ActivityHistoryProps> = ({
   activities,
   currentFilter,
   onFilterChange,
+  isLoading = false,
 }) => {
   const filters = [
     { label: "Semua", value: "all" },
     { label: "Beli", value: "BUY" },
     { label: "Jual", value: "SELL" },
     { label: "Alokasi", value: "ALLOCATE" },
+    { label: "Tarik Dana", value: "WITHDRAW" },
   ];
 
   const getIcon = (type: string) => {
@@ -96,7 +118,9 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
       </div>
 
       <div className="space-y-4 overflow-y-auto flex-1 pb-4 pr-1 scrollbar-thin">
-        {Object.keys(grouped).length === 0 ? (
+        {isLoading ? (
+          <ActivitySkeleton />
+        ) : Object.keys(grouped).length === 0 ? (
           <div className="py-8 text-center text-text-subtle text-xs sm:text-sm italic">
             Tidak ada riwayat aktivitas
           </div>

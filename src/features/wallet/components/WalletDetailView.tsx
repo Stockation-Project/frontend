@@ -2,7 +2,8 @@ import React from "react";
 import type { Portfolio, Activity, WalletStats } from "../types/wallet";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import { Button } from "@/components/ui/button";
-import { Plus, ArrowUpRight, Landmark, Edit3 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ArrowUpRight, Landmark } from "lucide-react";
 import ActivityHistory from "./ActivityHistory";
 
 interface WalletDetailViewProps {
@@ -13,6 +14,8 @@ interface WalletDetailViewProps {
   onFilterChange: (filter: string) => void;
   onTopUp: () => void;
   onWithdraw: () => void;
+  isLoading?: boolean;
+  isLoadingHistory?: boolean;
 }
 
 const WalletDetailView: React.FC<WalletDetailViewProps> = ({
@@ -23,7 +26,53 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
   onFilterChange,
   onTopUp,
   onWithdraw,
+  isLoading = false,
+  isLoadingHistory = false,
 }) => {
+  // Skeleton loading state (initial fetch)
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-xl border border-border-primary p-4 space-y-4">
+        {/* Header Skeleton */}
+        <div className="space-y-2">
+          <Skeleton className="h-6 w-40 rounded-md" />
+          <Skeleton className="h-3 w-64 rounded-md" />
+        </div>
+
+        {/* Stats Grid Skeleton */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} className="h-[72px] rounded-lg" />
+          ))}
+        </div>
+
+        {/* Action Button Skeleton */}
+        <Skeleton className="h-10 w-full rounded-xl" />
+
+        {/* Activity History Skeleton */}
+        <div className="pt-2 space-y-3">
+          <div className="flex justify-between items-center pb-2 border-b border-border-primary">
+            <Skeleton className="h-4 w-24 rounded" />
+            <Skeleton className="h-7 w-52 rounded-lg" />
+          </div>
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="flex items-center gap-3 py-2 px-1">
+              <Skeleton className="w-8 h-8 rounded-lg flex-shrink-0" />
+              <div className="flex-1 space-y-1.5">
+                <Skeleton className="h-3 w-3/4 rounded" />
+                <Skeleton className="h-2.5 w-1/2 rounded" />
+              </div>
+              <div className="space-y-1.5 text-right">
+                <Skeleton className="h-3 w-20 rounded" />
+                <Skeleton className="h-2.5 w-12 rounded" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   if (!portfolio) {
     return (
       <div className="h-full flex flex-col items-center justify-center p-12 text-center bg-background-primary rounded-2xl border border-border-secondary shadow-sm">
@@ -107,6 +156,7 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
           activities={activities}
           currentFilter={filter}
           onFilterChange={onFilterChange}
+          isLoading={isLoadingHistory}
         />
       </div>
     </div>
