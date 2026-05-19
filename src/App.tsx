@@ -12,6 +12,7 @@ import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/features/auth";
 
 // Pages
+import LandingPage from "./pages/landing/LandingPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPages";
 import QuestionnairePage from "./pages/questionnaire/QuestionnairePage";
@@ -57,7 +58,7 @@ function AnimatedRoutes() {
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
-        <Route path="/" element={<Navigate to="/register" replace />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </AnimatePresence>
   );
