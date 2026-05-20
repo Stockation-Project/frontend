@@ -66,7 +66,7 @@ const LandingNavbar = () => {
             <button onClick={() => navigate("/login")} className="flex-1 text-sm border border-border-primary rounded-lg py-2 text-text-secondary">
               Masuk
             </button>
-            <button onClick={() => navigate("/register")} className="flex-1 text-sm bg-yellow-400 text-white rounded-lg py-2 font-regular">
+            <button onClick={() => navigate("/register")} className="flex-1 text-sm bg-brand hover:bg-brand-950 text-white rounded-lg py-2 font-regular">
               Daftar
             </button>
           </div>

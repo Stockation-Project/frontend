@@ -33,8 +33,8 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 
   const handleLogout = () => {
     logout();
-    toast.success("Berhasil keluar", {
-      description: "Sampai jumpa kembali di Stockation!",
+    toast.success("Sesi Berhasil Diakhiri", {
+      description: "Anda telah berhasil keluar dari akun Anda. Sampai jumpa kembali di Stockation!",
     });
     setIsConfirmOpen(false);
     navigate("/login");
@@ -92,12 +92,12 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         <DialogContent className="max-w-xs sm:max-w-sm rounded-2xl bg-background-primary border border-border-primary shadow-2xl p-6 [&>button]:hidden">
           <div className="flex flex-col items-center text-center space-y-4">
             {/* Glowing Red Icon Container */}
-            <div className="h-12 w-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+            <div className="h-12 w-12 rounded-full bg-red-500/10 flex items-center justify-center text-error">
               <LogOut className="w-6 h-6 animate-pulse" />
             </div>
 
             <div className="space-y-1">
-              <DialogTitle className="text-lg font-semibold text-text-primary">
+              <DialogTitle className="text-base font-medium text-text-primary">
                 Keluar dari Akun?
               </DialogTitle>
               <DialogDescription className="text-sm text-text-muted">
@@ -105,17 +105,17 @@ const PageHeader: React.FC<PageHeaderProps> = ({
               </DialogDescription>
             </div>
 
-            <DialogFooter className="w-full flex sm:flex-row flex-col gap-2 pt-2 border-t-0 bg-transparent -mx-0 -mb-0 p-0">
+            <DialogFooter className="w-full flex gap-2 pt-2 border-t-0 bg-transparent -mx-0 -mb-0 p-0">
               <Button
                 variant="outline"
                 onClick={() => setIsConfirmOpen(false)}
-                className="w-full rounded-xl border-border-primary text-text-secondary hover:bg-background-secondary"
+                className="flex-1 rounded-xl border-border-primary text-text-secondary hover:bg-background-secondary"
               >
                 Batal
               </Button>
               <Button
                 onClick={handleLogout}
-                className="w-full rounded-xl bg-red-500 hover:bg-red-600 text-white font-medium shadow-md transition-all duration-200"
+                className="flex-1 rounded-xl bg-error hover:bg-error-900 text-white font-medium shadow-md transition-all duration-200"
               >
                 Keluar
               </Button>

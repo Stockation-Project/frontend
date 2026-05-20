@@ -72,7 +72,10 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
         current_price: currentPrice,
       });
 
-      toast.success(`Berhasil menjual ${lots} lot saham ${ticker}`);
+      toast.success("Penjualan Berhasil", {
+        description: `${lots} Lot ${ticker} berhasil dijual dengan total penerimaan ${formatCurrencyIDR(totalRevenue)}. Dana sudah masuk ke saldo dompet kamu.`,
+        duration: 5000, // 5 detik
+      });
       onSuccess();
       onClose();
     } catch (error: any) {
