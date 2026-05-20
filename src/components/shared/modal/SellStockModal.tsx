@@ -92,6 +92,7 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
       title={`Jual Saham ${ticker}`}
       actionText="Konfirmasi Jual"
       onAction={handleSell}
+      actionVariant="error"
       isActionDisabled={lots <= 0 || lots > maxLots || isSubmitting}
       isLoading={isSubmitting}
     >
