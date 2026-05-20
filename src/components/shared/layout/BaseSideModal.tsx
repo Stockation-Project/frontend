@@ -16,6 +16,7 @@ interface BaseSideModalProps {
   onAction: () => void;
   isLoading?: boolean;
   isActionDisabled?: boolean;
+  actionVariant?: "brand" | "error";
 }
 
 const BaseSideModal: React.FC<BaseSideModalProps> = ({
@@ -27,6 +28,7 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
   onAction,
   isLoading = false,
   isActionDisabled = false,
+  actionVariant = "brand",
 }) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -64,7 +66,11 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
           <Button
             onClick={onAction}
             disabled={isActionDisabled || isLoading}
-            className="flex-1 h-10 bg-brand hover:bg-brand-950 active:bg-brand text-white rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
+            className={`flex-1 h-10 text-white rounded-xl text-sm font-regular shadow-lg transition-all duration-200 cursor-pointer ${
+              actionVariant === "error"
+                ? "bg-error hover:bg-error-900 active:bg-error-800 shadow-error/20"
+                : "bg-brand hover:bg-brand-950 active:bg-brand shadow-brand/20"
+            }`}
           >
             {isLoading ? "Memproses..." : actionText}
           </Button>

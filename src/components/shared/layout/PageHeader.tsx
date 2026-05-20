@@ -105,17 +105,17 @@ const PageHeader: React.FC<PageHeaderProps> = ({
               </DialogDescription>
             </div>
 
-            <DialogFooter className="w-full flex gap-2 pt-2 border-t-0 bg-transparent -mx-0 -mb-0 p-0">
+            <DialogFooter className="w-full !flex !flex-row gap-2 pt-2 border-t-0 bg-transparent -mx-0 -mb-0 p-0">
               <Button
                 variant="outline"
                 onClick={() => setIsConfirmOpen(false)}
-                className="flex-1 rounded-xl border-border-primary text-text-secondary hover:bg-background-secondary"
+                className="flex-1 rounded-xl h-9 border-border-primary text-text-secondary hover:bg-background-secondary"
               >
                 Batal
               </Button>
               <Button
                 onClick={handleLogout}
-                className="flex-1 rounded-xl bg-error hover:bg-error-900 text-white font-medium shadow-md transition-all duration-200"
+                className="flex-1 rounded-xl h-9 bg-error hover:bg-error-900 text-white font-medium shadow-md transition-all duration-200"
               >
                 Keluar
               </Button>
