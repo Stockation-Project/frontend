@@ -31,11 +31,23 @@ const StockDetailPage: React.FC = () => {
     try {
       const result = await toggleWatchlist(ticker);
       if (result.success) {
-        setIsWatchlist(!isWatchlist);
-        toast.success(result.message);
-      }
+  setIsWatchlist(!isWatchlist);
+  
+  // Ganti result.message dengan teks sendiri
+  if (!isWatchlist) {
+    toast.success(`${ticker} Masuk ke watchlist`, {
+      description: `${ticker} telah ditambahkan ke daftar pantauan Anda.`,
+    });
+  } else {
+    toast.success(`${ticker} Dihapus dari Watchlist`, {
+      description: `${ticker} telah dihapus dari daftar pantauan Anda.`,
+    });
+  }
+}
     } catch (err: any) {
-      toast.error("Gagal mengubah daftar pantau");
+      toast.error("Gagal memperbarui watchlist", {
+        description: "Terjadi kesalahan. Silakan coba lagi nanti.",
+      });
     }
   };
 

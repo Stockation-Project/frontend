@@ -164,7 +164,9 @@ export const useSimulationBuy = () => {
         },
       ];
     });
-    toast.success(`${stock.ticker} ditambahkan ke keranjang`);
+    toast.success(`Berhasil ditambahkan`,{
+      description: `${stock.ticker} masuk ke daftar antrean grup transaksi Anda.`,
+    });
   };
 
   const removeStockFromCart = (ticker: string) => {
@@ -228,9 +230,13 @@ export const useSimulationBuy = () => {
         method: res.data.method,
         riskProfile: res.data.risk_profile,
       });
-      toast.success("Alokasi portofolio otomatis berhasil diterapkan!");
+      toast.success("Alokasi Berhasil!", {
+        description: "Jumlah lot berhasil disesuaikan otomatis oleh sistem untuk hasil yang lebih optimal.",
+      });
     } catch (err: any) {
-      toast.error(err.message || "Gagal mengalokasikan portofolio secara otomatis.");
+      toast.error(err.message || "Gagal mengalokasikan!", {
+        description: "Silakan coba lagi nanti.",
+      });
     } finally {
       setIsOptimizing(false);
     }
@@ -261,7 +267,9 @@ export const useSimulationBuy = () => {
 
       await bulkBuyStockService(payloads);
       
-      toast.success("Pembelian saham berhasil!");
+      toast.success("Pembelian Berhasil!", {
+        description: ` ${cart.length} Saham berhasil dibeli. Total investasi Anda sebesar ${totalInvestment.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}.`,
+      });
       
       // Clear cart
       setCart([]);
