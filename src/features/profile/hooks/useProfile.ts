@@ -33,10 +33,14 @@ export const useProfile = () => {
       const token = localStorage.getItem("token") || "";
       login(response.data, token);
       
-      toast.success("Profil berhasil diperbarui");
+      toast.success("Profil berhasil diperbarui",{
+        description: "Perubahan pada profil Anda telah berhasil disimpan.",
+      });
       return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Gagal memperbarui profil");
+      toast.error(error.response?.data?.message || "Terjadi kesalahan saat memperbarui profil",{
+        description: "Silakan coba lagi nanti.",
+      });
       throw error;
     } finally {
       setIsUpdating(false);
@@ -52,10 +56,14 @@ export const useProfile = () => {
       const token = localStorage.getItem("token") || "";
       login(response.data, token);
       
-      toast.success("Foto profil berhasil diperbarui");
+      toast.success("Foto profil berhasil diperbarui", {
+        description: "Foto profil Anda telah berhasil diperbarui.",
+      });
       return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Gagal memperbarui foto profil");
+      toast.error(error.response?.data?.message || "Gagal memperbarui foto profil", {
+        description: "Silakan coba lagi nanti.",
+      });
       throw error;
     } finally {
       setIsUploadingAvatar(false);
