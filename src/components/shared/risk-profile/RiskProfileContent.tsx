@@ -2,13 +2,9 @@
 import React from "react";
 
 interface RiskProfileContentProps {
-  /** Score out of 47 */
   score: number;
-  /** Display label e.g. "Serigala" */
   label: string;
-  /** Risk profile description */
   description: string;
-  /** Content variant: widget uses compact styling, modal uses larger styling */
   variant?: "widget" | "modal";
 }
 

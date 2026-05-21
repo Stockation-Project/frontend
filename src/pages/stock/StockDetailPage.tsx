@@ -33,7 +33,6 @@ const StockDetailPage: React.FC = () => {
       if (result.success) {
   setIsWatchlist(!isWatchlist);
   
-  // Ganti result.message dengan teks sendiri
   if (!isWatchlist) {
     toast.success(`${ticker} Masuk ke watchlist`, {
       description: `${ticker} telah ditambahkan ke daftar pantauan Anda.`,
@@ -64,12 +63,10 @@ const StockDetailPage: React.FC = () => {
     });
   };
 
-  // 2. Serahkan data mentah ke Custom Hook untuk diproses
   const chartRawData = data?.chart_data || data?.chart_1M || [];
   const { activeFilter, setActiveFilter, filteredChartData, priceChange } =
     useChartFilter(chartRawData, data?.current_price);
 
-  // --- Render Loading & Error ---
   if (isLoading) return <StockDetailSkeleton />;
 
   if (error || !data)
@@ -89,16 +86,8 @@ const StockDetailPage: React.FC = () => {
         showBackButton={true}
       />
 
-      {/* ============================================================== */}
-      {/* GRID CONTAINER RESPONSIF */}
-      {/* ============================================================== */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">
-        {/* Pembungkus Kolom Info Kiri (7/12) */}
-        {/* ====================================================================== */}
-        {/* KOLOM KIRI: Scroll independen hanya aktif di desktop (xl) */}
-        {/* ====================================================================== */}
         <div className="xl:col-span-7 flex flex-col gap-6 xl:h-full xl:overflow-y-auto pr-2 pb-6 scrollbar-thin">
-          {/* 1a. INFORMASI EMITEN (Nama, Ticker, Sektor, Bookmark) */}
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
@@ -123,8 +112,6 @@ const StockDetailPage: React.FC = () => {
               <Bookmark className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`} />
             </Button>
           </div>
-
-          {/* 1b. HARGA SAHAM REALTIME */}
           <div className="flex items-end gap-2">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-text-primary tracking-tight leading-none">
               {formatCurrencyIDR(data.current_price)}
@@ -136,7 +123,6 @@ const StockDetailPage: React.FC = () => {
             </span>
           </div>
 
-          {/* 2a. CHART AREA */}
           <StockAreaChart
             data={filteredChartData}
             activeFilter={activeFilter}
@@ -145,10 +131,6 @@ const StockDetailPage: React.FC = () => {
           />
         </div>
 
-        {/* KONTEN PELENGKAP - SEBELAH KANAN (5/12) */}
-        {/* ====================================================================== */}
-        {/* KOLOM KANAN: Scroll independen hanya aktif di desktop (xl) */}
-        {/* ====================================================================== */}
         <div className="xl:col-span-5 flex flex-col gap-4 xl:h-full xl:overflow-y-auto pb-6 xl:pb-0 relative scrollbar-thin">
           <Button
             className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand-900 text-text-inverse rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
@@ -156,7 +138,6 @@ const StockDetailPage: React.FC = () => {
           >
             Beli Saham Ini
           </Button>
-          {/* 3a. WIDGET STATISTIK SAHAM */}
           <div className="bg-background-primary">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Statistik Saham
@@ -197,7 +178,6 @@ const StockDetailPage: React.FC = () => {
             </div>
           </div>
 
-          {/* 3b. WIDGET PERGERAKAN ANOMALI */}
           <div className="bg-background-primary">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
@@ -205,17 +185,14 @@ const StockDetailPage: React.FC = () => {
             <AnomalyTable data={data.anomaly_history} />
           </div>
 
-          {/* 3c. WIDGET RANGKUMAN PERUSAHAAN */}
           <div className="px-2">
             <h3 className="text-base font-medium text-text-secondary mb-2">Rangkuman</h3>
-            <div className="max-h-37 overflow-y-auto"> {/* TAMBAH: max-h-40 overflow-y-auto */}
+            <div className="max-h-37 overflow-y-auto"> 
               <p className="text-sm text-text-muted leading-relaxed text-justify">
                 {data.about_company}
               </p>
             </div>
           </div>
-
-          {/* [KHUSUS DETAIL PASAR] 3d. TOMBOL AKSI BELI SAHAM */}
           
         </div>
       </div>

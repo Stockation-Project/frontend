@@ -22,10 +22,9 @@ const AnomalyTable: React.FC<AnomalyTableProps> = ({ data }) => {
   };
 
   return (
-    // Wrapper dengan batasan tinggi maks agar bisa scrollable secara mandiri
     <div className="w-full max-h-[168px] overflow-y-auto border border-border-primary rounded-xl bg-background-primary scrollbar-thin scrollbar-thumb-border-primary scrollbar-track-transparent">
       <table className="w-full text-xs text-left border-collapse">
-        {/* Sticky Header agar tetap diam di atas saat tabel discroll */}
+        {/* Sticky Header */}
         <thead className="text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border-primary sticky top-0 bg-background-secondary z-10">
           <tr>
             <th className="py-2.5 px-3 font-medium text-center">Periode</th>

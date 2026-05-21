@@ -93,11 +93,8 @@ const DashboardPages: React.FC = () => {
       className="w-full h-full flex flex-col overflow-hidden"
     >
       <PageHeader title="Dasboard" description={user_info.greeting} />
-      {/* Grid Utama (70% Kiri, 30% Kanan) - scrollable secara independen di bawah header */}
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
-        {/* KOLOM KIRI  */}
         <div className="xl:col-span-7 space-y-8">
-          {/* Global Wallet Card — Saldo dompet utama */}
           <GlobalWalletCard
             balance={wallet_summary.main_wallet_balance}
             onTopUpClick={() => setIsTopUpOpen(true)}
@@ -121,7 +118,6 @@ const DashboardPages: React.FC = () => {
             onSuccess={handleAllocate}
           />
 
-          {/* Portfolio Section — Dompet investasi */}
           <PortfolioSection
             portfolios={portfoliosWithColors}
             userRiskProfile={user_info.risk_profile}
@@ -139,22 +135,18 @@ const DashboardPages: React.FC = () => {
             onSuccess={handleCreatePortfolio}
           />
 
-          {/* Recommended Stocks — Saham sesuai profil risiko */}
           <StockTable
             title="Sesuai dengan Profil Resikomu"
             stocks={mappedStocks}
           />
         </div>
 
-        {/* KOLOM KANAN */}
         <div className="xl:col-span-3 space-y-8">
-          {/* Wallet Summary — Ringkasan alokasi dompet */}
           <WalletSummary
             totalWallet={wallet_summary.total_assets}
             allocations={walletAllocations}
           />
 
-          {/* Risk Profile Widget — Profil risiko user */}
           <RiskProfileWidget
             score={user_info.risk_score || 0}
             profileKey={user_info.risk_profile}

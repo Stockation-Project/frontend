@@ -30,11 +30,6 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
   const isProfit = profitLossRaw >= 0;
 
   return (
-    // ======================================================================
-    // PILIHAN STYLE WIDGET:
-    // Opsi 1 (Cadangan): Widget Normal -> className="bg-background-primary border border-border-primary rounded-xl p-4"
-    // Opsi 2 (AKTIF): Widget Sticky (Mengambang) -> className="bg-background-primary border border-border-primary rounded-xl p-4 sticky bottom-0 z-10 shadow-lg mt-auto"
-    // ======================================================================
     <div className="bg-background-primary border border-border-primary rounded-xl p-3">
       <h3 className="text-base font-medium text-text-primary mb-1">Posisi kamu</h3>
 

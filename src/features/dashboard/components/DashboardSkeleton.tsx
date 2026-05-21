@@ -2,11 +2,7 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-/**
- * Full-page skeleton loader for the Dashboard.
- * Mirrors the actual dashboard layout (70/30 grid) so users
- * see a familiar structure while data is being fetched.
- */
+
 const DashboardSkeleton: React.FC = () => {
   return (
     <div className="w-full animate-in fade-in duration-200">
@@ -16,14 +12,11 @@ const DashboardSkeleton: React.FC = () => {
         <Skeleton className="h-4 w-64 mt-2 rounded-md" />
       </div>
 
-      {/* Grid Utama (70% Kiri, 30% Kanan) */}
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8">
-        {/* KOLOM KIRI */}
         <div className="xl:col-span-7 space-y-8">
-          {/* GlobalWalletCard Skeleton */}
           <Skeleton className="w-full h-[200px] rounded-[2rem]" />
 
-          {/* PortfolioSection Skeleton */}
+          {/* SummaryCards Skeleton */}
           <div>
             <Skeleton className="h-6 w-40 mb-4 rounded-md" />
             <div className="flex gap-4">
@@ -32,7 +25,7 @@ const DashboardSkeleton: React.FC = () => {
             </div>
           </div>
 
-          {/* StockTable Skeleton */}
+          {/* RecentTransactions Skeleton */}
           <div>
             <Skeleton className="h-6 w-56 mb-4 rounded-md" />
             <div className="space-y-0 border-t border-border-secondary">
@@ -60,7 +53,7 @@ const DashboardSkeleton: React.FC = () => {
           </div>
         </div>
 
-        {/* KOLOM KANAN */}
+        {/* KANAN */}
         <div className="xl:col-span-3 space-y-8">
           {/* WalletSummary Skeleton */}
           <Skeleton className="w-full h-[280px] rounded-[2rem]" />

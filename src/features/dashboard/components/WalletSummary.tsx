@@ -38,12 +38,11 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
     <div className="w-full bg-background-primary border border-border-primary rounded-xl p-2 lg:p-4">
       <SectionHeader title="Ringkasan Dompet" className="mb-4" />
 
-      {/* Bagian Atas: Donut Chart & Info Total */}
+      {/* Container Donut Chart & Info Total */}
       <div className="flex gap-4 md:gap-30 lg:gap-4 mb-6 justify-center">
-        {/* Donut Chart SVG */}
+        {/* Donut Chart */}
         <div className="relative w-40 h-40 flex-shrink-0 flex items-center justify-center">
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 112 112" preserveAspectRatio="xMidYMid meet">
-            {/* Background Circle (Abu-abu) */}
             <circle
               cx="56"
               cy="56"
@@ -53,7 +52,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
               fill="transparent"
               className="text-border-secondary"
             />
-            {/* Progress Circle (Hijau) */}
+            {/* Progress Circle */}
             <circle
               cx="56"
               cy="56"
@@ -68,7 +67,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
             />
           </svg>
 
-          {/* Teks di tengah Donut Chart */}
+          {/* Text mid */}
           <div className="absolute text-center flex flex-col items-center justify-center">
             <span className="text-xl font-semibold text-text-primary leading-none">
               {Math.round(percentage)}%
@@ -79,7 +78,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
           </div>
         </div>
 
-        {/* Info Total Alokasi (Kanan) */}
+        {/* Info Total Alokasi */}
         <div className="flex flex-col justify-start items-start min-w-0 overflow-hidden">
           <span className="text-xs font-medium text-text-primary mb-1 whitespace-nowrap">
             Total Alokasi
@@ -104,7 +103,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
         </div>
       </div>
 
-      {/* Bagian Bawah: Daftar Detail Alokasi per Dompet */}
+      {/* Bar Detail Alokasi */}
       <div className="space-y-4 max-h-[140px] overflow-y-auto no-scrollbar pr-1 pb-1">
         {allocations.map((item) => {
           const itemPercentage = (item.amount / totalWallet) * 100;
@@ -123,7 +122,7 @@ const WalletSummary: React.FC<WalletSummaryProps> = ({
           );
         })}
 
-        {/* Jika belum ada alokasi sama sekali */}
+        {/* State */}
         {allocations.length === 0 && (
           <div className="text-center py-4 text-xs text-text-subtle">
             Belum ada dana yang dialokasikan.

@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"; // Asumsi path shadcn-mu di sini
+} from "@/components/ui/tooltip";
 
 interface StatCardProps {
   title: string;
@@ -18,8 +18,6 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, tooltipText }) => {
     <div className="bg-background-primary rounded-xl border border-border-primary p-3 flex flex-col justify-between h-full transition-colors hover:border-border-secondary">
       <div className="flex justify-between items-start gap-1 mb-1">
         <span className="text-[10px] sm:text-xs font-medium text-text-muted leading-tight">{title}</span>
-
-        {/* SHADCN TOOLTIP */}
         <TooltipProvider delayDuration={300}>
           <Tooltip>
             <TooltipTrigger asChild>

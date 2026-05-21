@@ -82,7 +82,7 @@ const AllocateModal: React.FC<AllocateModalProps> = ({
       isLoading={isLoading}
     >
       <div className="space-y-6">
-        {/* Sumber: Dompet Utama */}
+        {/* Global Wallet */}
         <div className="space-y-2">
           <label className="text-xs font-medium text-text-muted uppercase tracking-wider">
             Global Wallet
@@ -99,14 +99,12 @@ const AllocateModal: React.FC<AllocateModalProps> = ({
           </div>
         </div>
 
-        {/* Ikon Panah Down */}
         <div className="flex justify-center -my-2">
           <div className="w-10 h-10 rounded-full bg-background-secondary flex items-center justify-center border border-border-primary shadow-sm z-10">
             <ArrowDown className="w-5 h-5 text-text-subtle" />
           </div>
         </div>
 
-        {/* Tujuan: Pilih Portofolio */}
         <div className="space-y-2">
           <label className="text-xs font-medium text-text-muted uppercase tracking-wider">
             Ke Dompet:
@@ -124,7 +122,6 @@ const AllocateModal: React.FC<AllocateModalProps> = ({
           </select>
         </div>
 
-        {/* Input Nominal */}
         <div className="bg-brand-25 p-5 rounded-lg border border-brand/10 space-y-4">
           <label className="block text-xs font-medium text-text-muted uppercase tracking-wider">
             NOMINAL
