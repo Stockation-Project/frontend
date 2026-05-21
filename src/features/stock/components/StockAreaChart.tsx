@@ -83,7 +83,7 @@ const StockAreaChart: React.FC<StockAreaChartProps> = ({
         </div>
       </div>
 
-      {/* Chart Height: Lebih ramping dan proporsional untuk layout dua kolom */}
+      {/* Chart*/}
       <div className="w-full h-[240px] xl:h-[200px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart

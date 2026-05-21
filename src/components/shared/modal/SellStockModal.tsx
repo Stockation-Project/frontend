@@ -97,7 +97,6 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
       isLoading={isSubmitting}
     >
       <div className="space-y-6">
-        {/* Informasi Saham yang Dimiliki */}
         <div className="space-y-2">
           <label className="text-xs font-medium text-text-muted uppercase tracking-wider">
             Kepemilikan Saat Ini
@@ -119,13 +118,11 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
           </div>
         </div>
 
-        {/* Input Nominal Jual (Lot) */}
         <div className="bg-brand-25 p-5 rounded-lg border border-brand/10 space-y-4">
           <label className="block text-xs font-medium text-text-muted uppercase tracking-wider">
             Jumlah Lot Jual
           </label>
 
-          {/* Tombol Pilihan Persentase Cepat */}
           {lotOptions.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {lotOptions.map((opt) => (
@@ -139,7 +136,6 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
             </div>
           )}
 
-          {/* Input Manual Lot */}
           <div className="relative">
             <input
               type="number"
@@ -168,7 +164,6 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
           </div>
         </div>
 
-        {/* Rincian Transaksi */}
         <div className="bg-background-secondary rounded-2xl p-4 space-y-3 border border-border-primary">
           <div className="flex justify-between text-xs">
             <span className="text-text-muted">Harga Jual / Lembar</span>

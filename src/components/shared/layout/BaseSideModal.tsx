@@ -11,7 +11,7 @@ interface BaseSideModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  children: React.ReactNode; // Pastikan ejaannya benar: children
+  children: React.ReactNode;
   actionText: string;
   onAction: () => void;
   isLoading?: boolean;
@@ -32,12 +32,11 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
 }) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      {/* Mengatur lebar 50% layar (sm:max-w-[50vw]) dan muncul dari kanan */}
       <SheetContent
         side="right"
         className="!w-full sm:!w-[65vw] md:!w-[50vw] sm:!max-w-none p-0 flex flex-col bg-background-secondary"
       >
-        {/* Header Reusable */}
+        {/* Header Modal */}
         <SheetHeader className="px-4 py-3 border-b border-border-primary bg-background-primary flex flex-row items-center justify-between">
           <SheetTitle className="text-lg font-medium text-slate-900 m-0">
             {title}
@@ -46,14 +45,13 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
             onClick={onClose}
             className="p-2 rounded-md hover:bg-slate-100 transition-colors"
           >
-            {/* <X className="w-4 h-4 text-slate-500" /> */}
           </button>
         </SheetHeader>
 
-        {/* Konten Dinamis */}
+        {/* Content Area */}
         <div className="flex-1 overflow-y-auto p-6">{children}</div>
 
-        {/* Footer Reusable */}
+        {/* Footer Modal */}
         <div className="px-4 py-3 border-t border-border-primary bg-background-primary flex flex-row gap-3">
           <Button
             variant="outline"

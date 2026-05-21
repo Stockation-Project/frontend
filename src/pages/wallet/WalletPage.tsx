@@ -39,7 +39,6 @@ const WalletPage: React.FC = () => {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
-        {/* Kolom Kiri - 30% */}
         <div className="lg:col-span-4 space-y-4">
           <div className="space-y-1">
             <h3 className="text-sm font-medium text-text-muted">
@@ -64,9 +63,7 @@ const WalletPage: React.FC = () => {
             onCreateNew={() => setIsCreatePortoOpen(true)}
           />
         </div>
-
-        {/* Kolom Kanan - 70% */}
-        <div className="lg:col-span-8">
+       <div className="lg:col-span-8">
           <WalletDetailView
             portfolio={selectedPortfolio || null}
             activities={activities}
@@ -85,7 +82,6 @@ const WalletPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Modals */}
       <TopUpModal
         isOpen={isTopUpOpen}
         onClose={() => setIsTopUpOpen(false)}

@@ -36,7 +36,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           onAddClick={onAddClick}
         />
       ) : (
-        // Container Daftar Portfolio
+        // List portofolio dengan scroll horizontal
         <div className="flex gap-4 overflow-x-auto p-4 no-scrollbar scroll-smooth snap-x">
           {portfolios.map((porto, index) => (
             <div key={porto.id || index} className="snap-start">
@@ -59,7 +59,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
             </div>
           ))}
 
-          {/* Kartu Khusus untuk Menambah Portofolio Baru */}
+          {/* Button Create Portfolio */}
           <div className="snap-start">
             <button
               onClick={onAddClick}

@@ -7,7 +7,7 @@ interface TopUpModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentBalance: number;
-  onSuccess: (amount: number) => Promise<void>; // Fungsi untuk memanggil API
+  onSuccess: (amount: number) => Promise<void>;
 }
 
 const TOP_UP_OPTIONS = [

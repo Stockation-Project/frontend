@@ -28,10 +28,6 @@ const CTASection = () => {
         </motion.div>
       </div>
 
-      {/* Big watermark text */}
-      {/* Big watermark text */}
-{/* Big watermark text */}
-
     </section>
   );
 };

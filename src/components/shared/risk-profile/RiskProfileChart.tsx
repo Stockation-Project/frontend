@@ -2,13 +2,9 @@
 import React from "react";
 
 interface RiskProfileChartProps {
-  /** Score out of 47 */
   score: number;
-  /** Image source URL for the profile animal */
   imageSrc: string;
-  /** Alt text for the image */
   imageAlt: string;
-  /** SVG size variant */
   variant?: "default" | "modal";
 }
 

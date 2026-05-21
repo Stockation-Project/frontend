@@ -6,16 +6,15 @@ import MockSimulation from "./how-it-works/MockSimulation";
 import MockRiskProfile from "./how-it-works/MockRiskProfile"; 
 
 const HowItWorksSection = () => {
-  // Konfigurasi animasi terpusat yang lebih lambat dan smooth
   const stepVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8, // Durasi diperlama dari 0.4s ke 0.8s agar lebih anggun
-        delay: i * 0.18, // Jeda stagger antar card (0.18s) agar tidak terlalu cepat bertabrakan
-        ease: [0.215, 0.61, 0.355, 1], // Menggunakan cubic-bezier penyeimbang agar tarikan animasinya premium
+        duration: 0.8,
+        delay: i * 0.18,
+        ease: [0.215, 0.61, 0.355, 1], 
       },
     }),
   };
@@ -44,8 +43,8 @@ const HowItWorksSection = () => {
               variants={stepVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }} // Animasi terpicu sedikit sebelum card benar-benar di tengah layar
-              custom={i} // Mengirim index untuk kalkulasi delay stagger dinamis
+              viewport={{ once: true, margin: "-80px" }} 
+              custom={i} 
             >
               <div className="hover:border-brand-200 transition-colors h-full border border-border-primary rounded-lg overflow-hidden flex flex-col justify-between">
                 <div>

@@ -1,8 +1,6 @@
-// src/features/dashboard/utils/dashboard.utils.ts
 import type { DashboardRecommendedStock, DashboardPortfolio } from "../types/dashboard";
 import type { StockItem } from "@/components/shared/cards/StockTable";
 
-// Warna untuk setiap portfolio berdasarkan index (dapat diperluas)
 const PORTFOLIO_COLORS = [
   "bg-brand",
   "bg-brand-400",
@@ -11,9 +9,6 @@ const PORTFOLIO_COLORS = [
   "bg-emerald-400",
 ];
 
-/**
- * Memetakan data saham rekomendasi dari format API ke format yang dibutuhkan StockTable.
- */
 export function mapRecommendedStocks(stocks: DashboardRecommendedStock[]): StockItem[] {
   return stocks.map((stock, index) => ({
     id: index + 1,
@@ -32,9 +27,6 @@ interface WalletAllocation {
   color: string;
 }
 
-/**
- * Memetakan data portfolios dari format API ke format alokasi yang dibutuhkan WalletSummary.
- */
 export function mapPortfoliosToAllocations(portfolios: DashboardPortfolio[]): WalletAllocation[] {
   return portfolios.map((portfolio, index) => ({
     id: portfolio.id || String(index + 1),

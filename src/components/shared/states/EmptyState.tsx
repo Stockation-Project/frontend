@@ -22,7 +22,6 @@ const EmptyState: React.FC<EmptyStateProps> = ({
 }) => {
   return (
     <div className="w-full bg-background-primary border border-border-primary rounded-xl p-4 flex flex-col items-center justify-center text-center">
-      {/* Icon Area dengan lingkaran soft green */}
       <div className="w-12 h-12 p-3 bg-brand-50 rounded-lg flex items-center justify-center mb-4">
         <Icon className="w-full h-full text-brand" />
       </div>

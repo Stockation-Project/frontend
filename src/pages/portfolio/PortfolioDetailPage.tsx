@@ -19,7 +19,6 @@ import PageHeader from "@/components/shared/layout/PageHeader";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import EmptyState from "@/components/shared/states/EmptyState";
 
-// Warna alokasi (konsisten dengan DashboardPages)
 const ALLOCATION_COLORS = [
   "bg-brand",
   "bg-brand-500",
@@ -32,7 +31,6 @@ const PortfolioDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  // Hook untuk detail portfolio yang sedang dilihat
   const {
     portfolio,
     enrichedHoldings,
@@ -43,7 +41,6 @@ const PortfolioDetailPage: React.FC = () => {
     error: detailError,
   } = usePortfolioDetail(id);
 
-  // Hook untuk slider daftar portfolio (reuse dari dashboard)
   const {
     data: dashboardData,
     isLoading: isDashboardLoading,
@@ -91,7 +88,6 @@ const PortfolioDetailPage: React.FC = () => {
     );
   }
 
-  // Map warna alokasi untuk slider portfolio (konsisten dengan DashboardPages)
   const portfoliosWithColors = (dashboardData?.portfolios || []).map((p) => ({
     ...p,
     allocations: (p.allocations || []).map((alloc, idx) => ({
@@ -108,16 +104,16 @@ const PortfolioDetailPage: React.FC = () => {
       transition={{ duration: 0.4 }}
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      {/* Header dengan tombol kembali */}
+      {/* Header */}
       <PageHeader
         title="Portofolio"
         description={portfolio ? `Melihat isi dari dompet: ${portfolio.name}` : "Pilih dompet untuk melihat detail"}
         showBackButton={false}
       />
 
-      {/* Konten Utama di bawah Header yang bisa di-scroll secara independen */}
+      {/* Content */}
       <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-8 no-scrollbar">
-        {/* Section 1: Slider Daftar Portfolio (sama seperti dashboard) */}
+        {/* Card Section */}
         <div>
           <PortfolioSection
             portfolios={portfoliosWithColors}
@@ -139,7 +135,7 @@ const PortfolioDetailPage: React.FC = () => {
           />
         </div>
 
-        {/* Section 2: Detail Portfolio Card atau Empty State */}
+        {/* Detail Portfolio */}
         {!id || !portfolio ? (
           <EmptyState
             icon={Briefcase}

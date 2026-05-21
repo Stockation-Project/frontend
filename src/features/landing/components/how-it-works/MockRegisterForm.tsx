@@ -17,7 +17,6 @@ const MockRegisterForm = () => {
         }}
         className="w-full bg-white rounded-xl border border-border-primary p-3.5 shadow-sm space-y-2.5 text-left absolute top-4"
       >
-        {/* FIELD INPUT EMAIL */}
         <div className="space-y-1">
           <label className="text-[10px] font-medium text-text-muted">Email</label>
           <div className="relative h-8 w-full border border-border-primary rounded-lg px-2.5 flex items-center bg-background-primary overflow-hidden">
@@ -57,7 +56,6 @@ const MockRegisterForm = () => {
           </div>
         </div>
 
-        {/* FIELD INPUT KATA SANDI */}
         <div className="space-y-1 relative">
           <label className="text-[10px] font-medium text-text-muted">Kata sandi</label>
           <div className="h-8 w-full border border-border-primary rounded-lg px-2.5 flex items-center bg-background-primary justify-between relative overflow-hidden">
@@ -112,7 +110,6 @@ const MockRegisterForm = () => {
           </div>
         </div>
 
-        {/* TOMBOL DAFTAR */}
         <div className="pt-2">
           <motion.div
             animate={{
@@ -130,7 +127,6 @@ const MockRegisterForm = () => {
           </motion.div>
         </div>
 
-        {/* KURSOR */}
         <motion.div
           animate={{
             x: [120, 120, 194, 194, 120, 120],

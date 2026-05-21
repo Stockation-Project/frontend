@@ -7,10 +7,6 @@ interface PortfolioLegendProps {
   isDarkBg?: boolean;
 }
 
-/**
- * Komponen Legenda reusable — menampilkan daftar ticker + persentase
- * dengan dot warna yang sesuai. Digunakan di PortfolioCard dan PortfolioDetailCard.
- */
 const PortfolioLegend: React.FC<PortfolioLegendProps> = ({ allocations, isDarkBg = false }) => {
   if (allocations.length === 0) {
     return (

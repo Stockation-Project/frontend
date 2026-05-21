@@ -10,10 +10,6 @@ interface PortfolioDetailTableProps {
   portfolioId: string;
 }
 
-/**
- * Tabel detail holdings di dalam sebuah portfolio.
- * Menampilkan kolom: Emiten, Alokasi, Jumlah Lot, Laba/Rugi, Aksi.
- */
 const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
   holdings,
   portfolioId,
@@ -32,7 +28,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
 
   return (
     <div className="w-full overflow-x-auto">
-      {/* Table Header - Menggunakan grid-cols-12 baik di mobile maupun desktop dengan col-span responsif */}
+      {/* Table Header */}
       <div className="grid grid-cols-12 gap-1.5 md:gap-4 px-3 md:px-6 py-3.5 text-[9px] md:text-xs font-semibold text-text-muted uppercase tracking-wider border-b border-border-primary bg-background-primary/50">
         <div className="col-span-4 md:col-span-3">Emiten</div>
         <div className="col-span-3 md:col-span-3 text-center">Alokasi</div>
@@ -54,7 +50,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
             }
             className="grid grid-cols-12 gap-1.5 md:gap-4 items-center px-3 md:px-6 py-2.5 md:py-3 border-b border-border-secondary hover:bg-background-secondary/70 active:bg-background-secondary/90 transition-colors cursor-pointer"
           >
-            {/* Kolom 1: Emiten — Ticker & Nama */}
+            {/* col 1 */}
             <div className="col-span-4 md:col-span-3">
               <div className="flex items-center gap-2">
                 <div>
@@ -68,7 +64,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
               </div>
             </div>
 
-            {/* Kolom 2: Alokasi — Jumlah investasi & persentase */}
+            {/* col 2*/}
             <div className="col-span-3 md:col-span-3 text-center">
               <p className="font-medium text-text-primary text-[10px] sm:text-xs md:text-sm">
                 {formatCurrencyIDR(holding.investedAmount)}
@@ -80,7 +76,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
               </p>
             </div>
 
-            {/* Kolom 3: Jumlah Lot */}
+            {/* col 3 */}
             <div className="col-span-2 md:col-span-2 text-center">
               <p className="font-medium text-text-primary text-[10px] sm:text-xs md:text-sm">
                 {holding.totalLots} Lot
@@ -90,7 +86,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
               </p>
             </div>
 
-            {/* Kolom 4: Laba/Rugi */}
+            {/* col 4 */}
             <div className="col-span-2 md:col-span-2 text-center">
               <div className="flex flex-col items-center gap-0.5">
                 {/* Persentase */}
@@ -140,9 +136,8 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
               </div>
             </div>
 
-            {/* Kolom 5: Aksi - Chevron Navigasi di Mobile & Tombol Detail di Desktop */}
+            {/* col 5: Aksi*/}
             <div className="col-span-1 md:col-span-2 flex justify-end items-center">
-              {/* Chevron Arrow Kanan di Mobile */}
               <div className="block md:hidden">
                 <svg
                   className="w-3.5 h-3.5 text-slate-400 hover:text-brand transition-colors"
@@ -163,7 +158,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
               <div className="hidden md:block">
                 <button
                   onClick={(e) => {
-                    e.stopPropagation(); // Mencegah onClick pada baris terpicu
+                    e.stopPropagation();
                     navigate(`/portfolio/${portfolioId}/stocks/${holding.ticker}`);
                   }}
                   className="px-4 py-1.5 text-xs font-medium text-text-secondary bg-background-primary border border-border-primary rounded-lg hover:bg-background-secondary transition-all cursor-pointer flex items-center gap-1"

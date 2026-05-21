@@ -35,7 +35,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onUpdateAvatar, isL
     reader.readAsDataURL(file);
     reader.onload = () => {
       const base64String = reader.result as string;
-      onUpdateAvatar(base64String); // Memicu proses unggah di parent
+      onUpdateAvatar(base64String);
     };
     reader.onerror = () => {
       toast.error("Gagal membaca file gambar.");

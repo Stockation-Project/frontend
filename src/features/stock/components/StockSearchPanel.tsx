@@ -38,7 +38,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
           onChange={(e) => {
             setSearchQuery(e.target.value);
             if (e.target.value && activeTab === "Rekomendasi") {
-              setActiveTab("Manual"); // auto switch if typing
+              setActiveTab("Manual");
             }
           }}
           className="pl-9 bg-background-secondary border-border-primary rounded-lg"

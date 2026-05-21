@@ -2,10 +2,6 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-/**
- * Skeleton loader untuk halaman Detail Portfolio.
- * Menyerupai layout asli agar user familiar saat data sedang dimuat.
- */
 const PortfolioDetailSkeleton: React.FC = () => {
   return (
     <div className="w-full animate-in fade-in duration-300">

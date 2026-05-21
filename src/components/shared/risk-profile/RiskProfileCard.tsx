@@ -31,7 +31,7 @@ const RiskProfileCard: React.FC<RiskProfileCardProps> = ({
 
   return (
     <div className="w-full bg-background-primary border border-border-primary rounded-2xl p-4">
-      {/* Header Widget (Conditional) */}
+      {/* Header Widget */}
       {showHeader && (
         <div className="flex flex-col justify-between items-start mb-6">
           <h3 className="text-base font-medium text-text-secondary mb-2">Profil Resiko</h3>

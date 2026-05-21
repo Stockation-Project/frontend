@@ -38,10 +38,10 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
       <SectionHeader title="Detail Portofolio" />
 
       <div className="w-full bg-background-primary border border-border-primary rounded-xl overflow-hidden">
-        {/* Header Section — Nama, Info, Ringkasan Saldo */}
+        {/* Header Section*/}
         <div className="p-6 pb-4">
           <div className="flex flex-row items-start justify-between gap-4 mb-6 border-b border-border-secondary pb-6">
-            {/* Kiri: Identitas Portfolio (Kapsul Aktif Premium) */}
+            {/* left */}
             <div>
               <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-brand uppercase tracking-wider mb-2">
                 Dompet Investasi
@@ -52,7 +52,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
               </h3>
             </div>
 
-            {/* Kanan: Ringkasan Saldo */}
+            {/* right */}
             <div className="text-right">
               <span className="inline-flex items-center gap-1 text-[10px] font-bold text-text-muted uppercase tracking-wider mb-2">
                 Total Investasi

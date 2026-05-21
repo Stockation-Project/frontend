@@ -28,7 +28,7 @@ const SidebarPortfolioCard: React.FC<SidebarPortfolioCardProps> = ({
       cardRef.current.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
-        inline: isMobile ? "center" : "start", // HP di tengah, laptop/tablet di kiri (start)
+        inline: isMobile ? "center" : "start",
       });
     }
   }, [isActive]);

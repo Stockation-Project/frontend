@@ -38,11 +38,11 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
 
   useEffect(() => {
     if (isActive && cardRef.current) {
-      const isMobile = window.innerWidth < 768; // HP (< 768px)
+      const isMobile = window.innerWidth < 768;
       cardRef.current.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
-        inline: isMobile ? "center" : "start", // HP di tengah, laptop/tablet di kiri (start)
+        inline: isMobile ? "center" : "start",
       });
     }
   }, [isActive]);
@@ -54,7 +54,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
         ? "bg-background-primary border-brand ring-1 ring-brand"
         : "bg-background-primary border-border-primary hover:border-border-secondary"
       }`}>
-      {/* 1. Bagian Atas (Header) */}
+      {/* Header */}
       <div className={`px-4 py-3 flex items-start gap-3 ${
         isHeaderGreen ? "bg-brand" : "bg-background-secondary border-b border-border-secondary"
       }`}>
@@ -76,7 +76,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
       </div>
 
       <div className="p-4 flex-1 flex flex-col justify-between">
-        {/* 2. Bagian Tengah (Progress Bar Alokasi) */}
+        {/* allokasi portofolio */}
         <div className="mb-4">
           {/* Bar */}
           <div className="w-full h-2 flex rounded-full overflow-hidden bg-border-secondary mb-2 gap-0.5">
@@ -98,9 +98,8 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
           <PortfolioLegend allocations={allocations} isDarkBg={false} />
         </div>
 
-        {/* 3. Bagian Bawah (Footer: Terpakai & Tersedia) */}
+        {/* footer: cash, invested, profit/loss */}
         <div className="flex items-start justify-between pt-4 border-t border-border-secondary min-h-[60px]">
-          {/* Kiri: Tersedia (Cash) */}
           <div>
             <p className="text-[10px] font-medium mb-0.5 text-text-muted">
               Saldo Tersedia
@@ -110,7 +109,6 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
             </p>
           </div>
 
-          {/* Kanan: Terpakai (Invested) */}
           <div className="text-right flex flex-col items-end">
             <p className="text-[10px] font-medium mb-0.5 text-text-muted">
               Terpakai
@@ -118,7 +116,6 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
             <p className="text-sm font-semibold text-text-primary">
               {formatCurrencyIDR(investedBalance, { absolute: true })}
             </p>
-            {/* Teks Profit/Loss */}
             {investedBalance > 0 && (
               <p
                 className={`text-[10px] font-medium mt-0.5 ${isProfit ? "text-brand" : "text-error-500"
