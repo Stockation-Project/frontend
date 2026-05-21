@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const LoginPage: React.FC = () => {
   const { formData, isLoading, errorMessage, handleInputChange, handleSubmit } =
@@ -17,7 +16,7 @@ const LoginPage: React.FC = () => {
       exit={{ opacity: 0, x: 80 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Kolom Kiri Form Login */}
+      {/*Form Login */}
       <motion.div
         className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20"
         initial={{ opacity: 0, x: -40 }}

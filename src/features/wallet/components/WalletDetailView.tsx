@@ -24,7 +24,6 @@ const WalletDetailView: React.FC<WalletDetailViewProps> = ({
   stats,
   filter,
   onFilterChange,
-  onTopUp,
   onWithdraw,
   isLoading = false,
   isLoadingHistory = false,

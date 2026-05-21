@@ -98,20 +98,18 @@ const SimulationBuyPage: React.FC = () => {
           {/* TAB CONTENT: Rekomendasi */}
           {mainTab === "Rekomendasi" && (
             <div className="grid grid-cols-1 xl:grid-cols-10 gap-6 items-start animate-fade-in">
-              {/* Kolom Kiri: Search & Banner Info */}
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[650px]">
                 {/* Banner Informasi Mode Alokasi Otomatis */}
                 <div className="p-4 bg-gradient-to-b from-brand-100 to-brand/5 border border-brand-200 rounded-xl shadow-sm flex flex-col gap-2">
                   <h4 className="text-xs font-medium text-brand flex items-center gap-1.5 animate-pulse">
-  <Sparkles className="w-3.5 h-3.5 text-brand animate-pulse" />
-  Mode Alokasi Otomatis Aktif
-</h4>
+                   <Sparkles className="w-3.5 h-3.5 text-brand animate-pulse" />
+                    Mode Alokasi Otomatis Aktif
+                  </h4>
                   <p className="text-[10px] font-regular text-text-secondary leading-relaxed text-justify">
                     Sistem sedang mengoptimalkan portofoliomu secara otomatis berdasarkan profil risikomu. Untuk menjaga akurasi strategi sistem, jumlah lot tidak dapat diubah manual di mode ini. Kamu tetap bisa menghapus atau mengurangi jenis saham terpilih.
                   </p>
                 </div>
 
-                {/* Tinggi dibatasi 320px (4-5 baris saham) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full">
                   <StockSearchPanel
                     searchQuery={state.searchQuery}
@@ -123,7 +121,6 @@ const SimulationBuyPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Kolom Tengah: Cart & Tombol Trigger AI */}
               <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[685px]">
                 {state.cart.length >= 2 && (
                   <button
@@ -149,7 +146,6 @@ const SimulationBuyPage: React.FC = () => {
                   </button>
                 )}
 
-                {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
                   <CartListPanel
                     selectedPortfolio={state.selectedPortfolio}
@@ -157,14 +153,12 @@ const SimulationBuyPage: React.FC = () => {
                     onRemove={handlers.removeStockFromCart}
                     onUpdateLot={handlers.updateStockLot}
                     onToggleExpand={handlers.toggleExpandStock}
-                    isReadOnlyLots={true} // Kunci input lot manual
+                    isReadOnlyLots={true}
                   />
                 </div>
               </div>
 
-              {/* Kolom Kanan: Summary */}
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
-                {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
                   <SimulationSummaryPanel
                     cart={state.cart}
@@ -181,12 +175,10 @@ const SimulationBuyPage: React.FC = () => {
             </div>
           )}
 
-          {/* TAB CONTENT: Manual (The 3 Columns) */}
+          {/* TAB CONTENT: Manual */}
           {mainTab === "Manual" && (
             <div className="grid grid-cols-1 xl:grid-cols-10 gap-6 items-start">
-              {/* Kolom Kiri: Search */}
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
-                {/* Tinggi dibatasi 320px (4-5 baris saham) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full">
                   <StockSearchPanel
                     searchQuery={state.searchQuery}
@@ -198,9 +190,7 @@ const SimulationBuyPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Kolom Tengah: Cart */}
               <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[685px]">
-                {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
                   <CartListPanel
                     selectedPortfolio={state.selectedPortfolio}
@@ -212,9 +202,7 @@ const SimulationBuyPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Kolom Kanan: Summary */}
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
-                {/* Hug-content (auto) di HP/tablet, dan mengisi penuh sisa kolom di desktop */}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
                   <SimulationSummaryPanel
                     cart={state.cart}
@@ -224,7 +212,6 @@ const SimulationBuyPage: React.FC = () => {
                     remainingBalance={state.remainingBalance}
                     isBuying={state.isBuying}
                     onConfirmBuy={() => handlers.handleConfirmBuy(() => {
-                      // Optional callback on success, e.g. navigate back to portfolio detail
                     })}
                     optimizationMetrics={state.optimizationMetrics}
                   />

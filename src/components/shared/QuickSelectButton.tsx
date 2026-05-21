@@ -8,10 +8,6 @@ interface QuickSelectButtonProps {
   className?: string;
 }
 
-/**
- * Tombol pilihan cepat (quick select) dengan state aktif/tidak aktif.
- * Digunakan di TopUpModal dan CreatePortfolioModal untuk memilih nominal.
- */
 const QuickSelectButton: React.FC<QuickSelectButtonProps> = ({
   label,
   isSelected,

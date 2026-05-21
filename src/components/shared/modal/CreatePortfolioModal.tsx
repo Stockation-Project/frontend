@@ -31,7 +31,6 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
   const [amountText, setAmountText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Reset state tiap kali modal dibuka
   useEffect(() => {
     if (isOpen) {
       setName("");
@@ -40,7 +39,6 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
     }
   }, [isOpen]);
 
-  // Handler untuk input manual (hanya menerima angka)
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[^0-9]/g, ""); // Hapus semua karakter non-angka
     const numericValue = parseInt(rawValue, 10) || 0;
@@ -49,7 +47,6 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
     setAmountText(numericValue > 0 ? formatCurrencyIDR(numericValue) : "");
   };
 
-  // Handler untuk klik tombol nominal cepat
   const handleQuickSelect = (value: number) => {
     setAmount(value);
     setAmountText(formatCurrencyIDR(value));
@@ -69,7 +66,6 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
     }
   };
 
-  // Validasi: tombol disabled jika nama kosong, saldo 0, atau saldo kurang
   const isInvalid = !name.trim() || amount <= 0 || amount > currentBalance;
 
   return (
@@ -83,7 +79,7 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
       isLoading={isLoading}
     >
       <div className="space-y-4">
-        {/* Input Nama Portofolio */}
+        {/* Area Nama Portofolio */}
         <div>
           <label className="block text-xs font-medium text-slate-700 mb-2">
             Nama Dompet:
@@ -134,7 +130,7 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
             </span>
           </div>
 
-          {/* Pesan Error Jika Saldo Kurang */}
+          {/* Pesan Error */}
           {amount > currentBalance && (
             <p className="text-error-500 text-[10px] font-medium">
               Saldo Dompet Utama tidak mencukupi.

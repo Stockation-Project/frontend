@@ -9,10 +9,6 @@ interface AuthAlertProps {
   message: string;
 }
 
-/**
- * Komponen Alert reusable untuk halaman Auth (Login & Register).
- * Menghindari duplikasi struktur Alert antara LoginPages dan RegisterPage.
- */
 const AuthAlert: React.FC<AuthAlertProps> = ({ type, title, message }) => {
   if (type === "error") {
     return (

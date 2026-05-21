@@ -26,7 +26,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
       {title && <SectionHeader title={title} />}
 
       <div className="flex flex-col border border-border-primary max-h-[380px] overflow-y-auto px-4 rounded-xl">
-        {/* Header Bar */}
+        {/* Header Table */}
         <div className="flex items-center justify-between py-3 border-b border-border-primary px-2 -mx-2 text-[10px] font-medium text-text-muted uppercase tracking-wider">
           <div className="flex-1 min-w-[120px] md:min-w-[150px]">Emiten</div>
           <div className="hidden md:block flex-1 text-center">Chart (1D)</div>
@@ -44,7 +44,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
             onClick={() => navigate(`/stock/${stock.ticker}`)}
             className="group flex items-center justify-between py-2.5 border-b border-border-primary hover:bg-background-secondary px-2 -mx-2 transition-colors cursor-pointer"
           >
-            {/* Kolom 1: Ticker & Nama */}
+            {/* Col 1: Ticker & Nama */}
             <div className="flex-1 min-w-[120px] md:min-w-[150px]">
               <h4 className="font-medium text-text-primary text-xs">
                 {stock.ticker}
@@ -52,7 +52,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
               <p className="text-[10px] font-regular text-text-muted truncate max-w-[100px] sm:max-w-none">{stock.name}</p>
             </div>
 
-            {/* Kolom 2: Grafik Mini (Sparkline) - Desktop Only */}
+            {/* Col 2: Grafik Mini */}
             <div className="hidden md:flex flex-1 justify-center items-center px-4">
               <svg
                 width="60"
@@ -121,35 +121,34 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
               </svg>
             </div>
 
-            {/* Kolom 3: Harga saat ini - Desktop Only */}
+            {/* Col 3: Harga saat ini */}
             <div className="hidden md:block flex-1 text-center min-w-[100px]">
               <span className="font-medium text-text-primary text-xs md:text-sm">
                 {formatCurrencyIDR(stock.price)}
               </span>
             </div>
 
-            {/* Kolom 4: Indikator % - Desktop Only */}
+            {/* Col 4: Indikator % */}
             <div className="hidden md:flex flex-1 justify-end items-center min-w-[80px]">
               <span
                 className={`flex items-center text-xs md:text-sm font-medium ${stock.isPositive ? "text-brand" : "text-error-500"}`}
               >
-                {/* Segitiga Solid Kustom */}
                 <svg
                   className="w-3 h-3 mr-1"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
                   {stock.isPositive ? (
-                    <path d="M12 4l8 16H4z" /> // Segitiga hadap atas
+                    <path d="M12 4l8 16H4z" />
                   ) : (
-                    <path d="M12 20l8-16H4z" /> // Segitiga hadap bawah
+                    <path d="M12 20l8-16H4z" /> 
                   )}
                 </svg>
                 {stock.change}%
               </span>
             </div>
 
-            {/* Kolom Gabungan (Harga & Perubahan atas-bawah) - Mobile/HP Only */}
+            {/* Col 5: Harga & Perubahan - Mobile Only */}
             <div className="flex md:hidden flex-col items-end justify-center flex-1 min-w-[100px] text-right">
               <span className="font-semibold text-text-primary text-xs">
                 {formatCurrencyIDR(stock.price)}

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import type { User } from "@/features/auth";
 import type { ProfileUpdatePayload } from "../types/profile";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "lucide-react";
 
 interface PersonalInfoFormProps {
   user: User;
@@ -70,7 +69,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
           />
         </div>
 
-        {/* Username - Actually using email or first name as username for now as there is no username column */}
+        {/* Username */}
         <div className="space-y-2">
           <label className="text-xs font-medium text-text-muted tracking-wider">Username</label>
           <input 

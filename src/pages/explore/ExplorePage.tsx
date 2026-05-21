@@ -18,7 +18,7 @@ const ExplorePage: React.FC = () => {
   // Mapping data for StockTable
   const mapStocksForTable = (stocks: any[]) => {
     return stocks.map((s) => ({
-      id: Math.random(), // Just for key in table
+      id: Math.random(), 
       ticker: s.ticker,
       name: s.name,
       price: s.current_price,

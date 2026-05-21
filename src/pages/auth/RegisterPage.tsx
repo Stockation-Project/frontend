@@ -38,7 +38,7 @@ const RegisterPage: React.FC = () => {
         />
       </motion.div>
 
-      {/* --- KOLOM KANAN (Panel Form Register) --- */}
+      {/* Form Register */}
       <motion.div
         className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20 overflow-y-auto h-full"
         style={{ scrollbarWidth: "none" }}

@@ -9,17 +9,14 @@ interface AuthContextType {
   isAuthenticated: boolean;
 }
 
-// buat context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// buat provider
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  // buat use effect
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
@@ -30,7 +27,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, []);
 
-  // fungsi buat simpen token ke localstorage
   const login = (userData: User, tokenData: string) => {
     setUser(userData)
     setToken(tokenData)
@@ -38,7 +34,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem('user', JSON.stringify(userData))
   }
 
-  // fungsi ngilangin data token pas user logout
   const logout = () => {
     setUser(null);
     setToken(null);

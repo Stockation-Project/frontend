@@ -46,7 +46,6 @@ const Sidebar: React.FC = () => {
 
               {/* Tooltip */}
               <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 flex items-center">
-                {/* TAMBAH: panah segitiga */}
                 <div className="w-2 h-2 bg-background-primary border-l border-b border-border-primary rotate-45 -mr-1 flex-shrink-0" />
                 {/* Label */}
                 <div className="bg-background-primary text-slate-800 text-xs font-medium px-3 py-1.5 rounded-lg border border-border-primary shadow-md whitespace-nowrap">

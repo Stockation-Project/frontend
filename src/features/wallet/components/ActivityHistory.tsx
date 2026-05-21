@@ -97,7 +97,7 @@ const ActivityHistory: React.FC<ActivityHistoryProps> = ({
 
   return (
     <div className="space-y-3 h-[310px] overflow-hidden flex flex-col">
-      {/* Header Responsif: Bertumpuk di mobile, sejajar di desktop */}
+      {/* Header*/}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pb-2 border-b border-border-primary flex-shrink-0">
         <h3 className="text-xs sm:text-sm font-semibold text-text-muted">Riwayat Mutasi</h3>
         <div className="flex gap-0.5 bg-border-secondary p-0.5 rounded-lg overflow-x-auto no-scrollbar max-w-full">

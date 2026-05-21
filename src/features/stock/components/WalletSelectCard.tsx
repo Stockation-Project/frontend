@@ -1,6 +1,6 @@
 // src/components/simulation/WalletSelectCard.tsx
 import React, { useRef, useEffect } from "react";
-import { Wallet, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 
 interface WalletSelectCardProps {
@@ -23,11 +23,11 @@ const WalletSelectCard: React.FC<WalletSelectCardProps> = ({
 
   useEffect(() => {
     if (isSelected && cardRef.current) {
-      const isMobile = window.innerWidth < 768; // HP (< 768px)
+      const isMobile = window.innerWidth < 768;
       cardRef.current.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
-        inline: isMobile ? "center" : "start", // HP di tengah, laptop/tablet di kiri (start)
+        inline: isMobile ? "center" : "start",
       });
     }
   }, [isSelected]);

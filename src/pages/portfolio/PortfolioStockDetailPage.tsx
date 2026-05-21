@@ -28,7 +28,6 @@ const PortfolioStockDetailPage = () => {
   const [isSellModalOpen, setIsSellModalOpen] = useState(false);
   const [isWatchlist, setIsWatchlist] = useState(false);
 
-  // 1. Ambil data holding & transaksi dari portfolio
   const {
     holding,
     transactions,
@@ -36,10 +35,8 @@ const PortfolioStockDetailPage = () => {
     refetch: refetchPortfolio,
   } = usePortfolioStockDetail(portfolioId, ticker);
 
-  // 2. Ambil data saham (Sama persis seperti di StockDetailPage)
   const { data: stockData, isLoading: loadingStock } = useStockDetail(ticker);
 
-  // Sinkronkan state lokal dengan data dari backend saat berhasil dimuat
   useEffect(() => {
     if (stockData) {
       setIsWatchlist(!!stockData.is_watchlist);
@@ -60,13 +57,11 @@ const PortfolioStockDetailPage = () => {
     }
   };
 
-  // 3. Proses data chart menggunakan hook bawaan kamu
   const chartRawData = stockData?.chart_data || stockData?.chart_1M || [];
   const { activeFilter, setActiveFilter, filteredChartData, priceChange } =
     useChartFilter(chartRawData, stockData?.current_price);
 
   const handleBuy = () => {
-    // Navigasi ke simulasi beli
     navigate("/simulation", {
       state: {
         prefillStock: {
@@ -83,7 +78,7 @@ const PortfolioStockDetailPage = () => {
   };
 
   const handleSellSuccess = () => {
-    refetchPortfolio(); // Refresh data holding dan transaksi
+    refetchPortfolio();
   };
 
   if (loadingPortfolio || loadingStock) return <PortfolioStockDetailSkeleton />;
@@ -101,29 +96,17 @@ const PortfolioStockDetailPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      // ======================================================================
-      // LAYOUT RESPONSIF:
-      // Mobile/Tablet: Scroll halaman normal (w-full h-auto)
-      // Desktop (xl): Scroll kolom independen (h-[calc(100vh-2rem)] overflow-hidden)
-      // ======================================================================
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      {/* 1. HEADER HALAMAN / BACK BUTTON */}
+      {/* HEADER  */}
       <PageHeader
         title=""
         showBackButton={true}
       />
 
-      {/* ============================================================== */}
-      {/* GRID CONTAINER RESPONSIF */}
-      {/* ============================================================== */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">
-        {/* Pembungkus Kolom Info Kiri (7/12) */}
-        {/* ====================================================================== */}
-        {/* KOLOM KIRI: Scroll independen hanya aktif di desktop (xl) */}
-        {/* ====================================================================== */}
         <div className="xl:col-span-7 flex flex-col gap-6 xl:h-full xl:overflow-y-auto pr-2 pb-6 scrollbar-thin">
-          {/* 1a. INFORMASI EMITEN (Nama, Ticker, Sektor, Bookmark) */}
+          {/* INFO PERUSAHAAN */}
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
@@ -149,7 +132,7 @@ const PortfolioStockDetailPage = () => {
             </Button>
           </div>
 
-          {/* 1b. HARGA SAHAM REALTIME */}
+          {/*HARGA SAHAM REALTIME*/}
           <div className="flex items-end gap-2">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-text-primary tracking-tight leading-none">
               {formatCurrencyIDR(stockData.current_price)}
@@ -160,7 +143,7 @@ const PortfolioStockDetailPage = () => {
               {priceChange.isPositive ? "▲" : "▼"} {priceChange.percent}%
             </span>
           </div>
-          {/* 2a. CHART AREA */}
+          {/* CHART AREA*/}
           <StockAreaChart
             data={filteredChartData}
             activeFilter={activeFilter}
@@ -169,12 +152,8 @@ const PortfolioStockDetailPage = () => {
           />
           <TransactionHistoryList transactions={transactions} />
         </div>
-        {/* KONTEN PELENGKAP - SEBELAH KANAN (5/12) */}
-        {/* ====================================================================== */}
-        {/* KOLOM KANAN: Scroll independen hanya aktif di desktop (xl) */}
-        {/* ====================================================================== */}
+
         <div className="xl:col-span-5 flex flex-col gap-4 xl:h-full xl:overflow-y-auto pb-6 xl:pb-0 relative scrollbar-thin">
-          {/* [KHUSUS PORTFOLIO] 3d. WIDGET POSISI KAMU / TOMBOL JUAL & BELI */}
           <PortfolioPositionWidget
             symbol={ticker!}
             holding={holding}
@@ -182,7 +161,7 @@ const PortfolioStockDetailPage = () => {
             onBuy={handleBuy}
             onSell={handleSell}
           />
-          {/* 3a. WIDGET STATISTIK SAHAM */}
+          {/* WIDGET STATISTIK SAHAM */}
           <div className="bg-background-primary">
             <h3 className="text-base font-medium text-text-secondary mb-2">Statistik Saham</h3>
             <div className="grid grid-cols-2 gap-2">
@@ -219,7 +198,7 @@ const PortfolioStockDetailPage = () => {
             </div>
           </div>
 
-          {/* 3b. WIDGET PERGERAKAN ANOMALI */}
+          {/*PERGERAKAN ANOMALI */}
           <div className="bg-background-primary">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
@@ -227,7 +206,7 @@ const PortfolioStockDetailPage = () => {
             <AnomalyTable data={stockData.anomaly_history || []} />
           </div>
 
-          {/* 3c. WIDGET RANGKUMAN PERUSAHAAN */}
+          {/* RANGKUMAN PERUSAHAAN */}
           <div className="px-2">
             <h3 className="text-base font-medium text-text-secondary mb-2">Rangkuman</h3>
             <div className="max-h-37 overflow-y-auto">
@@ -235,9 +214,7 @@ const PortfolioStockDetailPage = () => {
                 {stockData.about_company || `${stockData.name} (${stockData.ticker}) adalah salah satu perusahaan terkemuka di sektornya. Perusahaan ini memiliki fundamental yang kuat dan prospek pertumbuhan yang menjanjikan dalam jangka panjang.`}
               </p>
             </div>
-          </div>
-
-          
+          </div> 
         </div>
       </div>
 
