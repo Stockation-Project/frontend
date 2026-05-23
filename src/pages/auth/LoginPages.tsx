@@ -1,4 +1,11 @@
-import { useLogin, PasswordInputField, FormInputGroup, AuthVisualPanel, AuthHeader, AuthAlert } from "@/features/auth";
+import {
+  useLogin,
+  PasswordInputField,
+  FormInputGroup,
+  AuthVisualPanel,
+  AuthHeader,
+  AuthAlert,
+} from "@/features/auth";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import registerBg from "@/assets/images/auth/register-bg.jpg";
@@ -53,7 +60,11 @@ const LoginPage: React.FC = () => {
 
             {/* Area Alert untuk Error */}
             {errorMessage && (
-              <AuthAlert type="error" title="Gagal Masuk" message={errorMessage} />
+              <AuthAlert
+                type="error"
+                title="Gagal Masuk"
+                message={errorMessage}
+              />
             )}
 
             <Button
@@ -65,7 +76,11 @@ const LoginPage: React.FC = () => {
                 <div className="flex items-center justify-center gap-2">
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                     className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
                   />
                   <span>Memproses...</span>
