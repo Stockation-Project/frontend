@@ -47,6 +47,30 @@ export function useRegister(): UseRegisterReturn {
     setErrorMessage("");
     setSuccessMessage("");
 
+    // Validasi input dasar
+    if (!formData.firstName.trim() || !formData.lastName.trim()) {
+      setErrorMessage("Nama depan dan nama belakang wajib diisi.");
+      return;
+    }
+
+    // Validasi format email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage("Format email tidak valid.");
+      return;
+    }
+
+    // Validasi kekuatan password
+    if (formData.password.length < 8) {
+      setErrorMessage("Kata sandi harus terdiri dari minimal 8 karakter.");
+      return;
+    }
+
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
+      setErrorMessage("Kata sandi harus mengandung kombinasi huruf besar, huruf kecil, dan angka.");
+      return;
+    }
+
     // Validasi konfirmasi password
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Konfirmasi Kata Sandi Tidak Cocok");

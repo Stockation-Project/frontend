@@ -1,4 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import supabase from "@/lib/supabase";
+import authService from "../services/auth.service";
 import type { User } from "../types/auth";
 
 interface AuthContextType {
@@ -25,6 +27,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === "SIGNED_IN" && session?.user) {
+          // Sinkronisasi data Google ke Backend
+          try {
+            const response = await authService.syncGoogleUser(session, session.user);
+            if (response.data) {
+              setToken(response.data.token);
+              setUser(response.data.user);
+              
+              // Redirect otomatis setelah berhasil sync
+              if (!response.data.user.risk_profile) {
+                if (window.location.pathname !== "/questionnaire") {
+                  window.location.href = "/questionnaire";
+                }
+              } else if (window.location.pathname === "/" || window.location.pathname === "/login" || window.location.pathname === "/register") {
+                window.location.href = "/dashboard";
+              }
+            }
+          } catch (error) {
+            console.error("Gagal sinkronisasi user Google:", error);
+          }
+        } else if (event === "SIGNED_OUT") {
+          // Handle sign out if triggered from Supabase
+          authService.logout();
+          setToken(null);
+          setUser(null);
+        }
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const login = (userData: User, tokenData: string) => {
