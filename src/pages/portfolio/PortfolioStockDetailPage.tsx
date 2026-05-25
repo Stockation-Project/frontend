@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bookmark, ChevronLeft } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import {
   StockAreaChart,
   useStockDetail,
@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { toggleWatchlist } from "@/features/explore/services/explore.service";
 import { toast } from "sonner";
 
-const PortfolioStockDetailPage = () => {
+const PortfolioStockDetailPage: React.FC = () => {
   const { portfolioId, ticker } = useParams();
   const navigate = useNavigate();
   const [isSellModalOpen, setIsSellModalOpen] = useState(false);
@@ -169,31 +169,44 @@ const PortfolioStockDetailPage = () => {
                 title="Rata-rata tumbuh per tahun"
                 value={stockData.cagr ? `${(stockData.cagr * 100).toFixed(1)}%` : "+15.4%"}
                 tooltipText="CAGR dalam 3 tahun terakhir."
+                stockSymbol={stockData.ticker}
+                metricValue={stockData.cagr ? `${(stockData.cagr * 100).toFixed(1)}%` : "+15.4%"}
+                showOnboardingEnabled={true}
               />
               <StatCard
                 title="Tingkat hutang perusahaan"
                 value={stockData.der ? `${(stockData.der / 100).toFixed(1)}x` : "0.5x"}
                 tooltipText="Debt to Equity Ratio (DER)."
+                stockSymbol={stockData.ticker}
+                metricValue={stockData.der ? `${(stockData.der / 100).toFixed(1)}x` : "0.5x"}
               />
               <StatCard
                 title="Harga vs keuntungan"
                 value={stockData.per ? `${stockData.per.toFixed(1)}x` : "12.5x"}
                 tooltipText="Price to Earnings Ratio (PER)."
+                stockSymbol={stockData.ticker}
+                metricValue={stockData.per ? `${stockData.per.toFixed(1)}x` : "12.5x"}
               />
               <StatCard
                 title="Penghasilan tanpa jual saham"
                 value={stockData.dividend ? `${(stockData.dividend * 100).toFixed(1)}%` : "4.2%"}
                 tooltipText="Dividend Yield."
+                stockSymbol={stockData.ticker}
+                metricValue={stockData.dividend ? `${(stockData.dividend * 100).toFixed(1)}%` : "4.2%"}
               />
               <StatCard
                 title="Harga terendah tahun ini"
                 value={formatCurrencyIDR(stockData.day_low || 4489)}
                 tooltipText="Harga terendah dalam 52 minggu terakhir."
+                stockSymbol={stockData.ticker}
+                metricValue={formatCurrencyIDR(stockData.day_low || 4489)}
               />
               <StatCard
                 title="Harga tertinggi tahun ini"
                 value={formatCurrencyIDR(stockData.day_high || 9000)}
                 tooltipText="Harga tertinggi dalam 52 minggu terakhir."
+                stockSymbol={stockData.ticker}
+                metricValue={formatCurrencyIDR(stockData.day_high || 9000)}
               />
             </div>
           </div>
@@ -203,7 +216,7 @@ const PortfolioStockDetailPage = () => {
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
-            <AnomalyTable data={stockData.anomaly_history || []} />
+            <AnomalyTable data={stockData.anomaly_history || []} stockSymbol={stockData.ticker} />
           </div>
 
           {/* RANGKUMAN PERUSAHAAN */}

@@ -147,16 +147,23 @@ const StockDetailPage: React.FC = () => {
                 title="Rata-rata tumbuh per tahun"
                 value={data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"}
                 tooltipText="Compound Annual Growth Rate (CAGR) dalam 3 tahun terakhir."
+                stockSymbol={data.ticker}
+                metricValue={data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"}
+                showOnboardingEnabled={true}
               />
               <StatCard
                 title="Tingkat hutang perusahaan"
                 value={data.der ? `${(data.der / 100).toFixed(1)}x` : "-"}
                 tooltipText="Debt to Equity Ratio (DER). Di atas 1x berarti hutang lebih besar dari modal."
+                stockSymbol={data.ticker}
+                metricValue={data.der ? `${(data.der / 100).toFixed(1)}x` : "-"}
               />
               <StatCard
                 title="Harga vs keuntungan"
                 value={data.per ? `${data.per.toFixed(1)}x` : "-"}
                 tooltipText="Price to Earnings Ratio (PER). Berapa kali lipat kamu membayar untuk laba perusahaan."
+                stockSymbol={data.ticker}
+                metricValue={data.per ? `${data.per.toFixed(1)}x` : "-"}
               />
               <StatCard
                 title="Penghasilan tanpa jual saham"
@@ -164,16 +171,22 @@ const StockDetailPage: React.FC = () => {
                   data.dividend ? `${(data.dividend * 100).toFixed(1)}%` : "-"
                 }
                 tooltipText="Dividend Yield. Persentase keuntungan tunai tahunan yang dibagikan ke investor."
+                stockSymbol={data.ticker}
+                metricValue={data.dividend ? `${(data.dividend * 100).toFixed(1)}%` : "-"}
               />
               <StatCard
                 title="Harga terendah tahun ini"
                 value={formatCurrencyIDR(data.day_low || 4489)}
                 tooltipText="Harga terendah dalam 52 minggu terakhir."
+                stockSymbol={data.ticker}
+                metricValue={formatCurrencyIDR(data.day_low || 4489)}
               />
               <StatCard
                 title="Harga tertinggi tahun ini"
                 value={formatCurrencyIDR(data.day_high || 9000)}
                 tooltipText="Harga tertinggi dalam 52 minggu terakhir."
+                stockSymbol={data.ticker}
+                metricValue={formatCurrencyIDR(data.day_high || 9000)}
               />
             </div>
           </div>
@@ -182,7 +195,7 @@ const StockDetailPage: React.FC = () => {
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
-            <AnomalyTable data={data.anomaly_history} />
+            <AnomalyTable data={data.anomaly_history} stockSymbol={data.ticker} />
           </div>
 
           <div className="px-2">
