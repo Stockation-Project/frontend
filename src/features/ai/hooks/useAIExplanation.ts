@@ -7,9 +7,6 @@ export const useAIExplanation = () => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchExplanation = useCallback(async (term: string, context?: string) => {
-    // Jika sudah ada penjelasan, tidak perlu fetch lagi
-    if (explanation) return;
-    
     setIsLoading(true);
     setError(null);
     try {
@@ -17,10 +14,11 @@ export const useAIExplanation = () => {
       setExplanation(data);
     } catch (err: any) {
       setError(err.response?.data?.message || "Gagal mendapatkan penjelasan AI");
+      setExplanation(null);
     } finally {
       setIsLoading(false);
     }
-  }, [explanation]);
+  }, []);
 
   return { explanation, isLoading, error, fetchExplanation };
 };

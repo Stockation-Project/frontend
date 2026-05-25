@@ -216,7 +216,7 @@ const PortfolioStockDetailPage: React.FC = () => {
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
-            <AnomalyTable data={stockData.anomaly_history || []} />
+            <AnomalyTable data={stockData.anomaly_history || []} stockSymbol={stockData.ticker} />
           </div>
 
           {/* RANGKUMAN PERUSAHAAN */}

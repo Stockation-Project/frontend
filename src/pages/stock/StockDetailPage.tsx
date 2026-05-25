@@ -195,7 +195,7 @@ const StockDetailPage: React.FC = () => {
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
-            <AnomalyTable data={data.anomaly_history} />
+            <AnomalyTable data={data.anomaly_history} stockSymbol={data.ticker} />
           </div>
 
           <div className="px-2">
