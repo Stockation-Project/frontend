@@ -8,6 +8,8 @@ import type { RiskProfileKey } from "../data/riskProfile";
 import RiskProfileChart from "@/components/shared/risk-profile/RiskProfileChart";
 import RiskProfileContent from "@/components/shared/risk-profile/RiskProfileContent";
 
+import { useAuth } from "@/features/auth";
+
 interface ResultModalProps {
   isOpen: boolean;
   score: number;
@@ -22,6 +24,8 @@ const ResultModal: React.FC<ResultModalProps> = ({
   onContinue,
 }) => {
   const profile = RISK_PROFILES[profileKey];
+  const { user } = useAuth();
+  const userName = user?.first_name || "Pengguna";
 
   if (!profile) return null;
 
@@ -49,6 +53,8 @@ const ResultModal: React.FC<ResultModalProps> = ({
             label={profile.label}
             description={profile.description}
             variant="modal"
+            userName={userName}
+            profileKey={profileKey}
           />
 
           <Button

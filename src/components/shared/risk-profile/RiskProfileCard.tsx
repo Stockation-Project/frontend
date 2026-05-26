@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { RISK_PROFILES, type RiskProfileKey } from "@/features/questionnaire";
+import { Sparkles } from "lucide-react";
 import RiskProfileChart from "./RiskProfileChart";
 import RiskProfileContent from "./RiskProfileContent";
 
@@ -15,6 +16,7 @@ interface RiskProfileCardProps {
   showRetestButton?: boolean;
   /** Update date string, e.g. "20 Okt 2023" */
   updatedAt?: string;
+  userName?: string;
 }
 
 const RiskProfileCard: React.FC<RiskProfileCardProps> = ({
@@ -23,6 +25,7 @@ const RiskProfileCard: React.FC<RiskProfileCardProps> = ({
   showHeader = false,
   showRetestButton = false,
   updatedAt,
+  userName,
 }) => {
   const navigate = useNavigate();
   const profile = RISK_PROFILES[profileKey];
@@ -34,7 +37,10 @@ const RiskProfileCard: React.FC<RiskProfileCardProps> = ({
       {/* Header Widget */}
       {showHeader && (
         <div className="flex flex-col justify-between items-start mb-6">
-          <h3 className="text-base font-medium text-text-secondary mb-2">Profil Resiko</h3>
+          <div className="flex items-center gap-1.5 mb-2">
+            <h3 className="text-base font-medium text-text-secondary">Profil Resiko</h3>
+            <Sparkles className="w-4 h-4 text-brand" />
+          </div>
           {updatedAt && (
             <span className="text-[10px] font-medium items-center text-text-subtle bg-background-secondary px-2 py-1 rounded-md">
               Diperbarui {updatedAt}
@@ -58,6 +64,8 @@ const RiskProfileCard: React.FC<RiskProfileCardProps> = ({
           label={profile.label}
           description={profile.description}
           variant="widget"
+          userName={userName}
+          profileKey={profileKey}
         />
 
         {/* Tombol Tes Ulang (Conditional) */}

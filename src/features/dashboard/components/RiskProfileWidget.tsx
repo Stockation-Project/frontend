@@ -7,12 +7,14 @@ interface RiskProfileWidgetProps {
   score: number;
   profileKey: RiskProfileKey;
   updatedAt: string; 
+  userName?: string;
 }
 
 const RiskProfileWidget: React.FC<RiskProfileWidgetProps> = ({
   score,
   profileKey,
   updatedAt,
+  userName,
 }) => {
   // Defensive fallback: pastikan score tidak pernah NaN di UI
   const safeScore = score || 0;
@@ -24,6 +26,7 @@ const RiskProfileWidget: React.FC<RiskProfileWidgetProps> = ({
       showHeader={true}
       showRetestButton={true}
       updatedAt={updatedAt}
+      userName={userName}
     />
   );
 };
