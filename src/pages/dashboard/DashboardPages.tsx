@@ -13,6 +13,7 @@ import {
   PortfolioSection
 } from "@/features/dashboard";
 import { useWallet } from "@/features/wallet";
+import { useAuth } from "@/features/auth";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
@@ -23,6 +24,7 @@ import PageHeader from "@/components/shared/layout/PageHeader";
 const DashboardPages: React.FC = () => {
   const navigate = useNavigate();
   const { data, isLoading, error, refreshData } = useDashboard();
+  const { user } = useAuth();
   
   const { actions, selectedPortfolioId, setSelectedPortfolioId, portfolios: walletPortfolios } = useWallet({ 
     onSuccess: refreshData 
@@ -67,6 +69,9 @@ const DashboardPages: React.FC = () => {
 
   // --- Destructure data from API ---
   const { user_info, wallet_summary, portfolios, recommended_stocks } = data;
+
+  // Ambil nama user
+  const userName = user?.first_name || "Pengguna";
 
   // Map recommended stocks ke format StockTable
   const mappedStocks = mapRecommendedStocks(recommended_stocks);
@@ -150,6 +155,7 @@ const DashboardPages: React.FC = () => {
           <RiskProfileWidget
             score={user_info.risk_score || 0}
             profileKey={user_info.risk_profile}
+            userName={userName}
             updatedAt=""
           />
         </div>
