@@ -1,10 +1,17 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bookmark, HelpCircle } from "lucide-react";
-import { useStockDetail, useChartFilter, StockAreaChart, AnomalyTable, StockDetailSkeleton } from "@/features/stock";
+import { Bookmark } from "lucide-react";
+import {
+  useStockDetail,
+  useChartFilter,
+  StockAreaChart,
+  AnomalyTable,
+  StockDetailSkeleton,
+} from "@/features/stock";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import StatCard from "@/components/shared/cards/StatCard";
+import VolatilityRiskCard from "@/components/shared/cards/VolatilityRiskCard";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/shared/layout/PageHeader";
 import { toggleWatchlist } from "@/features/explore/services/explore.service";
@@ -45,18 +52,18 @@ const StockDetailPage: React.FC = () => {
     try {
       const result = await toggleWatchlist(ticker);
       if (result.success) {
-  setIsWatchlist(!isWatchlist);
-  
-  if (!isWatchlist) {
-    toast.success(`${ticker} Masuk ke watchlist`, {
-      description: `${ticker} telah ditambahkan ke daftar pantauan Anda.`,
-    });
-  } else {
-    toast.success(`${ticker} Dihapus dari Watchlist`, {
-      description: `${ticker} telah dihapus dari daftar pantauan Anda.`,
-    });
-  }
-}
+        setIsWatchlist(!isWatchlist);
+
+        if (!isWatchlist) {
+          toast.success(`${ticker} Masuk ke watchlist`, {
+            description: `${ticker} telah ditambahkan ke daftar pantauan Anda.`,
+          });
+        } else {
+          toast.success(`${ticker} Dihapus dari Watchlist`, {
+            description: `${ticker} telah dihapus dari daftar pantauan Anda.`,
+          });
+        }
+      }
     } catch (err: any) {
       toast.error("Gagal memperbarui watchlist", {
         description: "Terjadi kesalahan. Silakan coba lagi nanti.",
@@ -118,10 +125,10 @@ const StockDetailPage: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
                 {data.ticker}
               </h1>
-              <p className="text-sm sm:text-base md:text-lg text-text-muted mb-1">{data.name}</p>
-              <span
-                className="inline-block px-2.5 py-0.5 text-[10px] font-medium bg-gradient-to-b from-brand-100 to-brand-25 text-brand border border-brand rounded-full whitespace-nowrap"
-              >
+              <p className="text-sm sm:text-base md:text-lg text-text-muted mb-1">
+                {data.name}
+              </p>
+              <span className="inline-block px-2.5 py-0.5 text-[10px] font-medium bg-gradient-to-b from-brand-100 to-brand-25 text-brand border border-brand rounded-full whitespace-nowrap">
                 Sektor: {data.sector || "Umum"}
               </span>
             </div>
@@ -135,7 +142,9 @@ const StockDetailPage: React.FC = () => {
                 : "text-text-subtle hover:text-background-primary bg-background-secondary hover:bg-border-secondary"
                 }`}
             >
-              <Bookmark className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`} />
+              <Bookmark
+                className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`}
+              />
             </Button>
           </div>
           <div className="flex items-end gap-2">
@@ -178,7 +187,9 @@ const StockDetailPage: React.FC = () => {
                 value={data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"}
                 tooltipText="Compound Annual Growth Rate (CAGR) dalam 3 tahun terakhir."
                 stockSymbol={data.ticker}
-                metricValue={data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"}
+                metricValue={
+                  data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"
+                }
                 showOnboardingEnabled={true}
               />
               <StatCard
@@ -202,7 +213,9 @@ const StockDetailPage: React.FC = () => {
                 }
                 tooltipText="Dividend Yield. Persentase keuntungan tunai tahunan yang dibagikan ke investor."
                 stockSymbol={data.ticker}
-                metricValue={data.dividend ? `${(data.dividend * 100).toFixed(1)}%` : "-"}
+                metricValue={
+                  data.dividend ? `${(data.dividend * 100).toFixed(1)}%` : "-"
+                }
               />
               <StatCard
                 title="Harga terendah tahun ini"
@@ -219,13 +232,20 @@ const StockDetailPage: React.FC = () => {
                 metricValue={formatCurrencyIDR(data.day_high || 9000)}
               />
             </div>
+            <VolatilityRiskCard
+              volatility={data.volatility || null}
+              stockSymbol={data.ticker}
+            />
           </div>
 
           <div className="bg-background-primary" data-tour="stock-detail-anomaly">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
-            <AnomalyTable data={data.anomaly_history} stockSymbol={data.ticker} />
+            <AnomalyTable
+              data={data.anomaly_history}
+              stockSymbol={data.ticker}
+            />
           </div>
 
           <div className="px-2" data-tour="stock-detail-summary">
@@ -236,7 +256,6 @@ const StockDetailPage: React.FC = () => {
               </p>
             </div>
           </div>
-          
         </div>
       </div>
 
