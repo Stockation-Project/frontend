@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/shared/layout/PageHeader";
 import { toggleWatchlist } from "@/features/explore/services/explore.service";
 import { toast } from "sonner";
+import { usePageTour, ProductTour } from "@/features/product-tour";
+import { STOCK_DETAIL_TOUR_STEPS } from "@/features/product-tour/steps";
 
 const StockDetailPage: React.FC = () => {
   const { ticker } = useParams<{ ticker: string }>();
@@ -24,6 +26,18 @@ const StockDetailPage: React.FC = () => {
   // 1. Ambil data dari Backend
   const { data, isLoading, error } = useStockDetail(ticker);
   const [isWatchlist, setIsWatchlist] = React.useState(false);
+
+  const {
+    isActive,
+    currentStep,
+    nextStep,
+    endTour,
+    startTour,
+  } = usePageTour({
+    steps: STOCK_DETAIL_TOUR_STEPS,
+    storageKey: "stockation_tour_stock_detail",
+    autoStart: true,
+  });
 
   // Sinkronkan state lokal dengan data dari backend saat berhasil dimuat
   React.useEffect(() => {
@@ -88,11 +102,25 @@ const StockDetailPage: React.FC = () => {
       exit={{ opacity: 0, y: 20 }}
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      <PageHeader title="" showBackButton={true} />
+      <PageHeader
+        title=""
+        showBackButton={true}
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={startTour}
+            className="text-xs gap-1.5 rounded-xl"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            Tur Halaman
+          </Button>
+        }
+      />
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">
         <div className="xl:col-span-7 flex flex-col gap-6 xl:h-full xl:overflow-y-auto pr-2 pb-6 scrollbar-thin">
-          <div className="flex justify-between items-start">
+          <div className="flex justify-between items-start" data-tour="stock-detail-info">
             <div>
               <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
                 {data.ticker}
@@ -108,11 +136,11 @@ const StockDetailPage: React.FC = () => {
               variant="outline"
               size="icon"
               onClick={handleToggleWatchlist}
-              className={`rounded-lg h-10 w-10 border-border-primary transition-all active:scale-95 ${
-                isWatchlist
-                  ? "bg-brand text-text-inverse border-brand hover:bg-brand-950"
-                  : "text-text-subtle hover:text-background-primary bg-background-secondary hover:bg-border-secondary"
-              }`}
+              data-tour="stock-detail-watchlist"
+              className={`rounded-lg h-10 w-10 border-border-primary transition-all active:scale-95 ${isWatchlist
+                ? "bg-brand text-text-inverse border-brand hover:bg-brand-950"
+                : "text-text-subtle hover:text-background-primary bg-background-secondary hover:bg-border-secondary"
+                }`}
             >
               <Bookmark
                 className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`}
@@ -130,22 +158,26 @@ const StockDetailPage: React.FC = () => {
             </span>
           </div>
 
-          <StockAreaChart
-            data={filteredChartData}
-            activeFilter={activeFilter}
-            onFilterChange={setActiveFilter}
-            isPositive={priceChange.isPositive}
-          />
+          <div data-tour="stock-detail-chart">
+            <StockAreaChart
+              data={filteredChartData}
+              activeFilter={activeFilter}
+              onFilterChange={setActiveFilter}
+              isPositive={priceChange.isPositive}
+            />
+          </div>
         </div>
 
         <div className="xl:col-span-5 flex flex-col gap-4 xl:h-full xl:overflow-y-auto pb-6 xl:pb-0 relative scrollbar-thin">
-          <Button
-            className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand-900 text-text-inverse rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
-            onClick={handleBuy}
-          >
-            Beli Saham Ini
-          </Button>
-          <div className="bg-background-primary">
+          <div data-tour="stock-detail-buy">
+            <Button
+              className="w-full h-10 bg-brand hover:bg-brand-950 active:bg-brand-900 text-text-inverse rounded-xl text-sm font-regular shadow-lg shadow-brand/20 transition-all duration-200 cursor-pointer"
+              onClick={handleBuy}
+            >
+              Beli Saham Ini
+            </Button>
+          </div>
+          <div className="bg-background-primary" data-tour="stock-detail-stats">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Statistik Saham
             </h3>
@@ -206,7 +238,7 @@ const StockDetailPage: React.FC = () => {
             />
           </div>
 
-          <div className="bg-background-primary">
+          <div className="bg-background-primary" data-tour="stock-detail-anomaly">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
@@ -216,11 +248,9 @@ const StockDetailPage: React.FC = () => {
             />
           </div>
 
-          <div className="px-2">
-            <h3 className="text-base font-medium text-text-secondary mb-2">
-              Rangkuman
-            </h3>
-            <div className="max-h-37 overflow-y-auto">
+          <div className="px-2" data-tour="stock-detail-summary">
+            <h3 className="text-base font-medium text-text-secondary mb-2">Rangkuman</h3>
+            <div className="max-h-37 overflow-y-auto"> 
               <p className="text-sm text-text-muted leading-relaxed text-justify">
                 {data.about_company}
               </p>
@@ -228,6 +258,14 @@ const StockDetailPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <ProductTour
+        isActive={isActive}
+        currentStep={currentStep}
+        steps={STOCK_DETAIL_TOUR_STEPS}
+        onNext={nextStep}
+        onEnd={endTour}
+      />
     </motion.div>
   );
 };
