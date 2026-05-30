@@ -4,9 +4,25 @@ import { useProfile } from "@/features/profile/hooks/useProfile";
 import ProfileHeader from "@/features/profile/components/ProfileHeader";
 import PersonalInfoForm from "@/features/profile/components/PersonalInfoForm";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { HelpCircle } from "lucide-react";
+import { usePageTour, ProductTour } from "@/features/product-tour";
+import { PROFILE_TOUR_STEPS } from "@/features/product-tour/steps";
 
 const ProfilePage: React.FC = () => {
   const { profile, isLoading, isUpdating, isUploadingAvatar, updateProfile, uploadAvatar } = useProfile();
+
+  const {
+    isActive,
+    currentStep,
+    nextStep,
+    endTour,
+    startTour,
+  } = usePageTour({
+    steps: PROFILE_TOUR_STEPS,
+    storageKey: "stockation_tour_profile",
+    autoStart: true,
+  });
 
   if (isLoading) {
     return (
@@ -59,30 +75,53 @@ const ProfilePage: React.FC = () => {
     <div className="w-full h-full flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
       <PageHeader 
         title="Profil" 
-        description="Kelola informasi akun dan preferensi Anda" 
+        description="Kelola informasi akun dan preferensi Anda"
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={startTour}
+            className="text-xs gap-1.5 rounded-xl"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            Tur Halaman
+          </Button>
+        }
       />
 
       <div className="flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         <div className="bg-background-primary rounded-xl p-4 border border-border-primary">
-          <ProfileHeader 
-            user={profile} 
-            onUpdateAvatar={(url) => {
-              if (url === null) {
-                updateProfile({ avatar_url: null });
-              } else {
-                uploadAvatar(url);
-              }
-            }} 
-            isLoading={isUploadingAvatar}
-          />
+          <div data-tour="profile-avatar">
+            <ProfileHeader 
+              user={profile} 
+              onUpdateAvatar={(url) => {
+                if (url === null) {
+                  updateProfile({ avatar_url: null });
+                } else {
+                  uploadAvatar(url);
+                }
+              }} 
+              isLoading={isUploadingAvatar}
+            />
+          </div>
 
-          <PersonalInfoForm 
-            user={profile} 
-            onUpdate={updateProfile} 
-            isLoading={isUpdating} 
-          />
+          <div data-tour="profile-personal-info">
+            <PersonalInfoForm 
+              user={profile} 
+              onUpdate={updateProfile} 
+              isLoading={isUpdating} 
+            />
+          </div>
         </div>
       </div>
+
+      <ProductTour
+        isActive={isActive}
+        currentStep={currentStep}
+        steps={PROFILE_TOUR_STEPS}
+        onNext={nextStep}
+        onEnd={endTour}
+      />
     </div>
   );
 };

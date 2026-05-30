@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, LogOut } from "lucide-react";
 import { useAuth } from "@/features/auth";
+import { useTutorialContext, TutorialButton } from "@/features/interactive-tutorial";
 import {
   Dialog,
   DialogContent,
@@ -28,6 +29,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   const navigate = useNavigate();
   const { logout, isAuthenticated } = useAuth();
+  const { startTutorial } = useTutorialContext();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const handleLogout = () => {
@@ -73,15 +75,18 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           {action && <div className="flex items-center">{action}</div>}
 
           {isAuthenticated && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsConfirmOpen(true)}
-              className="rounded-xl text-text-secondary hover:text-red-500 hover:bg-red-500/10 h-9 w-9 flex-shrink-0 transition-all duration-200 animate-in fade-in zoom-in duration-300"
-              title="Keluar dari Akun"
-            >
-              <LogOut className="w-5 h-5" />
-            </Button>
+            <>
+              <TutorialButton onClick={startTutorial} />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsConfirmOpen(true)}
+                className="rounded-xl text-text-secondary hover:text-red-500 hover:bg-red-500/10 h-9 w-9 flex-shrink-0 transition-all duration-200 animate-in fade-in zoom-in duration-300"
+                title="Keluar dari Akun"
+              >
+                <LogOut className="w-5 h-5" />
+              </Button>
+            </>
           )}
         </div>
       </div>

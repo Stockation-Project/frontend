@@ -77,10 +77,12 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
       onAction={handleSubmit}
       isActionDisabled={isInvalid}
       isLoading={isLoading}
+      submitDataTour="tutorial-wallet-submit"
+      modalDataTour="tutorial-modal"
     >
       <div className="space-y-4">
         {/* Area Nama Portofolio */}
-        <div>
+        <div data-tour="tutorial-wallet-name">
           <label className="block text-xs font-medium text-slate-700 mb-2">
             Nama Dompet:
           </label>
@@ -94,7 +96,7 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
         </div>
 
         {/* Area Nominal */}
-        <div className="bg-brand-25 p-4 rounded-lg border border-brand-100">
+        <div className="bg-brand-25 p-4 rounded-lg border border-brand-100" data-tour="tutorial-wallet-amount">
           <label className="block text-xs font-medium text-slate-700 mb-3">
             Nominal
           </label>

@@ -9,10 +9,13 @@ import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal
 import AllocateModal from "@/components/shared/modal/AllocateModal";
 import WithdrawModal from "@/components/shared/modal/WithdrawModal";
 import PageHeader from "@/components/shared/layout/PageHeader";
+import { usePageTour, ProductTour } from "@/features/product-tour";
+import { WALLET_TOUR_STEPS } from "@/features/product-tour/steps";
+import { Button } from "@/components/ui/button";
+import { HelpCircle } from "lucide-react";
 
 const WalletPage: React.FC = () => {
-  const {
-    globalWallet,
+  const { globalWallet,
     portfolios,
     selectedPortfolioId,
     setSelectedPortfolioId,
@@ -31,11 +34,34 @@ const WalletPage: React.FC = () => {
   const [isAllocateOpen, setIsAllocateOpen] = useState(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
+  const {
+    isActive,
+    currentStep,
+    nextStep,
+    endTour,
+    startTour,
+  } = usePageTour({
+    steps: WALLET_TOUR_STEPS,
+    storageKey: "stockation_tour_wallet",
+    autoStart: true,
+  });
+
   return (
     <div className="w-full h-full flex flex-col overflow-hidden">
       <PageHeader 
         title="Dompet"
         description="Kelola aset digital dan portofolio Anda"
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={startTour}
+            className="text-xs gap-1.5 rounded-xl"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            Tur Halaman
+          </Button>
+        }
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
@@ -47,38 +73,45 @@ const WalletPage: React.FC = () => {
             {isLoading ? (
               <Skeleton className="h-48 w-full rounded-xl" />
             ) : (
-              <GlobalWalletCard
-                balance={Number(globalWallet?.balance || 0)}
-                onTopUpClick={() => setIsTopUpOpen(true)}
-                onAllocateClick={() => setIsAllocateOpen(true)}
-              />
+              <div data-tour="wallet-balance">
+                <GlobalWalletCard
+                  balance={Number(globalWallet?.balance || 0)}
+                  onTopUpClick={() => setIsTopUpOpen(true)}
+                  onAllocateClick={() => setIsAllocateOpen(true)}
+                  topUpDataTour="wallet-topup"
+                />
+              </div>
             )}
           </div>
 
-          <PortfolioSidebarList
-            portfolios={portfolios}
-            selectedId={selectedPortfolioId}
-            onSelect={setSelectedPortfolioId}
-            isLoading={isLoading}
-            onCreateNew={() => setIsCreatePortoOpen(true)}
-          />
+          <div data-tour="wallet-portfolio-list">
+            <PortfolioSidebarList
+              portfolios={portfolios}
+              selectedId={selectedPortfolioId}
+              onSelect={setSelectedPortfolioId}
+              isLoading={isLoading}
+              onCreateNew={() => setIsCreatePortoOpen(true)}
+            />
+          </div>
         </div>
        <div className="lg:col-span-8">
-          <WalletDetailView
-            portfolio={selectedPortfolio || null}
-            activities={activities}
-            stats={stats}
-            filter={filter}
-            onFilterChange={setFilter}
-            isLoading={isLoading}
-            isLoadingHistory={isLoadingHistory}
-            onTopUp={() => {
-              setIsAllocateOpen(true);
-            }}
-            onWithdraw={() => {
-              setIsWithdrawOpen(true);
-            }}
-          />
+          <div data-tour="wallet-activities">
+            <WalletDetailView
+              portfolio={selectedPortfolio || null}
+              activities={activities}
+              stats={stats}
+              filter={filter}
+              onFilterChange={setFilter}
+              isLoading={isLoading}
+              isLoadingHistory={isLoadingHistory}
+              onTopUp={() => {
+                setIsAllocateOpen(true);
+              }}
+              onWithdraw={() => {
+                setIsWithdrawOpen(true);
+              }}
+            />
+          </div>
         </div>
       </div>
 
@@ -110,6 +143,14 @@ const WalletPage: React.FC = () => {
         onClose={() => setIsWithdrawOpen(false)}
         portfolio={selectedPortfolio || null}
         onSuccess={actions.handleWithdraw}
+      />
+
+      <ProductTour
+        isActive={isActive}
+        currentStep={currentStep}
+        steps={WALLET_TOUR_STEPS}
+        onNext={nextStep}
+        onEnd={endTour}
       />
     </div>
   );

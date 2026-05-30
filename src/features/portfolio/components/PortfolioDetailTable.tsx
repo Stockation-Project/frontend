@@ -8,11 +8,13 @@ import type { EnrichedHolding } from "../types/portfolio";
 interface PortfolioDetailTableProps {
   holdings: EnrichedHolding[];
   portfolioId: string;
+  actionDataTour?: string;
 }
 
 const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
   holdings,
   portfolioId,
+  actionDataTour,
 }) => {
   const navigate = useNavigate();
 
@@ -155,7 +157,7 @@ const PortfolioDetailTable: React.FC<PortfolioDetailTableProps> = ({
               </div>
 
               {/* Tombol Aksi di Desktop */}
-              <div className="hidden md:block">
+              <div className="hidden md:block" data-tour={actionDataTour}>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();

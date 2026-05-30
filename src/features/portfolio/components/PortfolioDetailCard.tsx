@@ -15,6 +15,7 @@ interface PortfolioDetailCardProps {
   totalProfitPercentage: number;
   allocations: Allocation[];
   holdings: EnrichedHolding[];
+  actionDataTour?: string;
 }
 
 /**
@@ -30,6 +31,7 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
   totalProfitPercentage,
   allocations,
   holdings,
+  actionDataTour,
 }) => {
   const isProfit = totalProfitAmount >= 0;
 
@@ -100,7 +102,9 @@ const PortfolioDetailCard: React.FC<PortfolioDetailCardProps> = ({
         <div className="mx-6 border-b border-border-primary"></div>
 
         {/* Body Section — Tabel Detail Holdings */}
-        <PortfolioDetailTable holdings={holdings} portfolioId={portfolioId} />
+        <div data-tour="portfolio-detail-holdings">
+          <PortfolioDetailTable holdings={holdings} portfolioId={portfolioId} actionDataTour={actionDataTour} />
+        </div>
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ interface SimulationSummaryPanelProps {
   isBuying: boolean;
   onConfirmBuy: () => void;
   optimizationMetrics?: OptimizationMetrics | null;
+  confirmDataTour?: string;
 }
 
 const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
@@ -28,6 +29,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
   isBuying,
   onConfirmBuy,
   optimizationMetrics = null,
+  confirmDataTour,
 }) => {
   const totalUnit = cart.length;
   const totalLot = cart.reduce((acc, item) => acc + item.lots, 0);
@@ -204,8 +206,9 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
         )}
 
         {/* Action Button */}
-        <button
-          onClick={onConfirmBuy}
+        <div data-tour={confirmDataTour}>
+          <button
+            onClick={onConfirmBuy}
           disabled={
             isBuying || cart.length === 0 || !isBalanceSufficient || !selectedPortfolio
           }
@@ -216,7 +219,8 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
           }`}
         >
           {isBuying ? "Memproses..." : "Konfirmasi Beli"}
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   );

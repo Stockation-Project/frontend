@@ -5,27 +5,31 @@ import EmptyState from "@/components/shared/states/EmptyState";
 interface EmptyPortfolioStateProps {
   riskProfile: string;
   onAddClick: () => void;
+  createButtonDataTour?: string;
 }
 
 const EmptyPortfolioState: React.FC<EmptyPortfolioStateProps> = ({
   riskProfile,
-  onAddClick
+  onAddClick,
+  createButtonDataTour,
 }) => {
   return (
-    <EmptyState
-      icon={Wallet}
-      title="Belum ada dompet investasi"
-      description={
-        <>
-          Buat dompet pertamamu dan mulai alokasikan dana sesuai profil{" "}
-          <span className="font-semibold text-text-primary">{riskProfile}-mu</span>
-          . Danamu aman ini adalah simulasi investasi virtual.
-        </>
-      }
-      actionLabel="Buat Portfolio"
-      onAction={onAddClick}
-      actionIcon={Plus}
-    />
+    <div data-tour={createButtonDataTour}>
+      <EmptyState
+        icon={Wallet}
+        title="Belum ada dompet investasi"
+        description={
+          <>
+            Buat dompet pertamamu dan mulai alokasikan dana sesuai profil{" "}
+            <span className="font-semibold text-text-primary">{riskProfile}-mu</span>
+            . Danamu aman ini adalah simulasi investasi virtual.
+          </>
+        }
+        actionLabel="Buat Portfolio"
+        onAction={onAddClick}
+        actionIcon={Plus}
+      />
+    </div>
   );
 };
 

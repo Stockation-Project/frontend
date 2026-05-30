@@ -2,8 +2,23 @@ import Sidebar from "./Sidebar";
 import BottomNav from "./BottomNav";
 import React from "react";
 import { Outlet } from "react-router-dom";
+import {
+  InteractiveTutorial,
+  TutorialProvider,
+  useTutorialContext,
+} from "@/features/interactive-tutorial";
 
-const DashboardLayout: React.FC = () => {
+const DashboardLayoutInner: React.FC = () => {
+  const {
+    isActive,
+    currentFlow,
+    currentStep,
+    currentStepIndex,
+    isLastStep,
+    nextStep,
+    endTutorial,
+  } = useTutorialContext();
+
   return (
     <div className="flex h-screen bg-background-primary overflow-hidden">
       <Sidebar />
@@ -15,7 +30,25 @@ const DashboardLayout: React.FC = () => {
       </main>
 
       <BottomNav />
+
+      <InteractiveTutorial
+        isActive={isActive}
+        currentFlow={currentFlow}
+        currentStep={currentStep}
+        currentStepIndex={currentStepIndex}
+        isLastStep={isLastStep}
+        onNext={nextStep}
+        onEnd={endTutorial}
+      />
     </div>
+  );
+};
+
+const DashboardLayout: React.FC = () => {
+  return (
+    <TutorialProvider>
+      <DashboardLayoutInner />
+    </TutorialProvider>
   );
 };
 

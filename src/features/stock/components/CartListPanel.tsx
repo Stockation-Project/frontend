@@ -12,6 +12,7 @@ interface CartListPanelProps {
   onUpdateLot: (ticker: string, lots: number) => void;
   onToggleExpand: (ticker: string) => void;
   isReadOnlyLots?: boolean;
+  cartItemDataTour?: string;
 }
 
 const CartListPanel: React.FC<CartListPanelProps> = ({
@@ -21,6 +22,7 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
   onUpdateLot,
   onToggleExpand,
   isReadOnlyLots = false,
+  cartItemDataTour,
 }) => {
   return (
     <div className="border border-border-primary rounded-lg flex flex-col h-[600px] overflow-hidden">
@@ -45,13 +47,14 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
 
       {/* Cart Items */}
       <div className="flex-1 overflow-y-auto no-scrollbar">
-        {cart.map((item) => (
+        {cart.map((item, index) => (
           <div
             key={item.ticker}
             className="border-1 m-2 border-border-primary rounded-lg overflow-hidden bg-background-primary"
           >
             {/* Header Item */}
             <div
+              data-tour={index === 0 ? cartItemDataTour : undefined}
               className={`px-3 py-2 flex items-center justify-between cursor-pointer transition-colors  ${
               item.isExpanded ? "bg-brand-50" : "hover:bg-background-secondary"}`}
               onClick={() => onToggleExpand(item.ticker)}>

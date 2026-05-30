@@ -16,6 +16,8 @@ interface PortfolioSectionProps {
   activePortfolioId?: string;
   /** Varian tampilan kartu di dalam section ini */
   cardVariant?: "default" | "dashboard";
+  /** data-tour target untuk tombol buat portofolio baru */
+  createButtonDataTour?: string;
 }
 
 const PortfolioSection: React.FC<PortfolioSectionProps> = ({
@@ -25,6 +27,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
   onCardClick,
   activePortfolioId,
   cardVariant = "default",
+  createButtonDataTour,
 }) => {
   return (
     <div className="w-full flex flex-col">
@@ -34,6 +37,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
         <EmptyPortfolioState
           riskProfile={userRiskProfile}
           onAddClick={onAddClick}
+          createButtonDataTour={createButtonDataTour}
         />
       ) : (
         // List portofolio dengan scroll horizontal
@@ -60,7 +64,7 @@ const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           ))}
 
           {/* Button Create Portfolio */}
-          <div className="snap-start">
+          <div className="snap-start" data-tour={createButtonDataTour}>
             <button
               onClick={onAddClick}
               className="min-w-[320px] w-[320px] h-full bg-transparent border-2 border-dashed border-border-primary rounded-xl flex flex-col items-center justify-center text-text-muted hover:text-brand hover:border-brand hover:bg-brand-50/50 transition-all cursor-pointer group"
