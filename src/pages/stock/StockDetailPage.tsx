@@ -2,9 +2,16 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Bookmark } from "lucide-react";
-import { useStockDetail, useChartFilter, StockAreaChart, AnomalyTable, StockDetailSkeleton } from "@/features/stock";
+import {
+  useStockDetail,
+  useChartFilter,
+  StockAreaChart,
+  AnomalyTable,
+  StockDetailSkeleton,
+} from "@/features/stock";
 import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import StatCard from "@/components/shared/cards/StatCard";
+import VolatilityRiskCard from "@/components/shared/cards/VolatilityRiskCard";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/shared/layout/PageHeader";
 import { toggleWatchlist } from "@/features/explore/services/explore.service";
@@ -31,18 +38,18 @@ const StockDetailPage: React.FC = () => {
     try {
       const result = await toggleWatchlist(ticker);
       if (result.success) {
-  setIsWatchlist(!isWatchlist);
-  
-  if (!isWatchlist) {
-    toast.success(`${ticker} Masuk ke watchlist`, {
-      description: `${ticker} telah ditambahkan ke daftar pantauan Anda.`,
-    });
-  } else {
-    toast.success(`${ticker} Dihapus dari Watchlist`, {
-      description: `${ticker} telah dihapus dari daftar pantauan Anda.`,
-    });
-  }
-}
+        setIsWatchlist(!isWatchlist);
+
+        if (!isWatchlist) {
+          toast.success(`${ticker} Masuk ke watchlist`, {
+            description: `${ticker} telah ditambahkan ke daftar pantauan Anda.`,
+          });
+        } else {
+          toast.success(`${ticker} Dihapus dari Watchlist`, {
+            description: `${ticker} telah dihapus dari daftar pantauan Anda.`,
+          });
+        }
+      }
     } catch (err: any) {
       toast.error("Gagal memperbarui watchlist", {
         description: "Terjadi kesalahan. Silakan coba lagi nanti.",
@@ -81,10 +88,7 @@ const StockDetailPage: React.FC = () => {
       exit={{ opacity: 0, y: 20 }}
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      <PageHeader
-        title=""
-        showBackButton={true}
-      />
+      <PageHeader title="" showBackButton={true} />
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">
         <div className="xl:col-span-7 flex flex-col gap-6 xl:h-full xl:overflow-y-auto pr-2 pb-6 scrollbar-thin">
@@ -93,10 +97,10 @@ const StockDetailPage: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
                 {data.ticker}
               </h1>
-              <p className="text-sm sm:text-base md:text-lg text-text-muted mb-1">{data.name}</p>
-              <span
-                className="inline-block px-2.5 py-0.5 text-[10px] font-medium bg-gradient-to-b from-brand-100 to-brand-25 text-brand border border-brand rounded-full whitespace-nowrap"
-              >
+              <p className="text-sm sm:text-base md:text-lg text-text-muted mb-1">
+                {data.name}
+              </p>
+              <span className="inline-block px-2.5 py-0.5 text-[10px] font-medium bg-gradient-to-b from-brand-100 to-brand-25 text-brand border border-brand rounded-full whitespace-nowrap">
                 Sektor: {data.sector || "Umum"}
               </span>
             </div>
@@ -104,12 +108,15 @@ const StockDetailPage: React.FC = () => {
               variant="outline"
               size="icon"
               onClick={handleToggleWatchlist}
-              className={`rounded-lg h-10 w-10 border-border-primary transition-all active:scale-95 ${isWatchlist
-                ? "bg-brand text-text-inverse border-brand hover:bg-brand-950"
-                : "text-text-subtle hover:text-background-primary bg-background-secondary hover:bg-border-secondary"
-                }`}
+              className={`rounded-lg h-10 w-10 border-border-primary transition-all active:scale-95 ${
+                isWatchlist
+                  ? "bg-brand text-text-inverse border-brand hover:bg-brand-950"
+                  : "text-text-subtle hover:text-background-primary bg-background-secondary hover:bg-border-secondary"
+              }`}
             >
-              <Bookmark className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`} />
+              <Bookmark
+                className={`w-5 h-5 ${isWatchlist ? "fill-current" : ""}`}
+              />
             </Button>
           </div>
           <div className="flex items-end gap-2">
@@ -148,7 +155,9 @@ const StockDetailPage: React.FC = () => {
                 value={data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"}
                 tooltipText="Compound Annual Growth Rate (CAGR) dalam 3 tahun terakhir."
                 stockSymbol={data.ticker}
-                metricValue={data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"}
+                metricValue={
+                  data.cagr ? `${(data.cagr * 100).toFixed(1)}%` : "-"
+                }
                 showOnboardingEnabled={true}
               />
               <StatCard
@@ -172,7 +181,9 @@ const StockDetailPage: React.FC = () => {
                 }
                 tooltipText="Dividend Yield. Persentase keuntungan tunai tahunan yang dibagikan ke investor."
                 stockSymbol={data.ticker}
-                metricValue={data.dividend ? `${(data.dividend * 100).toFixed(1)}%` : "-"}
+                metricValue={
+                  data.dividend ? `${(data.dividend * 100).toFixed(1)}%` : "-"
+                }
               />
               <StatCard
                 title="Harga terendah tahun ini"
@@ -189,24 +200,32 @@ const StockDetailPage: React.FC = () => {
                 metricValue={formatCurrencyIDR(data.day_high || 9000)}
               />
             </div>
+            <VolatilityRiskCard
+              volatility={data.volatility || null}
+              stockSymbol={data.ticker}
+            />
           </div>
 
           <div className="bg-background-primary">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
-            <AnomalyTable data={data.anomaly_history} stockSymbol={data.ticker} />
+            <AnomalyTable
+              data={data.anomaly_history}
+              stockSymbol={data.ticker}
+            />
           </div>
 
           <div className="px-2">
-            <h3 className="text-base font-medium text-text-secondary mb-2">Rangkuman</h3>
-            <div className="max-h-37 overflow-y-auto"> 
+            <h3 className="text-base font-medium text-text-secondary mb-2">
+              Rangkuman
+            </h3>
+            <div className="max-h-37 overflow-y-auto">
               <p className="text-sm text-text-muted leading-relaxed text-justify">
                 {data.about_company}
               </p>
             </div>
           </div>
-          
         </div>
       </div>
     </motion.div>
