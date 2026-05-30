@@ -21,9 +21,9 @@ export function usePageTour({
   useEffect(() => {
     if (isLoading || !autoStart) return;
 
-    // TODO production: uncomment baris ini
-    // const seen = localStorage.getItem(storageKey) === "true";
-    // if (seen) return;
+    // Already completed this page tour? Skip.
+    const completed = localStorage.getItem(storageKey) === "true";
+    if (completed) return;
 
     const timer = setTimeout(() => {
       setIsActive(true);
@@ -39,7 +39,7 @@ export function usePageTour({
 
   const endTour = useCallback(() => {
     setIsActive(false);
-    // TODO production: localStorage.setItem(storageKey, "true");
+    localStorage.setItem(storageKey, "true");
   }, [storageKey]);
 
   const nextStep = useCallback(() => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bookmark } from "lucide-react";
+import { Bookmark, HelpCircle } from "lucide-react";
 import {
   useStockDetail,
   useChartFilter,
