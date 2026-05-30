@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 import type { UseProductTourOptions } from "../types";
 import { DASHBOARD_TOUR_STEPS } from "../steps/dashboardSteps";
 
+const STORAGE_KEY = "stockation_product_tour_completed";
+
 // Re-export untuk backward compat
 export const TOUR_STEPS = DASHBOARD_TOUR_STEPS;
 
@@ -12,10 +14,13 @@ export function useProductTour(options: UseProductTourOptions) {
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Always auto-start when dashboard is ready (for design iteration)
-  // TODO: add localStorage + hasPortfolio check later for production
+  // Auto-start only for users who haven't completed the tour yet
   useEffect(() => {
     if (isLoading) return;
+
+    // Sudah selesai sebelumnya? Skip.
+    const completed = localStorage.getItem(STORAGE_KEY) === "true";
+    if (completed) return;
 
     const timer = setTimeout(() => {
       setIsActive(true);
@@ -31,7 +36,7 @@ export function useProductTour(options: UseProductTourOptions) {
 
   const endTour = useCallback(() => {
     setIsActive(false);
-    // TODO: localStorage.setItem("stockation_product_tour_seen", "true");
+    localStorage.setItem(STORAGE_KEY, "true");
   }, []);
 
   const nextStep = useCallback(() => {
@@ -65,4 +70,9 @@ export function useProductTour(options: UseProductTourOptions) {
     goToStep,
     endTour,
   };
+}
+
+/** Reset product tour flag — allows re-triggering during dev/testing */
+export function resetProductTour(): void {
+  localStorage.removeItem(STORAGE_KEY);
 }
