@@ -42,6 +42,7 @@ const StockTable: React.FC<StockTableProps> = ({ title, stocks }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             onClick={() => navigate(`/stock/${stock.ticker}`)}
+            data-tour={index === 0 ? "stock-row-first" : `stock-row-${stock.ticker}`}
             className="group flex items-center justify-between py-2.5 border-b border-border-primary hover:bg-background-secondary px-2 -mx-2 transition-colors cursor-pointer"
           >
             {/* Col 1: Ticker & Nama */}

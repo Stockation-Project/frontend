@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { AlertCircle, Briefcase } from "lucide-react";
+import { AlertCircle, Briefcase, HelpCircle } from "lucide-react";
 
 // Features (New Architecture)
 import { 
@@ -18,6 +18,12 @@ import {
 import PageHeader from "@/components/shared/layout/PageHeader";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import EmptyState from "@/components/shared/states/EmptyState";
+import { usePageTour, ProductTour } from "@/features/product-tour";
+import {
+  PORTFOLIO_TOUR_STEPS,
+  PORTFOLIO_DETAIL_TOUR_STEPS,
+} from "@/features/product-tour/steps";
+import { Button } from "@/components/ui/button";
 
 const ALLOCATION_COLORS = [
   "bg-brand",
@@ -53,6 +59,23 @@ const PortfolioDetailPage: React.FC = () => {
   const { handleCreatePortfolio } = actions;
 
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
+
+  // Product Tour — pilih steps sesuai mode halaman
+  const isListView = !id;
+  const tourSteps = isListView ? PORTFOLIO_TOUR_STEPS : PORTFOLIO_DETAIL_TOUR_STEPS;
+  const storageKey = isListView ? "stockation_tour_portfolio" : "stockation_tour_portfolio_detail";
+
+  const {
+    isActive,
+    currentStep,
+    nextStep,
+    endTour,
+    startTour,
+  } = usePageTour({
+    steps: tourSteps,
+    storageKey,
+    autoStart: true,
+  });
 
   // Loading state
   if (isDetailLoading || isDashboardLoading) {
@@ -109,12 +132,23 @@ const PortfolioDetailPage: React.FC = () => {
         title="Portofolio"
         description={portfolio ? `Melihat isi dari dompet: ${portfolio.name}` : "Pilih dompet untuk melihat detail"}
         showBackButton={false}
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={startTour}
+            className="text-xs gap-1.5 rounded-xl"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            Tur Halaman
+          </Button>
+        }
       />
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-8 no-scrollbar">
-        {/* Card Section */}
-        <div>
+        {/* Card Section — data-tour untuk list view */}
+        <div data-tour="portfolio-card-list">
           <PortfolioSection
             portfolios={portfoliosWithColors}
             userRiskProfile={dashboardData?.user_info?.risk_profile || ""}
@@ -123,6 +157,7 @@ const PortfolioDetailPage: React.FC = () => {
               navigate(`/portfolio/${portfolioId}`)
             }
             activePortfolioId={id}
+            createButtonDataTour="portfolio-create-btn"
           />
 
           <CreatePortfolioModal
@@ -137,23 +172,37 @@ const PortfolioDetailPage: React.FC = () => {
 
         {/* Detail Portfolio */}
         {!id || !portfolio ? (
-          <EmptyState
-            icon={Briefcase}
-            title="Pilih Dompet Investasi"
-            description="Silakan pilih salah satu dompet di atas untuk melihat rincian saham, alokasi, dan performanya."
-          />
+          <div data-tour="portfolio-summary">
+            <EmptyState
+              icon={Briefcase}
+              title="Pilih Dompet Investasi"
+              description="Silakan pilih salah satu dompet di atas untuk melihat rincian saham, alokasi, dan performanya."
+            />
+          </div>
         ) : (
-          <PortfolioDetailCard
-            portfolioName={portfolio.name}
-            portfolioId={portfolio.id}
-            investedBalance={portfolio.invested_balance}
-            totalProfitAmount={totalProfitAmount}
-            totalProfitPercentage={totalProfitPercentage}
-            allocations={allocations}
-            holdings={enrichedHoldings}
-          />
+          <div data-tour="portfolio-detail-info">
+            <PortfolioDetailCard
+              portfolioName={portfolio.name}
+              portfolioId={portfolio.id}
+              investedBalance={portfolio.invested_balance}
+              totalProfitAmount={totalProfitAmount}
+              totalProfitPercentage={totalProfitPercentage}
+              allocations={allocations}
+              holdings={enrichedHoldings}
+              actionDataTour="portfolio-detail-actions"
+            />
+          </div>
         )}
       </div>
+
+      {/* Product Tour */}
+      <ProductTour
+        isActive={isActive}
+        currentStep={currentStep}
+        steps={tourSteps}
+        onNext={nextStep}
+        onEnd={endTour}
+      />
     </motion.div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bookmark } from "lucide-react";
+import { Bookmark, HelpCircle } from "lucide-react";
 import {
   StockAreaChart,
   useStockDetail,
@@ -21,12 +21,26 @@ import PageHeader from "@/components/shared/layout/PageHeader";
 import { Button } from "@/components/ui/button";
 import { toggleWatchlist } from "@/features/explore/services/explore.service";
 import { toast } from "sonner";
+import { usePageTour, ProductTour } from "@/features/product-tour";
+import { PORTFOLIO_STOCK_DETAIL_TOUR_STEPS } from "@/features/product-tour/steps";
 
 const PortfolioStockDetailPage: React.FC = () => {
   const { portfolioId, ticker } = useParams();
   const navigate = useNavigate();
   const [isSellModalOpen, setIsSellModalOpen] = useState(false);
   const [isWatchlist, setIsWatchlist] = useState(false);
+
+  const {
+    isActive,
+    currentStep,
+    nextStep,
+    endTour,
+    startTour,
+  } = usePageTour({
+    steps: PORTFOLIO_STOCK_DETAIL_TOUR_STEPS,
+    storageKey: "stockation_tour_portfolio_stock",
+    autoStart: true,
+  });
 
   const {
     holding,
@@ -102,12 +116,23 @@ const PortfolioStockDetailPage: React.FC = () => {
       <PageHeader
         title=""
         showBackButton={true}
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={startTour}
+            className="text-xs gap-1.5 rounded-xl"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            Tur Halaman
+          </Button>
+        }
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">
         <div className="xl:col-span-7 flex flex-col gap-6 xl:h-full xl:overflow-y-auto pr-2 pb-6 scrollbar-thin">
           {/* INFO PERUSAHAAN */}
-          <div className="flex justify-between items-start">
+          <div className="flex justify-between items-start" data-tour="portfolio-stock-info">
             <div>
               <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary mb-0.5 tracking-tight">
                 {stockData.ticker}
@@ -144,25 +169,32 @@ const PortfolioStockDetailPage: React.FC = () => {
             </span>
           </div>
           {/* CHART AREA*/}
-          <StockAreaChart
-            data={filteredChartData}
-            activeFilter={activeFilter}
-            onFilterChange={setActiveFilter}
-            isPositive={priceChange.isPositive}
-          />
-          <TransactionHistoryList transactions={transactions} />
+          <div data-tour="portfolio-stock-chart">
+            <StockAreaChart
+              data={filteredChartData}
+              activeFilter={activeFilter}
+              onFilterChange={setActiveFilter}
+              isPositive={priceChange.isPositive}
+            />
+          </div>
+          <div data-tour="portfolio-stock-transactions">
+            <TransactionHistoryList transactions={transactions} />
+          </div>
         </div>
 
         <div className="xl:col-span-5 flex flex-col gap-4 xl:h-full xl:overflow-y-auto pb-6 xl:pb-0 relative scrollbar-thin">
-          <PortfolioPositionWidget
-            symbol={ticker!}
-            holding={holding}
-            currentPrice={stockData.current_price}
-            onBuy={handleBuy}
-            onSell={handleSell}
-          />
+          <div data-tour="portfolio-stock-position">
+            <PortfolioPositionWidget
+              symbol={ticker!}
+              holding={holding}
+              currentPrice={stockData.current_price}
+              onBuy={handleBuy}
+              onSell={handleSell}
+              actionsDataTour="portfolio-stock-actions"
+            />
+          </div>
           {/* WIDGET STATISTIK SAHAM */}
-          <div className="bg-background-primary">
+          <div className="bg-background-primary" data-tour="portfolio-stock-stats">
             <h3 className="text-base font-medium text-text-secondary mb-2">Statistik Saham</h3>
             <div className="grid grid-cols-2 gap-2">
               <StatCard
@@ -212,7 +244,7 @@ const PortfolioStockDetailPage: React.FC = () => {
           </div>
 
           {/*PERGERAKAN ANOMALI */}
-          <div className="bg-background-primary">
+          <div className="bg-background-primary" data-tour="portfolio-stock-anomaly">
             <h3 className="text-base font-medium text-text-secondary mb-2">
               Pergerakan Anomali
             </h3>
@@ -220,7 +252,7 @@ const PortfolioStockDetailPage: React.FC = () => {
           </div>
 
           {/* RANGKUMAN PERUSAHAAN */}
-          <div className="px-2">
+          <div className="px-2" data-tour="portfolio-stock-summary">
             <h3 className="text-base font-medium text-text-secondary mb-2">Rangkuman</h3>
             <div className="max-h-37 overflow-y-auto">
               <p className="text-sm text-text-muted leading-relaxed text-justify">
@@ -239,6 +271,14 @@ const PortfolioStockDetailPage: React.FC = () => {
         maxLots={holding?.total_shares / 100 || 0}
         currentPrice={stockData.current_price}
         onSuccess={handleSellSuccess}
+      />
+
+      <ProductTour
+        isActive={isActive}
+        currentStep={currentStep}
+        steps={PORTFOLIO_STOCK_DETAIL_TOUR_STEPS}
+        onNext={nextStep}
+        onEnd={endTour}
       />
     </motion.div>
   );
