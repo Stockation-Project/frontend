@@ -4,9 +4,9 @@ import { useMarketMovers, useWatchlist } from "@/features/explore";
 import StockTable from "@/components/shared/cards/StockTable";
 import EmptyState from "@/components/shared/states/EmptyState";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Search, HelpCircle } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { EXPLORE_TOUR_STEPS } from "@/features/product-tour/steps";
 
@@ -23,7 +23,7 @@ const ExplorePage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-    startTour,
+
   } = usePageTour({
     steps: EXPLORE_TOUR_STEPS,
     storageKey: "stockation_tour_explore",
@@ -81,17 +81,6 @@ const ExplorePage: React.FC = () => {
       <PageHeader
         title="Eksplorasi"
         description="Temukan peluang investasi terbaik di pasar modal Indonesia"
-        action={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={startTour}
-            className="text-xs gap-1.5 rounded-xl"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            Tur Halaman
-          </Button>
-        }
       />
 
       <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-8 no-scrollbar">

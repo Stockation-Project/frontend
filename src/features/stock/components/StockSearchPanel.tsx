@@ -73,9 +73,10 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
 
       {/* List */}
       <div className="flex-1 overflow-y-auto no-scrollbar">
-        {displayList.map((stock) => (
+        {displayList.map((stock, index) => (
           <div
             key={stock.ticker}
+            data-tour={`stock-search-row-${index}`}
             className="flex gap-2 items-center justify-between py-3 px-2 border-b border-border-primary hover:bg-background-secondary transition-colors "
           >
             <div className="min-w-0 max-w-[160px] ">
@@ -100,6 +101,7 @@ const StockSearchPanel: React.FC<StockSearchPanelProps> = ({
 
             <button
               onClick={() => onAddStock(stock)}
+              data-tour="stock-search-add-btn"
               className="w-6 h-6 bg-brand flex-shrink-0 flex items-center justify-center border border-brand text-white rounded-sm hover:bg-brand-800 transition-colors"
             >
               <Plus className="w-3 h-3" />

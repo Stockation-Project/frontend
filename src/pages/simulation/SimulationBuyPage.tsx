@@ -9,9 +9,9 @@ import {
   CartListPanel,
   SimulationSummaryPanel,
 } from "@/features/stock";
-import { Loader2, Sparkles, HelpCircle } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import SimulationBuySkeleton from "@/features/stock/components/SimulationBuySkeleton";
-import { Button } from "@/components/ui/button";
+
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { SIMULATION_TOUR_STEPS } from "@/features/product-tour/steps";
 
@@ -24,7 +24,7 @@ const SimulationBuyPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-    startTour,
+
   } = usePageTour({
     steps: SIMULATION_TOUR_STEPS,
     storageKey: "stockation_tour_simulation",
@@ -53,19 +53,7 @@ const SimulationBuyPage: React.FC = () => {
       exit={{ opacity: 0, y: 20 }}
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      <PageHeader title="" showBackButton={true}
-        action={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={startTour}
-            className="text-xs gap-1.5 rounded-xl"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            Tur Halaman
-          </Button>
-        }
-      />
+      <PageHeader title="" showBackButton={true} />
 
       <div className="w-full mx-auto flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         {/* SECTION 1: Pilih Dompet */}

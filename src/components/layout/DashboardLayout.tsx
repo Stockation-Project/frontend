@@ -4,11 +4,10 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import {
   InteractiveTutorial,
-  TutorialProvider,
   useTutorialContext,
 } from "@/features/interactive-tutorial";
 
-const DashboardLayoutInner: React.FC = () => {
+const DashboardLayout: React.FC = () => {
   const {
     isActive,
     currentFlow,
@@ -41,14 +40,6 @@ const DashboardLayoutInner: React.FC = () => {
         onEnd={endTutorial}
       />
     </div>
-  );
-};
-
-const DashboardLayout: React.FC = () => {
-  return (
-    <TutorialProvider>
-      <DashboardLayoutInner />
-    </TutorialProvider>
   );
 };
 

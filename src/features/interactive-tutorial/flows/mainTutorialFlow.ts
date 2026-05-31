@@ -5,7 +5,6 @@ export const mainTutorialFlow: TutorialFlow = {
   id: "main-tutorial",
   title: "Tutorial Lengkap",
   description: "Panduan interaktif dari membuat dompet sampai jual saham",
-  icon: "🎓",
   steps: [
     // ================================================================
     // FASE 1: DASHBOARD — Welcome & Trigger
@@ -54,22 +53,13 @@ export const mainTutorialFlow: TutorialFlow = {
         "Di tabel saham bawah, klik saham paling atas untuk melihat detailnya.",
       page: "/dashboard",
       target: "stocks",
-      clickTarget: "stock-row-first",
-      position: "top",
+      clickTarget: "^stock-row",
+      position: "right",
     },
 
     // ================================================================
     // FASE 4: DETAIL SAHAM — Beli Saham
     // ================================================================
-    {
-      id: "tut-stock-detail",
-      title: "Detail Saham",
-      description:
-        "Ini halaman detail saham. Kamu bisa lihat harga, grafik, dan statistik. Sekarang kita akan beli saham ini.",
-      page: "/stock",
-      target: "stock-detail-info",
-      position: "bottom",
-    },
     {
       id: "tut-buy-stock",
       title: "Beli Saham Ini",
@@ -77,7 +67,7 @@ export const mainTutorialFlow: TutorialFlow = {
         "Klik tombol \"Beli\" untuk mulai proses pembelian saham.",
       page: "/stock",
       target: "stock-detail-buy",
-      position: "left",
+      position: "top",
     },
 
     // ================================================================
@@ -93,67 +83,63 @@ export const mainTutorialFlow: TutorialFlow = {
       position: "bottom",
     },
     {
-      id: "tut-sim-cart-focus",
-      title: "Keranjang Belanja",
+      id: "tut-sim-bbca-expand",
+      title: "Perluas Kartu Saham",
       description:
-        "Saham BBCA yang kamu pilih sudah masuk ke keranjang. Lihat widget ini untuk mengatur pesanan.",
+        "Klik kartu saham ini untuk memperluas dan mengatur jumlah lot.",
       page: "/simulation",
-      target: "simulation-cart",
+      target: "simulation-cart-item",
       position: "left",
     },
     {
       id: "tut-sim-bbca-lot",
-      title: "Atur Jumlah Lot BBCA",
+      title: "Atur Jumlah Lot",
       description:
-        "Klik kartu BBCA untuk memperluas, lalu atur jumlah lot yang ingin dibeli.",
+        "Gunakan tombol + dan \u2212 untuk mengatur jumlah lot. Kalau sudah, klik \"Lanjut\" di bawah.",
       page: "/simulation",
-      target: "simulation-cart-item",
+      target: "simulation-cart-lot-controls",
+      buttonText: "Lanjut",
       position: "left",
     },
     {
-      id: "tut-sim-search-focus",
-      title: "Cari Saham Lain",
+      id: "tut-sim-add-stock",
+      title: "Tambah Saham Lain",
       description:
-        "Sekarang kita tambah satu saham lagi. Arahkan perhatian ke widget pencarian di sebelah kiri.",
+        "Klik tombol + pada saham manapun untuk menambahkannya ke keranjang.",
       page: "/simulation",
       target: "simulation-stock-search",
+      clickTarget: "stock-search-add-btn",
       position: "right",
     },
     {
-      id: "tut-sim-add-adro",
-      title: "Cari & Tambahkan ADRO",
+      id: "tut-sim-cart-review",
+      title: "Cek Keranjang",
       description:
-        "Ketik \"ADRO\" di kolom pencarian, lalu klik untuk menambahkannya ke keranjang.",
+        "Saham yang tadi ditambahkan sudah masuk ke keranjang. Klik \"Lanjut\" untuk lanjut ke ringkasan transaksi.",
       page: "/simulation",
-      target: "simulation-stock-search",
-      position: "right",
-    },
-    {
-      id: "tut-sim-adro-lot",
-      title: "Atur Jumlah Lot ADRO",
-      description:
-        "Balik ke keranjang dan atur jumlah lot ADRO seperti tadi. Klik kartu ADRO untuk memperluas.",
-      page: "/simulation",
-      target: "simulation-cart-item",
+      target: "simulation-cart",
+      buttonText: "Lanjut",
       position: "left",
     },
     {
       id: "tut-sim-summary",
       title: "Ringkasan Transaksi",
       description:
-        "Cek detail transaksi: jumlah lot, harga, biaya, dan total yang harus dibayar.",
+        "Cek detail transaksi: jumlah lot, harga, biaya, dan total yang harus dibayar. Kalau sudah, klik \"Lanjut\".",
       page: "/simulation",
       target: "simulation-summary",
+      buttonText: "Lanjut",
       position: "left",
     },
     {
       id: "tut-sim-confirm",
       title: "Konfirmasi Pembelian",
       description:
-        "Kalau sudah yakin, klik tombol \"Konfirmasi Beli\" untuk eksekusi transaksi!",
+        "Kalau sudah yakin, klik tombol \"Konfirmasi Beli\" untuk eksekusi transaksi! Setelah berhasil, klik \"Lanjut\" di bawah.",
       page: "/simulation",
       target: "simulation-confirm",
-      position: "bottom",
+      buttonText: "Lanjut",
+      position: "left",
     },
 
     // ================================================================
@@ -163,7 +149,7 @@ export const mainTutorialFlow: TutorialFlow = {
       id: "tut-go-portfolio",
       title: "Ke Halaman Portofolio",
       description:
-        "Transaksi berhasil! Sekarang kita lihat hasilnya di halaman Portofolio.",
+        "Klik tombol di bawah untuk melanjutkan ke halaman Portofolio.",
       page: "/simulation",
       target: null,
       buttonText: "Ke Portofolio",
@@ -200,34 +186,45 @@ export const mainTutorialFlow: TutorialFlow = {
     },
 
     // ================================================================
-    // FASE 7: JUAL SAHAM (edukasi, tanpa target spesifik)
+    // FASE 7: JUAL SAHAM — Detail saham & transaksi penjualan
     // ================================================================
     {
-      id: "tut-sell-info",
-      title: "Cara Jual Saham",
+      id: "tut-sell-button-highlight",
+      title: "Waktunya Menjual Saham",
       description:
-        "Kalau kamu ingin menjual saham, buka halaman detail saham dari portofoliomu. Klik tombol \"Detail\" lalu cari tombol \"Jual\" di widget Posisi.",
+        "Kamu sudah berada di halaman detail saham. Di sini kamu bisa memantau pergerakan harga dan performa kepemilikanmu. Jika ingin menjual, klik tombol <strong>Jual</strong> yang tersorot untuk membuka formulir penjualan.",
+      page: "/portfolio",
+      target: "sell-stock-button",
+      position: "left",
+    },
+    {
+      id: "tut-sell-modal-lot",
+      title: "Masukkan Jumlah Lot",
+      description:
+        "Form penjualan sudah terbuka. Ketikkan jumlah lot yang ingin kamu jual pada kolom yang tersorot. Pastikan jumlahnya tidak melebihi kepemilikanmu saat ini.",
+      page: "/portfolio",
+      target: "sell-lot-input",
+      buttonText: "Lanjut",
+      position: "left",
+    },
+    {
+      id: "tut-sell-choice",
+      title: "Mau Lanjut Jual?",
+      description:
+        "Keputusan ada di tanganmu sekarang. Pilih <strong>Jual Sekarang</strong> untuk menyelesaikan transaksi, atau pilih <strong>Lewati</strong> jika ingin menjual di waktu lain. Tutorial tetap berlanjut untuk kedua pilihan.",
       page: "/portfolio",
       target: null,
       position: "center",
+      isChoiceStep: true,
     },
     {
-      id: "tut-sell-lot",
-      title: "Tentukan Jumlah Lot",
+      id: "tut-end",
+      title: "Tutorial Selesai! 🎉",
       description:
-        "Kamu bisa jual sebagian atau seluruh saham yang dimiliki. Tinggal atur jumlah lot yang ingin dijual.",
+        "Hebat! Kamu telah berhasil menyelesaikan seluruh panduan Stockation. Kamu kini paham cara memantau portofolio, melihat detail saham, dan melakukan transaksi penjualan. Selamat berinvestasi dengan bijak!",
       page: "/portfolio",
       target: null,
-      position: "center",
-    },
-    {
-      id: "tut-sell-done",
-      title: "🎉 Tutorial Selesai!",
-      description:
-        "Kamu sekarang sudah bisa: buat dompet, eksplorasi saham, beli saham lewat simulasi, cek portofolio, dan jual saham. Selamat berinvestasi!",
-      page: "/portfolio",
-      target: null,
-      buttonText: "Selesai Tutorial",
+      buttonText: "Mulai Berinvestasi",
       position: "center",
       isLast: true,
     },

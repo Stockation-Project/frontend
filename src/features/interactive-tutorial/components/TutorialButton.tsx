@@ -11,7 +11,7 @@ export const TutorialButton: React.FC<TutorialButtonProps> = ({ onClick }) => {
     <button
       data-tour="tutorial-btn"
       onClick={onClick}
-      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-brand text-white hover:bg-brand-800 transition-all cursor-pointer"
+      className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-brand text-white hover:bg-brand-800 transition-all cursor-pointer"
       title="Mulai Tutorial Interaktif"
     >
       <GraduationCap className="w-4 h-4" />

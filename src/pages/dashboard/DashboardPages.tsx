@@ -108,7 +108,7 @@ const DashboardPages: React.FC = () => {
       transition={{ duration: 0.4 }}
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      <PageHeader title="Dasboard" description={user_info.greeting} />
+      <PageHeader title="Dasboard" description={user_info.greeting} showTutorialButton />
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         <div className="xl:col-span-7 space-y-8">
           <div data-tour="wallet">
