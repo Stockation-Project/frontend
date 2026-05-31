@@ -7,13 +7,31 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
+import { usePageTour, ProductTour } from "@/features/product-tour";
+import { EXPLORE_TOUR_STEPS } from "@/features/product-tour/steps";
+import { useAuth } from "@/features/auth";
+
 const ExplorePage: React.FC = () => {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<"all" | "trending" | "gainers" | "losers">("trending");
   const [watchlistSearch, setWatchlistSearch] = useState("");
   const [moversSearch, setMoversSearch] = useState("");
 
   const { data: marketData, isLoading: isMarketLoading } = useMarketMovers();
   const { watchlist, isLoading: isWatchlistLoading } = useWatchlist();
+
+  const {
+    isActive,
+    currentStep,
+    nextStep,
+    endTour,
+
+  } = usePageTour({
+    steps: EXPLORE_TOUR_STEPS,
+    storageKey: "stockation_tour_explore",
+    autoStart: true,
+    userId: user?.id,
+  });
 
   // Mapping data for StockTable
   const mapStocksForTable = (stocks: any[]) => {
@@ -53,9 +71,11 @@ const ExplorePage: React.FC = () => {
     }
 
     return (
-      <StockTable
-        stocks={mapStocksForTable(displayStocks)}
-      />
+      <div data-tour="explore-stock-list">
+        <StockTable
+          stocks={mapStocksForTable(displayStocks)}
+        />
+      </div>
     );
   };
 
@@ -68,7 +88,7 @@ const ExplorePage: React.FC = () => {
 
       <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-8 no-scrollbar">
         {/* Section 1: Watchlist */}
-        <section className="space-y-4">
+        <section className="space-y-4" data-tour="explore-watchlist">
           
           {isWatchlistLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -111,7 +131,7 @@ const ExplorePage: React.FC = () => {
         </section>
 
         {/* Section 2: Market Movers */}
-        <section className="space-y-6">
+        <section className="space-y-6" data-tour="explore-market-movers">
 
           <div className="flex flex-col gap-2 bg-background-primary border border-border-primary rounded-xl overflow-hidden p-2">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -146,7 +166,7 @@ const ExplorePage: React.FC = () => {
                 </button>
               </div>
 
-              <div className="relative w-full md:w-80">
+              <div className="relative w-full md:w-80" data-tour="explore-search">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-subtle" />
                 <Input
                   placeholder={`Cari di ${activeTab === "all" ? "semua saham" : activeTab}...`}
@@ -160,6 +180,14 @@ const ExplorePage: React.FC = () => {
           </div>
         </section>
       </div>
+
+      <ProductTour
+        isActive={isActive}
+        currentStep={currentStep}
+        steps={EXPLORE_TOUR_STEPS}
+        onNext={nextStep}
+        onEnd={endTour}
+      />
     </div>
   );
 };

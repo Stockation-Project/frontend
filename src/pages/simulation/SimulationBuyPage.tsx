@@ -12,9 +12,27 @@ import {
 import { Loader2, Sparkles } from "lucide-react";
 import SimulationBuySkeleton from "@/features/stock/components/SimulationBuySkeleton";
 
+import { usePageTour, ProductTour } from "@/features/product-tour";
+import { SIMULATION_TOUR_STEPS } from "@/features/product-tour/steps";
+import { useAuth } from "@/features/auth";
+
 const SimulationBuyPage: React.FC = () => {
+  const { user } = useAuth();
   const { state, handlers } = useSimulationBuy();
   const [mainTab, setMainTab] = useState<"Rekomendasi" | "Manual">("Manual");
+
+  const {
+    isActive,
+    currentStep,
+    nextStep,
+    endTour,
+
+  } = usePageTour({
+    steps: SIMULATION_TOUR_STEPS,
+    storageKey: "stockation_tour_simulation",
+    autoStart: true,
+    userId: user?.id,
+  });
 
   if (state.isLoading) {
     return (
@@ -42,7 +60,7 @@ const SimulationBuyPage: React.FC = () => {
 
       <div className="w-full mx-auto flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         {/* SECTION 1: Pilih Dompet */}
-        <div className="flex flex-col py-2 gap-2">
+        <div className="flex flex-col py-2 gap-2" data-tour="simulation-wallet-select">
           <h2 className="text-sm font-medium text-slate-500 uppercase tracking-wide">
             Pilih dompet
           </h2>
@@ -110,7 +128,7 @@ const SimulationBuyPage: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full">
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full" data-tour="simulation-stock-search">
                   <StockSearchPanel
                     searchQuery={state.searchQuery}
                     setSearchQuery={handlers.setSearchQuery}
@@ -146,7 +164,7 @@ const SimulationBuyPage: React.FC = () => {
                   </button>
                 )}
 
-                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full" data-tour="simulation-cart">
                   <CartListPanel
                     selectedPortfolio={state.selectedPortfolio}
                     cart={state.cart}
@@ -154,12 +172,13 @@ const SimulationBuyPage: React.FC = () => {
                     onUpdateLot={handlers.updateStockLot}
                     onToggleExpand={handlers.toggleExpandStock}
                     isReadOnlyLots={true}
+                    cartItemDataTour="simulation-cart-item"
                   />
                 </div>
               </div>
 
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
-                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full" data-tour="simulation-summary">
                   <SimulationSummaryPanel
                     cart={state.cart}
                     selectedPortfolio={state.selectedPortfolio}
@@ -169,6 +188,7 @@ const SimulationBuyPage: React.FC = () => {
                     isBuying={state.isBuying}
                     onConfirmBuy={() => handlers.handleConfirmBuy()}
                     optimizationMetrics={state.optimizationMetrics}
+                    confirmDataTour="simulation-confirm"
                   />
                 </div>
               </div>
@@ -179,7 +199,7 @@ const SimulationBuyPage: React.FC = () => {
           {mainTab === "Manual" && (
             <div className="grid grid-cols-1 xl:grid-cols-10 gap-6 items-start">
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
-                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full">
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-[320px] xl:[&>div]:!h-full" data-tour="simulation-stock-search">
                   <StockSearchPanel
                     searchQuery={state.searchQuery}
                     setSearchQuery={handlers.setSearchQuery}
@@ -191,19 +211,20 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[685px]">
-                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full" data-tour="simulation-cart">
                   <CartListPanel
                     selectedPortfolio={state.selectedPortfolio}
                     cart={state.cart}
                     onRemove={handlers.removeStockFromCart}
                     onUpdateLot={handlers.updateStockLot}
                     onToggleExpand={handlers.toggleExpandStock}
+                    cartItemDataTour="simulation-cart-item"
                   />
                 </div>
               </div>
 
               <div className="xl:col-span-3 w-full flex flex-col gap-4 xl:h-[685px]">
-                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full">
+                <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full" data-tour="simulation-summary">
                   <SimulationSummaryPanel
                     cart={state.cart}
                     selectedPortfolio={state.selectedPortfolio}
@@ -214,6 +235,7 @@ const SimulationBuyPage: React.FC = () => {
                     onConfirmBuy={() => handlers.handleConfirmBuy(() => {
                     })}
                     optimizationMetrics={state.optimizationMetrics}
+                    confirmDataTour="simulation-confirm"
                   />
                 </div>
               </div>
@@ -221,6 +243,14 @@ const SimulationBuyPage: React.FC = () => {
           )}
         </div>
       </div>
+
+      <ProductTour
+        isActive={isActive}
+        currentStep={currentStep}
+        steps={SIMULATION_TOUR_STEPS}
+        onNext={nextStep}
+        onEnd={endTour}
+      />
     </motion.div>
   );
 };

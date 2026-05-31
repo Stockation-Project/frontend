@@ -95,6 +95,9 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
       actionVariant="error"
       isActionDisabled={lots <= 0 || lots > maxLots || isSubmitting}
       isLoading={isSubmitting}
+      modalDataTour="sell-stock-modal"
+      submitDataTour="sell-confirm-button"
+      closeDataTour="sell-modal-close"
     >
       <div className="space-y-6">
         <div className="space-y-2">
@@ -140,6 +143,7 @@ const SellStockModal: React.FC<SellStockModalProps> = ({
             <input
               type="number"
               placeholder="0"
+              data-tour="sell-lot-input"
               value={lots || ""}
               onChange={(e) => {
                 const val = parseInt(e.target.value, 10) || 0;

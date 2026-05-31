@@ -14,12 +14,16 @@ import {
 } from "@/features/dashboard";
 import { useWallet } from "@/features/wallet";
 import { useAuth } from "@/features/auth";
+import { useProductTour, ProductTour } from "@/features/product-tour";
+import { DASHBOARD_TOUR_STEPS } from "@/features/product-tour/steps";
 import GlobalWalletCard from "@/components/shared/wallet/GlobalWalletCard";
 import StockTable from "@/components/shared/cards/StockTable";
 import TopUpModal from "@/components/shared/modal/TopUpModal";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import AllocateModal from "@/components/shared/modal/AllocateModal";
 import PageHeader from "@/components/shared/layout/PageHeader";
+import { Button } from "@/components/ui/button";
+import { HelpCircle } from "lucide-react";
 
 const DashboardPages: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +34,16 @@ const DashboardPages: React.FC = () => {
     onSuccess: refreshData 
   });
   const { handleTopUp, handleCreatePortfolio, handleAllocate } = actions;
+
+  // --- Product Tour ---
+  const hasPortfolio = (data?.portfolios ?? []).length > 0;
+  const {
+    isActive: isTourActive,
+    currentStep: tourStep,
+    nextStep: tourNext,
+    startTour: tourStart,
+    endTour,
+  } = useProductTour({ hasPortfolio, isLoading, userId: user?.id });
 
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
@@ -97,14 +111,30 @@ const DashboardPages: React.FC = () => {
       transition={{ duration: 0.4 }}
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      <PageHeader title="Dasboard" description={user_info.greeting} />
+      <PageHeader
+        title="Dasboard"
+        description={user_info.greeting}
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={tourStart}
+            className="text-xs gap-1.5 rounded-xl"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            Tur Halaman
+          </Button>
+        }
+      />
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         <div className="xl:col-span-7 space-y-8">
-          <GlobalWalletCard
-            balance={wallet_summary.main_wallet_balance}
-            onTopUpClick={() => setIsTopUpOpen(true)}
-            onAllocateClick={() => setIsAllocateOpen(true)}
-          />
+          <div data-tour="wallet">
+            <GlobalWalletCard
+              balance={wallet_summary.main_wallet_balance}
+              onTopUpClick={() => setIsTopUpOpen(true)}
+              onAllocateClick={() => setIsAllocateOpen(true)}
+            />
+          </div>
 
           <TopUpModal
             isOpen={isTopUpOpen}
@@ -123,15 +153,18 @@ const DashboardPages: React.FC = () => {
             onSuccess={handleAllocate}
           />
 
-          <PortfolioSection
-            portfolios={portfoliosWithColors}
-            userRiskProfile={user_info.risk_profile}
-            onAddClick={() => setIsCreatePortoOpen(true)}
-            onCardClick={(portfolioId) =>
-              navigate(`/portfolio/${portfolioId}`)
-            }
-            cardVariant="dashboard"
-          />
+          <div data-tour="portfolio-cta">
+            <PortfolioSection
+              portfolios={portfoliosWithColors}
+              userRiskProfile={user_info.risk_profile}
+              onAddClick={() => setIsCreatePortoOpen(true)}
+              onCardClick={(portfolioId) =>
+                navigate(`/portfolio/${portfolioId}`)
+              }
+              cardVariant="dashboard"
+              createButtonDataTour="portfolio-create-btn"
+            />
+          </div>
 
           <CreatePortfolioModal
             isOpen={isCreatePortoOpen}
@@ -140,26 +173,41 @@ const DashboardPages: React.FC = () => {
             onSuccess={handleCreatePortfolio}
           />
 
-          <StockTable
-            title="Sesuai dengan Profil Resikomu"
-            stocks={mappedStocks}
-          />
+          <div data-tour="stocks">
+            <StockTable
+              title="Sesuai dengan Profil Resikomu"
+              stocks={mappedStocks}
+            />
+          </div>
         </div>
 
         <div className="xl:col-span-3 space-y-8">
-          <WalletSummary
-            totalWallet={wallet_summary.total_assets}
-            allocations={walletAllocations}
-          />
+          <div data-tour="dashboard-summary">
+            <WalletSummary
+              totalWallet={wallet_summary.total_assets}
+              allocations={walletAllocations}
+            />
+          </div>
 
-          <RiskProfileWidget
-            score={user_info.risk_score || 0}
-            profileKey={user_info.risk_profile}
-            userName={userName}
-            updatedAt=""
-          />
+          <div data-tour="dashboard-risk-profile">
+            <RiskProfileWidget
+              score={user_info.risk_score || 0}
+              profileKey={user_info.risk_profile}
+              userName={userName}
+              updatedAt=""
+            />
+          </div>
         </div>
       </div>
+
+      {/* Product Tour Overlay */}
+      <ProductTour
+        isActive={isTourActive}
+        currentStep={tourStep}
+        steps={DASHBOARD_TOUR_STEPS}
+        onNext={tourNext}
+        onEnd={endTour}
+      />
     </motion.div>
   );
 };

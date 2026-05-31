@@ -17,6 +17,12 @@ interface BaseSideModalProps {
   isLoading?: boolean;
   isActionDisabled?: boolean;
   actionVariant?: "brand" | "error";
+  /** data-tour attribute untuk tombol submit */
+  submitDataTour?: string;
+  /** data-tour attribute untuk container modal */
+  modalDataTour?: string;
+  /** data-tour attribute untuk tombol tutup */
+  closeDataTour?: string;
 }
 
 const BaseSideModal: React.FC<BaseSideModalProps> = ({
@@ -29,11 +35,15 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
   isLoading = false,
   isActionDisabled = false,
   actionVariant = "brand",
+  submitDataTour,
+  modalDataTour,
+  closeDataTour,
 }) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent
         side="right"
+        data-tour={modalDataTour}
         className="!w-full sm:!w-[65vw] md:!w-[50vw] sm:!max-w-none p-0 flex flex-col bg-background-secondary"
       >
         {/* Header Modal */}
@@ -57,21 +67,24 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
             variant="outline"
             onClick={onClose}
             disabled={isLoading}
+            data-tour={closeDataTour}
             className="flex-1 h-10 bg-transparent border border-slate-900 hover:bg-slate-50 active:bg-slate-100 text-slate-900 rounded-xl text-sm font-regular transition-all duration-200 cursor-pointer"
           >
             Tutup
           </Button>
-          <Button
-            onClick={onAction}
-            disabled={isActionDisabled || isLoading}
-            className={`flex-1 h-10 text-white rounded-xl text-sm font-regular shadow-lg transition-all duration-200 cursor-pointer ${
-              actionVariant === "error"
-                ? "bg-error hover:bg-error-900 active:bg-error-800 shadow-error/20"
-                : "bg-brand hover:bg-brand-950 active:bg-brand shadow-brand/20"
-            }`}
-          >
-            {isLoading ? "Memproses..." : actionText}
-          </Button>
+          <div data-tour={submitDataTour} className="flex-1">
+            <Button
+              onClick={onAction}
+              disabled={isActionDisabled || isLoading}
+              className={`w-full h-10 text-white rounded-xl text-sm font-regular shadow-lg transition-all duration-200 cursor-pointer ${
+                actionVariant === "error"
+                  ? "bg-error hover:bg-error-900 active:bg-error-800 shadow-error/20"
+                  : "bg-brand hover:bg-brand-950 active:bg-brand shadow-brand/20"
+              }`}
+            >
+              {isLoading ? "Memproses..." : actionText}
+            </Button>
+          </div>
         </div>
       </SheetContent>
     </Sheet>

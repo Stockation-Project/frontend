@@ -8,6 +8,8 @@ interface PortfolioPositionWidgetProps {
   currentPrice: number; // Harga realtime dari API saham
   onBuy?: () => void;
   onSell?: () => void;
+  actionsDataTour?: string;
+  sellButtonDataTour?: string;
 }
 
 const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
@@ -16,6 +18,8 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
   currentPrice,
   onBuy,
   onSell,
+  actionsDataTour,
+  sellButtonDataTour,
 }) => {
   const isOwned = holding && holding.total_shares > 0;
   const avgPrice = isOwned ? holding.avg_buy_price : 0;
@@ -66,7 +70,7 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mt-4">
+      <div className="grid grid-cols-2 gap-3 mt-4" data-tour={actionsDataTour}>
         <Button
           onClick={onBuy}
           className="w-full h-10 bg-brand hover:bg-brand-950 text-text-inverse rounded-xl text-sm font-medium shadow-sm shadow-brand/10 transition-all cursor-pointer"
@@ -76,6 +80,7 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
         <Button
           onClick={onSell}
           disabled={!isOwned}
+          data-tour={sellButtonDataTour}
           className="w-full h-10 bg-error hover:bg-error-900 text-text-inverse rounded-xl text-sm font-medium shadow-sm shadow-error-500/10 transition-all cursor-pointer disabled:bg-background-secondary disabled:text-text-subtle disabled:shadow-none"
         >
           Jual
