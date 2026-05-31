@@ -1,5 +1,4 @@
 // src/features/product-tour/utils/tour-helpers.tsx
-// Shared helpers for both ProductTour and InteractiveTutorial
 
 import React from "react";
 import type { Rect } from "../types";
