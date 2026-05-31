@@ -94,7 +94,10 @@ const CartListPanel: React.FC<CartListPanelProps> = ({
 
             {/* Expanded Body */}
             {item.isExpanded && (
-              <div className="p-4 bg-background-secondary border-t border-border-primary">
+              <div
+                data-tour={index === 0 ? "simulation-cart-lot-controls" : undefined}
+                className="p-4 bg-background-secondary border-t border-border-primary"
+              >
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-Regular text-slate-500">

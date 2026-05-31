@@ -21,6 +21,8 @@ interface BaseSideModalProps {
   submitDataTour?: string;
   /** data-tour attribute untuk container modal */
   modalDataTour?: string;
+  /** data-tour attribute untuk tombol tutup */
+  closeDataTour?: string;
 }
 
 const BaseSideModal: React.FC<BaseSideModalProps> = ({
@@ -35,6 +37,7 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
   actionVariant = "brand",
   submitDataTour,
   modalDataTour,
+  closeDataTour,
 }) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -64,6 +67,7 @@ const BaseSideModal: React.FC<BaseSideModalProps> = ({
             variant="outline"
             onClick={onClose}
             disabled={isLoading}
+            data-tour={closeDataTour}
             className="flex-1 h-10 bg-transparent border border-slate-900 hover:bg-slate-50 active:bg-slate-100 text-slate-900 rounded-xl text-sm font-regular transition-all duration-200 cursor-pointer"
           >
             Tutup

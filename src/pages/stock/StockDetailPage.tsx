@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bookmark, HelpCircle } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import {
   useStockDetail,
   useChartFilter,
@@ -32,7 +32,7 @@ const StockDetailPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-    startTour,
+
   } = usePageTour({
     steps: STOCK_DETAIL_TOUR_STEPS,
     storageKey: "stockation_tour_stock_detail",
@@ -105,17 +105,6 @@ const StockDetailPage: React.FC = () => {
       <PageHeader
         title=""
         showBackButton={true}
-        action={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={startTour}
-            className="text-xs gap-1.5 rounded-xl"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            Tur Halaman
-          </Button>
-        }
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">

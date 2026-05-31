@@ -22,6 +22,8 @@ export interface TutorialFlowStep {
   position?: "top" | "bottom" | "left" | "right" | "center";
   /** True = step terakhir, tampil "Selesai" */
   isLast?: boolean;
+  /** True = step pilihan (render dua tombol: Lewati + Jual Sekarang) */
+  isChoiceStep?: boolean;
 }
 
 export interface TutorialFlow {

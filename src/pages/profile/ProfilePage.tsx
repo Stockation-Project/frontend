@@ -4,8 +4,8 @@ import { useProfile } from "@/features/profile/hooks/useProfile";
 import ProfileHeader from "@/features/profile/components/ProfileHeader";
 import PersonalInfoForm from "@/features/profile/components/PersonalInfoForm";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { HelpCircle } from "lucide-react";
+
+
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { PROFILE_TOUR_STEPS } from "@/features/product-tour/steps";
 
@@ -17,7 +17,7 @@ const ProfilePage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-    startTour,
+
   } = usePageTour({
     steps: PROFILE_TOUR_STEPS,
     storageKey: "stockation_tour_profile",
@@ -76,17 +76,7 @@ const ProfilePage: React.FC = () => {
       <PageHeader 
         title="Profil" 
         description="Kelola informasi akun dan preferensi Anda"
-        action={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={startTour}
-            className="text-xs gap-1.5 rounded-xl"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            Tur Halaman
-          </Button>
-        }
+
       />
 
       <div className="flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">

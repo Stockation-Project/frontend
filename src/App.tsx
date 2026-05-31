@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 
 // context
 import { AuthProvider } from "@/features/auth";
+import { TutorialProvider } from "@/features/interactive-tutorial";
 
 // Pages
 import LandingPage from "./pages/landing/LandingPage";
@@ -32,8 +33,9 @@ function AnimatedRoutes() {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
+    <TutorialProvider>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/questionnaire" element={<QuestionnairePage />} />
@@ -60,6 +62,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<LandingPage />} />
       </Routes>
     </AnimatePresence>
+    </TutorialProvider>
   );
 }
 

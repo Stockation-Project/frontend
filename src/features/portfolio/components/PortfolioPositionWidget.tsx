@@ -9,6 +9,7 @@ interface PortfolioPositionWidgetProps {
   onBuy?: () => void;
   onSell?: () => void;
   actionsDataTour?: string;
+  sellButtonDataTour?: string;
 }
 
 const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
@@ -18,6 +19,7 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
   onBuy,
   onSell,
   actionsDataTour,
+  sellButtonDataTour,
 }) => {
   const isOwned = holding && holding.total_shares > 0;
   const avgPrice = isOwned ? holding.avg_buy_price : 0;
@@ -78,6 +80,7 @@ const PortfolioPositionWidget: React.FC<PortfolioPositionWidgetProps> = ({
         <Button
           onClick={onSell}
           disabled={!isOwned}
+          data-tour={sellButtonDataTour}
           className="w-full h-10 bg-error hover:bg-error-900 text-text-inverse rounded-xl text-sm font-medium shadow-sm shadow-error-500/10 transition-all cursor-pointer disabled:bg-background-secondary disabled:text-text-subtle disabled:shadow-none"
         >
           Jual

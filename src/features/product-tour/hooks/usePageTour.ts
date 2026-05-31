@@ -1,6 +1,7 @@
 // src/features/product-tour/hooks/usePageTour.ts
 import { useState, useEffect, useCallback } from "react";
 import type { TourStep } from "../types";
+import { useAuth } from "@/features/auth";
 
 interface UsePageTourOptions {
   steps: TourStep[];
@@ -15,14 +16,16 @@ export function usePageTour({
   autoStart = false,
   isLoading = false,
 }: UsePageTourOptions) {
+  const { user } = useAuth();
+  const accountKey = `${storageKey}_${user?.id ?? "anonymous"}`;
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
     if (isLoading || !autoStart) return;
 
-    // Already completed this page tour? Skip.
-    const completed = localStorage.getItem(storageKey) === "true";
+    // Already completed this page tour? Skip (per-akun).
+    const completed = localStorage.getItem(accountKey) === "true";
     if (completed) return;
 
     const timer = setTimeout(() => {
@@ -30,7 +33,7 @@ export function usePageTour({
       setCurrentStep(0);
     }, 600);
     return () => clearTimeout(timer);
-  }, [isLoading, autoStart, storageKey]);
+  }, [isLoading, autoStart, accountKey]);
 
   const startTour = useCallback(() => {
     setIsActive(true);
@@ -39,8 +42,8 @@ export function usePageTour({
 
   const endTour = useCallback(() => {
     setIsActive(false);
-    localStorage.setItem(storageKey, "true");
-  }, [storageKey]);
+    localStorage.setItem(accountKey, "true");
+  }, [accountKey]);
 
   const nextStep = useCallback(() => {
     setCurrentStep((prev) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bookmark, HelpCircle } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import {
   StockAreaChart,
   useStockDetail,
@@ -35,7 +35,7 @@ const PortfolioStockDetailPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-    startTour,
+
   } = usePageTour({
     steps: PORTFOLIO_STOCK_DETAIL_TOUR_STEPS,
     storageKey: "stockation_tour_portfolio_stock",
@@ -116,17 +116,6 @@ const PortfolioStockDetailPage: React.FC = () => {
       <PageHeader
         title=""
         showBackButton={true}
-        action={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={startTour}
-            className="text-xs gap-1.5 rounded-xl"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            Tur Halaman
-          </Button>
-        }
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">
@@ -191,6 +180,7 @@ const PortfolioStockDetailPage: React.FC = () => {
               onBuy={handleBuy}
               onSell={handleSell}
               actionsDataTour="portfolio-stock-actions"
+              sellButtonDataTour="sell-stock-button"
             />
           </div>
           {/* WIDGET STATISTIK SAHAM */}

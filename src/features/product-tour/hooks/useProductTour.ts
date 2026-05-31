@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import type { UseProductTourOptions } from "../types";
 import { DASHBOARD_TOUR_STEPS } from "../steps/dashboardSteps";
+import { useAuth } from "@/features/auth";
 
 const STORAGE_KEY = "stockation_product_tour_completed";
 
@@ -10,6 +11,8 @@ export const TOUR_STEPS = DASHBOARD_TOUR_STEPS;
 
 export function useProductTour(options: UseProductTourOptions) {
   const { isLoading } = options;
+  const { user } = useAuth();
+  const accountKey = `${STORAGE_KEY}_${user?.id ?? "anonymous"}`;
 
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -18,8 +21,8 @@ export function useProductTour(options: UseProductTourOptions) {
   useEffect(() => {
     if (isLoading) return;
 
-    // Sudah selesai sebelumnya? Skip.
-    const completed = localStorage.getItem(STORAGE_KEY) === "true";
+    // Sudah selesai sebelumnya? Skip (per-akun).
+    const completed = localStorage.getItem(accountKey) === "true";
     if (completed) return;
 
     const timer = setTimeout(() => {
@@ -27,7 +30,7 @@ export function useProductTour(options: UseProductTourOptions) {
       setCurrentStep(0);
     }, 600);
     return () => clearTimeout(timer);
-  }, [isLoading]);
+  }, [isLoading, accountKey]);
 
   const startTour = useCallback(() => {
     setIsActive(true);
@@ -36,8 +39,8 @@ export function useProductTour(options: UseProductTourOptions) {
 
   const endTour = useCallback(() => {
     setIsActive(false);
-    localStorage.setItem(STORAGE_KEY, "true");
-  }, []);
+    localStorage.setItem(accountKey, "true");
+  }, [accountKey]);
 
   const nextStep = useCallback(() => {
     setCurrentStep((prev) => {
@@ -74,5 +77,8 @@ export function useProductTour(options: UseProductTourOptions) {
 
 /** Reset product tour flag — allows re-triggering during dev/testing */
 export function resetProductTour(): void {
-  localStorage.removeItem(STORAGE_KEY);
+  // Hapus semua key per-akun
+  Object.keys(localStorage)
+    .filter((k) => k.startsWith(STORAGE_KEY))
+    .forEach((k) => localStorage.removeItem(k));
 }

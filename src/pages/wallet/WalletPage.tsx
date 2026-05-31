@@ -11,8 +11,8 @@ import WithdrawModal from "@/components/shared/modal/WithdrawModal";
 import PageHeader from "@/components/shared/layout/PageHeader";
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { WALLET_TOUR_STEPS } from "@/features/product-tour/steps";
-import { Button } from "@/components/ui/button";
-import { HelpCircle } from "lucide-react";
+
+
 
 const WalletPage: React.FC = () => {
   const { globalWallet,
@@ -39,7 +39,7 @@ const WalletPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-    startTour,
+
   } = usePageTour({
     steps: WALLET_TOUR_STEPS,
     storageKey: "stockation_tour_wallet",
@@ -51,17 +51,7 @@ const WalletPage: React.FC = () => {
       <PageHeader 
         title="Dompet"
         description="Kelola aset digital dan portofolio Anda"
-        action={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={startTour}
-            className="text-xs gap-1.5 rounded-xl"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            Tur Halaman
-          </Button>
-        }
+
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">

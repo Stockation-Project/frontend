@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { AlertCircle, Briefcase, HelpCircle } from "lucide-react";
+import { AlertCircle, Briefcase } from "lucide-react";
 
 // Features (New Architecture)
 import { 
@@ -23,7 +23,7 @@ import {
   PORTFOLIO_TOUR_STEPS,
   PORTFOLIO_DETAIL_TOUR_STEPS,
 } from "@/features/product-tour/steps";
-import { Button } from "@/components/ui/button";
+
 
 const ALLOCATION_COLORS = [
   "bg-brand",
@@ -70,7 +70,7 @@ const PortfolioDetailPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-    startTour,
+
   } = usePageTour({
     steps: tourSteps,
     storageKey,
@@ -132,17 +132,6 @@ const PortfolioDetailPage: React.FC = () => {
         title="Portofolio"
         description={portfolio ? `Melihat isi dari dompet: ${portfolio.name}` : "Pilih dompet untuk melihat detail"}
         showBackButton={false}
-        action={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={startTour}
-            className="text-xs gap-1.5 rounded-xl"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            Tur Halaman
-          </Button>
-        }
       />
 
       {/* Content */}

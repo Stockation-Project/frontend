@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, LogOut } from "lucide-react";
 import { useAuth } from "@/features/auth";
 import { useTutorialContext, TutorialButton } from "@/features/interactive-tutorial";
+
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,7 @@ interface PageHeaderProps {
   description?: string;
   action?: React.ReactNode;
   showBackButton?: boolean;
+  showTutorialButton?: boolean;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
@@ -26,6 +28,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   description,
   action,
   showBackButton = false,
+  showTutorialButton = false,
 }) => {
   const navigate = useNavigate();
   const { logout, isAuthenticated } = useAuth();
@@ -76,12 +79,12 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 
           {isAuthenticated && (
             <>
-              <TutorialButton onClick={startTutorial} />
+              {showTutorialButton && <TutorialButton onClick={startTutorial} />}
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsConfirmOpen(true)}
-                className="rounded-xl text-text-secondary hover:text-red-500 hover:bg-red-500/10 h-9 w-9 flex-shrink-0 transition-all duration-200 animate-in fade-in zoom-in duration-300"
+                className="rounded-lg text-text-secondary hover:text-red-500 hover:bg-red-500/10 h-9 w-9 flex-shrink-0 transition-all duration-200 animate-in fade-in zoom-in duration-300"
                 title="Keluar dari Akun"
               >
                 <LogOut className="w-5 h-5" />
