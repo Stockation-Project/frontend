@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { fetchDashboardData, type DashboardPortfolio } from "@/features/dashboard";
 import { searchStocks, fetchRecommendedStocks } from "../services/stock.service";
 import { bulkBuyStockService, optimizePortfolio } from "@/features/portfolio";
+import { useAuth } from "@/features/auth";
 import type {
   CartItem,
   SearchStockItem,
@@ -15,12 +16,33 @@ import { toast } from "sonner";
 export interface OptimizationMetrics {
   expectedReturn: number;
   volatility: number;
+  cvar: number;
   sharpeRatio: number;
   method: string;
   riskProfile: string;
+  riskTolerance: number;
+  volatilitySource: "forecast" | "historical";
+  forecastCount: number;
+  totalCount: number;
 }
 
+/**
+ * Posisi default slider (0.0–1.0) berdasarkan persona profil risiko user.
+ * Selaras dengan default_risk_tolerance di config ML:
+ *   konservatif (turtle, hippo) → 0.20
+ *   moderat     (capybara)      → 0.50
+ *   agresif     (wolf, lion)    → 0.80
+ */
+export const getDefaultRiskTolerance = (riskProfile?: string | null): number => {
+  const profile = (riskProfile || "").toLowerCase();
+  if (profile === "turtle" || profile === "hippo") return 0.2;
+  if (profile === "wolf" || profile === "lion") return 0.8;
+  return 0.5; // capybara / default
+};
+
 export const useSimulationBuy = () => {
+  const { user } = useAuth();
+
   // --- States ---
   const [portfolios, setPortfolios] = useState<DashboardPortfolio[]>([]);
   const [selectedPortfolioId, setSelectedPortfolioId] = useState<string | null>(null);
@@ -52,6 +74,23 @@ export const useSimulationBuy = () => {
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [optimizationMetrics, setOptimizationMetrics] = useState<OptimizationMetrics | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // --- Risk Tolerance Slider ---
+  // Default mengikuti persona profil risiko user; bisa digeser manual.
+  const defaultRiskTolerance = useMemo(
+    () => getDefaultRiskTolerance(user?.risk_profile),
+    [user?.risk_profile]
+  );
+  const [riskTolerance, setRiskTolerance] = useState<number>(defaultRiskTolerance);
+  // Tandai apakah user sudah menggeser slider (untuk membedakan default vs manual)
+  const [isToleranceCustomized, setIsToleranceCustomized] = useState(false);
+
+  // Sinkronkan default begitu data user tersedia (jika belum digeser manual)
+  useEffect(() => {
+    if (!isToleranceCustomized) {
+      setRiskTolerance(defaultRiskTolerance);
+    }
+  }, [defaultRiskTolerance, isToleranceCustomized]);
 
   // --- Initial Data Fetching ---
   useEffect(() => {
@@ -139,6 +178,22 @@ export const useSimulationBuy = () => {
     setSelectedPortfolioId(id);
   };
 
+  // Ubah nilai slider toleransi risiko (0.0–1.0)
+  const handleChangeRiskTolerance = (value: number) => {
+    const clamped = Math.min(1, Math.max(0, value));
+    setRiskTolerance(clamped);
+    setIsToleranceCustomized(true);
+    // Hasil optimasi lama tidak lagi relevan setelah slider berubah
+    setOptimizationMetrics(null);
+  };
+
+  // Kembalikan slider ke default sesuai profil risiko user
+  const handleResetRiskTolerance = () => {
+    setRiskTolerance(defaultRiskTolerance);
+    setIsToleranceCustomized(false);
+    setOptimizationMetrics(null);
+  };
+
   const addStockToCart = (stock: SearchStockItem) => {
     setOptimizationMetrics(null);
     setCart((prev) => {
@@ -203,9 +258,12 @@ export const useSimulationBuy = () => {
     try {
       setIsOptimizing(true);
       const tickers = cart.map((item) => item.ticker);
-      
-      // 1. Panggil API Optimasi
-      const res = await optimizePortfolio(tickers);
+
+      // 1. Panggil API Optimasi dengan toleransi risiko dari slider.
+      //    Jika user belum menggeser slider, kirim null agar backend/ML
+      //    memakai default sesuai profil risiko user.
+      const tolerancePayload = isToleranceCustomized ? riskTolerance : null;
+      const res = await optimizePortfolio(tickers, tolerancePayload);
       const weights = res.data.weights; // format: { "BBCA": 0.45, "TLKM": 0.55 }
       
       // 2. Terapkan kalkulasi lot otomatis
@@ -223,12 +281,21 @@ export const useSimulationBuy = () => {
       });
 
       setCart(updatedCart);
+      const meta = res.data.metadata;
+      const perTicker = meta?.volatility_per_ticker || {};
+      const forecastCount = Object.values(perTicker).filter((s) => s === "forecast").length;
+      const totalCount = Object.keys(perTicker).length || cart.length;
       setOptimizationMetrics({
         expectedReturn: res.data.metrics.expected_return,
         volatility: res.data.metrics.volatility,
+        cvar: res.data.metrics.cvar,
         sharpeRatio: res.data.metrics.sharpe_ratio,
         method: res.data.method,
         riskProfile: res.data.risk_profile,
+        riskTolerance: meta?.risk_tolerance ?? riskTolerance,
+        volatilitySource: meta?.volatility_source ?? "historical",
+        forecastCount,
+        totalCount,
       });
       toast.success("Alokasi Berhasil!", {
         description: "Jumlah lot berhasil disesuaikan otomatis oleh sistem untuk hasil yang lebih optimal.",
@@ -306,6 +373,9 @@ export const useSimulationBuy = () => {
       remainingBalance,
       donutChartData,
       optimizationMetrics,
+      riskTolerance,
+      defaultRiskTolerance,
+      isToleranceCustomized,
     },
     handlers: {
       setSearchQuery,
@@ -316,6 +386,8 @@ export const useSimulationBuy = () => {
       toggleExpandStock,
       handleConfirmBuy,
       handleAutoAllocation,
+      handleChangeRiskTolerance,
+      handleResetRiskTolerance,
     },
   };
 };

@@ -8,6 +8,7 @@ import {
   StockSearchPanel,
   CartListPanel,
   SimulationSummaryPanel,
+  RiskToleranceSlider,
 } from "@/features/stock";
 import { Loader2, Sparkles } from "lucide-react";
 import SimulationBuySkeleton from "@/features/stock/components/SimulationBuySkeleton";
@@ -140,6 +141,16 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[685px]">
+                {state.cart.length >= 2 && (
+                  <RiskToleranceSlider
+                    value={state.riskTolerance}
+                    defaultValue={state.defaultRiskTolerance}
+                    isCustomized={state.isToleranceCustomized}
+                    onChange={handlers.handleChangeRiskTolerance}
+                    onReset={handlers.handleResetRiskTolerance}
+                    disabled={state.isOptimizing}
+                  />
+                )}
                 {state.cart.length >= 2 && (
                   <button
                     onClick={handlers.handleAutoAllocation}

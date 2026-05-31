@@ -8,7 +8,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 
 // context
-import { AuthProvider } from "@/features/auth";
+import { AuthProvider, ProtectedRoute } from "@/features/auth";
 
 // Pages
 import LandingPage from "./pages/landing/LandingPage";
@@ -39,22 +39,24 @@ function AnimatedRoutes() {
         <Route path="/questionnaire" element={<QuestionnairePage />} />
 
         {/* Rute Utama (Dengan Sidebar) */}
-        <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<DashboardPages />} />
-          <Route path="/simulation" element={<SimulationBuyPage />} />
-          <Route
-            path="/stock/:ticker"
-            element={<StockDetailPage />}
-          />
-          <Route
-            path="/portfolio/:portfolioId/stocks/:ticker"
-            element={<PortfolioStockDetailPage />}
-          />
-          <Route path="/portfolio" element={<PortfolioDetailPage />} />
-          <Route path="/portfolio/:id" element={<PortfolioDetailPage />} />
-          <Route path="/wallet" element={<WalletPage />} />
-          <Route path="/explore" element={<ExplorePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<DashboardPages />} />
+            <Route path="/simulation" element={<SimulationBuyPage />} />
+            <Route
+              path="/stock/:ticker"
+              element={<StockDetailPage />}
+            />
+            <Route
+              path="/portfolio/:portfolioId/stocks/:ticker"
+              element={<PortfolioStockDetailPage />}
+            />
+            <Route path="/portfolio" element={<PortfolioDetailPage />} />
+            <Route path="/portfolio/:id" element={<PortfolioDetailPage />} />
+            <Route path="/wallet" element={<WalletPage />} />
+            <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Route>
         </Route>
 
         <Route path="/" element={<LandingPage />} />

@@ -17,3 +17,4 @@ export { default as AuthHeader } from "./components/AuthHeader";
 export { default as AuthVisualPanel } from "./components/AuthVisualPanel";
 export { default as FormInputGroup } from "./components/FormInputGroup";
 export { default as PasswordInputField } from "./components/PasswordInputField";
+export { default as ProtectedRoute } from "./components/ProtectedRoute";
