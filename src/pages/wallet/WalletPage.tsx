@@ -13,8 +13,10 @@ import { usePageTour, ProductTour } from "@/features/product-tour";
 import { WALLET_TOUR_STEPS } from "@/features/product-tour/steps";
 import { Button } from "@/components/ui/button";
 import { HelpCircle } from "lucide-react";
+import { useAuth } from "@/features/auth";
 
 const WalletPage: React.FC = () => {
+  const { user } = useAuth();
   const { globalWallet,
     portfolios,
     selectedPortfolioId,
@@ -44,6 +46,7 @@ const WalletPage: React.FC = () => {
     steps: WALLET_TOUR_STEPS,
     storageKey: "stockation_tour_wallet",
     autoStart: true,
+    userId: user?.id,
   });
 
   return (

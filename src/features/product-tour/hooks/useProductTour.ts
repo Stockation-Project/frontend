@@ -7,22 +7,28 @@ import { DASHBOARD_TOUR_STEPS } from "../steps/dashboardSteps";
 export const TOUR_STEPS = DASHBOARD_TOUR_STEPS;
 
 export function useProductTour(options: UseProductTourOptions) {
-  const { isLoading } = options;
+  const { isLoading, userId } = options;
+
+  const STORAGE_KEY = userId
+    ? `stockation_product_tour_seen_${userId}`
+    : "stockation_product_tour_seen";
 
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Always auto-start when dashboard is ready (for design iteration)
-  // TODO: add localStorage + hasPortfolio check later for production
   useEffect(() => {
     if (isLoading) return;
+
+    // Cek apakah user sudah pernah melihat tour dashboard
+    const seen = localStorage.getItem(STORAGE_KEY) === "true";
+    if (seen) return;
 
     const timer = setTimeout(() => {
       setIsActive(true);
       setCurrentStep(0);
     }, 600);
     return () => clearTimeout(timer);
-  }, [isLoading]);
+  }, [isLoading, STORAGE_KEY]);
 
   const startTour = useCallback(() => {
     setIsActive(true);
@@ -31,8 +37,9 @@ export function useProductTour(options: UseProductTourOptions) {
 
   const endTour = useCallback(() => {
     setIsActive(false);
-    // TODO: localStorage.setItem("stockation_product_tour_seen", "true");
-  }, []);
+    // Simpan status tour sudah selesai ke localStorage
+    localStorage.setItem(STORAGE_KEY, "true");
+  }, [STORAGE_KEY]);
 
   const nextStep = useCallback(() => {
     setCurrentStep((prev) => {

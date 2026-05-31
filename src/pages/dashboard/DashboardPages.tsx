@@ -40,7 +40,7 @@ const DashboardPages: React.FC = () => {
     currentStep: tourStep,
     nextStep: tourNext,
     endTour,
-  } = useProductTour({ hasPortfolio, isLoading });
+  } = useProductTour({ hasPortfolio, isLoading, userId: user?.id });
 
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
