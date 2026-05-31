@@ -22,6 +22,8 @@ import TopUpModal from "@/components/shared/modal/TopUpModal";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import AllocateModal from "@/components/shared/modal/AllocateModal";
 import PageHeader from "@/components/shared/layout/PageHeader";
+import { Button } from "@/components/ui/button";
+import { HelpCircle } from "lucide-react";
 
 const DashboardPages: React.FC = () => {
   const navigate = useNavigate();
@@ -39,8 +41,9 @@ const DashboardPages: React.FC = () => {
     isActive: isTourActive,
     currentStep: tourStep,
     nextStep: tourNext,
+    startTour: tourStart,
     endTour,
-  } = useProductTour({ hasPortfolio, isLoading });
+  } = useProductTour({ hasPortfolio, isLoading, userId: user?.id });
 
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
@@ -108,7 +111,21 @@ const DashboardPages: React.FC = () => {
       transition={{ duration: 0.4 }}
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      <PageHeader title="Dasboard" description={user_info.greeting} showTutorialButton />
+      <PageHeader
+        title="Dasboard"
+        description={user_info.greeting}
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={tourStart}
+            className="text-xs gap-1.5 rounded-xl"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            Tur Halaman
+          </Button>
+        }
+      />
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         <div className="xl:col-span-7 space-y-8">
           <div data-tour="wallet">

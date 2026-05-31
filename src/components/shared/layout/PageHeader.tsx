@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, LogOut } from "lucide-react";
 import { useAuth } from "@/features/auth";
-import { useTutorialContext, TutorialButton } from "@/features/interactive-tutorial";
-
 import {
   Dialog,
   DialogContent,
@@ -32,7 +30,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   const navigate = useNavigate();
   const { logout, isAuthenticated } = useAuth();
-  const { startTutorial } = useTutorialContext();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const handleLogout = () => {
@@ -79,7 +76,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 
           {isAuthenticated && (
             <>
-              {showTutorialButton && <TutorialButton onClick={startTutorial} />}
               <Button
                 variant="ghost"
                 size="icon"

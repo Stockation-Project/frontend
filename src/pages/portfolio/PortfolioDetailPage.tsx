@@ -23,7 +23,8 @@ import {
   PORTFOLIO_TOUR_STEPS,
   PORTFOLIO_DETAIL_TOUR_STEPS,
 } from "@/features/product-tour/steps";
-
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/features/auth";
 
 const ALLOCATION_COLORS = [
   "bg-brand",
@@ -36,6 +37,7 @@ const ALLOCATION_COLORS = [
 const PortfolioDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const {
     portfolio,
@@ -75,6 +77,7 @@ const PortfolioDetailPage: React.FC = () => {
     steps: tourSteps,
     storageKey,
     autoStart: true,
+    userId: user?.id,
   });
 
   // Loading state

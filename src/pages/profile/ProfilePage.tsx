@@ -8,8 +8,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { PROFILE_TOUR_STEPS } from "@/features/product-tour/steps";
+import { useAuth } from "@/features/auth";
 
 const ProfilePage: React.FC = () => {
+  const { user } = useAuth();
   const { profile, isLoading, isUpdating, isUploadingAvatar, updateProfile, uploadAvatar } = useProfile();
 
   const {
@@ -22,6 +24,7 @@ const ProfilePage: React.FC = () => {
     steps: PROFILE_TOUR_STEPS,
     storageKey: "stockation_tour_profile",
     autoStart: true,
+    userId: user?.id,
   });
 
   if (isLoading) {

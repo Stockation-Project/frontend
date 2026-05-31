@@ -23,10 +23,12 @@ import { toggleWatchlist } from "@/features/explore/services/explore.service";
 import { toast } from "sonner";
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { PORTFOLIO_STOCK_DETAIL_TOUR_STEPS } from "@/features/product-tour/steps";
+import { useAuth } from "@/features/auth";
 
 const PortfolioStockDetailPage: React.FC = () => {
   const { portfolioId, ticker } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [isSellModalOpen, setIsSellModalOpen] = useState(false);
   const [isWatchlist, setIsWatchlist] = useState(false);
 
@@ -40,6 +42,7 @@ const PortfolioStockDetailPage: React.FC = () => {
     steps: PORTFOLIO_STOCK_DETAIL_TOUR_STEPS,
     storageKey: "stockation_tour_portfolio_stock",
     autoStart: true,
+    userId: user?.id,
   });
 
   const {

@@ -9,8 +9,10 @@ import { Input } from "@/components/ui/input";
 
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { EXPLORE_TOUR_STEPS } from "@/features/product-tour/steps";
+import { useAuth } from "@/features/auth";
 
 const ExplorePage: React.FC = () => {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<"all" | "trending" | "gainers" | "losers">("trending");
   const [watchlistSearch, setWatchlistSearch] = useState("");
   const [moversSearch, setMoversSearch] = useState("");
@@ -28,6 +30,7 @@ const ExplorePage: React.FC = () => {
     steps: EXPLORE_TOUR_STEPS,
     storageKey: "stockation_tour_explore",
     autoStart: true,
+    userId: user?.id,
   });
 
   // Mapping data for StockTable

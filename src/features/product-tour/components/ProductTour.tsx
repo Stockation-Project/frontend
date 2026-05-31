@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TourStep, Rect } from "../types";
 import Logo from "@/components/shared/brand/Logo";
-import { useTutorialContext } from "@/features/interactive-tutorial";
 import {
   OVERLAY_Z,
   TOOLTIP_Z,
@@ -39,10 +38,6 @@ const ProductTour: React.FC<ProductTourProps> = ({
   onNext,
   onEnd,
 }) => {
-  const { isActive: isTutorialActive } = useTutorialContext();
-  
-  // If interactive tutorial is running, suppress product tour entirely
-  const effectiveIsActive = isActive && !isTutorialActive;
   const [tooltipPos, setTooltipPos] = useState<{
     top: number;
     left: number;
@@ -90,7 +85,7 @@ const computePositions = useCallback((retryCount = 0) => {
   // Auto-scroll to target on step change
   // Temporarily unlocks body overflow so smooth scroll can run
 useEffect(() => {
-  if (!effectiveIsActive || !step?.target) return;
+  if (!isActive || !step?.target) return;
 
   const prevOverflow = document.body.style.overflow;
   document.body.style.overflow = "";
@@ -107,11 +102,11 @@ useEffect(() => {
     clearTimeout(settleTimer);
     document.body.style.overflow = prevOverflow || "hidden";
   };
-}, [effectiveIsActive, step?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+}, [isActive, step?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Recompute on step change, resize, scroll (debounced via rAF)
   useEffect(() => {
-    if (!effectiveIsActive) return;
+    if (!isActive) return;
     computePositions();
 
     const scheduleRecompute = () => {
@@ -132,11 +127,11 @@ useEffect(() => {
         rafIdRef.current = null;
       }
     };
-  }, [effectiveIsActive, computePositions]);
+  }, [isActive, computePositions]);
 
   // Lock body scroll + save/restore scroll position
   useEffect(() => {
-    if (effectiveIsActive) {
+    if (isActive) {
       savedScrollYRef.current = window.scrollY;
       document.body.style.overflow = "hidden";
       scrollLockedRef.current = true;
@@ -149,9 +144,9 @@ useEffect(() => {
         window.scrollTo({ top: savedScrollYRef.current, behavior: "instant" });
       }
     };
-  }, [effectiveIsActive]);
+  }, [isActive]);
 
-  if (!effectiveIsActive || !step) return null;
+  if (!isActive || !step) return null;
 
   const buttonLabel = step.buttonText ?? (isLast ? "Selesai" : "Lanjut");
 

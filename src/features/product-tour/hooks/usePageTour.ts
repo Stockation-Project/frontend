@@ -8,6 +8,8 @@ interface UsePageTourOptions {
   storageKey: string;
   autoStart?: boolean;
   isLoading?: boolean;
+  /** User ID untuk per-user localStorage key */
+  userId?: string;
 }
 
 export function usePageTour({
@@ -15,25 +17,29 @@ export function usePageTour({
   storageKey,
   autoStart = false,
   isLoading = false,
+  userId,
 }: UsePageTourOptions) {
   const { user } = useAuth();
   const accountKey = `${storageKey}_${user?.id ?? "anonymous"}`;
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
+  // Gabungkan storageKey dengan userId untuk per-user tracking
+  const resolvedKey = userId ? `${storageKey}_${userId}` : storageKey;
+
   useEffect(() => {
     if (isLoading || !autoStart) return;
 
-    // Already completed this page tour? Skip (per-akun).
-    const completed = localStorage.getItem(accountKey) === "true";
-    if (completed) return;
+    // Cek apakah tour sudah pernah dilihat user ini
+    const seen = localStorage.getItem(resolvedKey) === "true";
+    if (seen) return;
 
     const timer = setTimeout(() => {
       setIsActive(true);
       setCurrentStep(0);
     }, 600);
     return () => clearTimeout(timer);
-  }, [isLoading, autoStart, accountKey]);
+  }, [isLoading, autoStart, resolvedKey]);
 
   const startTour = useCallback(() => {
     setIsActive(true);
@@ -42,8 +48,9 @@ export function usePageTour({
 
   const endTour = useCallback(() => {
     setIsActive(false);
-    localStorage.setItem(accountKey, "true");
-  }, [accountKey]);
+    // Simpan status tour sudah selesai ke localStorage
+    localStorage.setItem(resolvedKey, "true");
+  }, [resolvedKey]);
 
   const nextStep = useCallback(() => {
     setCurrentStep((prev) => {

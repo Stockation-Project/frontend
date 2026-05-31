@@ -38,4 +38,6 @@ export interface UseProductTourOptions {
   hasPortfolio: boolean;
   /** Whether dashboard data is still loading */
   isLoading: boolean;
+  /** User ID untuk per-user localStorage key */
+  userId?: string;
 }

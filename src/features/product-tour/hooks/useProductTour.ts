@@ -10,27 +10,28 @@ const STORAGE_KEY = "stockation_product_tour_completed";
 export const TOUR_STEPS = DASHBOARD_TOUR_STEPS;
 
 export function useProductTour(options: UseProductTourOptions) {
-  const { isLoading } = options;
-  const { user } = useAuth();
-  const accountKey = `${STORAGE_KEY}_${user?.id ?? "anonymous"}`;
+  const { isLoading, userId } = options;
+
+  const STORAGE_KEY = userId
+    ? `stockation_product_tour_seen_${userId}`
+    : "stockation_product_tour_seen";
 
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Auto-start only for users who haven't completed the tour yet
   useEffect(() => {
     if (isLoading) return;
 
-    // Sudah selesai sebelumnya? Skip (per-akun).
-    const completed = localStorage.getItem(accountKey) === "true";
-    if (completed) return;
+    // Cek apakah user sudah pernah melihat tour dashboard
+    const seen = localStorage.getItem(STORAGE_KEY) === "true";
+    if (seen) return;
 
     const timer = setTimeout(() => {
       setIsActive(true);
       setCurrentStep(0);
     }, 600);
     return () => clearTimeout(timer);
-  }, [isLoading, accountKey]);
+  }, [isLoading, STORAGE_KEY]);
 
   const startTour = useCallback(() => {
     setIsActive(true);
@@ -39,8 +40,9 @@ export function useProductTour(options: UseProductTourOptions) {
 
   const endTour = useCallback(() => {
     setIsActive(false);
-    localStorage.setItem(accountKey, "true");
-  }, [accountKey]);
+    // Simpan status tour sudah selesai ke localStorage
+    localStorage.setItem(STORAGE_KEY, "true");
+  }, [STORAGE_KEY]);
 
   const nextStep = useCallback(() => {
     setCurrentStep((prev) => {

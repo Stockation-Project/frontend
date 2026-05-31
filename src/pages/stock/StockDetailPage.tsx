@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bookmark } from "lucide-react";
+import { Bookmark, HelpCircle } from "lucide-react";
 import {
   useStockDetail,
   useChartFilter,
@@ -18,10 +18,12 @@ import { toggleWatchlist } from "@/features/explore/services/explore.service";
 import { toast } from "sonner";
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { STOCK_DETAIL_TOUR_STEPS } from "@/features/product-tour/steps";
+import { useAuth } from "@/features/auth";
 
 const StockDetailPage: React.FC = () => {
   const { ticker } = useParams<{ ticker: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // 1. Ambil data dari Backend
   const { data, isLoading, error } = useStockDetail(ticker);
@@ -37,6 +39,7 @@ const StockDetailPage: React.FC = () => {
     steps: STOCK_DETAIL_TOUR_STEPS,
     storageKey: "stockation_tour_stock_detail",
     autoStart: true,
+    userId: user?.id,
   });
 
   // Sinkronkan state lokal dengan data dari backend saat berhasil dimuat

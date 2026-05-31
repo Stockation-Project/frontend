@@ -14,8 +14,10 @@ import SimulationBuySkeleton from "@/features/stock/components/SimulationBuySkel
 
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { SIMULATION_TOUR_STEPS } from "@/features/product-tour/steps";
+import { useAuth } from "@/features/auth";
 
 const SimulationBuyPage: React.FC = () => {
+  const { user } = useAuth();
   const { state, handlers } = useSimulationBuy();
   const [mainTab, setMainTab] = useState<"Rekomendasi" | "Manual">("Manual");
 
@@ -29,6 +31,7 @@ const SimulationBuyPage: React.FC = () => {
     steps: SIMULATION_TOUR_STEPS,
     storageKey: "stockation_tour_simulation",
     autoStart: true,
+    userId: user?.id,
   });
 
   if (state.isLoading) {
