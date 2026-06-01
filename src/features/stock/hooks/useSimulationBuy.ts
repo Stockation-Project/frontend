@@ -1,5 +1,5 @@
 // src/features/stock/hooks/useSimulationBuy.ts
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { fetchDashboardData, type DashboardPortfolio } from "@/features/dashboard";
 import { searchStocks, fetchRecommendedStocks } from "../services/stock.service";
@@ -80,6 +80,9 @@ export const useSimulationBuy = () => {
   // Tandai bahwa user sudah pernah klik tombol "Alokasi Otomatis" minimal sekali.
   // Auto-trigger via slider hanya aktif setelah optimasi pertama berhasil.
   const hasOptimizedOnce = useRef(false);
+  // Ref ke versi terbaru handleAutoAllocation — menghindari stale closure
+  // saat dipanggil dari dalam setTimeout debounce.
+  const handleAutoAllocationRef = useRef<() => Promise<void>>(() => Promise.resolve());
 
   // --- Risk Tolerance Slider ---
   // Default mengikuti persona profil risiko user; bisa digeser manual.
@@ -184,31 +187,6 @@ export const useSimulationBuy = () => {
     setSelectedPortfolioId(id);
   };
 
-  // Auto-optimize saat slider digeser (dipanggil via useEffect + debounce)
-  // Dibungkus useCallback agar useEffect dependencies stabil.
-  const triggerAutoOptimizeDebounced = useCallback(
-    (currentCart: typeof cart, currentIsOptimizing: boolean) => {
-      // Hanya auto-optimize jika:
-      // 1. User sudah pernah klik "Alokasi Otomatis" minimal sekali
-      // 2. Ada minimal 2 saham di cart
-      // 3. Tidak sedang dalam proses optimasi
-      if (!hasOptimizedOnce.current || currentCart.length < 2 || currentIsOptimizing) {
-        return;
-      }
-
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-      debounceTimerRef.current = setTimeout(() => {
-        handleAutoAllocation();
-      }, 600);
-    },
-    // handleAutoAllocation didefinisikan di bawah, jadi kita ikat via ref trick —
-    // tapi karena urutan deklarasi, kita gunakan pola sederhana: panggil langsung.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
   // Ubah nilai slider toleransi risiko (0.0–1.0)
   const handleChangeRiskTolerance = (value: number) => {
     const clamped = Math.min(1, Math.max(0, value));
@@ -229,10 +207,19 @@ export const useSimulationBuy = () => {
   // Saat riskTolerance berubah (user geser slider), trigger ulang optimasi
   // secara otomatis dengan debounce 600ms — HANYA jika optimasi pernah
   // dilakukan sebelumnya (hasOptimizedOnce) agar tidak spam API saat mount.
+  // Memanggil handleAutoAllocationRef.current() untuk menghindari stale closure.
   useEffect(() => {
-    triggerAutoOptimizeDebounced(cart, isOptimizing);
+    if (!hasOptimizedOnce.current || cart.length < 2 || isOptimizing) {
+      return;
+    }
 
-    // Cleanup debounce timer saat component unmount atau effect re-run
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    debounceTimerRef.current = setTimeout(() => {
+      handleAutoAllocationRef.current();
+    }, 600);
+
     return () => {
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current);
@@ -362,6 +349,11 @@ export const useSimulationBuy = () => {
       setIsOptimizing(false);
     }
   };
+
+  // Selalu sinkronkan ref ke versi terbaru handleAutoAllocation setiap render.
+  // Ini memastikan setTimeout di useEffect debounce selalu memanggil fungsi
+  // dengan state (cart, selectedPortfolio, riskTolerance, dll.) yang terkini.
+  handleAutoAllocationRef.current = handleAutoAllocation;
 
   const handleConfirmBuy = async (onSuccessCallback?: () => void) => {
     if (!selectedPortfolioId) {
