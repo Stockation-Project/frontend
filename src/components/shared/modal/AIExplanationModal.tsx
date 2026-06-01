@@ -8,6 +8,7 @@ interface AIExplanationModalProps {
   onClose: () => void;
   term: string;
   context?: string;
+  customStaticExplanation?: string;
 }
 
 const AIExplanationModal: React.FC<AIExplanationModalProps> = ({
@@ -15,14 +16,16 @@ const AIExplanationModal: React.FC<AIExplanationModalProps> = ({
   onClose,
   term,
   context,
+  customStaticExplanation,
 }) => {
   const { explanation, isLoading, error, fetchExplanation } = useAIExplanation();
+  const isStatic = !!customStaticExplanation;
 
   useEffect(() => {
-    if (isOpen && term) {
+    if (isOpen && term && !isStatic) {
       fetchExplanation(term, context);
     }
-  }, [isOpen, term, context, fetchExplanation]);
+  }, [isOpen, term, context, isStatic, fetchExplanation]);
 
   return (
     <BaseSideModal
@@ -48,7 +51,13 @@ const AIExplanationModal: React.FC<AIExplanationModalProps> = ({
           {/* Decorative background element */}
           <div className="absolute -top-4 -right-4 w-16 h-16 bg-brand-50 rounded-full blur-2xl opacity-60"></div>
           
-          {isLoading ? (
+          {isStatic ? (
+            <div className="relative z-10">
+              <p className="text-sm leading-relaxed text-text-primary text-justify">
+                {customStaticExplanation}
+              </p>
+            </div>
+          ) : isLoading ? (
             <div className="flex flex-col items-center justify-center py-8 space-y-4">
               <Sparkles className="w-8 h-8 text-brand animate-pulse" />
               <p className="text-sm font-medium text-text-secondary animate-pulse">

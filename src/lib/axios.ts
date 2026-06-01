@@ -36,7 +36,13 @@ apiClient.interceptors.response.use(
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
-      window.location.href = "/login";
+      // Hindari redirect-loop: jangan paksa pindah jika sudah berada di
+      // halaman publik (login/register/landing). Ini juga mencegah user
+      // tertendang keluar di tengah proses sinkronisasi OAuth Google.
+      const publicPaths = ["/login", "/register", "/"];
+      if (!publicPaths.includes(window.location.pathname)) {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   },

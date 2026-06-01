@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, LogOut } from "lucide-react";
+import { ChevronLeft, LogOut, HelpCircle } from "lucide-react";
 import { useAuth } from "@/features/auth";
 import {
   Dialog,
@@ -19,6 +19,7 @@ interface PageHeaderProps {
   action?: React.ReactNode;
   showBackButton?: boolean;
   showTutorialButton?: boolean;
+  onTutorialClick?: () => void;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
@@ -27,6 +28,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   action,
   showBackButton = false,
   showTutorialButton = false,
+  onTutorialClick,
 }) => {
   const navigate = useNavigate();
   const { logout, isAuthenticated } = useAuth();
@@ -73,6 +75,18 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 
         <div className="flex items-center gap-2 flex-shrink-0">
           {action && <div className="flex items-center">{action}</div>}
+
+          {showTutorialButton && onTutorialClick && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onTutorialClick}
+              className="text-xs gap-1.5 rounded-lg border-border-primary"
+            >
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Tur Halaman</span>
+            </Button>
+          )}
 
           {isAuthenticated && (
             <>
