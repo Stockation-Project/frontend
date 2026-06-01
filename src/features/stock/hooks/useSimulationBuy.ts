@@ -1,5 +1,5 @@
 // src/features/stock/hooks/useSimulationBuy.ts
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { fetchDashboardData, type DashboardPortfolio } from "@/features/dashboard";
 import { searchStocks, fetchRecommendedStocks } from "../services/stock.service";
@@ -74,6 +74,12 @@ export const useSimulationBuy = () => {
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [optimizationMetrics, setOptimizationMetrics] = useState<OptimizationMetrics | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Ref untuk debounce auto-optimize saat slider berubah
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Tandai bahwa user sudah pernah klik tombol "Alokasi Otomatis" minimal sekali.
+  // Auto-trigger via slider hanya aktif setelah optimasi pertama berhasil.
+  const hasOptimizedOnce = useRef(false);
 
   // --- Risk Tolerance Slider ---
   // Default mengikuti persona profil risiko user; bisa digeser manual.
@@ -178,6 +184,31 @@ export const useSimulationBuy = () => {
     setSelectedPortfolioId(id);
   };
 
+  // Auto-optimize saat slider digeser (dipanggil via useEffect + debounce)
+  // Dibungkus useCallback agar useEffect dependencies stabil.
+  const triggerAutoOptimizeDebounced = useCallback(
+    (currentCart: typeof cart, currentIsOptimizing: boolean) => {
+      // Hanya auto-optimize jika:
+      // 1. User sudah pernah klik "Alokasi Otomatis" minimal sekali
+      // 2. Ada minimal 2 saham di cart
+      // 3. Tidak sedang dalam proses optimasi
+      if (!hasOptimizedOnce.current || currentCart.length < 2 || currentIsOptimizing) {
+        return;
+      }
+
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+      debounceTimerRef.current = setTimeout(() => {
+        handleAutoAllocation();
+      }, 600);
+    },
+    // handleAutoAllocation didefinisikan di bawah, jadi kita ikat via ref trick —
+    // tapi karena urutan deklarasi, kita gunakan pola sederhana: panggil langsung.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
   // Ubah nilai slider toleransi risiko (0.0–1.0)
   const handleChangeRiskTolerance = (value: number) => {
     const clamped = Math.min(1, Math.max(0, value));
@@ -194,8 +225,26 @@ export const useSimulationBuy = () => {
     setOptimizationMetrics(null);
   };
 
+  // ── AUTO-OPTIMIZE EFFECT ──
+  // Saat riskTolerance berubah (user geser slider), trigger ulang optimasi
+  // secara otomatis dengan debounce 600ms — HANYA jika optimasi pernah
+  // dilakukan sebelumnya (hasOptimizedOnce) agar tidak spam API saat mount.
+  useEffect(() => {
+    triggerAutoOptimizeDebounced(cart, isOptimizing);
+
+    // Cleanup debounce timer saat component unmount atau effect re-run
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [riskTolerance]);
+
   const addStockToCart = (stock: SearchStockItem) => {
     setOptimizationMetrics(null);
+    // Reset flag agar user harus klik tombol lagi setelah komposisi saham berubah
+    hasOptimizedOnce.current = false;
     setCart((prev) => {
       // Check if already in cart
       const existing = prev.find((item) => item.ticker === stock.ticker);
@@ -226,6 +275,8 @@ export const useSimulationBuy = () => {
 
   const removeStockFromCart = (ticker: string) => {
     setOptimizationMetrics(null);
+    // Reset flag agar user harus klik tombol lagi setelah komposisi saham berubah
+    hasOptimizedOnce.current = false;
     setCart((prev) => prev.filter((item) => item.ticker !== ticker));
   };
 
@@ -297,6 +348,9 @@ export const useSimulationBuy = () => {
         forecastCount,
         totalCount,
       });
+      // Tandai bahwa optimasi pertama sudah berhasil — slider sekarang bisa
+      // men-trigger auto-optimize secara otomatis saat nilainya berubah.
+      hasOptimizedOnce.current = true;
       toast.success("Alokasi Berhasil!", {
         description: "Jumlah lot berhasil disesuaikan otomatis oleh sistem untuk hasil yang lebih optimal.",
       });
