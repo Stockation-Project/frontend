@@ -19,8 +19,7 @@ const ProfilePage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-
-  } = usePageTour({
+    startTour,  } = usePageTour({
     steps: PROFILE_TOUR_STEPS,
     storageKey: "stockation_tour_profile",
     autoStart: true,
@@ -79,7 +78,8 @@ const ProfilePage: React.FC = () => {
       <PageHeader 
         title="Profil" 
         description="Kelola informasi akun dan preferensi Anda"
-
+        showTutorialButton={true}
+        onTutorialClick={startTour}
       />
 
       <div className="flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">

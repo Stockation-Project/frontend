@@ -6,7 +6,7 @@ import type { AllocationChartItem, CartItem } from "../types/simulation";
 import type { DashboardPortfolio } from "@/features/dashboard";
 
 import type { OptimizationMetrics } from "../hooks/useSimulationBuy";
-import { Sparkles } from "lucide-react";
+import { Sparkles, BrainCircuit, Info } from "lucide-react";
 
 interface SimulationSummaryPanelProps {
   cart: CartItem[];
@@ -109,104 +109,140 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
       </div>
 
       {/* Rincian Pembayaran */}
-      <div className="flex-1 flex flex-col">
-        <h3 className="font-medium text-slate-900 mb-4 text-sm">
-          Rincian Pembayaran
-        </h3>
-        
-        <div className="space-y-3 mb-6">
-          <div className="flex justify-between text-xs">
-            <span className="text-slate-500">Total Unit Saham</span>
-            <span className="font-medium text-slate-900">{totalUnit}</span>
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex-1 overflow-y-auto no-scrollbar pr-1 pb-2">
+          <h3 className="font-medium text-slate-900 mb-4 text-sm">
+            Rincian Pembayaran
+          </h3>
+          
+          <div className="space-y-3 mb-6">
+            <div className="flex justify-between text-xs">
+              <span className="text-slate-500">Total Unit Saham</span>
+              <span className="font-medium text-slate-900">{totalUnit}</span>
+            </div>
+            <div className="flex justify-between text-xs">
+              <span className="text-slate-500">Total Lot</span>
+              <span className="font-medium text-slate-900">
+                {totalLot} Lot ({totalShares} Lembar)
+              </span>
+            </div>
+            <div className="flex justify-between text-xs">
+              <span className="text-slate-500">Total Investasi</span>
+              <span className="font-medium text-slate-900">
+                {formatCurrencyIDR(totalInvestment)}
+              </span>
+            </div>
+            <div className="flex justify-between text-xs pt-3 border-t border-slate-200/60">
+              <span className="text-slate-700 font-medium">Sisa Saldo</span>
+              <span
+                className={`font-medium ${
+                  !isBalanceSufficient ? "text-error-500" : "text-slate-900"
+                }`}
+              >
+                {selectedPortfolio
+                  ? formatCurrencyIDR(remainingBalance)
+                  : "-"}
+              </span>
+            </div>
           </div>
-          <div className="flex justify-between text-xs">
-            <span className="text-slate-500">Total Lot</span>
-            <span className="font-medium text-slate-900">
-              {totalLot} Lot ({totalShares} Lembar)
-            </span>
-          </div>
-          <div className="flex justify-between text-xs">
-            <span className="text-slate-500">Total Investasi</span>
-            <span className="font-medium text-slate-900">
-              {formatCurrencyIDR(totalInvestment)}
-            </span>
-          </div>
-          <div className="flex justify-between text-xs pt-3 border-t border-slate-200/60">
-            <span className="text-slate-700 font-medium">Sisa Saldo</span>
-            <span
-              className={`font-medium ${
-                !isBalanceSufficient ? "text-error-500" : "text-slate-900"
-              }`}
-            >
-              {selectedPortfolio
-                ? formatCurrencyIDR(remainingBalance)
-                : "-"}
-            </span>
-          </div>
+
+          {/* Explainable AI (XAI) Panel for Laypeople */}
+          {optimizationMetrics && (
+            <div className="mt-2 mb-4 p-3 bg-gradient-to-b from-brand-100 to-brand-50 border border-brand-200 rounded-xl flex flex-col gap-2.5 animate-fade-in shadow-sm">
+              {/* Header Widget */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-brand" />
+                  <span className="text-xs text-brand font-medium">Penjelasan Alokasi AI</span>
+                </div>
+                {/* Badge sumber risiko: prediksi vs historis */}
+                {optimizationMetrics.volatilitySource === "forecast" && (
+                  <span className="flex items-center gap-1 text-[8px] font-medium text-brand-800 bg-white/70 px-1.5 py-0.5 rounded-full border border-brand-200">
+                    <BrainCircuit className="w-2.5 h-2.5" />
+                    Risiko Prediksi AI
+                  </span>
+                )}
+              </div>
+
+              {/* Narasi Alasan Penentuan Bobot — Mean-CVaR */}
+              <p className="text-[10px] text-text-secondary font-regular leading-relaxed text-justify">
+                {optimizationMetrics.riskTolerance <= 0.35 && (
+                  "Sesuai pilihanmu yang condong AMAN, AI memakai metode Mean-CVaR untuk menekan potensi kerugian pada skenario terburuk. AI memilih kombinasi yang paling stabil dari saham yang kamu pilih, walau potensi keuntungannya jadi lebih terbatas."
+                )}
+                {optimizationMetrics.riskTolerance > 0.35 && optimizationMetrics.riskTolerance < 0.65 && (
+                  "Sesuai pilihanmu yang SEIMBANG, AI memakai metode Mean-CVaR untuk menyeimbangkan antara peluang keuntungan dan perlindungan terhadap skenario kerugian terburuk dari saham yang kamu pilih."
+                )}
+                {optimizationMetrics.riskTolerance >= 0.65 && (
+                  "Sesuai pilihanmu yang condong BERANI, AI memakai metode Mean-CVaR untuk mengejar peluang keuntungan lebih tinggi. Konsekuensinya, potensi kerugian pada skenario terburuk juga ikut lebih besar."
+                )}
+                {optimizationMetrics.volatilitySource === "forecast" && (
+                  " Estimasi risiko di bawah memakai prediksi volatilitas model AI (proyeksi ke depan), bukan sekadar data masa lalu."
+                )}
+              </p>
+
+              {/* Metrik Kuantitatif AI — diberi label akurat agar tidak salah tangkap */}
+              <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-brand-100/60">
+                <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40 text-center">
+                  <span className="text-[8px] text-slate-400 font-medium mb-0.5">Estimasi Imbal Hasil / thn</span>
+                  <span className={`text-[11px] font-semibold ${
+                    optimizationMetrics.expectedReturn >= 0 ? "text-brand" : "text-error-600"
+                  }`}>
+                    {optimizationMetrics.expectedReturn >= 0 ? "+" : "−"}
+                    {Math.abs(optimizationMetrics.expectedReturn * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40 text-center">
+                  <span className="text-[8px] text-slate-400 font-medium mb-0.5">Estimasi Kerugian Terburuk</span>
+                  <span className="text-[11px] font-semibold text-error-600">
+                    −{(optimizationMetrics.cvar * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40 text-center">
+                  <span className="text-[8px] text-slate-400 font-medium mb-0.5">Imbal Hasil vs Risiko</span>
+                  <span className={`text-[11px] font-semibold ${
+                    optimizationMetrics.sharpeRatio >= 1.0
+                      ? "text-brand"
+                      : optimizationMetrics.sharpeRatio >= 0
+                      ? "text-brand-800"
+                      : "text-warning-700"
+                  }`}>
+                    {optimizationMetrics.sharpeRatio >= 1.0
+                      ? "Sehat"
+                      : optimizationMetrics.sharpeRatio >= 0
+                      ? "Cukup"
+                      : "Kurang Ideal"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Disclaimer agar user tidak salah tangkap */}
+              <div className="flex items-start gap-1.5 pt-1.5 border-t border-brand-100/60">
+                <Info className="w-3 h-3 text-slate-400 flex-shrink-0 mt-0.5" />
+                <p className="text-[8px] text-slate-400 leading-relaxed text-justify">
+                  Angka ini estimasi berbasis data, bukan jaminan. "Kerugian terburuk" (CVaR) adalah
+                  rata-rata kerugian pada skenario paling buruk dalam setahun — makin besar, makin berisiko.
+                  Hasil nyata bisa berbeda.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Explainable AI (XAI) Panel for Laypeople */}
-        {optimizationMetrics && (
-          <div className="mt-2 mb-4 p-3 bg-gradient-to-b from-brand-100 to-brand-50 border border-brand-200 rounded-xl flex flex-col gap-2.5 animate-fade-in shadow-sm">
-            {/* Header Widget */}
-            <div className="flex items-center gap-1.5 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-brand" />
-              <span className="text-xs text-brand font-medium">Penjelasan Alokasi AI</span>
-            </div>
-
-            {/* Narasi Alasan Penentuan Bobot */}
-            <p className="text-[10px] text-text-secondary font-regular leading-relaxed text-justify">
-              {optimizationMetrics.method === "min_volatility" && (
-                "Karena kamu bertipe Konservatif (sangat hati-hati), AI menyusun alokasi ini dengan metode Keamanan Utama (Minimasi Volatilitas). Ini bertujuan agar nilainya stabil dan terhindar dari naik-turun harga yang ekstrem."
-              )}
-              {optimizationMetrics.method === "max_sharpe" && (
-                "Karena kamu bertipe Moderat (sedang), AI menyusun alokasi ini dengan metode Keseimbangan Optimal (Max Sharpe Ratio). AI menyeimbangkan antara potensi profit terbaik dan tingkat risiko yang wajar."
-              )}
-              {optimizationMetrics.method === "max_return" && (
-                "Karena kamu bertipe Agresif (pemberani), AI menyusun alokasi ini dengan metode Profit Maksimal (Maksimalkan Return). AI fokus mengejar keuntungan tertinggi sesuai dengan batas keberanian risikomu."
-              )}
+        <div className="pt-3 mt-auto bg-background-primary border-t border-border-primary/50">
+          {/* Validation Errors */}
+          {!isBalanceSufficient && selectedPortfolio && (
+            <p className="text-xs text-error-500 font-regular mb-3 text-start">
+              Saldo tidak mencukupi untuk pembelian ini.
             </p>
+          )}
+          {!selectedPortfolio && (
+            <p className="text-xs text-warning-500 font-medium mb-3 text-center">
+              Pilih dompet terlebih dahulu di atas.
+            </p>
+          )}
 
-            {/* Metrik Kuantitatif AI Sederhana */}
-            <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-brand-100/60">
-              <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
-                <span className="text-[8px] text-slate-400 font-medium mb-0.5">Potensi Profit</span>
-                <span className="text-[10px] font-medium text-brand">
-                  +{(optimizationMetrics.expectedReturn * 100).toFixed(1)}%
-                </span>
-              </div>
-              <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
-                <span className="text-[8px] text-slate-400 font-medium mb-0.5">Tingkat Risiko</span>
-                <span className="text-[10px] font-medium text-text-secondary">
-                  {(optimizationMetrics.volatility * 100).toFixed(1)}%
-                </span>
-              </div>
-              <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40">
-                <span className="text-[8px] text-slate-400 font-medium mb-0.5">Skor Kinerja AI</span>
-                <span className={`text-[10px] font-medium ${
-                  optimizationMetrics.sharpeRatio > 1.0 ? "text-brand" : "text-brand-800"
-                }`}>
-                  {optimizationMetrics.sharpeRatio > 1.0 ? "Sangat Sehat" : "Cukup Optimal"}
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Validation Errors */}
-        {!isBalanceSufficient && selectedPortfolio && (
-          <p className="text-xs text-error-500 font-regular mb-3 text-start">
-            Saldo tidak mencukupi untuk pembelian ini.
-          </p>
-        )}
-        {!selectedPortfolio && (
-          <p className="text-xs text-warning-500 font-medium mb-3 text-center">
-            Pilih dompet terlebih dahulu di atas.
-          </p>
-        )}
-
-        {/* Action Button */}
-        <div data-tour={confirmDataTour}>
+          {/* Action Button */}
+          <div data-tour={confirmDataTour}>
           <button
             onClick={onConfirmBuy}
           disabled={
@@ -220,6 +256,7 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
         >
           {isBuying ? "Memproses..." : "Konfirmasi Beli"}
           </button>
+        </div>
         </div>
       </div>
     </div>

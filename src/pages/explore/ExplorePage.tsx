@@ -25,8 +25,7 @@ const ExplorePage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-
-  } = usePageTour({
+    startTour,  } = usePageTour({
     steps: EXPLORE_TOUR_STEPS,
     storageKey: "stockation_tour_explore",
     autoStart: true,
@@ -84,6 +83,8 @@ const ExplorePage: React.FC = () => {
       <PageHeader
         title="Eksplorasi"
         description="Temukan peluang investasi terbaik di pasar modal Indonesia"
+        showTutorialButton={true}
+        onTutorialClick={startTour}
       />
 
       <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-8 no-scrollbar">

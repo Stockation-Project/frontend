@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bookmark, HelpCircle } from "lucide-react";
+import { Bookmark, HelpCircle, Sparkles } from "lucide-react";
 import {
   useStockDetail,
   useChartFilter,
@@ -19,11 +19,14 @@ import { toast } from "sonner";
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { STOCK_DETAIL_TOUR_STEPS } from "@/features/product-tour/steps";
 import { useAuth } from "@/features/auth";
+import { useAIExplanation } from "@/features/ai/hooks/useAIExplanation";
 
 const StockDetailPage: React.FC = () => {
   const { ticker } = useParams<{ ticker: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  
+  const { explanation: translatedDesc, isLoading: isTranslating, fetchExplanation: translateDescription } = useAIExplanation();
 
   // 1. Ambil data dari Backend
   const { data, isLoading, error } = useStockDetail(ticker);
@@ -34,8 +37,7 @@ const StockDetailPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-
-  } = usePageTour({
+    startTour,  } = usePageTour({
     steps: STOCK_DETAIL_TOUR_STEPS,
     storageKey: "stockation_tour_stock_detail",
     autoStart: true,
@@ -108,6 +110,8 @@ const StockDetailPage: React.FC = () => {
       <PageHeader
         title=""
         showBackButton={true}
+        showTutorialButton={true}
+        onTutorialClick={startTour}
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 flex-1 min-h-0 overflow-y-auto xl:overflow-hidden p-4 pb-6 no-scrollbar">
@@ -241,10 +245,20 @@ const StockDetailPage: React.FC = () => {
           </div>
 
           <div className="px-2" data-tour="stock-detail-summary">
-            <h3 className="text-base font-medium text-text-secondary mb-2">Rangkuman</h3>
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-base font-medium text-text-secondary">Rangkuman</h3>
+              <button 
+                onClick={() => translateDescription("Terjemahkan Deskripsi", `Tolong terjemahkan deskripsi profil perusahaan berikut ke dalam Bahasa Indonesia yang profesional dan mudah dipahami, tanpa menambahkan informasi fiktif, langsung outputkan terjemahannya saja: ${data.about_company}`)}
+                disabled={isTranslating}
+                className="text-xs font-medium text-brand hover:text-brand-900 transition-colors flex items-center gap-1 disabled:opacity-50"
+              >
+                <Sparkles className={`w-3.5 h-3.5 ${isTranslating ? 'animate-pulse' : ''}`} />
+                {isTranslating ? "Menerjemahkan..." : "Terjemahkan"}
+              </button>
+            </div>
             <div className="max-h-37 overflow-y-auto"> 
               <p className="text-sm text-text-muted leading-relaxed text-justify">
-                {data.about_company}
+                {translatedDesc || data.about_company}
               </p>
             </div>
           </div>
