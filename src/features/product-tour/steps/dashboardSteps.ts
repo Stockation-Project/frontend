@@ -28,14 +28,6 @@ export const DASHBOARD_TOUR_STEPS: TourStep[] = [
     position: "right",
   },
   {
-    id: "dashboard-tutorial-btn",
-    title: "Tutorial Interaktif",
-    description:
-      "Kapan pun butuh panduan, klik tombol Tutorial ini. Nanti kamu akan dipandu langkah demi langkah: buat dompet, beli saham, sampai jual saham.",
-    target: "tutorial-btn",
-    position: "bottom",
-  },
-  {
     id: "dashboard-summary",
     title: "Ringkasan Aset",
     description:
