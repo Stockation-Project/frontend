@@ -114,17 +114,8 @@ const DashboardPages: React.FC = () => {
       <PageHeader
         title="Dasboard"
         description={user_info.greeting}
-        action={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={tourStart}
-            className="text-xs gap-1.5 rounded-xl"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            Tur Halaman
-          </Button>
-        }
+        showTutorialButton={true}
+        onTutorialClick={tourStart}
       />
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-8 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         <div className="xl:col-span-7 space-y-8">

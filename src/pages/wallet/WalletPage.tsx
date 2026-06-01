@@ -41,8 +41,7 @@ const WalletPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-
-  } = usePageTour({
+    startTour,  } = usePageTour({
     steps: WALLET_TOUR_STEPS,
     storageKey: "stockation_tour_wallet",
     autoStart: true,
@@ -54,7 +53,8 @@ const WalletPage: React.FC = () => {
       <PageHeader 
         title="Dompet"
         description="Kelola aset digital dan portofolio Anda"
-
+        showTutorialButton={true}
+        onTutorialClick={startTour}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">

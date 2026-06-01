@@ -42,6 +42,11 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, tooltipText, stockSym
     ? `Nilai ${title} untuk saham ${stockSymbol} saat ini adalah ${metricValue}.`
     : undefined;
 
+  const isMissingData = value === "-" || metricValue === "-";
+  const staticFallback = isMissingData 
+    ? "Data statistik untuk saham ini belum tersedia atau belum bisa dihitung saat ini. Hal ini dapat terjadi pada saham yang baru IPO atau data laporannya belum diperbarui oleh bursa." 
+    : undefined;
+
   return (
     <>
       <div className="bg-background-primary rounded-xl border border-border-primary p-3 flex flex-col justify-between h-full transition-colors hover:border-border-secondary relative">
@@ -73,6 +78,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, tooltipText, stockSym
         onClose={() => setIsModalOpen(false)}
         term={tooltipText}
         context={contextData}
+        customStaticExplanation={staticFallback}
       />
     </>
   );

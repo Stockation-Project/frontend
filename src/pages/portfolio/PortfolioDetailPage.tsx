@@ -72,8 +72,7 @@ const PortfolioDetailPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-
-  } = usePageTour({
+    startTour,  } = usePageTour({
     steps: tourSteps,
     storageKey,
     autoStart: true,
@@ -135,6 +134,8 @@ const PortfolioDetailPage: React.FC = () => {
         title="Portofolio"
         description={portfolio ? `Melihat isi dari dompet: ${portfolio.name}` : "Pilih dompet untuk melihat detail"}
         showBackButton={false}
+        showTutorialButton={true}
+        onTutorialClick={startTour}
       />
 
       {/* Content */}

@@ -27,8 +27,7 @@ const SimulationBuyPage: React.FC = () => {
     currentStep,
     nextStep,
     endTour,
-
-  } = usePageTour({
+    startTour,  } = usePageTour({
     steps: SIMULATION_TOUR_STEPS,
     storageKey: "stockation_tour_simulation",
     autoStart: true,
@@ -57,7 +56,12 @@ const SimulationBuyPage: React.FC = () => {
       exit={{ opacity: 0, y: 20 }}
       className="w-full h-full flex flex-col overflow-hidden"
     >
-      <PageHeader title="" showBackButton={true} />
+      <PageHeader 
+        title="" 
+        showBackButton={true} 
+        showTutorialButton={true}
+        onTutorialClick={startTour}
+      />
 
       <div className="w-full mx-auto flex-1 overflow-y-auto p-4 pb-6 no-scrollbar">
         {/* SECTION 1: Pilih Dompet */}
