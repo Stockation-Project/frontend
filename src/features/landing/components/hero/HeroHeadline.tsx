@@ -6,7 +6,7 @@ interface HeroHeadlineProps {
 
 const HeroHeadline = ({ currentText }: HeroHeadlineProps) => (
   <motion.h1 className="text-2xl sm:text-4xl md:text-5xl font-semibold text-brand-950 leading-tight mb-4 tracking-tight select-none min-h-[5.2rem] sm:min-h-[7rem] md:min-h-[8.5rem] flex flex-col justify-center items-center">
-    <div>Mulai Investasi</div>
+    <div>Belajar Investasi</div>
     <div className="text-brand-950 inline-flex items-center justify-center mt-1">
       <span className="line-clamp-2 px-2">{currentText}</span>
       <motion.span

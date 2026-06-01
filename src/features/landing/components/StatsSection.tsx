@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const STATS = [
   { value: "100%", label: "Gratis. Tanpa biaya tersembunyi." },
-  { value: "0 Risiko", label: "Semua Transaksi Virtual" },
+  { value: "Jaring Pengaman", label: "Latih mental tanpa risiko finansial" },
   { value: "Real-time", label: "Data saham pasar nyata" },
 ];
 

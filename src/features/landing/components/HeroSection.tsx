@@ -8,7 +8,7 @@ import HeroDashboardImage from "./hero/HeroDashboardImage";
 const HeroSection = () => {
   const containerRef = useRef<HTMLElement>(null);
 
-  const words = ["bersama Stockation", "tanpa rasa khawatir", "belajar lewat simulasi nyata"];
+  const words = ["bersama Stockation", "tanpa rasa khawatir"];
   const [currentWordIdx, setCurrentWordIdx] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -62,7 +62,7 @@ const HeroSection = () => {
             <HeroHeadline currentText={currentText} />
           </motion.div>
           <motion.p variants={itemVariants} className="text-xs sm:text-sm text-text-muted max-w-md mx-auto mb-8 leading-relaxed px-4">
-            Pelajari saham dengan modal virtual, susun strategi investasimu, dan temukan profil risikomu — sebelum terjun ke pasar nyata.
+            Lebih dari sekadar simulasi. Stockation adalah teman pendamping yang melatih ketahanan mental, mengenali profil risikomu, dan melindungimu dari keputusan emosional (FOMO) sebelum terjun ke pasar nyata.
           </motion.p>
           <motion.div variants={itemVariants}>
             <HeroActions />

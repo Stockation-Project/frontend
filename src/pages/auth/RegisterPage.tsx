@@ -1,10 +1,9 @@
 import authService from "@/features/auth/services/auth.service";
-import { useRegister, FormInputGroup, PasswordInputField, AuthVisualPanel, AuthHeader, AuthAlert } from "@/features/auth";
+import { useRegister, FormInputGroup, PasswordInputField, AuthHeader, AuthAlert } from "@/features/auth";
 import { Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import registerBg from "@/assets/images/auth/register-bg.jpg";
 import { motion } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const RegisterPage: React.FC = () => {
   const {
@@ -18,37 +17,34 @@ const RegisterPage: React.FC = () => {
 
   return (
     <motion.div
-      className="h-screen overflow-hidden w-full flex px-2 py-2 bg-background-primary"
+      className="relative min-h-screen w-full flex px-2 py-2 bg-background-primary overflow-hidden"
       initial={{ opacity: 0, x: 80 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -80 }}
       transition={{ duration: 0.4 }}
     >
-      {/* --- KOLOM KIRI (Panel Visual & Branding) --- */}
-      <motion.div
-        className="hidden lg:block lg:w-1/2 flex-shrink-0"
-        initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 40 }}
-        transition={{ duration: 0.3, delay: 0.2 }}
-      >
-        <AuthVisualPanel
-          title="Mulai Investasi Tanpa Rasa Khawatir"
-          description="Dapatkan modal virtual gratis untuk belajar jual-beli saham secara real-time dan pantau portofolio Anda kapan saja."
-          backgroundImage={registerBg}
-        />
-      </motion.div>
+      {/* Soft Mesh Gradient Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-brand/10 blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-brand/15 blur-[140px]"></div>
+        <div className="absolute top-[30%] left-[30%] w-[50%] h-[50%] rounded-full bg-brand/5 blur-[100px]"></div>
+      </div>
 
       {/* Form Register */}
       <motion.div
-        className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20 overflow-y-auto h-full"
-        style={{ scrollbarWidth: "none" }}
+        className="relative z-10 w-full flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20"
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -40 }}
         transition={{ duration: 0.3, delay: 0.1 }}
       >
         <div className="w-full max-w-md space-y-5">
+          {/* Back Button */}
+          <Link to="/" className="inline-flex items-center text-sm font-medium text-text-muted hover:text-brand transition-colors mb-2">
+            <ChevronLeft className="w-4 h-4 mr-1" />
+            Kembali ke Beranda
+          </Link>
+
           {/* Header */}
           <AuthHeader
             title="Gabung Stockation"
