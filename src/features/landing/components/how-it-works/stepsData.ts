@@ -15,8 +15,8 @@ export const STEPS: Step[] = [
   {
     number: "02",
     label: "PROFIL RISIKO",
-    title: "Temukan Profil Risikomu",
-    description: "Isi kuis singkat dan sistem kami akan menentukan tipe investor yang paling sesuai denganmu.",
+    title: "Kenali Toleransi Mentalmu",
+    description: "Isi kuesioner psikologis singkat untuk mengetahui batasan risiko dan gaya investasi yang paling tidak membuatmu stres.",
   },
   {
     number: "03",
@@ -27,7 +27,7 @@ export const STEPS: Step[] = [
   {
     number: "04",
     label: "AKSI SIMULASI",
-    title: "Aksi Simulasi",
-    description: "Beli dan jual saham dengan saldo virtual. Ada fitur pintar sesuai profil risikomu.",
+    title: "Praktikkan Keputusan Rasional",
+    description: "Latih mentalmu menghadapi pasar nyata dengan saldo virtual. Bangun kebiasaan logis, bukan emosional.",
   },
 ];

@@ -114,11 +114,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem('user', JSON.stringify(userData))
   }
 
-  const logout = () => {
+  const logout = async () => {
     setUser(null);
     setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    await supabase.auth.signOut();
   };
 
   return (
