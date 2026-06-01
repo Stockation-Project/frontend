@@ -45,6 +45,8 @@ const ProductTour: React.FC<ProductTourProps> = ({
   }>({ top: 0, left: 0, arrow: null });
 
   const [highlightRect, setHighlightRect] = useState<Rect | null>(null);
+  const [isMobileBottom, setIsMobileBottom] = useState(false);
+
   const scrollLockedRef = useRef(false);
   const rafIdRef = useRef<number | null>(null);
   const savedScrollYRef = useRef<number>(0);
@@ -54,55 +56,64 @@ const ProductTour: React.FC<ProductTourProps> = ({
   const isFirst = currentStep === 0;
 
   // ----- Compute positions (with retry if target not yet in DOM) -----
-const computePositions = useCallback((retryCount = 0) => {
-  if (!step) return;
+  const computePositions = useCallback((retryCount = 0) => {
+    if (!step) return;
 
-  const targetRect = step.target ? getTargetRect(step.target) : null;
+    const isMobile = window.innerWidth < 640;
+    const mobileBottom = isMobile && step.position !== "center";
+    setIsMobileBottom(mobileBottom);
 
-  // If target expected but not found yet, retry up to 5x with 100ms delay
-  if (step.target && !targetRect && retryCount < 5) {
-    setTimeout(() => computePositionsRef.current(retryCount + 1), 100);
-    return;
-  }
+    const targetRect = step.target ? getTargetRect(step.target) : null;
 
-  const pos = computeTooltipPosition(
-    targetRect,
-    step.position,
-    step.showLogo ? 300 : 180
-  );
-  setTooltipPos(pos);
+    // If target expected but not found yet, retry up to 5x with 100ms delay
+    if (step.target && !targetRect && retryCount < 5) {
+      setTimeout(() => computePositionsRef.current(retryCount + 1), 100);
+      return;
+    }
 
-  if (step.position !== "center" && targetRect) {
-    setHighlightRect(targetRect);
-  } else {
-    setHighlightRect(null);
-  }
-}, [step]);
+    if (mobileBottom) {
+      setTooltipPos({ top: 0, left: 0, arrow: null });
+    } else {
+      const pos = computeTooltipPosition(
+        targetRect,
+        step.position,
+        step.showLogo ? 300 : 180
+      );
+      setTooltipPos(pos);
+    }
+
+    if (step.position !== "center" && targetRect) {
+      setHighlightRect(targetRect);
+    } else {
+      setHighlightRect(null);
+    }
+  }, [step]);
+
   // Keep a ref to latest computePositions so setTimeout never gets stale
   const computePositionsRef = useRef(computePositions);
   computePositionsRef.current = computePositions;
 
   // Auto-scroll to target on step change
   // Temporarily unlocks body overflow so smooth scroll can run
-useEffect(() => {
-  if (!isActive || !step?.target) return;
+  useEffect(() => {
+    if (!isActive || !step?.target) return;
 
-  const prevOverflow = document.body.style.overflow;
-  document.body.style.overflow = "";
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "";
 
-  scrollToTarget(step.target);
+    scrollToTarget(step.target);
 
-  // Tambah delay lebih panjang agar scroll + DOM settle
-  const settleTimer = setTimeout(() => {
-    document.body.style.overflow = prevOverflow || "hidden";
-    computePositionsRef.current();
-  }, 600); // ← naik dari 450 ke 600
+    // Tambah delay lebih panjang agar scroll + DOM settle
+    const settleTimer = setTimeout(() => {
+      document.body.style.overflow = prevOverflow || "hidden";
+      computePositionsRef.current();
+    }, 600); // ← naik dari 450 ke 600
 
-  return () => {
-    clearTimeout(settleTimer);
-    document.body.style.overflow = prevOverflow || "hidden";
-  };
-}, [isActive, step?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+    return () => {
+      clearTimeout(settleTimer);
+      document.body.style.overflow = prevOverflow || "hidden";
+    };
+  }, [isActive, step?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Recompute on step change, resize, scroll (debounced via rAF)
   useEffect(() => {
@@ -158,6 +169,31 @@ useEffect(() => {
     }
   };
 
+  const tooltipClasses = isMobileBottom
+    ? "fixed bottom-4 left-4 right-4 mx-auto w-auto max-w-[calc(100vw-32px)] rounded-2xl bg-gradient-to-br from-background-primary via-background-primary to-background-primary/50 border-1 border-background-primary backdrop-blur-sm shadow-[0_0_30px_-8px_rgba(0,0,0,0.25)] flex flex-col"
+    : "fixed rounded-2xl bg-gradient-to-br from-background-primary via-background-primary to-background-primary/50 border-1 border-background-primary backdrop-blur-sm shadow-[0_0_30px_-8px_rgba(0,0,0,0.25)] flex flex-col";
+
+  const tooltipStyle = isMobileBottom
+    ? { zIndex: TOOLTIP_Z }
+    : {
+        zIndex: TOOLTIP_Z,
+        top: tooltipPos.top,
+        left: tooltipPos.left,
+        width: TOOLTIP_WIDTH,
+      };
+
+  const motionInitial = isMobileBottom
+    ? { opacity: 0, y: 50 }
+    : { opacity: 0, scale: 0.9, y: 10 };
+
+  const motionAnimate = isMobileBottom
+    ? { opacity: 1, y: 0 }
+    : { opacity: 1, scale: 1, y: 0 };
+
+  const motionExit = isMobileBottom
+    ? { opacity: 0, y: 50 }
+    : { opacity: 0, scale: 0.9, y: -10 };
+
   return (
     <>
       {/* Overlay */}
@@ -179,31 +215,28 @@ useEffect(() => {
       <AnimatePresence mode="wait">
         <motion.div
           key={step.id}
-          initial={{ opacity: 0, scale: 0.9, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: -10 }}
+          initial={motionInitial}
+          animate={motionAnimate}
+          exit={motionExit}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="fixed rounded-2xl bg-gradient-to-br from-background-primary via-background-primary to-background-primary/50 border-1 border-background-primary backdrop-blur-sm shadow-xl flex flex-col overflow-hidden"
-          style={{
-            zIndex: TOOLTIP_Z,
-            top: tooltipPos.top,
-            left: tooltipPos.left,
-            width: TOOLTIP_WIDTH,
-          }}
+          className={tooltipClasses}
+          style={tooltipStyle}
         >
           {/* Arrow */}
-          {tooltipPos.arrow && <TooltipArrow direction={tooltipPos.arrow} />}
+          {tooltipPos.arrow && !isMobileBottom && (
+            <TooltipArrow direction={tooltipPos.arrow} />
+          )}
 
           {/* ---- Welcome: Logo Header ---- */}
           {step.showLogo && (
-            <div className="flex flex-col items-center text-center gap-1 overflow-hidden">
-              <div className="w-full py-10 bg-brand flex items-center justify-center flex-col mb-4">
-                  <Logo variant="white" showText={true} className="!flex flex-col" />
+            <div className="flex flex-col items-center text-center gap-1">
+              <div className="w-full py-6 sm:py-10 bg-brand flex items-center justify-center flex-col mb-4 rounded-t-2xl">
+                  <Logo variant="white" showText={true} className="!flex flex-col scale-90 sm:scale-100" />
               </div>
-              <h3 className="text-base font-medium text-text-primary">
+              <h3 className="text-sm sm:text-base font-medium text-text-primary">
                 {step.title}
               </h3>
-              <p className="text-sm text-text-muted leading-relaxed px-4 ">
+              <p className="text-xs sm:text-sm text-text-muted leading-relaxed px-4 ">
                 {step.description}
               </p>
             </div>
@@ -212,10 +245,10 @@ useEffect(() => {
           {/* ---- Regular Step: Title + Description (no icon) ---- */}
           {!step.showLogo && (
             <div className="px-5 pt-5 pb-3">
-              <h3 className="text-sm font-medium text-text-primary mb-1">
+              <h3 className="text-sm sm:text-base font-medium text-text-primary mb-1">
                 {step.title}
               </h3>
-              <p className="text-sm text-text-muted leading-relaxed">
+              <p className="text-xs sm:text-sm text-text-muted leading-relaxed">
                 {step.description}
               </p>
             </div>
@@ -234,18 +267,17 @@ useEffect(() => {
               {!isFirst && !isLast && (
                 <button
                   onClick={onEnd}
-                  className="px-3 py-1.5 text-sm text-text-muted hover:text-text-primary transition-colors cursor-pointer"
+                  className="px-3 py-1.5 text-xs sm:text-sm text-text-muted hover:text-text-primary transition-colors cursor-pointer"
                 >
                   Skip
                 </button>
               )}
               <button
                 onClick={handleButtonClick}
-                className="flex items-center px-3 py-1.5 rounded-lg text-sm font-reguler transition-all duration-200 cursor-pointer bg-brand text-white hover:bg-brand-800"
+                className="flex items-center px-3 py-1.5 rounded-lg text-xs sm:text-sm font-reguler transition-all duration-200 cursor-pointer bg-brand text-white hover:bg-brand-800"
               >
                 {buttonLabel}
               </button>
-
             </div>
           </div>
         </motion.div>
