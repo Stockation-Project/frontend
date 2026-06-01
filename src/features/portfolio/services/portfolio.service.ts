@@ -49,20 +49,29 @@ export interface OptimizePortfolioResponse {
     metrics: {
       expected_return: number;
       volatility: number;
+      cvar: number;
       sharpe_ratio: number;
     };
     method: string;
     risk_profile: string;
+    metadata?: {
+      risk_tolerance: number;
+      slider_overridden: boolean;
+      cvar_confidence: number;
+      volatility_source?: "forecast" | "historical";
+      volatility_per_ticker?: Record<string, "forecast" | "historical">;
+    };
   };
 }
 
 export const optimizePortfolio = async (
   tickers: string[],
+  riskTolerance?: number | null,
 ): Promise<OptimizePortfolioResponse> => {
   try {
     const response = await apiClient.post<OptimizePortfolioResponse>(
       "/portfolios/optimize",
-      { tickers },
+      { tickers, risk_tolerance: riskTolerance },
     );
     return response.data;
   } catch (error: any) {
