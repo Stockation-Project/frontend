@@ -8,25 +8,25 @@ export const FEATURES = [
   {
     icon: Wallet,
     title: "Sistem Kantong (Sub-Dompet)",
-    description: "Pisahkan strategi investasimu dengan membuat beberapa dompet. Setiap transaksi beli & jual hanya bisa dilakukan di dalam sub-dompet — persis seperti investor profesional mengelola portofolio.",
+    description: "Latih kedisiplinan dan kontrol emosimu. Pisahkan portofoliomu ke dalam dompet-dompet terisolasi agar kamu tetap rasional dan tidak mudah panik saat pasar bergejolak.",
     image: profilRisikoImg,
   },
   {
     icon: LineChart,
     title: "Data Saham Real-Time",
-    description: "Harga dan pergerakan saham dari pasar nyata. Belajar membaca chart dan memahami volatilitas tanpa uang asli yang terancam.",
+    description: "Belajar menghadapi volatilitas pasar nyata dengan kepala dingin. Rasakan tekanan dinamika harga secara langsung, namun dengan jaring pengaman tanpa risiko kehilangan uang riil.",
     image: tableImg,
   },
   {
     icon: PieChart,
     title: "Alokasi Pintar",
-    description: "Rekomendasi alokasi saham berdasarkan profil risikomu. Sistem menyarankan komposisi portofolio yang optimal — kamu tinggal setujui dan eksekusi.",
+    description: "Hindari keputusan impulsif. AI kami memberikan rekomendasi komposisi portofolio yang paling sehat dan sesuai dengan tingkat toleransi stres psikologismu.",
     image: alokasiImg,
   },
   {
     icon: ShoppingCart,
     title: "Keranjang Simulasi",
-    description: "Beli kombinasi saham sekaligus seperti keranjang belanja e-commerce. Preview portofolio sebelum eksekusi transaksi.",
+    description: "Rencanakan transaksimu secara logis. Evaluasi dan simulasikan dampak risiko ke portofoliomu sebelum mengambil keputusan akhir.",
     image: simulasiImg,
   },
 ];

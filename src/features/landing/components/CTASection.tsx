@@ -14,10 +14,10 @@ const CTASection = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-3 leading-tight">
-            Siap Jadi Investor yang<br />Lebih Cerdas?
+            Siap Jadi Investor yang<br />Rasional dan Tangguh?
           </h2>
           <p className="text-xs text-brand-300 mb-8">
-            Bergabung sekarang dan mulai simulasimu hari ini. Gratis, tanpa risiko.
+            Bergabunglah sekarang. Bangun kebiasaan investasimu dengan jaring pengaman psikologis, hari ini juga.
           </p>
           <button
             onClick={() => navigate("/register")}
