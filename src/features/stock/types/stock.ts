@@ -36,4 +36,9 @@ export interface StockDetailData {
   ai_summary: string;
   is_watchlist?: boolean;
   anomaly_history: AnomalyHistory[];
+  volatility?: {
+    forecast_10d: number;
+    forecast_1m: number;
+    forecast_3m: number;
+  };
 }
