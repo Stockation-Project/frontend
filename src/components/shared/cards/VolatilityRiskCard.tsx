@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Activity, AlertTriangle } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface VolatilityData {
@@ -23,16 +23,14 @@ const VolatilityRiskCard: React.FC<VolatilityRiskCardProps> = ({
 
   if (!volatility) {
     return (
-      <div className="bg-background-primary rounded-xl border border-border-primary p-4 flex flex-col gap-4 mt-4 shadow-sm relative overflow-hidden">
+      <div className="bg-background-primary rounded-xl border border-border-primary p-4 flex flex-col gap-4 mt-4 relative overflow-hidden">
         <div className="flex items-center gap-2">
-          <Activity className="w-5 h-5 text-text-subtle" />
-          <h3 className="text-base font-semibold text-text-secondary">
+          <h3 className="text-base font-medium text-text-secondary">
             Potensi Gejolak Harga (AI)
           </h3>
         </div>
         <div className="flex flex-col items-center justify-center p-6 text-center bg-background-secondary rounded-lg border border-dashed border-border-secondary">
-          <AlertTriangle className="w-8 h-8 text-text-subtle mb-3 opacity-50" />
-          <h4 className="text-sm font-semibold text-text-secondary mb-1">Data Belum Cukup</h4>
+          <h4 className="text-sm font-medium text-text-secondary mb-1">Data Belum Cukup</h4>
           <p className="text-xs text-text-muted max-w-[250px]">
             AI belum memiliki cukup data historis untuk memprediksi potensi fluktuasi saham <span className="font-semibold">{stockSymbol}</span> secara akurat.
           </p>
@@ -47,8 +45,7 @@ const VolatilityRiskCard: React.FC<VolatilityRiskCardProps> = ({
     <div className="bg-background-primary rounded-xl border border-border-primary p-4 flex flex-col gap-4 mt-4 shadow-sm relative overflow-hidden">
       {/* Header */}
       <div className="flex items-center gap-2">
-        <Activity className="w-5 h-5 text-brand" />
-        <h3 className="text-base font-semibold text-text-primary">
+        <h3 className="text-base font-medium text-text-primary">
           Potensi Gejolak Harga (AI)
         </h3>
       </div>
