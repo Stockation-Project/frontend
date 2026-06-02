@@ -7,6 +7,7 @@ import {
   useDashboard, 
   mapRecommendedStocks, 
   mapPortfoliosToAllocations,
+  assignPortfolioColors,
   WalletSummary,
   RiskProfileWidget,
   DashboardSkeleton,
@@ -22,15 +23,13 @@ import TopUpModal from "@/components/shared/modal/TopUpModal";
 import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
 import AllocateModal from "@/components/shared/modal/AllocateModal";
 import PageHeader from "@/components/shared/layout/PageHeader";
-import { Button } from "@/components/ui/button";
-import { HelpCircle } from "lucide-react";
 
 const DashboardPages: React.FC = () => {
   const navigate = useNavigate();
   const { data, isLoading, error, refreshData } = useDashboard();
   const { user } = useAuth();
   
-  const { actions, selectedPortfolioId, setSelectedPortfolioId, portfolios: walletPortfolios } = useWallet({ 
+  const { actions, selectedPortfolioId, setSelectedPortfolioId } = useWallet({ 
     onSuccess: refreshData 
   });
   const { handleTopUp, handleCreatePortfolio, handleAllocate } = actions;
@@ -48,6 +47,12 @@ const DashboardPages: React.FC = () => {
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
   const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
   const [isAllocateOpen, setIsAllocateOpen] = useState(false);
+
+  // Pindahkan hook useMemo ke atas sebelum early return
+  const portfoliosWithColors = React.useMemo(
+    () => assignPortfolioColors(data?.portfolios || []),
+    [data?.portfolios]
+  );
 
   // ini buat loading ya lek yaa
   if (isLoading) {
@@ -92,16 +97,6 @@ const DashboardPages: React.FC = () => {
 
   // Map portfolios ke format WalletSummary melalui utilitas terpusat
   const walletAllocations = mapPortfoliosToAllocations(portfolios);
-
-  // Map warna UI untuk masing-masing saham di dalam setiap dompet
-  const ALLOCATION_COLORS = ["bg-brand", "bg-brand-700", "bg-brand-500", "bg-brand-800", "bg-brand-600"];
-  const portfoliosWithColors = portfolios.map(p => ({
-    ...p,
-    allocations: (p.allocations || []).map((alloc, idx) => ({
-      ...alloc,
-      color: ALLOCATION_COLORS[idx % ALLOCATION_COLORS.length]
-    }))
-  }));
 
   return (
     <motion.div

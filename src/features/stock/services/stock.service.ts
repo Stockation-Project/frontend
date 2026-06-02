@@ -17,10 +17,33 @@ export async function fetchStockDetail(ticker: string): Promise<StockDetailData>
   return response.data.data;
 }
 
+interface RawStockItem {
+  ticker: string;
+  name: string;
+  current_price?: number;
+  change_percent?: number;
+}
+
+interface RecommendedStocksResponse {
+  success: boolean;
+  data: {
+    recommendations: RawStockItem[];
+  };
+  message?: string;
+}
+
+interface ExploreStocksResponse {
+  success: boolean;
+  data: {
+    all_stocks: RawStockItem[];
+  };
+  message?: string;
+}
+
 /**
  * Map raw backend data to SearchStockItem
  */
-const mapToSearchStockItem = (raw: any): SearchStockItem => ({
+const mapToSearchStockItem = (raw: RawStockItem): SearchStockItem => ({
   ticker: raw.ticker,
   name: raw.name,
   currentPrice: raw.current_price || 0,
@@ -32,7 +55,7 @@ const mapToSearchStockItem = (raw: any): SearchStockItem => ({
  * Fetch recommended stocks based on user's risk profile.
  */
 export async function fetchRecommendedStocks(): Promise<SearchStockItem[]> {
-  const response = await apiClient.get<any>("/stocks/recommendations");
+  const response = await apiClient.get<RecommendedStocksResponse>("/stocks/recommendations");
   const rawData = response.data.data.recommendations || [];
   return rawData.map(mapToSearchStockItem);
 }
@@ -41,7 +64,7 @@ export async function fetchRecommendedStocks(): Promise<SearchStockItem[]> {
  * Fetch all stocks to be used for search/explore.
  */
 export async function searchStocks(): Promise<SearchStockItem[]> {
-  const response = await apiClient.get<any>("/stocks/explore");
+  const response = await apiClient.get<ExploreStocksResponse>("/stocks/explore");
   const rawData = response.data.data.all_stocks || [];
   return rawData.map(mapToSearchStockItem);
 }
