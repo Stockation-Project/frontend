@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import BaseSideModal from "../layout/BaseSideModal";
 import { Sparkles, Bot } from "lucide-react";
 import { useAIExplanation } from "@/features/ai/hooks/useAIExplanation";
+import ReactMarkdown from 'react-markdown';
 
 interface AIExplanationModalProps {
   isOpen: boolean;
@@ -77,14 +78,12 @@ const AIExplanationModal: React.FC<AIExplanationModalProps> = ({
               </p>
             </div>
           ) : (
-            <div className="relative z-10">
-              <p className="text-sm leading-relaxed text-text-primary text-justify">
-                {explanation ? (
-                  <span dangerouslySetInnerHTML={{ __html: explanation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
-                ) : (
-                  "Penjelasan tidak tersedia."
-                )}
-              </p>
+            <div className="relative z-10 text-sm leading-relaxed text-text-primary text-justify">
+              {explanation ? (
+                <ReactMarkdown>{explanation}</ReactMarkdown>
+              ) : (
+                "Penjelasan tidak tersedia."
+              )}
             </div>
           )}
         </div>
