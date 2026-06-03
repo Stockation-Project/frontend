@@ -29,7 +29,7 @@ const DashboardPages: React.FC = () => {
   const { data, isLoading, error, refreshData } = useDashboard();
   const { user } = useAuth();
   
-  const { actions, selectedPortfolioId, setSelectedPortfolioId } = useWallet({ 
+  const { actions } = useWallet({ 
     onSuccess: refreshData 
   });
   const { handleTopUp, handleCreatePortfolio, handleAllocate } = actions;
@@ -133,8 +133,6 @@ const DashboardPages: React.FC = () => {
             isOpen={isAllocateOpen}
             onClose={() => setIsAllocateOpen(false)}
             portfolios={portfolios}
-            selectedPortfolioId={selectedPortfolioId || ""}
-            onPortfolioSelect={setSelectedPortfolioId}
             currentBalance={wallet_summary.main_wallet_balance}
             onSuccess={handleAllocate}
           />

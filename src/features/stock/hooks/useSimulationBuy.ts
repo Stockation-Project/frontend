@@ -402,6 +402,20 @@ export const useSimulationBuy = () => {
     }
   };
 
+  const refreshPortfolios = async () => {
+    try {
+      const dashboardRes = await fetchDashboardData();
+      const updatedPortfolios = dashboardRes.data.portfolios || [];
+      setPortfolios(updatedPortfolios);
+      // Auto-select newly created portfolio (last in list)
+      if (updatedPortfolios.length > 0 && !selectedPortfolioId) {
+        setSelectedPortfolioId(updatedPortfolios[0].id);
+      }
+    } catch (err) {
+      console.error("Gagal refresh portfolio list:", err);
+    }
+  };
+
   return {
     state: {
       isLoading,
@@ -434,6 +448,7 @@ export const useSimulationBuy = () => {
       handleAutoAllocation,
       handleChangeRiskTolerance,
       handleResetRiskTolerance,
+      refreshPortfolios,
     },
   };
 };

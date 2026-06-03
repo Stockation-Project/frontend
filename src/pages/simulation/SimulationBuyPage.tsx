@@ -12,6 +12,8 @@ import {
 } from "@/features/stock";
 import { Loader2, Sparkles } from "lucide-react";
 import SimulationBuySkeleton from "@/features/stock/components/SimulationBuySkeleton";
+import CreatePortfolioModal from "@/components/shared/modal/CreatePortfolioModal";
+import { useWallet } from "@/features/wallet";
 
 import { usePageTour, ProductTour } from "@/features/product-tour";
 import { SIMULATION_TOUR_STEPS } from "@/features/product-tour/steps";
@@ -21,6 +23,11 @@ const SimulationBuyPage: React.FC = () => {
   const { user } = useAuth();
   const { state, handlers } = useSimulationBuy();
   const [mainTab, setMainTab] = useState<"Rekomendasi" | "Manual">("Manual");
+  const [isCreatePortoOpen, setIsCreatePortoOpen] = useState(false);
+
+  const { actions, globalWallet } = useWallet({
+    onSuccess: () => handlers.refreshPortfolios?.(),
+  });
 
   const {
     isActive,
@@ -85,10 +92,7 @@ const SimulationBuyPage: React.FC = () => {
               cashBalance={0}
               isSelected={false}
               isAddCard={true}
-              onClick={() => {
-                // In future: Open CreatePortfolioModal
-                // For now, no-op or toast
-              }}
+              onClick={() => setIsCreatePortoOpen(true)}
             />
           </div>
         </div>
@@ -258,6 +262,17 @@ const SimulationBuyPage: React.FC = () => {
           )}
         </div>
       </div>
+
+      <CreatePortfolioModal
+        isOpen={isCreatePortoOpen}
+        onClose={() => setIsCreatePortoOpen(false)}
+        currentBalance={Number(globalWallet?.balance || 0)}
+        onSuccess={async (name, amount) => {
+          await actions.handleCreatePortfolio(name, amount);
+          await handlers.refreshPortfolios();
+          setIsCreatePortoOpen(false);
+        }}
+      />
 
       <ProductTour
         isActive={isActive}
