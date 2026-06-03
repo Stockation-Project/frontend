@@ -109,10 +109,11 @@ export const useWallet = (options: UseWalletOptions = {}) => {
     }
   };
 
-  const handleAllocate = async (amount: number) => {
-    if (!selectedPortfolioId) return;
+  const handleAllocate = async (amount: number, portfolioId?: string) => {
+    const targetId = portfolioId || selectedPortfolioId;
+    if (!targetId) return;
     try {
-      await allocateApi(selectedPortfolioId, amount);
+      await allocateApi(targetId, amount);
       await fetchData();
       await fetchHistory();
       if (onSuccess) await onSuccess();
