@@ -84,29 +84,6 @@ npm run lint
 
 ---
 
-## 🏗️ Aturan Pengembangan Frontend
-
-Sesuai dengan kesepakatan tim (`GEMINI.md`):
-
-1. **Komponen UI**:
-   - Pecah komponen kompleks menjadi komponen yang lebih kecil (*micro-components*).
-   - Pisahkan *Container Component* (pengambil data) dan *Presentational Component* (penerjemah UI murni).
-
-2. **State Management**:
-   - Gunakan `useState` untuk *local state* (form, toggle, modal).
-   - Gunakan Context (React Context) untuk *global state* yang dipakai lintas fitur (Profil User, Saldo Wallet Global).
-
-3. **Performa**:
-   - Terapkan *lazy loading* pada rute yang berat (seperti halaman Dashboard).
-   - Batasi render ulang pada grafik dengan memisahkan *state* yang tidak berhubungan secara langsung.
-   - Buat *Optimistic UI* atau *refetch* otomatis segera setelah ada transaksi berhasil agar saldo ter-update seketika.
-
-4. **Data Fetching**:
-   - Tangani error dengan menampilkan notifikasi *user-friendly* (misal via Sonner) tanpa mengekspos *stack trace*.
-   - Semua *request* wajib diarahkan ke API Gateway (bukan langsung ke FastAPI / DB).
-
----
-
 ## 📦 Dependencies Utama
 
 | Package | Kegunaan |
