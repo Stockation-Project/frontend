@@ -1,4 +1,5 @@
 import axios from "axios";
+import supabase from "@/lib/supabase";
 
 // buat base url pake axios
 const apiClient = axios.create({
@@ -35,6 +36,10 @@ apiClient.interceptors.response.use(
 
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+
+      // Hapus juga sesi Supabase agar tidak terjadi auto-login
+      // saat AuthContext mount ulang di halaman login
+      supabase.auth.signOut();
 
       // Hindari redirect-loop: jangan paksa pindah jika sudah berada di
       // halaman publik (login/register/landing). Ini juga mencegah user

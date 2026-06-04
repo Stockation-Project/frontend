@@ -27,7 +27,15 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ user, onUpdate, isL
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onUpdate(formData);
+    // Sanitasi: bersihkan field kosong agar tidak mengirim string kosong
+    // ke backend (khususnya field date seperti dob)
+    const sanitizedData: ProfileUpdatePayload = { ...formData };
+    (Object.keys(sanitizedData) as Array<keyof ProfileUpdatePayload>).forEach((key) => {
+      if (sanitizedData[key] === "") {
+        sanitizedData[key] = null;
+      }
+    });
+    await onUpdate(sanitizedData);
   };
 
   const getInputClass = (value: any) => {

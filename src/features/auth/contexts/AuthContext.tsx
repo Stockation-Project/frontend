@@ -30,6 +30,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     // Jangan sync ulang jika sedang berjalan atau token backend sudah ada.
     if (syncingRef.current) return;
     if (localStorage.getItem("token")) return;
+    // Jangan auto-sync jika user sudah berada di halaman login
+    // (menandakan user sengaja logout/token expired)
+    if (window.location.pathname === "/login") return;
 
     syncingRef.current = true;
     try {
