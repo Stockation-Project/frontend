@@ -60,6 +60,17 @@ export interface OptimizePortfolioResponse {
       cvar_confidence: number;
       volatility_source?: "forecast" | "historical";
       volatility_per_ticker?: Record<string, "forecast" | "historical">;
+      pairwise_downside?: Array<{
+        ticker_a: string;
+        ticker_b: string;
+        level: "rendah" | "sedang" | "tinggi";
+        conditional_probability: number;
+        lower_tail_dependence: number;
+        kendall_tau: number;
+        tail_quantile: number;
+        observations: number;
+        model: "clayton";
+      }>;
     };
   };
 }
@@ -67,11 +78,18 @@ export interface OptimizePortfolioResponse {
 export const optimizePortfolio = async (
   tickers: string[],
   riskTolerance?: number | null,
+  method?: string,
+  periodKey?: string,
 ): Promise<OptimizePortfolioResponse> => {
   try {
     const response = await apiClient.post<OptimizePortfolioResponse>(
       "/portfolios/optimize",
-      { tickers, risk_tolerance: riskTolerance },
+      {
+        tickers,
+        risk_tolerance: riskTolerance,
+        method,
+        period_key: periodKey,
+      },
     );
     return response.data;
   } catch (error: any) {

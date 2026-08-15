@@ -24,6 +24,19 @@ export interface OptimizationMetrics {
   volatilitySource: "forecast" | "historical";
   forecastCount: number;
   totalCount: number;
+  pairwiseDownside: PairwiseDownsideRisk[];
+}
+
+export interface PairwiseDownsideRisk {
+  ticker_a: string;
+  ticker_b: string;
+  level: "rendah" | "sedang" | "tinggi";
+  conditional_probability: number;
+  lower_tail_dependence: number;
+  kendall_tau: number;
+  tail_quantile: number;
+  observations: number;
+  model: "clayton";
 }
 
 /**
@@ -73,6 +86,7 @@ export const useSimulationBuy = () => {
   const [isBuying, setIsBuying] = useState(false);
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [optimizationMetrics, setOptimizationMetrics] = useState<OptimizationMetrics | null>(null);
+  const [manualPairwiseDownside, setManualPairwiseDownside] = useState<PairwiseDownsideRisk[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   // Ref untuk debounce auto-optimize saat slider berubah
@@ -91,6 +105,8 @@ export const useSimulationBuy = () => {
     [user?.risk_profile]
   );
   const [riskTolerance, setRiskTolerance] = useState<number>(defaultRiskTolerance);
+  const [optimizationMethod] = useState("mean_cvar");
+  const [optimizationPeriod, setOptimizationPeriod] = useState("1_tahun");
   // Tandai apakah user sudah menggeser slider (untuk membedakan default vs manual)
   const [isToleranceCustomized, setIsToleranceCustomized] = useState(false);
 
@@ -230,6 +246,7 @@ export const useSimulationBuy = () => {
 
   const addStockToCart = (stock: SearchStockItem) => {
     setOptimizationMetrics(null);
+    setManualPairwiseDownside([]);
     // Reset flag agar user harus klik tombol lagi setelah komposisi saham berubah
     hasOptimizedOnce.current = false;
     setCart((prev) => {
@@ -262,6 +279,7 @@ export const useSimulationBuy = () => {
 
   const removeStockFromCart = (ticker: string) => {
     setOptimizationMetrics(null);
+    setManualPairwiseDownside([]);
     // Reset flag agar user harus klik tombol lagi setelah komposisi saham berubah
     hasOptimizedOnce.current = false;
     setCart((prev) => prev.filter((item) => item.ticker !== ticker));
@@ -301,7 +319,12 @@ export const useSimulationBuy = () => {
       //    Jika user belum menggeser slider, kirim null agar backend/ML
       //    memakai default sesuai profil risiko user.
       const tolerancePayload = isToleranceCustomized ? riskTolerance : null;
-      const res = await optimizePortfolio(tickers, tolerancePayload);
+      const res = await optimizePortfolio(
+        tickers,
+        tolerancePayload,
+        "mean_cvar",
+        optimizationPeriod,
+      );
       const weights = res.data.weights; // format: { "BBCA": 0.45, "TLKM": 0.55 }
       
       // 2. Terapkan kalkulasi lot otomatis
@@ -310,7 +333,7 @@ export const useSimulationBuy = () => {
         const weight = weights[item.ticker] || 0;
         const allocatedFund = weight * totalCash;
         const calculatedShares = allocatedFund / item.currentPrice;
-        const lots = Math.max(1, Math.floor(calculatedShares / 100)); // Min 1 lot, floor agar tidak overbudget
+        const lots = Math.floor(calculatedShares / 100);
         
         return {
           ...item,
@@ -318,11 +341,18 @@ export const useSimulationBuy = () => {
         };
       });
 
+      const purchasableCount = updatedCart.filter((item) => item.lots > 0).length;
+      if (purchasableCount === 0) {
+        toast.error("Tidak ada alokasi yang cukup untuk membeli satu lot.");
+        return;
+      }
+      // Pertahankan semua saham pilihan agar user tetap bisa mengubah slider
+      // dan membandingkan skenario, meski suatu saham saat ini berbobot nol.
       setCart(updatedCart);
       const meta = res.data.metadata;
       const perTicker = meta?.volatility_per_ticker || {};
       const forecastCount = Object.values(perTicker).filter((s) => s === "forecast").length;
-      const totalCount = Object.keys(perTicker).length || cart.length;
+      const totalCount = Object.keys(perTicker).length || purchasableCount;
       setOptimizationMetrics({
         expectedReturn: res.data.metrics.expected_return,
         volatility: res.data.metrics.volatility,
@@ -334,6 +364,7 @@ export const useSimulationBuy = () => {
         volatilitySource: meta?.volatility_source ?? "historical",
         forecastCount,
         totalCount,
+        pairwiseDownside: meta?.pairwise_downside ?? [],
       });
       // Tandai bahwa optimasi pertama sudah berhasil — slider sekarang bisa
       // men-trigger auto-optimize secara otomatis saat nilainya berubah.
@@ -345,6 +376,34 @@ export const useSimulationBuy = () => {
       toast.error(err.message || "Gagal mengalokasikan!", {
         description: "Silakan coba lagi nanti.",
       });
+    } finally {
+      setIsOptimizing(false);
+    }
+  };
+
+  const handleSetOptimizationPeriod = (period: string) => {
+    setOptimizationPeriod(period);
+    setOptimizationMetrics(null);
+    setManualPairwiseDownside([]);
+  };
+
+  const handleManualRiskAnalysis = async () => {
+    if (cart.length < 2) {
+      toast.error("Pilih minimal 2 saham untuk dianalisis.");
+      return;
+    }
+    try {
+      setIsOptimizing(true);
+      const res = await optimizePortfolio(
+        cart.map((item) => item.ticker),
+        null,
+        "mean_cvar",
+        optimizationPeriod,
+      );
+      setManualPairwiseDownside(res.data.metadata?.pairwise_downside ?? []);
+      toast.success("Analisis risiko jatuh bersama selesai.");
+    } catch (err: any) {
+      toast.error(err.message || "Gagal menganalisis risiko jatuh bersama.");
     } finally {
       setIsOptimizing(false);
     }
@@ -371,12 +430,19 @@ export const useSimulationBuy = () => {
 
     try {
       setIsBuying(true);
-      const payloads: BuyStockPayload[] = cart.map((item) => ({
+      const payloads: BuyStockPayload[] = cart
+        .filter((item) => item.lots > 0)
+        .map((item) => ({
         portfolio_id: selectedPortfolioId,
         ticker: item.ticker,
         lots: item.lots,
         current_price: item.currentPrice,
-      }));
+        }));
+
+      if (payloads.length === 0) {
+        toast.error("Tidak ada alokasi yang cukup untuk membeli satu lot.");
+        return;
+      }
 
       await bulkBuyStockService(payloads);
       
@@ -433,8 +499,10 @@ export const useSimulationBuy = () => {
       remainingBalance,
       donutChartData,
       optimizationMetrics,
+      manualPairwiseDownside,
       riskTolerance,
       defaultRiskTolerance,
+      optimizationPeriod,
       isToleranceCustomized,
     },
     handlers: {
@@ -446,8 +514,10 @@ export const useSimulationBuy = () => {
       toggleExpandStock,
       handleConfirmBuy,
       handleAutoAllocation,
+      handleManualRiskAnalysis,
       handleChangeRiskTolerance,
       handleResetRiskTolerance,
+      setOptimizationPeriod: handleSetOptimizationPeriod,
       refreshPortfolios,
     },
   };

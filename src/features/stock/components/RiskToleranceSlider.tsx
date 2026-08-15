@@ -76,12 +76,12 @@ const RiskToleranceSlider: React.FC<RiskToleranceSliderProps> = ({
           type="range"
           min={0}
           max={100}
-          step={5}
+          step={1}
           value={percent}
           disabled={disabled}
           onChange={(e) => onChange(Number(e.target.value) / 100)}
           className={cn(
-            "flex-1 h-2 rounded-full appearance-none cursor-pointer",
+            "flex-1 h-3 rounded-full appearance-none cursor-pointer",
             "bg-gradient-to-r from-brand-300 via-warning-300 to-error-300",
             "accent-brand disabled:cursor-not-allowed disabled:opacity-50",
             "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4",
