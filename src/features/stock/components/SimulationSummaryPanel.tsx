@@ -5,7 +5,7 @@ import { formatCurrencyIDR } from "@/lib/utils/formatCurrency";
 import type { AllocationChartItem, CartItem } from "../types/simulation";
 import type { DashboardPortfolio } from "@/features/dashboard";
 
-import type { OptimizationMetrics } from "../hooks/useSimulationBuy";
+import type { OptimizationMetrics, PairwiseDownsideRisk } from "../hooks/useSimulationBuy";
 import { Sparkles, BrainCircuit, Info } from "lucide-react";
 
 interface SimulationSummaryPanelProps {
@@ -17,6 +17,7 @@ interface SimulationSummaryPanelProps {
   isBuying: boolean;
   onConfirmBuy: () => void;
   optimizationMetrics?: OptimizationMetrics | null;
+  pairwiseDownside?: PairwiseDownsideRisk[];
   confirmDataTour?: string;
 }
 
@@ -29,12 +30,15 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
   isBuying,
   onConfirmBuy,
   optimizationMetrics = null,
+  pairwiseDownside = [],
   confirmDataTour,
 }) => {
   const totalUnit = cart.length;
   const totalLot = cart.reduce((acc, item) => acc + item.lots, 0);
   const totalShares = totalLot * 100;
   const isBalanceSufficient = remainingBalance >= 0;
+  const estimatedAnnualReturnValue = totalInvestment * (optimizationMetrics?.expectedReturn ?? 0);
+  const estimatedWorstLossValue = totalInvestment * (optimizationMetrics?.cvar ?? 0);
 
   // Recharts needs valid hex colors, but we have tailwind classes.
   // We'll map the tailwind classes back to hex for recharts.
@@ -166,15 +170,20 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
 
               {/* Narasi Alasan Penentuan Bobot — Mean-CVaR */}
               <p className="text-[10px] text-text-secondary font-regular leading-relaxed text-justify">
-                {optimizationMetrics.riskTolerance <= 0.35 && (
+                {optimizationMetrics.method === "mean_cvar" && optimizationMetrics.riskTolerance <= 0.35 && (
                   "Sesuai pilihanmu yang condong AMAN, AI memakai metode Mean-CVaR untuk menekan potensi kerugian pada skenario terburuk. AI memilih kombinasi yang paling stabil dari saham yang kamu pilih, walau potensi keuntungannya jadi lebih terbatas."
                 )}
-                {optimizationMetrics.riskTolerance > 0.35 && optimizationMetrics.riskTolerance < 0.65 && (
+                {optimizationMetrics.method === "mean_cvar" && optimizationMetrics.riskTolerance > 0.35 && optimizationMetrics.riskTolerance < 0.65 && (
                   "Sesuai pilihanmu yang SEIMBANG, AI memakai metode Mean-CVaR untuk menyeimbangkan antara peluang keuntungan dan perlindungan terhadap skenario kerugian terburuk dari saham yang kamu pilih."
                 )}
-                {optimizationMetrics.riskTolerance >= 0.65 && (
+                {optimizationMetrics.method === "mean_cvar" && optimizationMetrics.riskTolerance >= 0.65 && (
                   "Sesuai pilihanmu yang condong BERANI, AI memakai metode Mean-CVaR untuk mengejar peluang keuntungan lebih tinggi. Konsekuensinya, potensi kerugian pada skenario terburuk juga ikut lebih besar."
                 )}
+                {optimizationMetrics.method === "max_sharpe" && "AI memakai Max Sharpe untuk mencari kombinasi dengan rasio potensi imbal hasil terhadap risiko paling efisien dari saham pilihanmu."}
+                {optimizationMetrics.method === "min_volatility" && "AI memakai Minimisasi Volatilitas untuk mencari kombinasi dengan pergerakan nilai paling stabil dari saham pilihanmu."}
+                {optimizationMetrics.method === "max_return" && "AI memakai Max Return untuk memprioritaskan potensi imbal hasil historis tertinggi. Akibatnya, alokasi dapat lebih terkonsentrasi pada saham tertentu."}
+                {optimizationMetrics.method === "risk_parity" && "AI memakai Risk Parity untuk membagi kontribusi risiko lebih merata antar saham, bukan sekadar membagi nominal uang sama rata."}
+                {optimizationMetrics.method === "equal_weight" && "AI memakai Bobot Sama Rata sebagai pembanding sederhana: setiap saham memperoleh porsi yang setara sebelum dikonversi menjadi lot."}
                 {optimizationMetrics.volatilitySource === "forecast" && (
                   " Estimasi risiko di bawah memakai prediksi volatilitas model AI (proyeksi ke depan), bukan sekadar data masa lalu."
                 )}
@@ -190,30 +199,84 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
                     {optimizationMetrics.expectedReturn >= 0 ? "+" : "−"}
                     {Math.abs(optimizationMetrics.expectedReturn * 100).toFixed(1)}%
                   </span>
+                  <span className="text-[8px] text-slate-500 mt-0.5">
+                    {estimatedAnnualReturnValue >= 0 ? "+" : "−"}
+                    {formatCurrencyIDR(Math.abs(estimatedAnnualReturnValue))}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40 text-center">
                   <span className="text-[8px] text-slate-400 font-medium mb-0.5">Estimasi Kerugian Terburuk</span>
                   <span className="text-[11px] font-semibold text-error-600">
                     −{(optimizationMetrics.cvar * 100).toFixed(1)}%
                   </span>
+                  <span className="text-[8px] text-slate-500 mt-0.5">
+                    −{formatCurrencyIDR(estimatedWorstLossValue)}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center p-1.5 bg-white/80 rounded-lg border border-brand-100/40 text-center">
-                  <span className="text-[8px] text-slate-400 font-medium mb-0.5">Imbal Hasil vs Risiko</span>
+                  <span className="text-[8px] text-slate-400 font-medium mb-0.5">Sharpe Ratio</span>
                   <span className={`text-[11px] font-semibold ${
                     optimizationMetrics.sharpeRatio >= 1.0
                       ? "text-brand"
-                      : optimizationMetrics.sharpeRatio >= 0
+                      : optimizationMetrics.sharpeRatio >= 0.5
                       ? "text-brand-800"
                       : "text-warning-700"
                   }`}>
+                    {optimizationMetrics.sharpeRatio.toFixed(2)}
+                  </span>
+                  <span className="text-[8px] text-slate-500 mt-0.5">
                     {optimizationMetrics.sharpeRatio >= 1.0
-                      ? "Sehat"
-                      : optimizationMetrics.sharpeRatio >= 0
+                      ? "Baik"
+                      : optimizationMetrics.sharpeRatio >= 0.5
                       ? "Cukup"
-                      : "Kurang Ideal"}
+                      : optimizationMetrics.sharpeRatio >= 0
+                      ? "Rendah"
+                      : "Kurang ideal"}
                   </span>
                 </div>
               </div>
+
+              {optimizationMetrics.pairwiseDownside.length > 0 && (
+                <div className="pt-2 border-t border-brand-100/60">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-medium text-slate-700">
+                      Risiko Jatuh Bersama
+                    </span>
+                    <span className="text-[8px] text-slate-400">Clayton Copula</span>
+                  </div>
+                  <p className="text-[8px] leading-relaxed text-slate-500 mb-2">
+                    Kemungkinan kedua saham turun tajam secara bersamaan berdasarkan
+                    data historis.
+                  </p>
+                  <div className="space-y-1.5">
+                    {optimizationMetrics.pairwiseDownside.slice(0, 10).map((pair) => {
+                      const tone = pair.level === "tinggi"
+                        ? "bg-red-50 border-red-200 text-red-700"
+                        : pair.level === "sedang"
+                        ? "bg-amber-50 border-amber-200 text-amber-700"
+                        : "bg-emerald-50 border-emerald-200 text-emerald-700";
+                      return (
+                        <div
+                          key={`${pair.ticker_a}-${pair.ticker_b}`}
+                          className={`flex items-center justify-between rounded-lg border px-2 py-1.5 ${tone}`}
+                        >
+                          <span className="text-[9px] font-semibold">
+                            {pair.ticker_a} + {pair.ticker_b}
+                          </span>
+                          <span className="text-[9px] font-semibold capitalize">
+                            {pair.level} · {(pair.conditional_probability * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <p className="text-[8px] leading-relaxed text-slate-500 mt-2">
+                    Pasangan teratas paling rentan jatuh bersama, sehingga manfaat
+                    diversifikasinya dapat melemah saat pasar buruk. Perhitungan
+                    berfokus pada 5% kondisi penurunan paling ekstrem.
+                  </p>
+                </div>
+              )}
 
               {/* Disclaimer agar user tidak salah tangkap */}
               <div className="flex items-start gap-1.5 pt-1.5 border-t border-brand-100/60">
@@ -223,6 +286,32 @@ const SimulationSummaryPanel: React.FC<SimulationSummaryPanelProps> = ({
                   rata-rata kerugian pada skenario paling buruk dalam setahun — makin besar, makin berisiko.
                   Hasil nyata bisa berbeda.
                 </p>
+              </div>
+            </div>
+          )}
+          {!optimizationMetrics && pairwiseDownside.length > 0 && (
+            <div className="mt-2 mb-4 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-slate-800">Risiko Jatuh Bersama</span>
+                <span className="text-[8px] text-slate-400">Analisis historis</span>
+              </div>
+              <p className="text-[9px] leading-relaxed text-slate-500 mb-2">
+                Kemungkinan kedua saham turun tajam secara bersamaan. Jumlah lot manualmu tidak diubah.
+              </p>
+              <div className="space-y-1.5">
+                {pairwiseDownside.slice(0, 10).map((pair) => {
+                  const tone = pair.level === "tinggi"
+                    ? "bg-red-50 border-red-200 text-red-700"
+                    : pair.level === "sedang"
+                    ? "bg-amber-50 border-amber-200 text-amber-700"
+                    : "bg-emerald-50 border-emerald-200 text-emerald-700";
+                  return (
+                    <div key={`${pair.ticker_a}-${pair.ticker_b}`} className={`flex justify-between rounded-lg border px-2 py-1.5 ${tone}`}>
+                      <span className="text-[9px] font-semibold">{pair.ticker_a} + {pair.ticker_b}</span>
+                      <span className="text-[9px] font-semibold capitalize">{pair.level} · {(pair.conditional_probability * 100).toFixed(1)}%</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

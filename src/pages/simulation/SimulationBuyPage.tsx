@@ -160,6 +160,23 @@ const SimulationBuyPage: React.FC = () => {
                   />
                 )}
                 {state.cart.length >= 2 && (
+                  <div className="grid grid-cols-1 gap-3 p-4 bg-background-primary border border-border-primary rounded-xl shadow-sm [&>label:first-child]:hidden">
+                    <label className="flex flex-col gap-1.5 text-xs font-medium text-text-primary">
+                      Strategi optimasi
+                      <select value={state.optimizationMethod} disabled className="w-full rounded-lg border border-border-primary bg-white px-3 py-2 text-xs font-normal text-text-primary disabled:opacity-50">
+                        <option value="mean_cvar">Mean-CVaR — seimbangkan return & risiko ekstrem</option>
+                      </select>
+                    </label>
+                    <label className="flex flex-col gap-1.5 text-xs font-medium text-text-primary">
+                      Periode data historis
+                      <select value={state.optimizationPeriod} onChange={(event) => handlers.setOptimizationPeriod(event.target.value)} disabled={state.isOptimizing} className="w-full rounded-lg border border-border-primary bg-white px-3 py-2 text-xs font-normal text-text-primary disabled:opacity-50">
+                        <option value="3_bulan">3 bulan</option><option value="6_bulan">6 bulan</option><option value="1_tahun">1 tahun</option><option value="3_tahun">3 tahun</option><option value="5_tahun">5 tahun</option><option value="10_tahun">10 tahun</option>
+                      </select>
+                    </label>
+                    <p className="text-[10px] leading-relaxed text-text-secondary">Ubah periode dan toleransi risiko untuk membandingkan hasil Mean-CVaR. Tidak ada bobot minimum; saham yang tidak menerima alokasi cukup untuk satu lot tidak akan ikut dibeli.</p>
+                  </div>
+                )}
+                {state.cart.length >= 2 && (
                   <button
                     onClick={handlers.handleAutoAllocation}
                     disabled={state.isOptimizing}
@@ -230,6 +247,32 @@ const SimulationBuyPage: React.FC = () => {
               </div>
 
               <div className="xl:col-span-4 w-full flex flex-col gap-4 xl:h-[685px]">
+                {state.cart.length >= 2 && (
+                  <div className="p-3 bg-background-primary border border-border-primary rounded-xl shadow-sm">
+                    <label className="flex flex-col gap-1.5 text-xs font-medium text-text-primary">
+                      Periode analisis historis
+                      <select
+                        value={state.optimizationPeriod}
+                        onChange={(event) => handlers.setOptimizationPeriod(event.target.value)}
+                        disabled={state.isOptimizing}
+                        className="w-full rounded-lg border border-border-primary bg-white px-3 py-2 text-xs font-normal"
+                      >
+                        <option value="3_bulan">3 bulan</option><option value="6_bulan">6 bulan</option>
+                        <option value="1_tahun">1 tahun</option><option value="3_tahun">3 tahun</option>
+                        <option value="5_tahun">5 tahun</option><option value="10_tahun">10 tahun</option>
+                      </select>
+                    </label>
+                    <button
+                      onClick={handlers.handleManualRiskAnalysis}
+                      disabled={state.isOptimizing}
+                      className="w-full mt-3 py-2.5 rounded-lg bg-brand text-white text-xs font-medium flex items-center justify-center gap-2 disabled:bg-slate-200 disabled:text-slate-400"
+                    >
+                      {state.isOptimizing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+                      {state.isOptimizing ? "Menganalisis..." : "Analisis Risiko Jatuh Bersama"}
+                    </button>
+                    <p className="mt-2 text-[9px] text-text-secondary">Analisis tidak mengubah saham maupun jumlah lot manual.</p>
+                  </div>
+                )}
                 <div className="w-full flex-1 min-h-0 overflow-hidden [&>div]:!h-auto xl:[&>div]:!h-full" data-tour="simulation-cart">
                   <CartListPanel
                     selectedPortfolio={state.selectedPortfolio}
@@ -253,7 +296,8 @@ const SimulationBuyPage: React.FC = () => {
                     isBuying={state.isBuying}
                     onConfirmBuy={() => handlers.handleConfirmBuy(() => {
                     })}
-                    optimizationMetrics={state.optimizationMetrics}
+                    optimizationMetrics={null}
+                    pairwiseDownside={state.manualPairwiseDownside}
                     confirmDataTour="simulation-confirm"
                   />
                 </div>
